@@ -20,6 +20,7 @@ internal fun SplashScreen(
     onNavigate: OnNavigateTo,
     viewModel: SplashViewModel = koinViewModel(),
 ) {
+    viewModel.onNavigate = onNavigate
 
     Box(
         modifier = Modifier

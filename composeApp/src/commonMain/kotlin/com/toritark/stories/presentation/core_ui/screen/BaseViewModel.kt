@@ -2,6 +2,7 @@ package com.toritark.stories.presentation.core_ui.screen
 
 import androidx.lifecycle.ViewModel
 import co.touchlab.kermit.Logger
+import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -20,6 +21,8 @@ abstract class BaseViewModel(
 
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
+
+    var onNavigate: OnNavigateTo = { _, _ -> }
 
     protected fun setScreenState(state: ScreenState) {
         _screenState.value = state
