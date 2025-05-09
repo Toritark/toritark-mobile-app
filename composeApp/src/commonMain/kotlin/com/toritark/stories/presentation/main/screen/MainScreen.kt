@@ -2,11 +2,15 @@
 
 package com.toritark.stories.presentation.main.screen
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
+import com.toritark.stories.presentation.story.detail.StoryDetailScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
@@ -43,6 +47,10 @@ internal fun MainScreen(
             )
         },
     ) { innerPadding ->
-
+        Box(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            StoryDetailScreen(onNavigate = onNavigate)
+        }
     }
 }

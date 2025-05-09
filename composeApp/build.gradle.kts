@@ -83,6 +83,8 @@ kotlin {
             implementation(libs.coil)
             implementation(libs.coil.network)
 
+            implementation(libs.compottie)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

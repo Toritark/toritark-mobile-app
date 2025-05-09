@@ -14,6 +14,7 @@ fun KoinApplication.configureModules(vararg additionalModules: Module) {
         languageModule,
         onboardingModule,
         splashModule,
+        storyModule,
         mainModule,
         *additionalModules,
     )

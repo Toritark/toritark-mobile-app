@@ -28,4 +28,21 @@
 
     <!-- Main screen -->
     <string name="title_main_screen_topbar">Toritark</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Customize the story</string>
+    <string name="hint_story_customize_prompt">Enter your story instructions here...</string>
+
+    <string name="title_story_topic_daily_routine">Daily routine</string>
+    <string name="title_story_topic_store_dialog">Store dialog</string>
+    <string name="title_story_topic_favorite_animal">Favorite animal</string>
+    <string name="title_story_topic_walk">Walk</string>
+    <string name="title_story_topic_meeting_new_friend">Meeting a new friend</string>
+    <string name="title_story_topic_special_day">Special day</string>
+    <string name="title_story_topic_my_dream">My dream</string>
+    <string name="title_story_topic_my_room">My room</string>
+    <string name="title_story_topic_family">Family</string>
+    <string name="title_story_topic_custom">Custom</string>
+
+    <string name="title_story_generate_btn">Create a story</string>
 </resources>

@@ -11,6 +11,7 @@ import com.toritark.stories.presentation.language.nav.languagesScreens
 import com.toritark.stories.presentation.onboarding.nav.onboardingScreens
 import com.toritark.stories.presentation.splash.nav.SplashScreenDestination
 import com.toritark.stories.presentation.splash.nav.splashScreen
+import com.toritark.stories.presentation.story.nav.storiesScreens
 
 private const val LOG_TAG = "AppNavigation"
 private val logger = Logger.withTag(LOG_TAG)
@@ -36,6 +37,7 @@ internal fun AppNavigation(
         splashScreen(onNavigate = defaultOnNavigateTo)
         languagesScreens(onNavigate = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         onboardingScreens(onNavigate = defaultOnNavigateTo)
+        storiesScreens(onNavigate = defaultOnNavigateTo)
         mainScreen(onNavigate = defaultOnNavigateTo)
     }
 }
