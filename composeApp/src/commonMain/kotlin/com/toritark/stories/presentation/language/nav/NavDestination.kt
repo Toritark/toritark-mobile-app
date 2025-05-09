@@ -6,16 +6,37 @@ import com.toritark.stories.presentation.core_ui.nav.NavDestination
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.language.setup.learning.LearningLanguageChooserScreen
+import com.toritark.stories.presentation.language.setup.level.LanguageLevelChooserScreen
+import com.toritark.stories.presentation.language.setup.native.NativeLanguageChooserScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object LearningLanguageChooserScreenDestination : NavDestination
+sealed interface LanguageSetupScreenDestination : NavDestination {
+
+    @Serializable
+    data object LearningLanguageChooser : LanguageSetupScreenDestination
+
+    @Serializable
+    data object LanguageLevelChooser : LanguageSetupScreenDestination
+
+    @Serializable
+    data object NativeLanguageChooser : LanguageSetupScreenDestination
+}
+
 
 fun NavGraphBuilder.languagesScreens(
     onNavigate: OnNavigateTo,
     onPopBackStack: OnPopBackStack,
 ) {
-    composable<LearningLanguageChooserScreenDestination> {
+    composable<LanguageSetupScreenDestination.LearningLanguageChooser> {
         LearningLanguageChooserScreen(onNavigate, onPopBackStack)
+    }
+
+    composable<LanguageSetupScreenDestination.LanguageLevelChooser> {
+        LanguageLevelChooserScreen(onNavigate, onPopBackStack)
+    }
+
+    composable<LanguageSetupScreenDestination.NativeLanguageChooser> {
+        NativeLanguageChooserScreen(onNavigate, onPopBackStack)
     }
 }

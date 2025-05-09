@@ -7,6 +7,8 @@ import com.toritark.stories.di.name.DispatchersNames
 import com.toritark.stories.di.name.HttpClientNames
 import com.toritark.stories.di.name.LanguageSettingsNames
 import com.toritark.stories.presentation.language.setup.learning.LearningLanguageChooserViewModel
+import com.toritark.stories.presentation.language.setup.level.LanguageLevelChooserViewModel
+import com.toritark.stories.presentation.language.setup.native.NativeLanguageChooserViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -28,6 +30,25 @@ val languageModule = module {
 
     viewModel<LearningLanguageChooserViewModel> {
         LearningLanguageChooserViewModel(
+            languagesRepository = get(),
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
+        )
+    }
+
+    viewModel {
+        NativeLanguageChooserViewModel(
+            getDeviceLanguageCode = get(),
+            languagesRepository = get(),
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
+        )
+    }
+
+    viewModel {
+        LanguageLevelChooserViewModel(
             languagesRepository = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),

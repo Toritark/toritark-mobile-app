@@ -68,7 +68,7 @@ internal class LanguagesRepositoryImpl(
 
         _learningLanguage.value = getLanguage(key = LEARNING_LANGUAGE_KEY, languages = languages)
         _nativeLanguage.value = getLanguage(key = NATIVE_LANGUAGE_KEY, languages = languages)
-        _languageLevel.value = settings.getStringOrNull(LANGUAGE_LEVEL_KEY)?.let(LanguageLevel::valueOf)
+        _languageLevel.value = settings.getStringOrNull(LANGUAGE_LEVEL_KEY)?.let(LanguageLevel::fromValue)
 
         updateAreAllParametersSet()
     }

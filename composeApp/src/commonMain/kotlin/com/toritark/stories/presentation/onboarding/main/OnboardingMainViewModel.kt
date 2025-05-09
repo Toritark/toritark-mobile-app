@@ -1,11 +1,15 @@
 package com.toritark.stories.presentation.onboarding.main
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.stories.data.language.repository.LanguagesRepository
 import com.toritark.stories.data.onboarding.repository.OnboardingRepository
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
-import com.toritark.stories.presentation.language.nav.LearningLanguageChooserScreenDestination
+import com.toritark.stories.presentation.language.nav.LanguageSetupScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 internal class OnboardingMainViewModel(
     private val languagesRepository: LanguagesRepository,
@@ -23,11 +27,18 @@ internal class OnboardingMainViewModel(
     fun update() {
         logger.d { "update" }
 
-        if (languagesRepository.areAllParametersSet.value == true) {
-            // TODO: Main screen
-            // TODO: Set onboarding completed
-        } else {
-            showLanguageSetupStep()
+        viewModelScope.launch {
+            val areAllParametersSet = languagesRepository
+                .areAllParametersSet
+                .filterNotNull()
+                .first()
+
+            if (areAllParametersSet) {
+                // TODO: Main screen
+                // TODO: Set onboarding completed
+            } else {
+                showLanguageSetupStep()
+            }
         }
     }
 
@@ -36,19 +47,19 @@ internal class OnboardingMainViewModel(
             languagesRepository.learningLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: learningLanguage is null" }
 
-                onNavigate(LearningLanguageChooserScreenDestination) {}
+                onNavigate(LanguageSetupScreenDestination.LearningLanguageChooser) {}
             }
 
             languagesRepository.languageLevel.value == null -> {
                 logger.d { "showLanguageSetupStep: languageLevel is null" }
 
-                // TODO
+                onNavigate(LanguageSetupScreenDestination.LanguageLevelChooser) {}
             }
 
             languagesRepository.nativeLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: nativeLanguage is null" }
 
-                // TODO
+                onNavigate(LanguageSetupScreenDestination.NativeLanguageChooser) {}
             }
         }
     }

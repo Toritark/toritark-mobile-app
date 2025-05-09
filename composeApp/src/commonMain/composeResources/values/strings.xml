@@ -1,5 +1,29 @@
 <resources>
+
+    <!-- Languages set up -->
     <string name="title_search_languages_field">Search languages</string>
+
     <string name="title_choose_learning_language_screen">Choose the language you're learning</string>
     <string name="title_choose_learning_language_next_btn">Next</string>
+
+    <string name="title_choose_language_level_screen">Choose your current language level</string>
+    <string name="title_choose_language_level_next_btn">Next</string>
+
+    <string name="title_choose_native_language_screen">Choose your native language</string>
+    <string name="title_choose_native_language_next_btn">Next</string>
+
+    <string name="title_language_level_none">None</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">You're just starting and have zero level knowledge</string>
+    <string name="desc_language_level_a1">Can understand and use familiar everyday expressions and very basic phrases</string>
+    <string name="desc_language_level_a2">Can understand sentences and frequently used expressions</string>
+    <string name="desc_language_level_b1">Can understand the main points of clear standard input on familiar matters regularly encountered in work, school, leisure</string>
+    <string name="desc_language_level_b2">Can understand the main ideas of a complex text on both concrete and abstract topics, including technical discussions in your field of specialisation</string>
+    <string name="desc_language_level_c1">Can understand a wide range of demanding, longer texts, and recognize implicit meaning. Can express him/herself fluently and spontaneously without much obvious searching for expressions</string>
+
 </resources>
