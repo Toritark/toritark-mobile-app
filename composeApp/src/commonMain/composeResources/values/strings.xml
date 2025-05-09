@@ -1,0 +1,5 @@
+<resources>
+    <string name="title_search_languages_field">Search languages</string>
+    <string name="title_choose_learning_language_screen">Choose the language you're learning</string>
+    <string name="title_choose_learning_language_next_btn">Next</string>
+</resources>

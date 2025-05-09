@@ -1,16 +1,21 @@
 package com.toritark.stories.presentation.splash
 
 import co.touchlab.kermit.Logger
+import com.toritark.stories.data.onboarding.repository.OnboardingRepository
 import com.toritark.stories.domain.auth.interactor.AuthInteractor
 import com.toritark.stories.domain.auth.model.AuthState
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
+import com.toritark.stories.presentation.onboarding.nav.OnboardingMainScreenDestination
+import com.toritark.stories.presentation.splash.nav.SplashScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SplashViewModel(
     private val authInteractor: AuthInteractor,
+    private val onboardingRepository: OnboardingRepository,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -34,10 +39,25 @@ class SplashViewModel(
 
                 when (state) {
                     is AuthState.Authenticated -> {
-                        // TODO: Navigate
+                        navigateAuthenticated()
                     }
 
                     else -> {}
+                }
+            }
+        }
+    }
+
+    private suspend fun navigateAuthenticated() {
+        if (onboardingRepository.isOnboardingCompleted()) {
+            logger.d { "navigateAuthenticated: navigate to main screen" }
+            // TODO
+        } else {
+            logger.d { "navigateAuthenticated: navigate to onboarding" }
+
+            withContext(mainDispatcher) {
+                onNavigate(OnboardingMainScreenDestination) {
+                    popUpTo(SplashScreenDestination) { inclusive = true }
                 }
             }
         }

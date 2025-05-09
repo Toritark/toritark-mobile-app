@@ -3,6 +3,7 @@ package com.toritark.stories.presentation.core_ui.screen
 import androidx.lifecycle.ViewModel
 import co.touchlab.kermit.Logger
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
+import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -23,6 +24,7 @@ abstract class BaseViewModel(
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
 
     var onNavigate: OnNavigateTo = { _, _ -> }
+    var onPopBackStack: OnPopBackStack = {}
 
     protected fun setScreenState(state: ScreenState) {
         _screenState.value = state

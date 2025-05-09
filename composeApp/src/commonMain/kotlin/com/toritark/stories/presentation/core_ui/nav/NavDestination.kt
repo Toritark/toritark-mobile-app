@@ -17,3 +17,4 @@ data object PreviousScreen : NavDestination
 
 
 typealias OnNavigateTo = (navDestination: NavDestination, navOptionsBuilder: NavOptionsBuilder.() -> Unit) -> Unit
+typealias OnPopBackStack = () -> Unit
