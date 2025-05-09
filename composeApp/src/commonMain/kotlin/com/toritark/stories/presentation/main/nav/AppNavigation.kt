@@ -34,9 +34,8 @@ internal fun AppNavigation(
         startDestination = SplashScreenDestination,
     ) {
         splashScreen(onNavigate = defaultOnNavigateTo)
-
         languagesScreens(onNavigate = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
-
         onboardingScreens(onNavigate = defaultOnNavigateTo)
+        mainScreen(onNavigate = defaultOnNavigateTo)
     }
 }

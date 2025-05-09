@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.toritark.stories.presentation.main.MainApp
+import com.toritark.stories.presentation.main.app.MainApp
 
 @Composable
 fun AndroidAppView() {

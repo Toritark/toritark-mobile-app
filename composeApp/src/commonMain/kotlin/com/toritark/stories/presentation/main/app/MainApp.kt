@@ -1,4 +1,4 @@
-package com.toritark.stories.presentation.main
+package com.toritark.stories.presentation.main.app
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

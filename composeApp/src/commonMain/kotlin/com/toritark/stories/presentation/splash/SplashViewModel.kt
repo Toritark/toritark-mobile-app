@@ -5,13 +5,10 @@ import com.toritark.stories.data.onboarding.repository.OnboardingRepository
 import com.toritark.stories.domain.auth.interactor.AuthInteractor
 import com.toritark.stories.domain.auth.model.AuthState
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
+import com.toritark.stories.presentation.main.nav.MainScreenDestination
 import com.toritark.stories.presentation.onboarding.nav.OnboardingMainScreenDestination
 import com.toritark.stories.presentation.splash.nav.SplashScreenDestination
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class SplashViewModel(
     private val authInteractor: AuthInteractor,
@@ -51,7 +48,12 @@ class SplashViewModel(
     private suspend fun navigateAuthenticated() {
         if (onboardingRepository.isOnboardingCompleted()) {
             logger.d { "navigateAuthenticated: navigate to main screen" }
-            // TODO
+
+            withContext(mainDispatcher) {
+                onNavigate(MainScreenDestination) {
+                    popUpTo(SplashScreenDestination) { inclusive = true }
+                }
+            }
         } else {
             logger.d { "navigateAuthenticated: navigate to onboarding" }
 

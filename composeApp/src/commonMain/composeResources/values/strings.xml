@@ -26,4 +26,6 @@
     <string name="desc_language_level_b2">Can understand the main ideas of a complex text on both concrete and abstract topics, including technical discussions in your field of specialisation</string>
     <string name="desc_language_level_c1">Can understand a wide range of demanding, longer texts, and recognize implicit meaning. Can express him/herself fluently and spontaneously without much obvious searching for expressions</string>
 
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
 </resources>

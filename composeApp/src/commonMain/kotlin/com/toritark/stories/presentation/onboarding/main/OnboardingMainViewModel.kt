@@ -6,6 +6,7 @@ import com.toritark.stories.data.language.repository.LanguagesRepository
 import com.toritark.stories.data.onboarding.repository.OnboardingRepository
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.language.nav.LanguageSetupScreenDestination
+import com.toritark.stories.presentation.main.nav.MainScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -28,18 +29,24 @@ internal class OnboardingMainViewModel(
         logger.d { "update" }
 
         viewModelScope.launch {
-            val areAllParametersSet = languagesRepository
-                .areAllParametersSet
-                .filterNotNull()
-                .first()
-
-            if (areAllParametersSet) {
-                // TODO: Main screen
-                // TODO: Set onboarding completed
+            if (onboardingRepository.isOnboardingCompleted()) {
+                openMainScreen()
             } else {
-                showLanguageSetupStep()
+                if (isLanguageSetupCompleted()) {
+                    onboardingRepository.setOnboardingCompleted()
+                    openMainScreen()
+                } else {
+                    showLanguageSetupStep()
+                }
             }
         }
+    }
+
+    private suspend fun isLanguageSetupCompleted(): Boolean {
+        return languagesRepository
+            .areAllParametersSet
+            .filterNotNull()
+            .first()
     }
 
     private fun showLanguageSetupStep() {
@@ -62,6 +69,12 @@ internal class OnboardingMainViewModel(
                 onNavigate(LanguageSetupScreenDestination.NativeLanguageChooser) {}
             }
         }
+    }
+
+    private fun openMainScreen() {
+        logger.d { "openMainScreen" }
+
+        onNavigate(MainScreenDestination) {}
     }
 
     private companion object {
