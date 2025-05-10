@@ -23,7 +23,7 @@ abstract class BaseViewModel(
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
 
-    var onNavigate: OnNavigateTo = { _, _ -> }
+    var onNavigateTo: OnNavigateTo = { _, _ -> }
     var onPopBackStack: OnPopBackStack = {}
 
     protected fun setScreenState(state: ScreenState) {

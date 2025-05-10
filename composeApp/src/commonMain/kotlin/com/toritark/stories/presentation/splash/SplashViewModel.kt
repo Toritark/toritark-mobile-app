@@ -50,7 +50,7 @@ class SplashViewModel(
             logger.d { "navigateAuthenticated: navigate to main screen" }
 
             withContext(mainDispatcher) {
-                onNavigate(MainScreenDestination) {
+                onNavigateTo(MainScreenDestination) {
                     popUpTo(SplashScreenDestination) { inclusive = true }
                 }
             }
@@ -58,7 +58,7 @@ class SplashViewModel(
             logger.d { "navigateAuthenticated: navigate to onboarding" }
 
             withContext(mainDispatcher) {
-                onNavigate(OnboardingMainScreenDestination) {
+                onNavigateTo(OnboardingMainScreenDestination) {
                     popUpTo(SplashScreenDestination) { inclusive = true }
                 }
             }

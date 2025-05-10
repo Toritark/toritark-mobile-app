@@ -1,22 +1,21 @@
 package com.toritark.stories.presentation.story.detail.component
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
@@ -30,117 +29,135 @@ internal fun StoryText(
 ) {
     var expandedSentenceIndex by remember { mutableStateOf<Int?>(null) }
 
+    val hapticFeedback = LocalHapticFeedback.current
+
     Column(
         modifier = modifier
-            .padding(vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
         learningLanguageText.forEachIndexed { index, learningSentence ->
             val nativeSentence = nativeLanguageText.getOrNull(index)
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                SentenceItem(
-                    text = learningSentence,
-                    isNativeSentenceExpanded = expandedSentenceIndex == index,
-                    onClick = {
-                        expandedSentenceIndex = if (expandedSentenceIndex == index) null else index
-                    },
-                )
-
-                if (nativeSentence != null) {
-                    AnimatedVisibility(
-                        visible = expandedSentenceIndex == index,
-                        enter = fadeIn(animationSpec = tween(durationMillis = 300)) + expandVertically(
-                            animationSpec = tween(durationMillis = 300),
-                            expandFrom = Alignment.Top
-                        ),
-                        exit = fadeOut(animationSpec = tween(durationMillis = 300)) + shrinkVertically(
-                            animationSpec = tween(durationMillis = 300),
-                            shrinkTowards = Alignment.Top
-                        )
-                    ) {
-                        NativeSentenceItem(
-                            text = nativeSentence,
-                            onClick = {
-                                expandedSentenceIndex = null
-                            },
-                        )
-                    }
-                }
-            }
+            SentenceItem(
+                learningLanguageText = learningSentence,
+                nativeLanguageText = nativeSentence,
+                isExpanded = expandedSentenceIndex == index,
+                hapticFeedback = hapticFeedback,
+                onClick = {
+                    expandedSentenceIndex = if (expandedSentenceIndex == index) null else index
+                },
+            )
         }
     }
 }
 
 @Composable
 private fun SentenceItem(
-    text: String,
-    isNativeSentenceExpanded: Boolean,
+    learningLanguageText: String,
+    nativeLanguageText: String?,
+    isExpanded: Boolean,
+    hapticFeedback: HapticFeedback,
     onClick: () -> Unit,
 ) {
-    Box(
+    val backgroundColor = if (isExpanded) {
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f)
+    } else {
+        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)
+    }
+
+    val textColor = if (isExpanded) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSecondaryContainer
+    }
+
+    val shape = RoundedCornerShape(20.dp)
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick, interactionSource = null, indication = null),
+            .padding(vertical = 4.dp)
+            .background(color = backgroundColor, shape = shape)
+            .clip(shape)
+            .clickable {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+                onClick()
+            }
+            .padding(horizontal = 12.dp, vertical = 12.dp),
     ) {
-        val backgroundColor = if (isNativeSentenceExpanded) {
-            MaterialTheme.colorScheme.inversePrimary
-        } else {
-            Color.Transparent
-        }
-        val modifier = Modifier
-            .padding(horizontal = 8.dp)
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .padding(horizontal = 8.dp, vertical = 12.dp)
-
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 20.sp,
-            ),
-            modifier = modifier,
+        LearningLanguageSentenceItem(
+            text = learningLanguageText,
+            textColor = textColor,
         )
+
+        if (nativeLanguageText != null) {
+            FadeAndExpandVerticallyAnimation(
+                visible = isExpanded,
+            ) {
+                NativeSentenceItem(
+                    text = nativeLanguageText,
+                    textColor = textColor,
+                )
+            }
+        }
     }
+}
+
+@Composable
+private fun LearningLanguageSentenceItem(
+    text: String,
+    textColor: Color,
+) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp, vertical = 4.dp),
+        text = text,
+        style = MaterialTheme.typography.bodyLarge.copy(
+            fontSize = 18.sp,
+        ),
+        color = textColor,
+    )
 }
 
 @Composable
 private fun NativeSentenceItem(
     text: String,
-    onClick: () -> Unit,
+    textColor: Color,
 ) {
     Text(
+        modifier = Modifier
+            .padding(start = 4.dp, top = 4.dp, end = 4.dp),
         text = text,
         style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable(onClick = onClick, interactionSource = null, indication = null),
+        color = textColor,
     )
 }
 
 @Preview
 @Composable
 private fun StoryTextPreview() {
-    StoryText(
-        learningLanguageText = listOf(
-            "Hello, my name is Toritark.",
-            "I am a developer.",
-            "I like to code.",
-            "I am learning Kotlin.",
-            "I am learning Jetpack Compose. This is a long, multi-line sentence",
-        ),
-        nativeLanguageText = listOf(
-            "Tere, mina olen Toritark.",
-            "Mina olen arendaja.",
-            "Test test test",
-            "Mina elan Tartus.",
-            "Mina olen 32 aastat vana.",
-        ),
-        modifier = Modifier.fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-    )
+    Box(
+        modifier = Modifier
+            .size(width = 400.dp, height = 500.dp)
+            .background(color = MaterialTheme.colorScheme.surface)
+    ) {
+        StoryText(
+            learningLanguageText = listOf(
+                "Hello, my name is Toritark.",
+                "I am a developer.",
+                "I like to code.",
+                "I am learning Kotlin.",
+                "I am learning Jetpack Compose. This is a long, multi-line sentence",
+            ),
+            nativeLanguageText = listOf(
+                "Tere, mina olen Toritark.",
+                "Mina olen arendaja.",
+                "Test test test",
+                "Mina elan Tartus.",
+                "Mina olen 32 aastat vana.",
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }

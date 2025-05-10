@@ -54,19 +54,19 @@ internal class OnboardingMainViewModel(
             languagesRepository.learningLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: learningLanguage is null" }
 
-                onNavigate(LanguageSetupScreenDestination.LearningLanguageChooser) {}
+                onNavigateTo(LanguageSetupScreenDestination.LearningLanguageChooser) {}
             }
 
             languagesRepository.languageLevel.value == null -> {
                 logger.d { "showLanguageSetupStep: languageLevel is null" }
 
-                onNavigate(LanguageSetupScreenDestination.LanguageLevelChooser) {}
+                onNavigateTo(LanguageSetupScreenDestination.LanguageLevelChooser) {}
             }
 
             languagesRepository.nativeLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: nativeLanguage is null" }
 
-                onNavigate(LanguageSetupScreenDestination.NativeLanguageChooser) {}
+                onNavigateTo(LanguageSetupScreenDestination.NativeLanguageChooser) {}
             }
         }
     }
@@ -74,7 +74,7 @@ internal class OnboardingMainViewModel(
     private fun openMainScreen() {
         logger.d { "openMainScreen" }
 
-        onNavigate(MainScreenDestination) {}
+        onNavigateTo(MainScreenDestination) {}
     }
 
     private companion object {

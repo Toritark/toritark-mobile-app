@@ -6,18 +6,16 @@ import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.language.setup.base.language.BaseLanguageChooserScreen
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
-import toritark.composeapp.generated.resources.title_choose_learning_language_next_btn
-import toritark.composeapp.generated.resources.title_choose_learning_language_screen
 import toritark.composeapp.generated.resources.title_choose_native_language_next_btn
 import toritark.composeapp.generated.resources.title_choose_native_language_screen
 
 @Composable
 internal fun NativeLanguageChooserScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     onPopBackStack: OnPopBackStack,
     viewModel: NativeLanguageChooserViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
     viewModel.onPopBackStack = onPopBackStack
 
     BaseLanguageChooserScreen(

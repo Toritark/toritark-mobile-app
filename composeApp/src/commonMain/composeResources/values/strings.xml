@@ -44,5 +44,20 @@
     <string name="title_story_topic_family">Family</string>
     <string name="title_story_topic_custom">Custom</string>
 
-    <string name="title_story_generate_btn">Create a story</string>
+    <string name="title_story_generate_btn">Create</string>
+
+    <string name="title_story_preview_read_your_story">Read your story</string>
+
+    <string name="title_story_quiz">Check yourself</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Answer on a question about this story to check yourself!</item>
+        <item quantity="other">Answer on %1$d questions about this story to check yourself!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Brewing idea…</string>
+    <string name="title_story_creation_progress_2">Thinking deeper…</string>
+    <string name="title_story_creation_progress_3">Adding imagination...</string>
+    <string name="title_story_creation_progress_4">Adding magic...</string>
+
+    <string name="title_story_text_screen">Your personal story ✨</string>
 </resources>

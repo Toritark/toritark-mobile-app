@@ -8,6 +8,7 @@ import com.toritark.stories.data.story.model.topic.StoryTopic
 import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.story.model.StoryTopicUiModel
+import com.toritark.stories.presentation.story.nav.StoryNavDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -163,6 +164,24 @@ internal class StoryDetailViewModel(
         logger.w { "onStoryGenerationError: storyRequest=$storyRequest" }
 
         setContentScreenState()
+    }
+
+    fun onStoryClick() {
+        logger.d { "onStoryClick" }
+
+        val story = story.value ?: return
+
+        onNavigateTo(
+            StoryNavDestination.Text(
+                story = story
+            )
+        ) {}
+    }
+
+    fun onStoryQuestionsClick() {
+        logger.d { "onStoryQuestionsClick" }
+
+        // TODO
     }
 
     private companion object {

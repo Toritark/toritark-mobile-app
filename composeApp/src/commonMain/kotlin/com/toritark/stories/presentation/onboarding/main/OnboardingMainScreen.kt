@@ -11,10 +11,10 @@ private val logger = Logger.withTag(LOG_TAG)
 
 @Composable
 internal fun OnboardingMainScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     viewModel: OnboardingMainViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
 
     LaunchedEffect(Unit) {
         logger.d { "LaunchedEffect" }

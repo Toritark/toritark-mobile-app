@@ -10,8 +10,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object OnboardingMainScreenDestination : NavDestination
 
-fun NavGraphBuilder.onboardingScreens(onNavigate: OnNavigateTo) {
+fun NavGraphBuilder.onboardingScreens(onNavigateTo: OnNavigateTo) {
     composable<OnboardingMainScreenDestination> {
-        OnboardingMainScreen(onNavigate)
+        OnboardingMainScreen(onNavigateTo)
     }
 }

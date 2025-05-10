@@ -25,18 +25,18 @@ sealed interface LanguageSetupScreenDestination : NavDestination {
 
 
 fun NavGraphBuilder.languagesScreens(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     onPopBackStack: OnPopBackStack,
 ) {
     composable<LanguageSetupScreenDestination.LearningLanguageChooser> {
-        LearningLanguageChooserScreen(onNavigate, onPopBackStack)
+        LearningLanguageChooserScreen(onNavigateTo, onPopBackStack)
     }
 
     composable<LanguageSetupScreenDestination.LanguageLevelChooser> {
-        LanguageLevelChooserScreen(onNavigate, onPopBackStack)
+        LanguageLevelChooserScreen(onNavigateTo, onPopBackStack)
     }
 
     composable<LanguageSetupScreenDestination.NativeLanguageChooser> {
-        NativeLanguageChooserScreen(onNavigate, onPopBackStack)
+        NativeLanguageChooserScreen(onNavigateTo, onPopBackStack)
     }
 }

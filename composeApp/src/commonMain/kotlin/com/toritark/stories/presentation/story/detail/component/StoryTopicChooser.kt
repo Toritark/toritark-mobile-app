@@ -1,30 +1,105 @@
 package com.toritark.stories.presentation.story.detail.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.toritark.stories.data.story.model.topic.StoryTopic
+import com.toritark.stories.presentation.core_ui.icon.AppIcons
+import com.toritark.stories.presentation.core_ui.icon.Magic
 import com.toritark.stories.presentation.story.model.StoryTopicUiModel
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import toritark.composeapp.generated.resources.*
 
 @Composable
-internal fun StoryTopicChooser(
+internal fun GenerateStoryHeader(
+    modifier: Modifier = Modifier,
+    topics: List<StoryTopicUiModel>,
+    selectedTopic: StoryTopicUiModel?,
+    isPromptVisible: Boolean,
+    isGenerateButtonEnabled: Boolean,
+    onTopicSelected: (StoryTopicUiModel) -> Unit,
+    onCustomizeClick: () -> Unit,
+    onGenerateClick: () -> Unit,
+) {
+
+    val hapticFeedback = LocalHapticFeedback.current
+
+    Row(
+        modifier = modifier.height(IntrinsicSize.Min)
+    ) {
+        // Dropdown
+        StoryTopicDropdown(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+            topics = topics,
+            selectedTopic = selectedTopic,
+            onTopicSelected = onTopicSelected,
+        )
+
+        // Customize topic prompt
+        IconButton(
+            modifier = Modifier.fillMaxHeight(),
+            onClick = {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+                onCustomizeClick()
+            }
+        ) {
+            Icon(
+                modifier = Modifier
+                    .background(
+                        color = if (isPromptVisible) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent,
+                        shape = CircleShape,
+                    )
+                    .padding(6.dp),
+                imageVector = Icons.Default.Settings,
+                contentDescription = null,
+                tint = if (isPromptVisible) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+            )
+        }
+
+        // Generate button
+        Button(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .fillMaxHeight(),
+            enabled = isGenerateButtonEnabled,
+            onClick = {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
+                onGenerateClick()
+            }
+        ) {
+            Text(
+                text = stringResource(Res.string.title_story_generate_btn),
+            )
+
+            Icon(
+                imageVector = AppIcons.Magic,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(16.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun StoryTopicDropdown(
     modifier: Modifier = Modifier,
     topics: List<StoryTopicUiModel>,
     selectedTopic: StoryTopicUiModel?,
@@ -34,45 +109,35 @@ internal fun StoryTopicChooser(
     val topic = selectedTopic ?: topics.firstOrNull()
     val topicText = topic?.let { stringResource(it.nameResource) } ?: ""
 
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = MaterialTheme.shapes.small
-                )
-                .clip(MaterialTheme.shapes.small)
-                .clickable { expanded = true }
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+    val hapticFeedback = LocalHapticFeedback.current
+
+    Box(modifier = modifier) {
+        AssistChip(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(12.dp),
+            onClick = { expanded = true },
+            label = {
                 Text(
                     text = topicText,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.weight(1f)
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
+            },
+            trailingIcon = {
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ArrowDropUp else Icons.Filled.ArrowDropDown,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurface
                 )
-            }
-        }
+            },
+        )
 
         // Dropdown menu
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
         ) {
             topics.forEach { topic ->
                 DropdownMenuItem(
@@ -83,6 +148,7 @@ internal fun StoryTopicChooser(
                         )
                     },
                     onClick = {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                         onTopicSelected(topic)
                         expanded = false
                     }
@@ -90,4 +156,68 @@ internal fun StoryTopicChooser(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun StoryTopicDropdownPreview() {
+    Box(
+        modifier = Modifier
+            .size(width = 200.dp, height = 200.dp)
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp)
+    ) {
+        StoryTopicDropdown(
+            modifier = Modifier.height(100.dp),
+            topics = previewTopics,
+            selectedTopic = previewTopics.firstOrNull(),
+            onTopicSelected = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun GenerateStoryHeaderPreview() {
+    Box(
+        modifier = Modifier
+            .size(width = 400.dp, height = 200.dp)
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp)
+    ) {
+        GenerateStoryHeader(
+            topics = previewTopics,
+            selectedTopic = previewTopics.firstOrNull(),
+            isPromptVisible = false,
+            isGenerateButtonEnabled = true,
+            onTopicSelected = {},
+            onCustomizeClick = {},
+            onGenerateClick = {},
+        )
+    }
+}
+
+private val previewTopics by lazy {
+    listOf(
+        StoryTopicUiModel(
+            storyTopic = StoryTopic.Family,
+            nameResource = Res.string.title_story_topic_daily_routine,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopic.Family,
+            nameResource = Res.string.title_story_topic_store_dialog,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopic.Family,
+            nameResource = Res.string.title_story_topic_meeting_new_friend,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopic.Family,
+            nameResource = Res.string.title_story_topic_family,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopic.Family,
+            nameResource = Res.string.title_story_topic_my_room,
+        ),
+    )
 }

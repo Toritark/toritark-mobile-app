@@ -20,7 +20,6 @@ koin = "4.0.4"
 ktor = "3.1.3"
 settings = "1.3.0"
 coil = "3.1.0"
-compottie = "2.0.0-rc04"
 
 androidx-activity-compose = "1.10.1"
 
@@ -90,8 +89,6 @@ firebase-android-bom = { module = "com.google.firebase:firebase-bom", version.re
 firebase-android-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-android-messaging = { module = "com.google.firebase:firebase-messaging" }
 firebase-android-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
-
-compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

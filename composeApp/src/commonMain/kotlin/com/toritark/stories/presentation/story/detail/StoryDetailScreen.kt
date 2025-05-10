@@ -1,39 +1,29 @@
 package com.toritark.stories.presentation.story.detail
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.StoryApiModel
-import com.toritark.stories.presentation.core_ui.icon.AppIcons
-import com.toritark.stories.presentation.core_ui.icon.Customize
-import com.toritark.stories.presentation.core_ui.icon.MagicWand
+import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.screen.ScreenState
-import com.toritark.stories.presentation.story.detail.component.StoryPrompt
-import com.toritark.stories.presentation.story.detail.component.StoryText
-import com.toritark.stories.presentation.story.detail.component.StoryTopicChooser
-import io.github.alexzhirkevich.compottie.Compottie
-import io.github.alexzhirkevich.compottie.LottieCompositionSpec
-import io.github.alexzhirkevich.compottie.rememberLottieComposition
-import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import org.jetbrains.compose.resources.stringResource
+import com.toritark.stories.presentation.story.detail.component.*
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import toritark.composeapp.generated.resources.Res
-import toritark.composeapp.generated.resources.title_story_generate_btn
 
 @Composable
 internal fun StoryDetailScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     viewModel: StoryDetailViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
 
     val screenState by viewModel.screenState.collectAsState()
 
@@ -61,32 +51,19 @@ internal fun StoryDetailScreen(
         state = lazyListState
     ) {
         item {
-            Row(
+            // Generate story header
+            GenerateStoryHeader(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Topic chooser
-                StoryTopicChooser(
-                    modifier = Modifier
-                        .weight(1f),
-                    topics = storyTopics,
-                    selectedTopic = selectedStoryTopic,
-                    onTopicSelected = viewModel::onStoryTopicSelected,
-                )
-
-                // Customize topic prompt
-                IconButton(
-                    onClick = { viewModel.togglePromptVisibility() }
-                ) {
-                    Icon(
-                        imageVector = AppIcons.Customize,
-                        contentDescription = null,
-                        tint = if (isPromptVisible) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
+                topics = storyTopics,
+                selectedTopic = selectedStoryTopic,
+                isPromptVisible = isPromptVisible,
+                isGenerateButtonEnabled = isGenerateButtonEnabled,
+                onTopicSelected = viewModel::onStoryTopicSelected,
+                onCustomizeClick = viewModel::togglePromptVisibility,
+                onGenerateClick = viewModel::onGenerateStoryClick,
+            )
         }
 
         item {
@@ -101,31 +78,6 @@ internal fun StoryDetailScreen(
             )
         }
 
-        item {
-            // Generate button
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                onClick = { viewModel.onGenerateStoryClick() },
-                enabled = isGenerateButtonEnabled && screenState != ScreenState.Loading,
-            ) {
-                Text(
-                    text = stringResource(Res.string.title_story_generate_btn),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-
-                Icon(
-                    imageVector = AppIcons.MagicWand,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(start = 16.dp)
-                        .size(16.dp)
-                )
-            }
-        }
-
         // Story state
         when (screenState) {
             ScreenState.Content -> {
@@ -135,6 +87,8 @@ internal fun StoryDetailScreen(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             story = it,
+                            onStoryClick = viewModel::onStoryClick,
+                            onStoryQuizClick = viewModel::onStoryQuestionsClick,
                         )
                     }
                 }
@@ -143,7 +97,13 @@ internal fun StoryDetailScreen(
             is ScreenState.Error -> {}
             ScreenState.Loading -> {
                 item {
-                    StoryLoading()
+                    FadeInAnimation {
+                        StoryCreationProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 32.dp),
+                        )
+                    }
                 }
             }
         }
@@ -154,29 +114,50 @@ internal fun StoryDetailScreen(
 private fun StoryContent(
     modifier: Modifier = Modifier,
     story: StoryApiModel,
+    onStoryClick: () -> Unit,
+    onStoryQuizClick: () -> Unit,
 ) {
-    StoryText(
+    Column(
         modifier = modifier
-            .padding(top = 16.dp),
-        learningLanguageText = story.learningLanguageText,
-        nativeLanguageText = story.nativeLanguageText,
-    )
-}
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+    ) {
+        StoryPreviewCard(
+            modifier = modifier
+                .padding(top = 16.dp),
+            story = story,
+            onClick = onStoryClick,
+        )
 
-@Composable
-private fun StoryLoading() {
-    val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(
-            Res.readBytes("files/lottie/magic.json").decodeToString()
+        StoryQuizPreviewCard(
+            modifier = modifier
+                .padding(top = 16.dp),
+            story = story,
+            onClick = onStoryQuizClick,
         )
     }
+}
 
-    Image(
-        modifier = Modifier.fillMaxWidth(),
-        painter = rememberLottiePainter(
-            composition = composition,
-            iterations = Compottie.IterateForever,
+@Preview
+@Composable
+private fun StoryContentPreview() {
+    val story = StoryApiModel(
+        learningLanguageText = listOf(
+            "Hello, my name is Toritark.",
+            "I am a developer, writing code in Kotlin and Python.",
+            "I like to code.",
+            "I am coding in Kotlin.",
+            "I am learning Jetpack Compose. This is a long, multi-line sentence",
+            "One more sentence",
         ),
-        contentDescription = null,
+        nativeLanguageText = emptyList(),
+        questions = emptyList(),
+    )
+
+    StoryContent(
+        modifier = Modifier.fillMaxWidth(),
+        story = story,
+        onStoryClick = {},
+        onStoryQuizClick = {},
     )
 }

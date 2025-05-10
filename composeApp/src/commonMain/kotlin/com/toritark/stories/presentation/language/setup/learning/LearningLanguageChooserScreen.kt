@@ -11,11 +11,11 @@ import toritark.composeapp.generated.resources.title_choose_learning_language_sc
 
 @Composable
 internal fun LearningLanguageChooserScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     onPopBackStack: OnPopBackStack,
     viewModel: LearningLanguageChooserViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
     viewModel.onPopBackStack = onPopBackStack
 
     BaseLanguageChooserScreen(

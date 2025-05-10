@@ -1,6 +1,5 @@
 package com.toritark.stories.presentation.story.detail.component
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import org.jetbrains.compose.resources.stringResource
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.hint_story_customize_prompt
@@ -22,7 +22,9 @@ internal fun StoryPrompt(
     isExpanded: Boolean = false,
     onPromptChange: (String) -> Unit = {},
 ) {
-    AnimatedVisibility(visible = isExpanded) {
+    FadeAndExpandVerticallyAnimation(
+        visible = isExpanded,
+    ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()

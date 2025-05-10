@@ -18,10 +18,10 @@ import toritark.composeapp.generated.resources.title_main_screen_topbar
 
 @Composable
 internal fun MainScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     viewModel: MainViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
 
     Scaffold(
         topBar = {
@@ -50,7 +50,7 @@ internal fun MainScreen(
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            StoryDetailScreen(onNavigate = onNavigate)
+            StoryDetailScreen(onNavigateTo = onNavigateTo)
         }
     }
 }

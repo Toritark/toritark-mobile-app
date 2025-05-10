@@ -34,10 +34,10 @@ internal fun AppNavigation(
         navController = navController,
         startDestination = SplashScreenDestination,
     ) {
-        splashScreen(onNavigate = defaultOnNavigateTo)
-        languagesScreens(onNavigate = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
-        onboardingScreens(onNavigate = defaultOnNavigateTo)
-        storiesScreens(onNavigate = defaultOnNavigateTo)
-        mainScreen(onNavigate = defaultOnNavigateTo)
+        splashScreen(onNavigateTo = defaultOnNavigateTo)
+        languagesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
+        onboardingScreens(onNavigateTo = defaultOnNavigateTo)
+        storiesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
+        mainScreen(onNavigateTo = defaultOnNavigateTo)
     }
 }

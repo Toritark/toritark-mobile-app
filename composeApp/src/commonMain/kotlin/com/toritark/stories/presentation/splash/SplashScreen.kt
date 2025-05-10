@@ -17,10 +17,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 @Preview
 internal fun SplashScreen(
-    onNavigate: OnNavigateTo,
+    onNavigateTo: OnNavigateTo,
     viewModel: SplashViewModel = koinViewModel(),
 ) {
-    viewModel.onNavigate = onNavigate
+    viewModel.onNavigateTo = onNavigateTo
 
     Box(
         modifier = Modifier
