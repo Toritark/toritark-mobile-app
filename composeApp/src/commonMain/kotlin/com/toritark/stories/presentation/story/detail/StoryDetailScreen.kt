@@ -15,6 +15,10 @@ import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.screen.ScreenState
 import com.toritark.stories.presentation.story.detail.component.*
+import com.toritark.stories.presentation.story.detail.component.generate.GenerateStoryHeader
+import com.toritark.stories.presentation.story.detail.component.generate.StoryPrompt
+import com.toritark.stories.presentation.story.detail.component.preview.StoryPreviewCard
+import com.toritark.stories.presentation.story.detail.component.preview.StoryQuizPreviewCard
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 

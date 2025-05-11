@@ -7,6 +7,7 @@ import com.toritark.stories.di.name.HttpClientNames
 import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.domain.story.interactor.StoriesInteractorImpl
 import com.toritark.stories.presentation.story.detail.StoryDetailViewModel
+import com.toritark.stories.presentation.story.quiz.StoryQuizViewModel
 import com.toritark.stories.presentation.story.text.StoryTextViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -41,6 +42,14 @@ val storyModule = module {
 
     viewModel {
         StoryTextViewModel(
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
+        )
+    }
+
+    viewModel {
+        StoryQuizViewModel(
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

@@ -173,7 +173,7 @@ internal class StoryDetailViewModel(
 
         onNavigateTo(
             StoryNavDestination.Text(
-                story = story
+                story = story,
             )
         ) {}
     }
@@ -181,7 +181,13 @@ internal class StoryDetailViewModel(
     fun onStoryQuestionsClick() {
         logger.d { "onStoryQuestionsClick" }
 
-        // TODO
+        val story = story.value ?: return
+
+        onNavigateTo(
+            StoryNavDestination.Quiz(
+                story = story,
+            )
+        ) {}
     }
 
     private companion object {

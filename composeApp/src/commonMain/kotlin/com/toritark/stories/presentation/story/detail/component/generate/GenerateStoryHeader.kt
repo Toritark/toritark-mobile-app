@@ -1,4 +1,4 @@
-package com.toritark.stories.presentation.story.detail.component
+package com.toritark.stories.presentation.story.detail.component.generate
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

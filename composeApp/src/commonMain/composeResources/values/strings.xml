@@ -60,4 +60,10 @@
     <string name="title_story_creation_progress_4">Adding magic...</string>
 
     <string name="title_story_text_screen">Your personal story ✨</string>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Check yourself ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Next question</string>
+    <string name="title_story_quiz_question_finish_btn">Finish</string>
 </resources>
