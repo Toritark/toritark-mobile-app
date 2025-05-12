@@ -1,10 +1,13 @@
 package com.toritark.stories.presentation.story.detail
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,6 +22,7 @@ import com.toritark.stories.presentation.story.detail.component.generate.Generat
 import com.toritark.stories.presentation.story.detail.component.generate.StoryPrompt
 import com.toritark.stories.presentation.story.detail.component.preview.StoryPreviewCard
 import com.toritark.stories.presentation.story.detail.component.preview.StoryQuizPreviewCard
+import com.toritark.stories.presentation.story.retelling.StoryRetellingSection
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -93,6 +97,7 @@ internal fun StoryDetailScreen(
                             story = it,
                             onStoryClick = viewModel::onStoryClick,
                             onStoryQuizClick = viewModel::onStoryQuestionsClick,
+                            lazyListState = lazyListState,
                         )
                     }
                 }
@@ -120,24 +125,35 @@ private fun StoryContent(
     story: StoryApiModel,
     onStoryClick: () -> Unit,
     onStoryQuizClick: () -> Unit,
+    lazyListState: LazyListState? = null,
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
         StoryPreviewCard(
-            modifier = modifier
-                .padding(top = 16.dp),
+            modifier = modifier,
             story = story,
             onClick = onStoryClick,
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         StoryQuizPreviewCard(
-            modifier = modifier
-                .padding(top = 16.dp),
+            modifier = modifier,
             story = story,
             onClick = onStoryQuizClick,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        StoryRetellingSection(
+            modifier = modifier,
+            story = story,
+            lazyListState = lazyListState,
         )
     }
 }

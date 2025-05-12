@@ -66,4 +66,8 @@
 
     <string name="title_story_quiz_question_next_btn">Next question</string>
     <string name="title_story_quiz_question_finish_btn">Finish</string>
+
+    <string name="title_story_retelling_card">Retell the story</string>
+    <string name="desc_story_retelling_card">Retell the story, and our AI will check and rate it</string>
+    <string name="title_story_retelling_check_btn">Check the retelling</string>
 </resources>
