@@ -66,7 +66,7 @@ private fun StoryRetellingContent(
                 color = MaterialTheme.colorScheme.secondary,
                 shape = RoundedCornerShape(24.dp)
             )
-            .padding(16.dp),
+            .padding(horizontal = 8.dp, vertical = 24.dp),
     ) {
         Column(
             modifier = Modifier
@@ -108,11 +108,18 @@ private fun StoryRetellingContent(
                         onTextInputChange(newText)
                     }
                 },
-                enabled = !isLoading,
+                readOnly = isLoading,
                 minLines = 2,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences
-                )
+                ),
+                placeholder = {
+                    Text(
+                        text = stringResource(Res.string.desc_story_retelling_card),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -162,13 +169,13 @@ private fun CardHeader() {
         )
     }
 
-    Spacer(modifier = Modifier.height(12.dp))
-
-    Text(
-        text = stringResource(Res.string.desc_story_retelling_card),
-        style = MaterialTheme.typography.bodyLarge,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
+//    Spacer(modifier = Modifier.height(12.dp))
+//
+//    Text(
+//        text = stringResource(Res.string.desc_story_retelling_card),
+//        style = MaterialTheme.typography.bodyLarge,
+//        color = MaterialTheme.colorScheme.onSurfaceVariant,
+//    )
 }
 
 @Preview

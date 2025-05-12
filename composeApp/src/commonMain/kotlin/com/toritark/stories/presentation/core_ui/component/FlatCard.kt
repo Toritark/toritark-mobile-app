@@ -47,7 +47,7 @@ fun FlatCard(
                 hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick()
             }
-            .padding(horizontal = 16.dp, vertical = 24.dp),
+            .padding(horizontal = 8.dp, vertical = 24.dp),
     ) {
         content()
 
