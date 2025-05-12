@@ -127,8 +127,6 @@ private fun StoryRetellingContent(
                 }
 
                 is StoryRetellingScreenContent.ReviewResult.Ready -> {
-                    Spacer(modifier = Modifier.height(32.dp))
-
                     FadeInAnimation {
                         StoryRetellingReviewSummary(
                             modifier = Modifier.fillMaxWidth(),

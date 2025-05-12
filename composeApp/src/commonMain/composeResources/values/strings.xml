@@ -87,4 +87,6 @@
     <string name="title_retelling_review_score_spelling">Spelling</string>
     <string name="title_retelling_review_score_punctuation">Punctuation</string>
 
+    <string name="title_retelling_review_detail_screen">Your retelling review ✨</string>
+
 </resources>

@@ -31,7 +31,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
-import toritark.composeapp.generated.resources.title_story_text_screen
+import toritark.composeapp.generated.resources.title_retelling_review_detail_screen
 
 @Composable
 internal fun StoryRetellingDetailScreen(
@@ -66,7 +66,7 @@ private fun StoryRetellingDetailScreenContent(
                     titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 ),
                 title = {
-                    Text(stringResource(Res.string.title_story_text_screen))
+                    Text(stringResource(Res.string.title_retelling_review_detail_screen))
                 },
                 navigationIcon = {
                     IconButton(onClick = onCloseClick) {
