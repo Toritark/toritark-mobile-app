@@ -2,8 +2,6 @@ package com.toritark.stories.presentation.language.setup.base.language
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.toritark.stories.presentation.language.base.LanguageChooser
 import com.toritark.stories.presentation.language.setup.base.BaseLanguageSetupScreen
@@ -20,14 +18,12 @@ internal fun BaseLanguageChooserScreen(
         titleStringResource = titleStringResource,
         nextButtonStringResource = nextButtonStringResource,
         viewModel = viewModel,
-    ) {
-        val languages by viewModel.languages.collectAsState()
-        val preSelectedLanguage by viewModel.preSelectedLanguage.collectAsState()
+    ) { contentValue ->
 
         LanguageChooser(
             modifier = Modifier.fillMaxSize(),
-            languages = languages,
-            selectedLanguage = preSelectedLanguage,
+            languages = contentValue.languages,
+            selectedLanguage = contentValue.preSelectedLanguage,
             onSelectLanguage = viewModel::onLanguageSelected,
         )
     }

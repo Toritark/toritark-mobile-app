@@ -7,12 +7,11 @@ import com.toritark.stories.data.story.model.story_request.StoryRequestApiModel
 import com.toritark.stories.data.story.model.topic.StoryTopic
 import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
+import com.toritark.stories.presentation.story.detail.model.StoryDetailScreenContent
 import com.toritark.stories.presentation.story.model.StoryTopicUiModel
 import com.toritark.stories.presentation.story.nav.StoryNavDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import toritark.composeapp.generated.resources.*
@@ -22,30 +21,13 @@ internal class StoryDetailViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel(
+) : BaseViewModel<StoryDetailScreenContent>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
+    defaultContentValue = StoryDetailScreenContent(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
-
-    private val _storyTopics = MutableStateFlow<List<StoryTopicUiModel>>(emptyList())
-    val storyTopics = _storyTopics.asStateFlow()
-
-    private val _selectedStoryTopic = MutableStateFlow<StoryTopicUiModel?>(null)
-    val selectedStoryTopic = _selectedStoryTopic.asStateFlow()
-
-    private val _prompt = MutableStateFlow("")
-    val prompt = _prompt.asStateFlow()
-
-    private val _isPromptVisible = MutableStateFlow(false)
-    val isPromptVisible = _isPromptVisible.asStateFlow()
-
-    private val _isGenerateButtonEnabled = MutableStateFlow(false)
-    val isGenerateButtonEnabled = _isGenerateButtonEnabled.asStateFlow()
-
-    private val _story = MutableStateFlow<StoryApiModel?>(null)
-    val story = _story.asStateFlow()
 
     init {
         initialize()
@@ -56,47 +38,61 @@ internal class StoryDetailViewModel(
     }
 
     private fun initializeStoryTopics() {
-        _storyTopics.value = defaultStoryTopics
-        _selectedStoryTopic.value = defaultStoryTopics.first()
-        onPromptChange(selectedStoryTopic.value?.storyTopic?.prompt ?: "")
+        updateAndShowContent {
+            copy(
+                topics = defaultStoryTopics,
+                selectedTopic = defaultStoryTopics.first(),
+            )
+        }
+        onPromptChange(contentValue.selectedTopic?.storyTopic?.prompt ?: "")
     }
 
     fun onStoryTopicSelected(storyTopic: StoryTopicUiModel) {
         logger.d { "onStoryTopicSelected: storyTopic=${storyTopic.storyTopic}" }
 
-        val previousStoryTopic = _selectedStoryTopic.value
+        val previousStoryTopic = contentValue.selectedTopic
 
-        _selectedStoryTopic.value = storyTopic
         onPromptChange(storyTopic.storyTopic.prompt)
 
-        if (storyTopic.storyTopic is StoryTopic.Custom) {
-            _isPromptVisible.value = true
-        } else {
-            if (_isPromptVisible.value && previousStoryTopic?.storyTopic is StoryTopic.Custom) {
-                _isPromptVisible.value = false
-            }
+        updateAndShowContent {
+            copy(
+                selectedTopic = storyTopic,
+                isPromptInputVisible = when {
+                    storyTopic.storyTopic is StoryTopic.Custom -> true
+                    contentValue.isPromptInputVisible && previousStoryTopic?.storyTopic is StoryTopic.Custom -> false
+                    else -> contentValue.isPromptInputVisible
+                }
+            )
         }
     }
 
     fun onPromptChange(prompt: String) {
         logger.d { "onPromptChange: newPrompt=$prompt" }
 
-        _prompt.value = prompt
-        _isGenerateButtonEnabled.value = prompt.isNotBlank()
+        updateAndShowContent {
+            copy(
+                promptText = prompt,
+                isGenerateButtonEnabled = prompt.isNotBlank(),
+            )
+        }
     }
 
     fun togglePromptVisibility() {
-        logger.d { "togglePromptVisibility: current=${_isPromptVisible.value}" }
+        logger.d { "togglePromptVisibility: current=${contentValue.isPromptInputVisible}" }
 
-        _isPromptVisible.value = !_isPromptVisible.value
+        updateAndShowContent {
+            copy(isPromptInputVisible = !isPromptInputVisible)
+        }
     }
 
     fun onGenerateStoryClick() {
         logger.d { "onGenerateStoryClick" }
 
-        val prompt = prompt.value.takeIf { it.isNotBlank() } ?: return
+        val prompt = contentValue.promptText.takeIf { it.isNotBlank() } ?: return
 
-        setLoadingScreenState()
+        updateAndShowContent {
+            copy(storyState = StoryDetailScreenContent.StoryState.Creating)
+        }
 
         viewModelScope.launch {
             storiesInteractor
@@ -155,7 +151,14 @@ internal class StoryDetailViewModel(
     private fun onStoryGenerated(storyRequest: StoryRequestApiModel) {
         logger.d { "onStoryGenerated: storyRequest=$storyRequest" }
 
-        _story.value = storyRequest.story
+        updateAndShowContent {
+            copy(
+                storyState = when (storyRequest.story) {
+                    null -> StoryDetailScreenContent.StoryState.Empty
+                    else -> StoryDetailScreenContent.StoryState.Created(storyRequest.story)
+                },
+            )
+        }
 
         setContentScreenState()
     }
@@ -169,7 +172,7 @@ internal class StoryDetailViewModel(
     fun onStoryClick() {
         logger.d { "onStoryClick" }
 
-        val story = story.value ?: return
+        val story = story ?: return
 
         onNavigateTo(
             StoryNavDestination.Text(
@@ -181,7 +184,7 @@ internal class StoryDetailViewModel(
     fun onStoryQuestionsClick() {
         logger.d { "onStoryQuestionsClick" }
 
-        val story = story.value ?: return
+        val story = story ?: return
 
         onNavigateTo(
             StoryNavDestination.Quiz(
@@ -189,6 +192,14 @@ internal class StoryDetailViewModel(
             )
         ) {}
     }
+
+    private val story: StoryApiModel?
+        get() {
+            return when (val storyState = contentValue.storyState) {
+                is StoryDetailScreenContent.StoryState.Created -> storyState.story
+                else -> null
+            }
+        }
 
     private companion object {
         private const val LOG_TAG = "StoryDetailViewModel"

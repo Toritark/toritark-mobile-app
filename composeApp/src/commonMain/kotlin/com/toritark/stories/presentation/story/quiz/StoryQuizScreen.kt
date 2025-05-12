@@ -10,13 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.toritark.stories.data.story.model.story.StoryApiModel
 import com.toritark.stories.data.story.model.story.StoryQuestionAnswerApiModel
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
+import com.toritark.stories.presentation.core_ui.screen.BaseScreen
 import com.toritark.stories.presentation.story.quiz.component.StoryQuiz
 import com.toritark.stories.presentation.story.quiz.model.QuizState
 import org.jetbrains.compose.resources.stringResource
@@ -35,15 +34,15 @@ internal fun StoryQuizScreen(
     viewModel.onPopBackStack = onPopBackStack
     viewModel.onNavigateTo = onNavigateTo
 
-    val quizState by viewModel.quizState.collectAsState()
-
-    quizState?.let { state ->
-        StoryQuizScreenContent(
-            quizState = state,
-            onCloseClick = viewModel::onCloseClick,
-            onAnswerSelected = viewModel::onAnswerSelected,
-            onNextClick = viewModel::onNextClick,
-        )
+    BaseScreen(viewModel) { contentValue ->
+        contentValue.quizState?.let { quizState ->
+            StoryQuizScreenContent(
+                quizState = quizState,
+                onCloseClick = viewModel::onCloseClick,
+                onAnswerSelected = viewModel::onAnswerSelected,
+                onNextClick = viewModel::onNextClick,
+            )
+        }
     }
 }
 

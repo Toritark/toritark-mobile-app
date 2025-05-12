@@ -4,9 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.toritark.stories.data.language.model.Language
 import com.toritark.stories.data.language.repository.LanguagesRepository
 import com.toritark.stories.presentation.language.setup.base.BaseLanguageSetupViewModel
+import com.toritark.stories.presentation.language.setup.base.language.model.LanguageChooserScreenContent
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 internal abstract class BaseLanguageChooserViewModel(
@@ -14,18 +13,12 @@ internal abstract class BaseLanguageChooserViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseLanguageSetupViewModel(
+) : BaseLanguageSetupViewModel<LanguageChooserScreenContent>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
+    defaultContentValue = LanguageChooserScreenContent(),
 ) {
-
-    private val _languages = MutableStateFlow<List<Language>>(emptyList())
-    val languages = _languages.asStateFlow()
-
-    protected val _preSelectedLanguage = MutableStateFlow<Language?>(null)
-    val preSelectedLanguage = _preSelectedLanguage.asStateFlow()
-
     protected var selectedLanguage: Language? = null
 
     override fun initialize() {
@@ -35,7 +28,9 @@ internal abstract class BaseLanguageChooserViewModel(
             languagesRepository.getLanguages().collect {
                 logger.d { "initialize: languages=${it.size}" }
 
-                _languages.value = it
+                updateAndShowContent {
+                    copy(languages = it)
+                }
 
                 setContentScreenState()
             }
@@ -46,7 +41,10 @@ internal abstract class BaseLanguageChooserViewModel(
         logger.d { "onLanguageSelected: language=$language" }
 
         selectedLanguage = language
-        _isNextButtonEnabled.value = true
+
+        updateAndShowContent {
+            copy(isNextButtonEnabled = true)
+        }
     }
 
     override fun onNextButtonClick() {

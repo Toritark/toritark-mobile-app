@@ -1,27 +1,24 @@
 package com.toritark.stories.presentation.story.detail
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.StoryApiModel
-import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
-import com.toritark.stories.presentation.core_ui.screen.ScreenState
-import com.toritark.stories.presentation.story.detail.component.*
+import com.toritark.stories.presentation.core_ui.screen.BaseScreen
+import com.toritark.stories.presentation.story.detail.component.StoryCreationProgressIndicator
 import com.toritark.stories.presentation.story.detail.component.generate.GenerateStoryHeader
 import com.toritark.stories.presentation.story.detail.component.generate.StoryPrompt
 import com.toritark.stories.presentation.story.detail.component.preview.StoryPreviewCard
 import com.toritark.stories.presentation.story.detail.component.preview.StoryQuizPreviewCard
+import com.toritark.stories.presentation.story.detail.model.StoryDetailScreenContent
 import com.toritark.stories.presentation.story.retelling.StoryRetellingSection
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -32,16 +29,6 @@ internal fun StoryDetailScreen(
     viewModel: StoryDetailViewModel = koinViewModel(),
 ) {
     viewModel.onNavigateTo = onNavigateTo
-
-    val screenState by viewModel.screenState.collectAsState()
-
-    val storyTopics by viewModel.storyTopics.collectAsState()
-    val selectedStoryTopic by viewModel.selectedStoryTopic.collectAsState()
-    val prompt by viewModel.prompt.collectAsState()
-    val isPromptVisible by viewModel.isPromptVisible.collectAsState()
-    val isGenerateButtonEnabled by viewModel.isGenerateButtonEnabled.collectAsState()
-
-    val story by viewModel.story.collectAsState()
 
     val lazyListState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -54,59 +41,59 @@ internal fun StoryDetailScreen(
             }
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = lazyListState
-    ) {
-        item {
-            // Generate story header
-            GenerateStoryHeader(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                topics = storyTopics,
-                selectedTopic = selectedStoryTopic,
-                isPromptVisible = isPromptVisible,
-                isGenerateButtonEnabled = isGenerateButtonEnabled,
-                onTopicSelected = viewModel::onStoryTopicSelected,
-                onCustomizeClick = viewModel::togglePromptVisibility,
-                onGenerateClick = viewModel::onGenerateStoryClick,
-            )
-        }
+    BaseScreen(
+        viewModel = viewModel,
+    ) { contentValue ->
 
-        item {
-            // Prompt input
-            StoryPrompt(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                prompt = prompt,
-                isExpanded = isPromptVisible,
-                onPromptChange = viewModel::onPromptChange,
-            )
-        }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = lazyListState
+        ) {
+            item {
+                // Generate story header
+                GenerateStoryHeader(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                    topics = contentValue.topics,
+                    selectedTopic = contentValue.selectedTopic,
+                    isPromptVisible = contentValue.isPromptInputVisible,
+                    isGenerateButtonEnabled = contentValue.isGenerateButtonEnabled,
+                    onTopicSelected = viewModel::onStoryTopicSelected,
+                    onCustomizeClick = viewModel::togglePromptVisibility,
+                    onGenerateClick = viewModel::onGenerateStoryClick,
+                )
+            }
 
-        // Story state
-        when (screenState) {
-            ScreenState.Content -> {
-                story?.let {
+            item {
+                // Prompt input
+                StoryPrompt(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                    prompt = contentValue.promptText,
+                    isExpanded = contentValue.isPromptInputVisible,
+                    onPromptChange = viewModel::onPromptChange,
+                )
+            }
+
+            // Story state
+            when (val storyState = contentValue.storyState) {
+                is StoryDetailScreenContent.StoryState.Created -> {
                     item {
                         StoryContent(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            story = it,
+                            story = storyState.story,
                             onStoryClick = viewModel::onStoryClick,
                             onStoryQuizClick = viewModel::onStoryQuestionsClick,
                             lazyListState = lazyListState,
                         )
                     }
                 }
-            }
 
-            is ScreenState.Error -> {}
-            ScreenState.Loading -> {
-                item {
-                    FadeInAnimation {
+                StoryDetailScreenContent.StoryState.Creating -> {
+                    item {
                         StoryCreationProgressIndicator(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -114,6 +101,8 @@ internal fun StoryDetailScreen(
                         )
                     }
                 }
+
+                StoryDetailScreenContent.StoryState.Empty -> {}
             }
         }
     }

@@ -1,22 +1,20 @@
 package com.toritark.stories.presentation.language.setup.base
 
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
+import com.toritark.stories.presentation.language.setup.base.model.BaseLanguageSetupScreenContent
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
-internal abstract class BaseLanguageSetupViewModel(
+internal abstract class BaseLanguageSetupViewModel<C : BaseLanguageSetupScreenContent>(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel(
+    defaultContentValue: C,
+) : BaseViewModel<C>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
+    defaultContentValue = defaultContentValue,
 ) {
-
-    protected val _isNextButtonEnabled = MutableStateFlow(false)
-    val isNextButtonEnabled = _isNextButtonEnabled.asStateFlow()
 
     abstract fun initialize()
     abstract fun onNextButtonClick()

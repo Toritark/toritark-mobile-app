@@ -8,10 +8,11 @@ internal class MainViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel(
+) : BaseViewModel<Unit>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
+    defaultContentValue = Unit,
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 

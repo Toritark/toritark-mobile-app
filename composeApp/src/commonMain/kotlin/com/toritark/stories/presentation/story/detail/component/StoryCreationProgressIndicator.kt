@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -39,33 +40,35 @@ internal fun StoryCreationProgressIndicator(
         }
     }
 
-    Column(
-        modifier = modifier,
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .size(64.dp)
-                .align(Alignment.CenterHorizontally),
-        )
-
-        Spacer(modifier = Modifier.size(16.dp))
-
-        AnimatedContent(
-            targetState = step,
-            transitionSpec = {
-                fadeIn(animationSpec = tween(durationMillis = 500)) togetherWith
-                        fadeOut(animationSpec = tween(durationMillis = 500))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-        ) { currentStepIndex ->
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringResource(steps[currentStepIndex]),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
+    FadeInAnimation {
+        Column(
+            modifier = modifier,
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(64.dp)
+                    .align(Alignment.CenterHorizontally),
             )
+
+            Spacer(modifier = Modifier.size(16.dp))
+
+            AnimatedContent(
+                targetState = step,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(durationMillis = 500)) togetherWith
+                            fadeOut(animationSpec = tween(durationMillis = 500))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) { currentStepIndex ->
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = stringResource(steps[currentStepIndex]),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
     }
 }

@@ -13,9 +13,9 @@ import kotlinx.coroutines.delay
 private const val ERROR_MESSAGE_DELAY_MS = 1000L * 5
 
 @Composable
-fun <T : BaseViewModel> BaseScreen(
+fun <C, T : BaseViewModel<C>> BaseScreen(
     viewModel: T,
-    content: @Composable () -> Unit,
+    content: @Composable (contentValue: C) -> Unit,
 ) {
     val screenState by viewModel.screenState.collectAsState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
@@ -38,13 +38,14 @@ fun <T : BaseViewModel> BaseScreen(
                 )
             }
 
-            ScreenState.Content -> {
-                content()
+            is ScreenState.Content<*> -> {
+                @Suppress("UNCHECKED_CAST")
+                content(state.value as C)
             }
 
             is ScreenState.Error -> {
                 ErrorScreen(
-                    message = state.message,
+                    message = state.getMessage(),
                     onRetryClick = viewModel::onRetryClick
                 )
             }

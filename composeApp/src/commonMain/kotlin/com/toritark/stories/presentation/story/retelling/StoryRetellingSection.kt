@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.StoryApiModel
 import com.toritark.stories.presentation.core_ui.icon.AppIcons
 import com.toritark.stories.presentation.core_ui.icon.MagicChange
-import com.toritark.stories.presentation.core_ui.screen.ScreenState
+import com.toritark.stories.presentation.core_ui.screen.BaseScreen
+import com.toritark.stories.presentation.story.retelling.model.StoryRetellingScreenContent
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -36,29 +37,23 @@ internal fun StoryRetellingSection(
     story: StoryApiModel,
     lazyListState: LazyListState? = null,
 ) {
-    viewModel.story = story
+    viewModel.setStory(story)
 
-    val text by viewModel.retellingText.collectAsState()
-    val isSubmitButtonEnabled by viewModel.isSubmitButtonEnabled.collectAsState()
-    val screenState by viewModel.screenState.collectAsState()
-
-    StoryRetellingContent(
-        modifier = modifier,
-        screenState = screenState,
-        text = text,
-        isSubmitButtonEnabled = isSubmitButtonEnabled,
-        onTextInputChange = viewModel::onTextChange,
-        onSubmitClick = viewModel::onSubmitButtonClick,
-        lazyListState = lazyListState,
-    )
+    BaseScreen(viewModel) { contentValue ->
+        StoryRetellingContent(
+            modifier = modifier,
+            screenContent = contentValue,
+            onTextInputChange = viewModel::onTextChange,
+            onSubmitClick = viewModel::onSubmitButtonClick,
+            lazyListState = lazyListState,
+        )
+    }
 }
 
 @Composable
 private fun StoryRetellingContent(
     modifier: Modifier = Modifier,
-    screenState: ScreenState,
-    text: String,
-    isSubmitButtonEnabled: Boolean,
+    screenContent: StoryRetellingScreenContent,
     onTextInputChange: (text: String) -> Unit,
     onSubmitClick: () -> Unit,
     lazyListState: LazyListState? = null,
@@ -78,16 +73,18 @@ private fun StoryRetellingContent(
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp),
         ) {
-            var inputText by remember { mutableStateOf(text) }
+            var inputText by remember { mutableStateOf(screenContent.retellingText) }
             var isFocused by remember { mutableStateOf(false) }
             val focusRequester = remember { FocusRequester() }
+
+            val isLoading = screenContent.checkResult is StoryRetellingScreenContent.CheckResult.Checking
 
             CardHeader()
 
             Spacer(modifier = Modifier.height(16.dp))
 
             LaunchedEffect(isFocused, inputText) {
-                if (lazyListState != null && (isFocused || inputText != text)) {
+                if (lazyListState != null && (isFocused || inputText != screenContent.retellingText)) {
                     // Scroll to ensure the text field and button are visible
                     // Using a higher index with additional offset to ensure both text field and button are visible
                     lazyListState.animateScrollToItem(
@@ -107,11 +104,11 @@ private fun StoryRetellingContent(
                 value = inputText,
                 onValueChange = { newText ->
                     inputText = newText
-                    if (newText != text) {
+                    if (newText != screenContent.retellingText) {
                         onTextInputChange(newText)
                     }
                 },
-                enabled = screenState !is ScreenState.Loading,
+                enabled = !isLoading,
                 minLines = 2,
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences
@@ -124,7 +121,7 @@ private fun StoryRetellingContent(
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = onSubmitClick,
-                enabled = isSubmitButtonEnabled && screenState !is ScreenState.Loading,
+                enabled = screenContent.isSubmitButtonEnabled && !isLoading,
             ) {
                 Icon(
                     imageVector = Icons.Default.Check,
@@ -186,9 +183,10 @@ private fun StoryRetellingContentPreview() {
         ) {
             StoryRetellingContent(
                 modifier = Modifier,
-                screenState = ScreenState.Content,
-                text = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
-                isSubmitButtonEnabled = true,
+                screenContent = StoryRetellingScreenContent(
+                    retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
+                    isSubmitButtonEnabled = true,
+                ),
                 onTextInputChange = {},
                 onSubmitClick = {},
             )

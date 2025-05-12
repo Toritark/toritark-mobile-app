@@ -7,17 +7,21 @@ import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.StringResource
 import org.koin.core.component.KoinComponent
 
-abstract class BaseViewModel(
+abstract class BaseViewModel<C>(
     protected val defaultDispatcher: CoroutineDispatcher,
     protected val ioDispatcher: CoroutineDispatcher,
     protected val mainDispatcher: CoroutineDispatcher,
+    defaultContentValue: C,
 ) : ViewModel(), KoinComponent {
 
     protected abstract val logger: Logger
 
-    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Content)
+    protected var contentValue: C = defaultContentValue
+
+    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Content(defaultContentValue))
     val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
 
     private val _errorMessage = MutableSharedFlow<String>()
@@ -35,19 +39,24 @@ abstract class BaseViewModel(
     }
 
     protected fun setContentScreenState() {
-        setScreenState(ScreenState.Content)
+        setScreenState(ScreenState.Content(contentValue))
+    }
+
+    protected fun updateAndShowContent(block: C.() -> C) {
+        contentValue = contentValue.block()
+        setContentScreenState()
     }
 
     protected fun setErrorScreenState(message: String) {
-        setScreenState(ScreenState.Error(message = message))
+        setScreenState(ScreenState.Error.Text(message = message))
+    }
+
+    protected fun setErrorScreenState(resource: StringResource) {
+        setScreenState(ScreenState.Error.Resource(resource = resource))
     }
 
     protected fun setErrorScreenState(throwable: Throwable) {
-        setScreenState(
-            ScreenState.Error(
-                message = throwable.message ?: throwable.toString()
-            )
-        )
+        setErrorScreenState(throwable.message ?: throwable.toString())
     }
 
     protected fun <T> Flow<T>.onErrorShowMessage(

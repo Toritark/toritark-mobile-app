@@ -46,10 +46,14 @@ internal class NativeLanguageChooserViewModel(
                 .collect { language ->
                     logger.d { "initializeNativeLanguage: language=$language from device language '$deviceLanguageCode'" }
 
-                    _preSelectedLanguage.value = language
                     selectedLanguage = language
 
-                    _isNextButtonEnabled.value = true
+                    updateAndShowContent {
+                        copy(
+                            preSelectedLanguage = language,
+                            isNextButtonEnabled = true
+                        )
+                    }
                 }
 
         }

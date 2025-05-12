@@ -7,43 +7,42 @@ import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.stories.presentation.story.quiz.model.QuizQuestionState
 import com.toritark.stories.presentation.story.quiz.model.QuizState
+import com.toritark.stories.presentation.story.quiz.model.StoryQuizScreenContent
 import com.toritark.stories.util.core.extension.iterable.replaceItemAt
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 internal class StoryQuizViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel(
+) : BaseViewModel<StoryQuizScreenContent>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
+    defaultContentValue = StoryQuizScreenContent(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
-
-    private val _story = MutableStateFlow<StoryApiModel?>(null)
-    val story = _story.asStateFlow()
-
-    private val _quizState = MutableStateFlow<QuizState?>(null)
-    val quizState = _quizState.asStateFlow()
 
     fun setStory(story: StoryApiModel) {
         logger.d { "setStory: story=$story" }
 
-        if (_story.value == story) return
+        if (contentValue.story == story) return
 
-        _story.value = story
-        _quizState.value = QuizState(
-            questions = story.questions,
-            questionsStates = List(story.questions.size) { QuizQuestionState.NONE },
-            currentQuestionIndex = -1,
-            answersStates = emptyList(),
-            isLastQuestion = false,
-            correctAnswers = 0,
-            wrongAnswers = 0,
-        )
+        updateAndShowContent {
+            copy(
+                story = story,
+                quizState = QuizState(
+                    questions = story.questions,
+                    questionsStates = List(story.questions.size) { QuizQuestionState.NONE },
+                    currentQuestionIndex = -1,
+                    answersStates = emptyList(),
+                    isLastQuestion = false,
+                    correctAnswers = 0,
+                    wrongAnswers = 0,
+                )
+            )
+        }
+
         showNextQuestion()
     }
 
@@ -56,13 +55,13 @@ internal class StoryQuizViewModel(
     fun onAnswerSelected(answer: StoryQuestionAnswerApiModel) {
         logger.d { "onAnswerSelected: answer=$answer" }
 
-        val state = quizState.value ?: return
+        val state = contentValue.quizState ?: return
 
         val currentQuestion = state.questions[state.currentQuestionIndex]
         val currentAnswerIndex = currentQuestion.answers.indexOf(answer)
 
-        if (answer.isCorrect) {
-            _quizState.value = state.copy(
+        val quizState = if (answer.isCorrect) {
+            state.copy(
                 questionsStates = state.questionsStates.replaceItemAt(
                     state.currentQuestionIndex,
                     QuizQuestionState.CORRECT
@@ -78,7 +77,7 @@ internal class StoryQuizViewModel(
         } else {
             val correctAnswerIndex = currentQuestion.answers.indexOfFirst { it.isCorrect }
 
-            _quizState.value = state.copy(
+            state.copy(
                 questionsStates = state.questionsStates.replaceItemAt(
                     state.currentQuestionIndex,
                     QuizQuestionState.WRONG
@@ -93,12 +92,16 @@ internal class StoryQuizViewModel(
                 wrongAnswers = state.wrongAnswers + 1,
             )
         }
+
+        updateAndShowContent {
+            copy(quizState = quizState)
+        }
     }
 
     fun onNextClick() {
         logger.d { "onNextClick" }
 
-        if (quizState.value?.isLastQuestion == false) {
+        if (contentValue.quizState?.isLastQuestion == false) {
             showNextQuestion()
         } else {
             // TODO: Show results
@@ -107,7 +110,7 @@ internal class StoryQuizViewModel(
     }
 
     private fun showNextQuestion() {
-        val state = quizState.value ?: return
+        val state = contentValue.quizState ?: return
 
         val currentQuestionIndex = state.currentQuestionIndex + 1
 
@@ -118,12 +121,19 @@ internal class StoryQuizViewModel(
 
         val currentQuestion = state.questions[currentQuestionIndex]
 
-        _quizState.value = state.copy(
-            questionsStates = state.questionsStates.replaceItemAt(currentQuestionIndex, QuizQuestionState.CURRENT),
-            currentQuestionIndex = currentQuestionIndex,
-            answersStates = List(currentQuestion.answers.size) { QuizAnswerState.NONE },
-            isLastQuestion = currentQuestionIndex == state.questions.size - 1,
-        )
+        updateAndShowContent {
+            copy(
+                quizState = state.copy(
+                    questionsStates = state.questionsStates.replaceItemAt(
+                        currentQuestionIndex,
+                        QuizQuestionState.CURRENT
+                    ),
+                    currentQuestionIndex = currentQuestionIndex,
+                    answersStates = List(currentQuestion.answers.size) { QuizAnswerState.NONE },
+                    isLastQuestion = currentQuestionIndex == state.questions.size - 1,
+                )
+            )
+        }
     }
 
     private companion object {

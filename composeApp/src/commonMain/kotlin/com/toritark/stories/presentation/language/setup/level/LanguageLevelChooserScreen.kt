@@ -13,8 +13,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,8 +42,7 @@ internal fun LanguageLevelChooserScreen(
         titleStringResource = Res.string.title_choose_language_level_screen,
         nextButtonStringResource = Res.string.title_choose_language_level_next_btn,
         viewModel = viewModel,
-    ) {
-        val languageLevels by viewModel.languageLevels.collectAsState()
+    ) { contentValue ->
         val listState = rememberLazyListState()
 
         val selectedLanguageLevel = mutableStateOf<LanguageLevelUiModel?>(null)
@@ -54,7 +51,7 @@ internal fun LanguageLevelChooserScreen(
             state = listState,
             modifier = Modifier.fillMaxSize()
         ) {
-            itemsIndexed(languageLevels) { index, languageLevel ->
+            itemsIndexed(contentValue.levels) { index, languageLevel ->
                 LanguageLevelItem(
                     languageLevel = languageLevel,
                     isSelected = selectedLanguageLevel.value == languageLevel,
@@ -64,7 +61,7 @@ internal fun LanguageLevelChooserScreen(
                     },
                 )
 
-                if (index < languageLevels.lastIndex) {
+                if (index < contentValue.levels.lastIndex) {
                     HorizontalDivider()
                 }
             }

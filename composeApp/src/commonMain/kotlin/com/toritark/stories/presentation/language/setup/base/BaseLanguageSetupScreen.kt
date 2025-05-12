@@ -8,26 +8,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
+import com.toritark.stories.presentation.language.setup.base.model.BaseLanguageSetupScreenContent
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun BaseLanguageSetupScreen(
+internal fun <C : BaseLanguageSetupScreenContent> BaseLanguageSetupScreen(
     titleStringResource: StringResource,
     nextButtonStringResource: StringResource,
-    viewModel: BaseLanguageSetupViewModel,
-    content: @Composable () -> Unit,
+    viewModel: BaseLanguageSetupViewModel<C>,
+    content: @Composable (contentValue: C) -> Unit,
 ) {
-    BaseScreen(viewModel) {
-        val isNextButtonEnabled by viewModel.isNextButtonEnabled.collectAsState()
-
+    BaseScreen(viewModel) { contentValue ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -47,7 +44,7 @@ internal fun BaseLanguageSetupScreen(
                     .weight(1f)
                     .fillMaxWidth(),
             ) {
-                content()
+                content(contentValue)
             }
 
             Button(
@@ -55,7 +52,7 @@ internal fun BaseLanguageSetupScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 onClick = viewModel::onNextButtonClick,
-                enabled = isNextButtonEnabled,
+                enabled = contentValue.isNextButtonEnabled,
             ) {
                 Text(
                     text = stringResource(nextButtonStringResource),
