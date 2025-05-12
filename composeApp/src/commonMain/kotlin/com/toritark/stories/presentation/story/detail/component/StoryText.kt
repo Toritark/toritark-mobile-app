@@ -4,9 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,6 +31,7 @@ internal fun StoryText(
     modifier: Modifier = Modifier,
     learningLanguageText: List<String>,
     nativeLanguageText: List<String>,
+    onCopyClick: () -> Unit,
 ) {
     var expandedSentenceIndex by remember { mutableStateOf<Int?>(null) }
 
@@ -46,6 +52,24 @@ internal fun StoryText(
                 onClick = {
                     expandedSentenceIndex = if (expandedSentenceIndex == index) null else index
                 },
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        IconButton(
+            modifier = Modifier
+                .align(Alignment.End),
+            onClick = {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+
+                onCopyClick()
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.ContentCopy,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
@@ -157,7 +181,8 @@ private fun StoryTextPreview() {
                 "Mina elan Tartus.",
                 "Mina olen 32 aastat vana.",
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            onCopyClick = {},
         )
     }
 }

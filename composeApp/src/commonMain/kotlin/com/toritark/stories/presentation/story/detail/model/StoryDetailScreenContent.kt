@@ -16,6 +16,7 @@ internal data class StoryDetailScreenContent(
         data object Empty : StoryState
         data object Creating : StoryState
         data class Created(
+            val storyRequestId: Long,
             val story: StoryApiModel,
         ) : StoryState
     }

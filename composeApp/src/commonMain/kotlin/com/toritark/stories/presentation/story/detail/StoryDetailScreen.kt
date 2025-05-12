@@ -2,7 +2,6 @@ package com.toritark.stories.presentation.story.detail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +11,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
+import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
 import com.toritark.stories.presentation.story.detail.component.StoryCreationProgressIndicator
 import com.toritark.stories.presentation.story.detail.component.generate.GenerateStoryHeader
@@ -19,13 +19,14 @@ import com.toritark.stories.presentation.story.detail.component.generate.StoryPr
 import com.toritark.stories.presentation.story.detail.component.preview.StoryPreviewCard
 import com.toritark.stories.presentation.story.detail.component.preview.StoryQuizPreviewCard
 import com.toritark.stories.presentation.story.detail.model.StoryDetailScreenContent
-import com.toritark.stories.presentation.story.retelling.StoryRetellingSection
+import com.toritark.stories.presentation.story.retelling.section.StoryRetellingSection
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun StoryDetailScreen(
     onNavigateTo: OnNavigateTo,
+    onPopBackStack: OnPopBackStack,
     viewModel: StoryDetailViewModel = koinViewModel(),
 ) {
     viewModel.onNavigateTo = onNavigateTo
@@ -84,10 +85,12 @@ internal fun StoryDetailScreen(
                         StoryContent(
                             modifier = Modifier
                                 .fillMaxWidth(),
+                            storyRequestId = storyState.storyRequestId,
                             story = storyState.story,
                             onStoryClick = viewModel::onStoryClick,
                             onStoryQuizClick = viewModel::onStoryQuestionsClick,
-                            lazyListState = lazyListState,
+                            onNavigateTo = onNavigateTo,
+                            onPopBackStack = onPopBackStack,
                         )
                     }
                 }
@@ -111,10 +114,12 @@ internal fun StoryDetailScreen(
 @Composable
 private fun StoryContent(
     modifier: Modifier = Modifier,
+    storyRequestId: Long,
     story: StoryApiModel,
     onStoryClick: () -> Unit,
     onStoryQuizClick: () -> Unit,
-    lazyListState: LazyListState? = null,
+    onNavigateTo: OnNavigateTo,
+    onPopBackStack: OnPopBackStack,
 ) {
     Column(
         modifier = Modifier
@@ -141,8 +146,10 @@ private fun StoryContent(
 
         StoryRetellingSection(
             modifier = modifier,
+            storyRequestId = storyRequestId,
             story = story,
-            lazyListState = lazyListState,
+            onNavigateTo = onNavigateTo,
+            onPopBackStack = onPopBackStack,
         )
     }
 }
@@ -165,8 +172,11 @@ private fun StoryContentPreview() {
 
     StoryContent(
         modifier = Modifier.fillMaxWidth(),
+        storyRequestId = 0L,
         story = story,
         onStoryClick = {},
         onStoryQuizClick = {},
+        onNavigateTo = { _, _ -> },
+        onPopBackStack = {},
     )
 }

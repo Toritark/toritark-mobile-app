@@ -38,6 +38,6 @@ internal fun AppNavigation(
         languagesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         onboardingScreens(onNavigateTo = defaultOnNavigateTo)
         storiesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
-        mainScreen(onNavigateTo = defaultOnNavigateTo)
+        mainScreen(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
     }
 }

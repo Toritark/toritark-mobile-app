@@ -8,7 +8,8 @@ import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.domain.story.interactor.StoriesInteractorImpl
 import com.toritark.stories.presentation.story.detail.StoryDetailViewModel
 import com.toritark.stories.presentation.story.quiz.StoryQuizViewModel
-import com.toritark.stories.presentation.story.retelling.StoryRetellingViewModel
+import com.toritark.stories.presentation.story.retelling.detail.StoryRetellingDetailViewModel
+import com.toritark.stories.presentation.story.retelling.section.StoryRetellingViewModel
 import com.toritark.stories.presentation.story.text.StoryTextViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -59,6 +60,15 @@ val storyModule = module {
 
     viewModel {
         StoryRetellingViewModel(
+            storiesInteractor = get(),
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
+        )
+    }
+
+    viewModel {
+        StoryRetellingDetailViewModel(
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

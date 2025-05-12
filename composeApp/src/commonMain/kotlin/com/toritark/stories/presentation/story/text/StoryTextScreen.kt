@@ -12,13 +12,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.presentation.core_ui.clipboard.clipEntryOf
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
 import com.toritark.stories.presentation.story.detail.component.StoryText
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -36,11 +40,19 @@ internal fun StoryTextScreen(
     viewModel.onPopBackStack = onPopBackStack
     viewModel.onNavigateTo = onNavigateTo
 
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
+
     BaseScreen(viewModel) { contentValue ->
         contentValue.story?.let { story ->
             StoryTextScreenContent(
                 story = story,
                 onCloseClick = viewModel::onCloseClick,
+                onCopyClick = {
+                    coroutineScope.launch {
+                        clipboard.setClipEntry(clipEntryOf(story.learningLanguageText.joinToString("\n")))
+                    }
+                }
             )
         }
     }
@@ -50,6 +62,7 @@ internal fun StoryTextScreen(
 private fun StoryTextScreenContent(
     story: StoryApiModel,
     onCloseClick: () -> Unit,
+    onCopyClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -80,6 +93,7 @@ private fun StoryTextScreenContent(
                 .verticalScroll(rememberScrollState()),
             learningLanguageText = story.learningLanguageText,
             nativeLanguageText = story.nativeLanguageText,
+            onCopyClick = onCopyClick,
         )
     }
 }
@@ -119,6 +133,7 @@ private fun StoryTextScreenPreview() {
         StoryTextScreenContent(
             story = story,
             onCloseClick = {},
+            onCopyClick = {},
         )
     }
 }

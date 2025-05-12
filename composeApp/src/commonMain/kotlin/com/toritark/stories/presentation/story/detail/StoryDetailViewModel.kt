@@ -2,8 +2,8 @@ package com.toritark.stories.presentation.story.detail
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.data.story.model.story.request.StoryRequestApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.data.story.model.topic.StoryTopic
 import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
@@ -155,18 +155,24 @@ internal class StoryDetailViewModel(
             copy(
                 storyState = when (storyRequest.story) {
                     null -> StoryDetailScreenContent.StoryState.Empty
-                    else -> StoryDetailScreenContent.StoryState.Created(storyRequest.story)
+                    else -> StoryDetailScreenContent.StoryState.Created(
+                        storyRequestId = storyRequest.id,
+                        story = storyRequest.story
+                    )
                 },
             )
         }
-
-        setContentScreenState()
     }
 
     private fun onStoryGenerationError(storyRequest: StoryRequestApiModel) {
         logger.w { "onStoryGenerationError: storyRequest=$storyRequest" }
 
-        setContentScreenState()
+        updateAndShowContent {
+            copy(storyState = StoryDetailScreenContent.StoryState.Empty)
+        }
+
+
+        // TODO: Show error
     }
 
     fun onStoryClick() {
@@ -204,7 +210,7 @@ internal class StoryDetailViewModel(
     private companion object {
         private const val LOG_TAG = "StoryDetailViewModel"
 
-        private const val WATCH_STORY_CHECK_INTERVAL_MS = 100L
+        private const val WATCH_STORY_CHECK_INTERVAL_MS = 300L
 
         private val defaultStoryTopics = listOf(
             StoryTopicUiModel(

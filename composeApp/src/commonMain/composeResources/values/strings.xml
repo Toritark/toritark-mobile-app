@@ -56,8 +56,8 @@
 
     <string name="title_story_creation_progress_1">Brewing idea…</string>
     <string name="title_story_creation_progress_2">Thinking deeper…</string>
-    <string name="title_story_creation_progress_3">Adding imagination...</string>
-    <string name="title_story_creation_progress_4">Adding magic...</string>
+    <string name="title_story_creation_progress_3">Adding imagination…</string>
+    <string name="title_story_creation_progress_4">Adding magic…</string>
 
     <string name="title_story_text_screen">Your personal story ✨</string>
 
@@ -70,4 +70,21 @@
     <string name="title_story_retelling_card">Retell the story</string>
     <string name="desc_story_retelling_card">Retell the story, and our AI will check and rate it</string>
     <string name="title_story_retelling_check_btn">Check the retelling</string>
+
+    <string name="title_story_retelling_review_progress_1">Checking completeness…</string>
+    <string name="title_story_retelling_review_progress_2">Checking grammar…</string>
+    <string name="title_story_retelling_review_progress_3">Checking vocabulary…</string>
+    <string name="title_story_retelling_review_progress_4">Checking punctuation…</string>
+    <string name="title_story_retelling_review_progress_5">Checking spelling…</string>
+    <string name="title_story_retelling_review_progress_6">Finalizing checks…</string>
+
+    <string name="title_retelling_review_summary_header">Your retelling score: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">See the detailed review</string>
+
+    <string name="title_retelling_review_score_completeness">Completeness</string>
+    <string name="title_retelling_review_score_grammar">Grammar</string>
+    <string name="title_retelling_review_score_vocabulary">Vocabulary</string>
+    <string name="title_retelling_review_score_spelling">Spelling</string>
+    <string name="title_retelling_review_score_punctuation">Punctuation</string>
+
 </resources>

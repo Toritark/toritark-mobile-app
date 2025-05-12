@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
+import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.story.detail.StoryDetailScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -19,6 +20,7 @@ import toritark.composeapp.generated.resources.title_main_screen_topbar
 @Composable
 internal fun MainScreen(
     onNavigateTo: OnNavigateTo,
+    onPopBackStack: OnPopBackStack,
     viewModel: MainViewModel = koinViewModel(),
 ) {
     viewModel.onNavigateTo = onNavigateTo
@@ -50,7 +52,10 @@ internal fun MainScreen(
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            StoryDetailScreen(onNavigateTo = onNavigateTo)
+            StoryDetailScreen(
+                onNavigateTo = onNavigateTo,
+                onPopBackStack = onPopBackStack,
+            )
         }
     }
 }
