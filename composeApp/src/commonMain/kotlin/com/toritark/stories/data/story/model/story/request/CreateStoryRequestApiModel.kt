@@ -1,4 +1,4 @@
-package com.toritark.stories.data.story.model.story_request
+package com.toritark.stories.data.story.model.story.request
 
 import com.toritark.stories.data.language.model.LanguageLevel
 import kotlinx.serialization.SerialName

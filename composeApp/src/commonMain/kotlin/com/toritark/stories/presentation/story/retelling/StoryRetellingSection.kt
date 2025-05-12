@@ -17,7 +17,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.presentation.core_ui.icon.AppIcons
 import com.toritark.stories.presentation.core_ui.icon.MagicChange
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen

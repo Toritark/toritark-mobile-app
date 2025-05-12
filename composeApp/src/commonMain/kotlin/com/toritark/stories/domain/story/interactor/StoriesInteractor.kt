@@ -2,7 +2,8 @@ package com.toritark.stories.domain.story.interactor
 
 import co.touchlab.kermit.Logger
 import com.toritark.stories.data.language.repository.LanguagesRepository
-import com.toritark.stories.data.story.model.story_request.StoryRequestApiModel
+import com.toritark.stories.data.story.model.retelling.request.StoryRetellingReviewRequestApiModel
+import com.toritark.stories.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.stories.data.story.repository.StoryRequestsApiRepository
 import com.toritark.stories.domain.story.exception.CreateStoryException
 import com.toritark.stories.util.core.extension.flow.errorFlow
@@ -13,6 +14,13 @@ import kotlinx.coroutines.flow.flowOn
 internal interface StoriesInteractor {
     fun createStory(prompt: String): Flow<StoryRequestApiModel>
     fun getStory(requestId: Long): Flow<StoryRequestApiModel>
+
+    fun createStoryRetellingReview(
+        storyRequestId: Long,
+        retelling: String,
+    ): Flow<StoryRetellingReviewRequestApiModel>
+
+    fun getStoryRetellingReview(requestId: Long): Flow<StoryRetellingReviewRequestApiModel>
 }
 
 internal class StoriesInteractorImpl(
@@ -52,6 +60,28 @@ internal class StoriesInteractorImpl(
 
         return storyRequestsApiRepository
             .getStoryRequest(id = requestId)
+            .flowOn(ioDispatcher)
+    }
+
+    override fun createStoryRetellingReview(
+        storyRequestId: Long,
+        retelling: String,
+    ): Flow<StoryRetellingReviewRequestApiModel> {
+        logger.d { "createStoryRetellingReview: storyRequestId=$storyRequestId, retelling='$retelling'" }
+
+        return storyRequestsApiRepository
+            .createStoryRetellingReviewRequest(
+                storyRequestId = storyRequestId,
+                retelling = retelling,
+            )
+            .flowOn(ioDispatcher)
+    }
+
+    override fun getStoryRetellingReview(requestId: Long): Flow<StoryRetellingReviewRequestApiModel> {
+        logger.d { "getStoryRetellingReview: requestId=$requestId" }
+
+        return storyRequestsApiRepository
+            .getStoryRetellingReviewRequest(id = requestId)
             .flowOn(ioDispatcher)
     }
 

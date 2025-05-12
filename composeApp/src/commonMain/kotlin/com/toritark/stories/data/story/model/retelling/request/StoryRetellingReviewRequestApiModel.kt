@@ -1,21 +1,18 @@
-package com.toritark.stories.data.story.model.story_request
+package com.toritark.stories.data.story.model.retelling.request
 
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StoryRequestApiModel(
+data class StoryRetellingReviewRequestApiModel(
     @SerialName("id")
     val id: Long,
     @SerialName("status")
     val status: Status,
-    @SerialName("story")
-    val story: StoryApiModel? = null,
-    @SerialName("rating")
-    val rating: Rating? = null,
+    @SerialName("review")
+    val review: StoryRetellingReviewApiModel? = null,
 ) {
-
     @Serializable
     enum class Status {
         @SerialName("pending")
@@ -29,14 +26,5 @@ data class StoryRequestApiModel(
 
         @SerialName("failed")
         FAILED,
-    }
-
-    @Serializable
-    enum class Rating {
-        @SerialName("good")
-        GOOD,
-
-        @SerialName("bad")
-        BAD,
     }
 }

@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.toritark.stories.data.story.model.story.StoryApiModel
-import com.toritark.stories.data.story.model.story.StoryQuestionApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.stories.presentation.core_ui.component.FlatCard
 import com.toritark.stories.presentation.core_ui.icon.AppIcons

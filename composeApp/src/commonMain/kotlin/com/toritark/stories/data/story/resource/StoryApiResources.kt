@@ -23,4 +23,21 @@ internal class StoryApiResources(val parent: BaseApiResource = BaseApiResource()
             val id: Long,
         )
     }
+
+    @Resource("story-retellings-reviews/")
+    class StoryRetellingsReviews(val parent: StoryApiResources = StoryApiResources()) {
+
+        @Resource("")
+        class List(val parent: StoryRetellingsReviews = StoryRetellingsReviews())
+
+        @Resource("")
+        class Create(val parent: StoryRetellingsReviews = StoryRetellingsReviews())
+
+        @Resource("{id}/")
+        class Get(
+            val parent: StoryRetellingsReviews = StoryRetellingsReviews(),
+            @SerialName("id")
+            val id: Long,
+        )
+    }
 }

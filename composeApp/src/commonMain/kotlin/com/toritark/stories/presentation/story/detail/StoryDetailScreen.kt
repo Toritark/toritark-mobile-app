@@ -10,7 +10,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
 import com.toritark.stories.presentation.story.detail.component.StoryCreationProgressIndicator

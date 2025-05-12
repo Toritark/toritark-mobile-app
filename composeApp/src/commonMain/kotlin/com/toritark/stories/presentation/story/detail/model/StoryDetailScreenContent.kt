@@ -1,6 +1,6 @@
 package com.toritark.stories.presentation.story.detail.model
 
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.presentation.story.model.StoryTopicUiModel
 
 internal data class StoryDetailScreenContent(

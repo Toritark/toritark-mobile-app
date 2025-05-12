@@ -1,8 +1,8 @@
 package com.toritark.stories.presentation.story.quiz
 
 import co.touchlab.kermit.Logger
-import com.toritark.stories.data.story.model.story.StoryApiModel
-import com.toritark.stories.data.story.model.story.StoryQuestionAnswerApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.stories.presentation.story.quiz.model.QuizQuestionState

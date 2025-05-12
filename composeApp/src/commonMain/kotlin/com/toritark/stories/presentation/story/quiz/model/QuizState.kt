@@ -1,6 +1,6 @@
 package com.toritark.stories.presentation.story.quiz.model
 
-import com.toritark.stories.data.story.model.story.StoryQuestionApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionApiModel
 
 internal data class QuizState(
     val questions: List<StoryQuestionApiModel>,

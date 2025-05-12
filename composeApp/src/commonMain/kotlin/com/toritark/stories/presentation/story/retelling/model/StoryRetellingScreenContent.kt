@@ -1,6 +1,6 @@
 package com.toritark.stories.presentation.story.retelling.model
 
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 
 internal data class StoryRetellingScreenContent(
     val story: StoryApiModel? = null,

@@ -1,7 +1,7 @@
 package com.toritark.stories.presentation.story.retelling
 
 import co.touchlab.kermit.Logger
-import com.toritark.stories.data.story.model.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.story.retelling.model.StoryRetellingScreenContent
 import kotlinx.coroutines.CoroutineDispatcher

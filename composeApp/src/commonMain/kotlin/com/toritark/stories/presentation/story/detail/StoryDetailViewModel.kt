@@ -2,8 +2,8 @@ package com.toritark.stories.presentation.story.detail
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.toritark.stories.data.story.model.story.StoryApiModel
-import com.toritark.stories.data.story.model.story_request.StoryRequestApiModel
+import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.stories.data.story.model.topic.StoryTopic
 import com.toritark.stories.domain.story.interactor.StoriesInteractor
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel

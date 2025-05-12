@@ -3,8 +3,10 @@ package com.toritark.stories.data.story.repository
 import com.toritark.stories.data.language.model.Language
 import com.toritark.stories.data.language.model.LanguageLevel
 import com.toritark.stories.data.story.exception.QuotaExceededException
-import com.toritark.stories.data.story.model.story_request.CreateStoryRequestApiModel
-import com.toritark.stories.data.story.model.story_request.StoryRequestApiModel
+import com.toritark.stories.data.story.model.retelling.request.CreateStoryRetellingReviewRequestApiModel
+import com.toritark.stories.data.story.model.retelling.request.StoryRetellingReviewRequestApiModel
+import com.toritark.stories.data.story.model.story.request.CreateStoryRequestApiModel
+import com.toritark.stories.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.stories.data.story.resource.StoryApiResources
 import com.toritark.stories.util.core.extension.flow.typedFlow
 import io.ktor.client.*
@@ -28,6 +30,13 @@ internal interface StoryRequestsApiRepository {
     ): Flow<StoryRequestApiModel>
 
     fun getStoryRequest(id: Long): Flow<StoryRequestApiModel>
+
+    fun createStoryRetellingReviewRequest(
+        storyRequestId: Long,
+        retelling: String,
+    ): Flow<StoryRetellingReviewRequestApiModel>
+
+    fun getStoryRetellingReviewRequest(id: Long): Flow<StoryRetellingReviewRequestApiModel>
 }
 
 internal class StoryRequestsApiRepositoryImpl(
@@ -70,6 +79,39 @@ internal class StoryRequestsApiRepositoryImpl(
                 expectSuccess = true
 
             }.body<StoryRequestApiModel>()
+        }
+    }
+
+    override fun createStoryRetellingReviewRequest(
+        storyRequestId: Long,
+        retelling: String,
+    ): Flow<StoryRetellingReviewRequestApiModel> {
+        val request = CreateStoryRetellingReviewRequestApiModel(
+            storyRequestId = storyRequestId,
+            retelling = retelling,
+        )
+
+        return typedFlow {
+            httpClient.post(StoryApiResources.StoryRetellingsReviews.Create()) {
+                setBody(request)
+                expectSuccess = true
+            }.body<StoryRetellingReviewRequestApiModel>()
+        }
+            .catch { t ->
+                if (t is ClientRequestException && t.response.status == HttpStatusCode.TooManyRequests) {
+                    throw QuotaExceededException()
+                }
+
+                throw t
+            }
+            .flowOn(ioDispatcher)
+    }
+
+    override fun getStoryRetellingReviewRequest(id: Long): Flow<StoryRetellingReviewRequestApiModel> {
+        return typedFlow {
+            httpClient.get(StoryApiResources.StoryRetellingsReviews.Get(id = id)) {
+                expectSuccess = true
+            }.body<StoryRetellingReviewRequestApiModel>()
         }
     }
 }

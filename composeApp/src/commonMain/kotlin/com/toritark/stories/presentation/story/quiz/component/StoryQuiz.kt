@@ -6,8 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.toritark.stories.data.story.model.story.StoryQuestionAnswerApiModel
-import com.toritark.stories.data.story.model.story.StoryQuestionApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionAnswerApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.stories.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.stories.presentation.story.quiz.model.QuizQuestionState
 import com.toritark.stories.presentation.story.quiz.model.QuizState

@@ -22,8 +22,8 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
-import com.toritark.stories.data.story.model.story.StoryQuestionAnswerApiModel
-import com.toritark.stories.data.story.model.story.StoryQuestionApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionAnswerApiModel
+import com.toritark.stories.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.stories.presentation.story.quiz.model.QuizAnswerState
 import org.jetbrains.compose.resources.stringResource
