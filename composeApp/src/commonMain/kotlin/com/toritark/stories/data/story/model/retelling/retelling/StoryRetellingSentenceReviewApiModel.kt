@@ -20,10 +20,7 @@ data class StoryRetellingSentenceReviewApiModel(
         @SerialName("correct")
         CORRECT,
 
-        @SerialName("insignificant_mistakes")
-        INSIGNIFICANT_MISTAKES,
-
-        @SerialName("significant_mistakes")
-        SIGNIFICANT_MISTAKES,
+        @SerialName("wrong")
+        WRONG,
     }
 }

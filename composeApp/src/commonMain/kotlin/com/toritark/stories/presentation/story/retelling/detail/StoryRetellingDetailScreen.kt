@@ -122,14 +122,12 @@ private fun RetellingSentenceReview(
 ) {
     val color = when (review.status) {
         StoryRetellingSentenceReviewApiModel.Status.CORRECT -> AppTheme.successColors.success
-        StoryRetellingSentenceReviewApiModel.Status.INSIGNIFICANT_MISTAKES -> MaterialTheme.colorScheme.error
-        StoryRetellingSentenceReviewApiModel.Status.SIGNIFICANT_MISTAKES -> MaterialTheme.colorScheme.error
+        StoryRetellingSentenceReviewApiModel.Status.WRONG -> MaterialTheme.colorScheme.error
     }
 
     val icon = when (review.status) {
         StoryRetellingSentenceReviewApiModel.Status.CORRECT -> Icons.Default.Check
-        StoryRetellingSentenceReviewApiModel.Status.INSIGNIFICANT_MISTAKES -> Icons.Default.Close
-        StoryRetellingSentenceReviewApiModel.Status.SIGNIFICANT_MISTAKES -> Icons.Default.Close
+        StoryRetellingSentenceReviewApiModel.Status.WRONG -> Icons.Default.Close
     }
 
     val shape = RoundedCornerShape(20.dp)
@@ -242,13 +240,13 @@ private fun StoryRetellingDetailScreenContentPreview() {
                                 explanation = null,
                             ),
                             StoryRetellingSentenceReviewApiModel(
-                                status = StoryRetellingSentenceReviewApiModel.Status.INSIGNIFICANT_MISTAKES,
+                                status = StoryRetellingSentenceReviewApiModel.Status.WRONG,
                                 sentence = "Hello, world! This is a <s>very good</s> retelling. I <s>likes</s> it very much.",
                                 correctedSentence = "Hello, world! This is a <u>quite good</u> retelling. I <u>like</u> it very much.",
                                 explanation = "Factual errors. The sentence is not correct.",
                             ),
                             StoryRetellingSentenceReviewApiModel(
-                                status = StoryRetellingSentenceReviewApiModel.Status.SIGNIFICANT_MISTAKES,
+                                status = StoryRetellingSentenceReviewApiModel.Status.WRONG,
                                 sentence = "This is a very good retelling. I like <s>this</s> very much.",
                                 correctedSentence = "This is a very good retelling. I like <u>it</u> very much.",
                                 explanation = "This is totally incorrect! Full sentence is wrong.\nMultiline text here",
