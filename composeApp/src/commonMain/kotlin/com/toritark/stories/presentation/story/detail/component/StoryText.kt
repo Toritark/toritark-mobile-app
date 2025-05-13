@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
+import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
@@ -41,6 +42,10 @@ internal fun StoryText(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
+        AiDisclaimer()
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         learningLanguageText.forEachIndexed { index, learningSentence ->
             val nativeSentence = nativeLanguageText.getOrNull(index)
 

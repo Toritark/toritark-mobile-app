@@ -1,5 +1,8 @@
 <resources>
 
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI can make mistakes. Check important info.</string>
+
     <!-- Languages set up -->
     <string name="title_search_languages_field">Search languages</string>
 

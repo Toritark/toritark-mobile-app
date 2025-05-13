@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
+import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import com.toritark.stories.presentation.main.app.AppTheme
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -36,7 +37,6 @@ internal fun StoryRetellingReviewSummary(
                 .fillMaxWidth(),
             review = review,
         )
-
         Spacer(modifier = Modifier.height(16.dp))
 
         RetellingReviewScores(
@@ -81,6 +81,10 @@ private fun RetellingReviewSummaryHeader(
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface,
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        AiDisclaimer()
 
         Spacer(modifier = Modifier.height(8.dp))
 

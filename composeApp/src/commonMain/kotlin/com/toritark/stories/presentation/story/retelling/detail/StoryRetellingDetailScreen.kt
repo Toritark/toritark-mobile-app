@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingSentenceReviewApiModel
+import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
