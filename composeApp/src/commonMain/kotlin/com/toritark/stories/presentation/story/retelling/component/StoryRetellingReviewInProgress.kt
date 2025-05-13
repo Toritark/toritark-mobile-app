@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
+import com.toritark.stories.presentation.main.app.AppTheme
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -79,7 +80,7 @@ internal fun StoryRetellingReviewInProgress(
 @Preview
 @Composable
 private fun StoryRetellingReviewInProgressPreview() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)

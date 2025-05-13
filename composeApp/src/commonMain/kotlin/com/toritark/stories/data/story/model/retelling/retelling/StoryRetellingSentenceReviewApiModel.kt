@@ -5,12 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StoryRetellingSentenceReviewApiModel(
-    @SerialName("sentence")
-    val sentence: String,
     @SerialName("status")
     val status: Status,
-    @SerialName("review")
-    val review: String? = null,
+    @SerialName("sentence")
+    val sentence: String,
+    @SerialName("corrected_sentence")
+    val correctedSentence: String? = null,
+    @SerialName("explanation")
+    val explanation: String? = null,
 ) {
 
     @Serializable

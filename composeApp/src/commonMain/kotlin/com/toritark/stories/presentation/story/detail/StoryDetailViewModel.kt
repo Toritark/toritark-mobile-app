@@ -91,7 +91,9 @@ internal class StoryDetailViewModel(
         val prompt = contentValue.promptText.takeIf { it.isNotBlank() } ?: return
 
         updateAndShowContent {
-            copy(storyState = StoryDetailScreenContent.StoryState.Creating)
+            copy(
+                storyState = StoryDetailScreenContent.StoryState.Creating,
+            )
         }
 
         viewModelScope.launch {

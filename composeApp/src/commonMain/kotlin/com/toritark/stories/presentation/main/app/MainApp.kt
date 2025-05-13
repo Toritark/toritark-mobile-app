@@ -1,6 +1,5 @@
 package com.toritark.stories.presentation.main.app
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import co.touchlab.kermit.Logger
 import com.toritark.stories.presentation.main.nav.AppNavigation
@@ -12,7 +11,7 @@ private val logger = Logger.withTag(LOG_TAG)
 @Composable
 @Preview
 fun MainApp() {
-    MaterialTheme {
+    AppTheme {
         AppNavigation()
     }
 }

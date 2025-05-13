@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
+import com.toritark.stories.presentation.main.app.AppTheme
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -36,7 +37,7 @@ internal fun StoryRetellingReviewSummary(
             review = review,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         RetellingReviewScores(
             review = review,
@@ -132,6 +133,18 @@ private fun RetellingReviewScore(
     score: Int,
     scoreNameResource: StringResource,
 ) {
+    val color = when {
+        score <= 30 -> MaterialTheme.colorScheme.error
+        score <= 60 -> MaterialTheme.colorScheme.primary
+        else -> AppTheme.successColors.success
+    }
+
+    val trackColor = when {
+        score <= 30 -> MaterialTheme.colorScheme.errorContainer
+        score <= 60 -> MaterialTheme.colorScheme.primaryContainer
+        else -> AppTheme.successColors.successContainer
+    }
+
     Column(
         modifier = modifier,
     ) {
@@ -142,7 +155,7 @@ private fun RetellingReviewScore(
             Text(
                 text = stringResource(scoreNameResource),
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Light,
+                fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
@@ -158,6 +171,8 @@ private fun RetellingReviewScore(
         LinearProgressIndicator(
             progress = { score.toFloat() / 100f },
             modifier = Modifier.fillMaxWidth(),
+            color = color,
+            trackColor = trackColor,
             gapSize = 0.dp,
             drawStopIndicator = {}
         )
@@ -167,7 +182,7 @@ private fun RetellingReviewScore(
 @Preview
 @Composable
 private fun StoryRetellingReviewSummaryPreview() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)

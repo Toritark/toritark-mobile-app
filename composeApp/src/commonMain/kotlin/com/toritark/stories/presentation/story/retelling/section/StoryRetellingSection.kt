@@ -30,6 +30,7 @@ import com.toritark.stories.presentation.core_ui.icon.MagicChange
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
+import com.toritark.stories.presentation.main.app.AppTheme
 import com.toritark.stories.presentation.story.retelling.component.StoryRetellingReviewInProgress
 import com.toritark.stories.presentation.story.retelling.component.StoryRetellingReviewSummary
 import com.toritark.stories.presentation.story.retelling.section.model.StoryRetellingScreenContent
@@ -249,7 +250,7 @@ private fun RetellingForm(
 @Preview
 @Composable
 private fun StoryRetellingContentPreviewNormal() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
@@ -273,7 +274,7 @@ private fun StoryRetellingContentPreviewNormal() {
 @Preview
 @Composable
 private fun StoryRetellingContentPreviewInProgress() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
@@ -298,7 +299,7 @@ private fun StoryRetellingContentPreviewInProgress() {
 @Preview
 @Composable
 private fun StoryRetellingContentPreviewReady() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)

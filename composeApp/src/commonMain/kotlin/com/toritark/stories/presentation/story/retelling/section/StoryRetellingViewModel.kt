@@ -36,7 +36,9 @@ internal class StoryRetellingViewModel(
         this.storyRequestId = storyRequestId
 
         updateAndShowContent {
-            copy(story = story)
+            StoryRetellingScreenContent(
+                story = story,
+            )
         }
     }
 

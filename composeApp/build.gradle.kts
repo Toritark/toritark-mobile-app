@@ -83,6 +83,8 @@ kotlin {
             implementation(libs.coil)
             implementation(libs.coil.network)
 
+            implementation(libs.ksoup.html)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -104,6 +106,8 @@ kotlin {
 
             implementation(libs.ktor.client.cio)
             implementation(libs.koin.android)
+
+            implementation(libs.auth0.android)
         }
 
         iosMain.dependencies {
@@ -155,6 +159,13 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        manifestPlaceholders.putAll(
+            mapOf(
+                "auth0Domain" to "toritark.eu.auth0.com",
+                "auth0Scheme" to "https",
+            )
+        )
     }
     packaging {
         resources {

@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.toritark.stories.presentation.main.app.AppTheme
 import com.toritark.stories.presentation.story.quiz.model.QuizQuestionState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -106,7 +107,7 @@ private fun QuizQuestionState.toColor(): Color {
 @Preview()
 @Composable
 fun HorizontalStepperPreview() {
-    MaterialTheme {
+    AppTheme {
         Column {
             QuizStepper(
                 states = listOf(

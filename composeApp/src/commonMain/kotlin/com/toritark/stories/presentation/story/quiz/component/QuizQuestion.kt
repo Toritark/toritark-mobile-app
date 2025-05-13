@@ -25,6 +25,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.stories.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.stories.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.stories.presentation.core_ui.animation.FadeInAnimation
+import com.toritark.stories.presentation.main.app.AppTheme
 import com.toritark.stories.presentation.story.quiz.model.QuizAnswerState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -183,7 +184,7 @@ private fun QuizAnswer(
 @Preview
 @Composable
 private fun QuizQuestionEmptyPreview() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
@@ -210,7 +211,7 @@ private fun QuizQuestionEmptyPreview() {
 @Preview
 @Composable
 private fun QuizQuestionAnsweredPreview() {
-    MaterialTheme {
+    AppTheme {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
