@@ -173,7 +173,6 @@ internal class StoryDetailViewModel(
             copy(storyState = StoryDetailScreenContent.StoryState.Empty)
         }
 
-
         // TODO: Show error
     }
 

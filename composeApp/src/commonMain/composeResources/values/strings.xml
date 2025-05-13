@@ -64,12 +64,22 @@
 
     <string name="title_story_text_screen">Your personal story ✨</string>
 
+    <!-- Selected story words -->
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Selected %1$d word to learn. Add them to the learning set!</item>
+        <item quantity="other">Selected %1$d words to learn. Add them to the learning set!</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Remove all</string>
+    <string name="title_story_selected_words_add_to_learning">Add to learning set</string>
+
     <!-- Story quiz -->
     <string name="title_story_quiz_screen">Check yourself ✅</string>
 
     <string name="title_story_quiz_question_next_btn">Next question</string>
     <string name="title_story_quiz_question_finish_btn">Finish</string>
 
+    <!-- Story retelling -->
     <string name="title_story_retelling_card">Retell the story</string>
     <string name="desc_story_retelling_card">Retell the story, and our AI will check and rate it</string>
     <string name="title_story_retelling_check_btn">Check the retelling</string>

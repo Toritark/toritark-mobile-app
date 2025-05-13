@@ -2,25 +2,23 @@
 
 package com.toritark.stories.presentation.story.text
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.stories.presentation.core_ui.clipboard.clipEntryOf
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
+import com.toritark.stories.presentation.story.detail.component.SelectedStoryWordsHeader
 import com.toritark.stories.presentation.story.detail.component.StoryText
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -52,7 +50,8 @@ internal fun StoryTextScreen(
                     coroutineScope.launch {
                         clipboard.setClipEntry(clipEntryOf(story.learningLanguageText.joinToString("\n")))
                     }
-                }
+                },
+                onAddWordsToLearningSetClick = viewModel::onAddWordsToLearningSetClick,
             )
         }
     }
@@ -63,6 +62,7 @@ private fun StoryTextScreenContent(
     story: StoryApiModel,
     onCloseClick: () -> Unit,
     onCopyClick: () -> Unit,
+    onAddWordsToLearningSetClick: (words: Set<String>) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -86,15 +86,51 @@ private fun StoryTextScreenContent(
             )
         },
     ) { innerPadding ->
-        StoryText(
+        Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            learningLanguageText = story.learningLanguageText,
-            nativeLanguageText = story.nativeLanguageText,
-            onCopyClick = onCopyClick,
-        )
+        ) {
+            var selectedWords by remember { mutableStateOf(setOf<String>()) }
+
+            FadeAndExpandVerticallyAnimation(visible = selectedWords.isNotEmpty()) {
+                Column {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    SelectedStoryWordsHeader(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        words = selectedWords,
+                        onClearClick = {
+                            selectedWords = emptySet()
+                        },
+                        onAddAllClick = {
+                            onAddWordsToLearningSetClick(selectedWords)
+                            selectedWords = emptySet()
+                        },
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+
+            StoryText(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                learningLanguageText = story.learningLanguageText,
+                nativeLanguageText = story.nativeLanguageText,
+                selectedWords = selectedWords,
+                onWordSelected = { word ->
+                    selectedWords = if (selectedWords.contains(word)) {
+                        selectedWords - word
+                    } else {
+                        selectedWords + word
+                    }
+                },
+                onCopyClick = onCopyClick,
+            )
+        }
     }
 }
 
@@ -133,6 +169,7 @@ private fun StoryTextScreenPreview() {
         StoryTextScreenContent(
             story = story,
             onCloseClick = {},
+            onAddWordsToLearningSetClick = {},
             onCopyClick = {},
         )
     }

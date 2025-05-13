@@ -2,6 +2,7 @@ package com.toritark.stories.presentation.story.detail.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -17,12 +18,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.touchlab.kermit.Logger
 import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+private const val LOG_TAG = "StoryText"
+private val logger = Logger.withTag(LOG_TAG)
 
 /**
  * Displays story text sentence-by-sentence and translated sentences
@@ -32,6 +43,8 @@ internal fun StoryText(
     modifier: Modifier = Modifier,
     learningLanguageText: List<String>,
     nativeLanguageText: List<String>,
+    selectedWords: Set<String>,
+    onWordSelected: (word: String) -> Unit,
     onCopyClick: () -> Unit,
 ) {
     var expandedSentenceIndex by remember { mutableStateOf<Int?>(null) }
@@ -54,8 +67,13 @@ internal fun StoryText(
                 nativeLanguageText = nativeSentence,
                 isExpanded = expandedSentenceIndex == index,
                 hapticFeedback = hapticFeedback,
+                selectedWords = selectedWords,
                 onClick = {
                     expandedSentenceIndex = if (expandedSentenceIndex == index) null else index
+                },
+                onWordSelected = { word ->
+                    onWordSelected(word)
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                 },
             )
         }
@@ -86,7 +104,9 @@ private fun SentenceItem(
     nativeLanguageText: String?,
     isExpanded: Boolean,
     hapticFeedback: HapticFeedback,
+    selectedWords: Set<String>,
     onClick: () -> Unit,
+    onWordSelected: (word: String) -> Unit,
 ) {
     val backgroundColor = if (isExpanded) {
         MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f)
@@ -117,6 +137,9 @@ private fun SentenceItem(
         LearningLanguageSentenceItem(
             text = learningLanguageText,
             textColor = textColor,
+            selectedWords = selectedWords,
+            onClick = onClick,
+            onWordSelected = onWordSelected,
         )
 
         if (nativeLanguageText != null) {
@@ -136,12 +159,35 @@ private fun SentenceItem(
 private fun LearningLanguageSentenceItem(
     text: String,
     textColor: Color,
+    selectedWords: Set<String>,
+    onClick: () -> Unit,
+    onWordSelected: (word: String) -> Unit,
 ) {
+    var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
+
     Text(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 4.dp, vertical = 4.dp),
-        text = text,
+            .padding(horizontal = 4.dp, vertical = 4.dp)
+            .pointerInput(text) {
+                detectTapGestures(
+                    onTap = { onClick() },
+                    onLongPress = { pressOffset ->
+                        textLayoutResult?.let { layoutResult ->
+                            val charOffset = layoutResult.getOffsetForPosition(pressOffset)
+                            val wordRange = layoutResult.getWordBoundary(charOffset)
+
+                            val wordStart = wordRange.start
+                            val wordEnd = wordRange.end
+                            val word = text.substring(wordStart, wordEnd)
+
+                            onWordSelected(word)
+                        }
+                    }
+                )
+            },
+        onTextLayout = { textLayoutResult = it },
+        text = highlightSelectedWords(text = text, words = selectedWords),
         style = MaterialTheme.typography.bodyLarge.copy(
             fontSize = 18.sp,
         ),
@@ -161,6 +207,63 @@ private fun NativeSentenceItem(
         style = MaterialTheme.typography.bodyLarge,
         color = textColor,
     )
+}
+
+@Composable
+private fun highlightSelectedWords(
+    text: String,
+    words: Set<String>,
+): AnnotatedString {
+    val builder = AnnotatedString.Builder(text.length)
+
+    if (words.isEmpty() || text.isBlank()) {
+        builder.append(text)
+        return builder.toAnnotatedString()
+    }
+
+    val lowercaseWords = words.map { it.lowercase() }.toSet()
+
+    val highlightStyle = SpanStyle(
+        color = MaterialTheme.colorScheme.primary,
+        fontWeight = FontWeight.Bold,
+        textDecoration = TextDecoration.Underline,
+    )
+
+    var currentIndex = 0
+    while (currentIndex < text.length) {
+        var nextWordStart = currentIndex
+        while (nextWordStart < text.length && !text[nextWordStart].isLetterOrDigit()) {
+            nextWordStart++
+        }
+
+        if (nextWordStart > currentIndex) {
+            builder.append(text.substring(currentIndex, nextWordStart))
+        }
+
+        var nextWordEnd = nextWordStart
+        while (nextWordEnd < text.length && text[nextWordEnd].isLetterOrDigit()) {
+            nextWordEnd++
+        }
+
+        if (nextWordEnd > nextWordStart) {
+            val word = text.substring(nextWordStart, nextWordEnd)
+            val lowercaseWord = word.lowercase()
+
+            if (lowercaseWords.contains(lowercaseWord)) {
+                val start = builder.length
+                builder.append(word)
+                val end = builder.length
+                builder.addStyle(highlightStyle, start, end)
+            } else {
+                builder.append(word)
+            }
+            currentIndex = nextWordEnd
+        } else {
+            currentIndex = nextWordStart
+        }
+    }
+
+    return builder.toAnnotatedString()
 }
 
 @Preview
@@ -186,8 +289,11 @@ private fun StoryTextPreview() {
                 "Mina elan Tartus.",
                 "Mina olen 32 aastat vana.",
             ),
+            selectedWords = setOf("code", "kotlin"),
             modifier = Modifier.fillMaxWidth(),
+            onWordSelected = { _ -> },
             onCopyClick = {},
         )
     }
 }
+

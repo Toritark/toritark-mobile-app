@@ -1,6 +1,7 @@
 package com.toritark.stories.presentation.core_ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,8 +28,11 @@ fun FlatCard(
     modifier: Modifier = Modifier,
     backgroundColor: Color,
     cornerRadius: Dp,
+    padding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 24.dp),
     rightIcon: ImageVector? = null,
     rightIconTint: Color = LocalContentColor.current,
+    borderColor: Color? = null,
+    borderWidth: Dp? = null,
     onClick: () -> Unit = {},
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -42,12 +46,20 @@ fun FlatCard(
                 color = backgroundColor,
                 shape = shape,
             )
+            .let {
+                if (borderColor != null && borderWidth != null) {
+                    it.border(width = borderWidth, color = borderColor, shape = shape)
+                } else {
+                    it
+                }
+            }
+            .fillMaxWidth()
             .clip(shape)
             .clickable {
                 hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick()
             }
-            .padding(horizontal = 8.dp, vertical = 24.dp),
+            .padding(padding),
     ) {
         content()
 

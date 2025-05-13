@@ -32,6 +32,12 @@ internal class StoryTextViewModel(
         onPopBackStack()
     }
 
+    fun onAddWordsToLearningSetClick(words: Set<String>) {
+        logger.d { "onAddWordsToLearningSetClick: words=$words" }
+
+        // TODO
+    }
+
     private companion object {
         private const val LOG_TAG = "StoryTextViewModel"
     }
