@@ -1,21 +1,68 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web.
+# Toritark Stories
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+A language learning application that helps users learn languages through text stories.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## 🌐 Supported languages
 
+- 🇬🇧 English
+- 🇪🇸 Spanish
+- 🇩🇪 German
+- 🇫🇷 French
+- 🇮🇹 Italian
+- 🇷🇺 Russian
+- 🇺🇦 Ukrainian
+- 🇵🇱 Polish
+- 🇨🇿 Czech
+- 🇷🇸 Serbian
+- 🇵🇹 Portuguese
+- 🇫🇮 Finnish
+- 🇸🇪 Swedish
+- 🇪🇪 Estonian
+- 🇱🇻 Latvian
+- 🇱🇹 Lithuanian
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+## 🚧 Work in Progress
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+This project is currently a Work in Progress (WIP). It's being developed as an MVP with the goal of rapid development.
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+## 📱 Platform Support
+
+- ✅ Android (current)
+- 🔜 iOS (planned)
+- 🌐 Web (planned)
+
+## 📋 Features
+
+- Language selection (native and learning)
+- Interactive stories for language learning
+- Word and sentence learning tools
+- Progress tracking
+
+## 🔧 Technical Details
+
+- **Kotlin Multiplatform** - Cross-platform development
+- **Compose Multiplatform** - Cross-platform UI
+- **Material 3** - UI
+- **Koin** - DI
+- **Ktor** - HTTP client
+- **Room** - Cross-platform SQLite ORM
+- **Kotlinx Serialization** - JSON serialization/deserialization
+- **Kotlinx Coroutines** - Asynchronous programming
+- **Kotlinx DateTime** - Date and time handling
+- **Coil** - Image loading library
+- **Auth0** - Authentication service
+- **RevenueCat** - IAP
+- **KSoup** - HTML parsing (for text highlighting)
+- **Django** - Backend (closed-source)
+
+## ⚠️ Requirements
+
+This application requires a backend server to run, which is closed-source.
+
+## 🧪 Testing
+
+Tests will be added later as this is an MVP focused on rapid development.
+
+## 📜 License
+
+Attribution-NonCommercial-ShareAlike 4.0 International
