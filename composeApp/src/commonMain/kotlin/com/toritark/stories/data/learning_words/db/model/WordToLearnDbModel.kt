@@ -1,4 +1,4 @@
-package com.toritark.stories.data.word.db.model
+package com.toritark.stories.data.learning_words.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -16,10 +16,10 @@ import kotlinx.datetime.Instant
         Index(value = ["language_code", "text"], unique = true),
         Index(value = ["language_code", "is_learned"], unique = false),
         Index(value = ["is_learned"], unique = false),
-        Index(value = ["languageCode"], unique = false),
-        Index(value = ["correctAttempts"], unique = false),
-        Index(value = ["incorrectAttempts"], unique = false),
-        Index(value = ["lastAttempt"], unique = false),
+        Index(value = ["language_code"], unique = false),
+        Index(value = ["correct_attempts"], unique = false),
+        Index(value = ["incorrect_attempts"], unique = false),
+        Index(value = ["last_attempt"], unique = false),
     ],
 )
 data class WordToLearnDbModel(

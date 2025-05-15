@@ -1,4 +1,4 @@
-package com.toritark.stories.data.word.db.converter
+package com.toritark.stories.data.learning_words.db.converter
 
 import androidx.room.TypeConverter
 import kotlinx.datetime.Instant

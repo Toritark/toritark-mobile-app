@@ -1,4 +1,4 @@
-package com.toritark.stories.data.word.db.model
+package com.toritark.stories.data.learning_words.db.model
 
 import androidx.room.Embedded
 import androidx.room.Junction

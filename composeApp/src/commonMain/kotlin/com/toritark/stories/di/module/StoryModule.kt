@@ -44,6 +44,7 @@ val storyModule = module {
 
     viewModel {
         StoryTextViewModel(
+            learningWordsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

@@ -1,4 +1,4 @@
-package com.toritark.stories.data.word.db.model
+package com.toritark.stories.data.learning_words.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -11,13 +11,13 @@ import androidx.room.Index
     foreignKeys = [
         ForeignKey(
             entity = WordToLearnDbModel::class,
-            parentColumns = ["word_id"],
+            parentColumns = ["id"],
             childColumns = ["word_id"],
             onDelete = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = SentenceToLearnDbModel::class,
-            parentColumns = ["sentence_id"],
+            parentColumns = ["id"],
             childColumns = ["sentence_id"],
             onDelete = ForeignKey.CASCADE,
         )

@@ -1,8 +1,6 @@
 package com.toritark.stories.presentation.core_ui.screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 private const val ERROR_MESSAGE_DELAY_MS = 1000L * 5
+private const val MESSAGE_DELAY_MS = 1000L * 3
 
 @Composable
 fun <C, T : BaseViewModel<C>> BaseScreen(
@@ -18,10 +17,17 @@ fun <C, T : BaseViewModel<C>> BaseScreen(
     content: @Composable (contentValue: C) -> Unit,
 ) {
     val screenState by viewModel.screenState.collectAsState()
+    var snackbarErrorMessage by remember { mutableStateOf<String?>(null) }
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(viewModel) {
         viewModel.errorMessage.collect { message ->
+            snackbarErrorMessage = message
+        }
+    }
+
+    LaunchedEffect(viewModel) {
+        viewModel.snackBarMessage.collect { message ->
             snackbarMessage = message
         }
     }
@@ -51,16 +57,45 @@ fun <C, T : BaseViewModel<C>> BaseScreen(
             }
         }
 
+        snackbarErrorMessage?.let { message ->
+            MessageSnackbar(
+                message = message,
+                dismissDelay = ERROR_MESSAGE_DELAY_MS,
+                onDismissWithDelay = { snackbarErrorMessage = null },
+            )
+        }
+
         snackbarMessage?.let { message ->
-            Snackbar(
-                modifier = Modifier.align(Alignment.BottomCenter)
-            ) {
-                Text(text = message)
-            }
-            LaunchedEffect(message) {
-                delay(ERROR_MESSAGE_DELAY_MS)
-                snackbarMessage = null
-            }
+            MessageSnackbar(
+                message = message,
+                dismissDelay = MESSAGE_DELAY_MS,
+                onDismissWithDelay = { snackbarMessage = null },
+            )
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.MessageSnackbar(
+    message: String,
+    dismissDelay: Long = 0L,
+    onDismissWithDelay: () -> Unit = {},
+) {
+    Snackbar(
+        modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .systemBarsPadding(),
+    ) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+
+    if (dismissDelay > 0) {
+        LaunchedEffect(message) {
+            delay(dismissDelay)
+            onDismissWithDelay()
         }
     }
 }

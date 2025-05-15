@@ -1,4 +1,4 @@
-package com.toritark.stories.data.word.db.model
+package com.toritark.stories.data.learning_words.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -13,12 +13,12 @@ import kotlinx.datetime.Instant
 @Entity(
     tableName = "sentences_to_learn",
     indices = [
-        Index(value = ["language_code", "text"], unique = true),
+        Index(value = ["language_code", "learning_language_text"], unique = true),
         Index(value = ["language_code", "is_learned"], unique = false),
         Index(value = ["is_learned"], unique = false),
-        Index(value = ["correctAttempts"], unique = false),
-        Index(value = ["incorrectAttempts"], unique = false),
-        Index(value = ["lastAttempt"], unique = false),
+        Index(value = ["correct_attempts"], unique = false),
+        Index(value = ["incorrect_attempts"], unique = false),
+        Index(value = ["last_attempt"], unique = false),
     ]
 )
 data class SentenceToLearnDbModel(
@@ -29,8 +29,11 @@ data class SentenceToLearnDbModel(
     @ColumnInfo(name = "language_code")
     val languageCode: String,
 
-    @ColumnInfo(name = "text")
-    val text: String,
+    @ColumnInfo(name = "learning_language_text")
+    val learningLanguageText: String,
+
+    @ColumnInfo(name = "native_language_text")
+    val nativeLanguageText: String,
 
     @ColumnInfo(name = "is_learned")
     val isLearned: Boolean = false,
@@ -42,5 +45,5 @@ data class SentenceToLearnDbModel(
     val incorrectAttempts: Int = 0,
 
     @ColumnInfo(name = "last_attempt")
-    val lastAttempt: Instant = Instant.fromEpochMilliseconds(0L)
+    val lastAttempt: Instant = Instant.fromEpochMilliseconds(0L),
 )

@@ -72,6 +72,10 @@
 
     <string name="title_story_selected_words_remove_all">Remove all</string>
     <string name="title_story_selected_words_add_to_learning">Add to learning set</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Added %1$d word to learn</item>
+        <item quantity="other">Added %1$d words to learn</item>
+    </plurals>
 
     <!-- Story quiz -->
     <string name="title_story_quiz_screen">Check yourself ✅</string>

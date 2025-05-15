@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.koin.core.component.KoinComponent
 
 abstract class BaseViewModel<C>(
@@ -22,10 +23,13 @@ abstract class BaseViewModel<C>(
     protected var contentValue: C = defaultContentValue
 
     private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Content(defaultContentValue))
-    val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
+    val screenState = _screenState.asStateFlow()
 
     private val _errorMessage = MutableSharedFlow<String>()
-    val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
+    val errorMessage = _errorMessage.asSharedFlow()
+
+    private val _snackBarMessage = MutableSharedFlow<String>()
+    val snackBarMessage = _snackBarMessage.asSharedFlow()
 
     var onNavigateTo: OnNavigateTo = { _, _ -> }
     var onPopBackStack: OnPopBackStack = {}
@@ -78,6 +82,14 @@ abstract class BaseViewModel<C>(
 
     suspend fun showErrorMessage(message: String) {
         _errorMessage.emit(message)
+    }
+
+    protected suspend fun showSnackBarMessage(message: String) {
+        _snackBarMessage.emit(message)
+    }
+
+    protected suspend fun showSnackBarMessage(messageResource: StringResource) {
+        showSnackBarMessage(getString(messageResource))
     }
 
     open fun onRetryClick() {

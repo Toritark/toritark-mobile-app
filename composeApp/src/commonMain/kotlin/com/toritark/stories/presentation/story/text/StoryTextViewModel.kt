@@ -1,12 +1,20 @@
 package com.toritark.stories.presentation.story.text
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.stories.data.learning_words.data.model.SentenceToLearn
 import com.toritark.stories.data.story.model.story.story.StoryApiModel
+import com.toritark.stories.domain.learning_words.interactor.LearningWordsInteractor
 import com.toritark.stories.presentation.core_ui.screen.BaseViewModel
 import com.toritark.stories.presentation.story.text.model.StoryTextScreenContent
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getPluralString
+import toritark.composeapp.generated.resources.Res
+import toritark.composeapp.generated.resources.message_added_selected_words_to_learning
 
 internal class StoryTextViewModel(
+    private val learningWordsInteractor: LearningWordsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -35,7 +43,34 @@ internal class StoryTextViewModel(
     fun onAddWordsToLearningSetClick(words: Set<String>) {
         logger.d { "onAddWordsToLearningSetClick: words=$words" }
 
-        // TODO
+        val story = contentValue.story ?: return
+
+        viewModelScope.launch {
+            val sentences = story.learningLanguageText.mapIndexed { index, learningLanguageText ->
+                SentenceToLearn(
+                    learningLanguageText = learningLanguageText,
+                    nativeLanguageText = story.nativeLanguageText[index],
+                )
+            }.toSet()
+
+            learningWordsInteractor
+                .addWords(
+                    words = words,
+                    sentences = sentences,
+                )
+                .onErrorShowMessage()
+                .collect {
+                    logger.d { "onAddWordsToLearningSetClick: added" }
+
+                    showSnackBarMessage(
+                        getPluralString(
+                            Res.plurals.message_added_selected_words_to_learning,
+                            words.size,
+                            words.size,
+                        )
+                    )
+                }
+        }
     }
 
     private companion object {
