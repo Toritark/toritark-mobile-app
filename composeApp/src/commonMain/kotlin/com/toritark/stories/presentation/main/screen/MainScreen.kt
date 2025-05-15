@@ -19,7 +19,9 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
+import com.toritark.stories.presentation.learning_words.main.LearningWordsMainScreen
 import com.toritark.stories.presentation.main.nav.MainScreenDestination
+import com.toritark.stories.presentation.profile.main.ProfileMainScreen
 import com.toritark.stories.presentation.story.detail.StoryDetailScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -75,8 +77,19 @@ internal fun MainScreen(
                     )
                 }
 
-                MainScreenDestination.LearningWords -> TODO()
-                MainScreenDestination.Profile -> TODO()
+                MainScreenDestination.LearningWords -> {
+                    LearningWordsMainScreen(
+                        onNavigateTo = onNavigateTo,
+                        onPopBackStack = onPopBackStack,
+                    )
+                }
+
+                MainScreenDestination.Profile -> {
+                    ProfileMainScreen(
+                        onNavigateTo = onNavigateTo,
+                        onPopBackStack = onPopBackStack,
+                    )
+                }
             }
         }
     }

@@ -9,7 +9,9 @@ import com.toritark.stories.di.name.DispatchersNames
 import com.toritark.stories.di.name.LearningWordsNames
 import com.toritark.stories.domain.learning_words.interactor.LearningWordsInteractor
 import com.toritark.stories.domain.learning_words.interactor.LearningWordsInteractorImpl
+import com.toritark.stories.presentation.learning_words.main.LearningWordsMainViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -61,6 +63,15 @@ val learningWordsModule = module {
         LearningWordsInteractorImpl(
             languagesRepository = get(),
             learningWordsRepository = get(),
+        )
+    }
+
+    viewModel {
+        LearningWordsMainViewModel(
+            learningWordsInteractor = get(),
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
         )
     }
 }
