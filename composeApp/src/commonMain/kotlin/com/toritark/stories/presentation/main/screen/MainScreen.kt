@@ -3,22 +3,31 @@
 package com.toritark.stories.presentation.main.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Book
+import androidx.compose.material.icons.rounded.Checklist
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
+import com.toritark.stories.presentation.main.nav.MainScreenDestination
 import com.toritark.stories.presentation.story.detail.StoryDetailScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import toritark.composeapp.generated.resources.Res
-import toritark.composeapp.generated.resources.title_main_screen_topbar
+import toritark.composeapp.generated.resources.*
 
 @Composable
 internal fun MainScreen(
+    destination: MainScreenDestination,
     onNavigateTo: OnNavigateTo,
     onPopBackStack: OnPopBackStack,
     viewModel: MainViewModel = koinViewModel(),
@@ -48,14 +57,95 @@ internal fun MainScreen(
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
             )
         },
+        bottomBar = {
+            BottomNavigationBar(
+                currentDestination = destination,
+                onNavigateTo = onNavigateTo,
+            )
+        }
     ) { innerPadding ->
         Box(
             modifier = Modifier.padding(innerPadding)
         ) {
-            StoryDetailScreen(
-                onNavigateTo = onNavigateTo,
-                onPopBackStack = onPopBackStack,
-            )
+            when (destination) {
+                MainScreenDestination.Story -> {
+                    StoryDetailScreen(
+                        onNavigateTo = onNavigateTo,
+                        onPopBackStack = onPopBackStack,
+                    )
+                }
+
+                MainScreenDestination.LearningWords -> TODO()
+                MainScreenDestination.Profile -> TODO()
+            }
         }
     }
+}
+
+@Composable
+private fun BottomNavigationBar(
+    currentDestination: MainScreenDestination,
+    onNavigateTo: OnNavigateTo,
+) {
+    NavigationBar(
+        modifier = Modifier
+            .fillMaxWidth(),
+    ) {
+        BottomNavigationBarItem(
+            currentDestination = currentDestination,
+            targetDestination = MainScreenDestination.Story,
+            labelText = stringResource(Res.string.title_main_bottom_nav_story),
+            icon = Icons.Rounded.Book,
+            onNavigateTo = onNavigateTo,
+        )
+
+        BottomNavigationBarItem(
+            currentDestination = currentDestination,
+            targetDestination = MainScreenDestination.LearningWords,
+            labelText = stringResource(Res.string.title_main_bottom_nav_learning_words),
+            icon = Icons.Rounded.Checklist,
+            onNavigateTo = onNavigateTo,
+        )
+
+        BottomNavigationBarItem(
+            currentDestination = currentDestination,
+            targetDestination = MainScreenDestination.Profile,
+            labelText = stringResource(Res.string.title_main_bottom_nav_profile),
+            icon = Icons.Rounded.Person,
+            onNavigateTo = onNavigateTo,
+        )
+    }
+}
+
+@Composable
+private fun RowScope.BottomNavigationBarItem(
+    currentDestination: MainScreenDestination,
+    targetDestination: MainScreenDestination,
+    labelText: String,
+    icon: ImageVector,
+    onNavigateTo: OnNavigateTo,
+) {
+    val hapticFeedback = LocalHapticFeedback.current
+
+    NavigationBarItem(
+        selected = currentDestination == targetDestination,
+        onClick = {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+
+            if (currentDestination != targetDestination) {
+                onNavigateTo(targetDestination) {}
+            }
+        },
+        label = {
+            Text(
+                text = labelText,
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = icon,
+                contentDescription = labelText,
+            )
+        }
+    )
 }

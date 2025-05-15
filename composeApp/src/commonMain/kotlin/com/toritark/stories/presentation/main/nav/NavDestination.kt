@@ -9,10 +9,60 @@ import com.toritark.stories.presentation.main.screen.MainScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object MainScreenDestination : NavDestination
+sealed interface MainScreenDestination : NavDestination {
+
+    @Serializable
+    data object Story : MainScreenDestination
+
+    @Serializable
+    data object LearningWords : MainScreenDestination
+
+    @Serializable
+    data object Profile : MainScreenDestination
+}
 
 fun NavGraphBuilder.mainScreen(onNavigateTo: OnNavigateTo, onPopBackStack: OnPopBackStack) {
-    composable<MainScreenDestination> {
-        MainScreen(onNavigateTo = onNavigateTo, onPopBackStack = onPopBackStack)
+    mainScreenChild<MainScreenDestination.Story>(
+        onNavigateTo = onNavigateTo,
+        onPopBackStack = onPopBackStack,
+        destination = MainScreenDestination.Story,
+    )
+    mainScreenChild<MainScreenDestination.LearningWords>(
+        onNavigateTo = onNavigateTo,
+        onPopBackStack = onPopBackStack,
+        destination = MainScreenDestination.LearningWords,
+    )
+    mainScreenChild<MainScreenDestination.Profile>(
+        onNavigateTo = onNavigateTo,
+        onPopBackStack = onPopBackStack,
+        destination = MainScreenDestination.Profile,
+    )
+}
+
+private inline fun <reified T : MainScreenDestination> NavGraphBuilder.mainScreenChild(
+    noinline onNavigateTo: OnNavigateTo,
+    noinline onPopBackStack: OnPopBackStack,
+    destination: T,
+) {
+    composable<T> { navBackStackEntry ->
+        MainScreen(
+            destination = destination,
+            onNavigateTo = { navDestination, navOptionsBuilder ->
+                if (navDestination is MainScreenDestination) {
+                    onNavigateTo(navDestination) {
+                        launchSingleTop = true
+
+                        popUpTo(navDestination) {
+                            inclusive = true
+                        }
+
+                        navOptionsBuilder()
+                    }
+                } else {
+                    onNavigateTo(navDestination, navOptionsBuilder)
+                }
+            },
+            onPopBackStack = onPopBackStack,
+        )
     }
 }

@@ -32,6 +32,10 @@
     <!-- Main screen -->
     <string name="title_main_screen_topbar">Toritark</string>
 
+    <string name="title_main_bottom_nav_story">Story</string>
+    <string name="title_main_bottom_nav_learning_words">Learn words</string>
+    <string name="title_main_bottom_nav_profile">Profile</string>
+
     <!-- Story detail -->
     <string name="title_story_customize_prompt_dropdown">Customize the story</string>
     <string name="hint_story_customize_prompt">Enter your story instructions here...</string>

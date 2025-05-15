@@ -51,7 +51,7 @@ class SplashViewModel(
             logger.d { "navigateAuthenticated: navigate to main screen" }
 
             withContext(mainDispatcher) {
-                onNavigateTo(MainScreenDestination) {
+                onNavigateTo(MainScreenDestination.Story) {
                     popUpTo(SplashScreenDestination) { inclusive = true }
                 }
             }

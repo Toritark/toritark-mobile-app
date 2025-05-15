@@ -75,7 +75,7 @@ internal class OnboardingMainViewModel(
     private fun openMainScreen() {
         logger.d { "openMainScreen" }
 
-        onNavigateTo(MainScreenDestination) {}
+        onNavigateTo(MainScreenDestination.Story) {}
     }
 
     private companion object {
