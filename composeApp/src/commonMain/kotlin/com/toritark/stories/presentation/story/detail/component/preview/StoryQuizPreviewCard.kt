@@ -1,5 +1,6 @@
 package com.toritark.stories.presentation.story.detail.component.preview
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
@@ -16,6 +17,7 @@ import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVertical
 import com.toritark.stories.presentation.core_ui.component.FlatCard
 import com.toritark.stories.presentation.core_ui.icon.AppIcons
 import com.toritark.stories.presentation.core_ui.icon.Quiz
+import com.toritark.stories.presentation.main.app.AppTheme
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -32,10 +34,12 @@ internal fun StoryQuizPreviewCard(
     FadeAndExpandVerticallyAnimation {
         FlatCard(
             modifier = modifier,
-            backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+            backgroundColor = MaterialTheme.colorScheme.background,
             cornerRadius = 24.dp,
+            borderWidth = 1.dp,
+            borderColor = MaterialTheme.colorScheme.secondary,
             rightIcon = Icons.Default.ChevronRight,
-            rightIconTint = MaterialTheme.colorScheme.onSurfaceVariant,
+            rightIconTint = MaterialTheme.colorScheme.onBackground,
             onClick = onClick,
         ) {
             CardBody(
@@ -59,7 +63,11 @@ private fun RowScope.CardBody(
         Spacer(modifier = Modifier.size(8.dp))
 
         Text(
-            text = pluralStringResource(Res.plurals.desc_story_quiz, story.questions.size, story.questions.size),
+            text = pluralStringResource(
+                Res.plurals.desc_story_quiz,
+                story.questions.size,
+                story.questions.size,
+            ),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
@@ -75,7 +83,7 @@ private fun CardHeader() {
                 .size(24.dp),
             imageVector = AppIcons.Quiz,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = MaterialTheme.colorScheme.onBackground,
         )
 
         Text(
@@ -84,7 +92,7 @@ private fun CardHeader() {
                 .padding(start = 8.dp),
             text = stringResource(Res.string.title_story_quiz),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
@@ -115,10 +123,19 @@ private fun StoryQuizPreviewCardPreview() {
         ),
     )
 
-    StoryQuizPreviewCard(
-        modifier = Modifier
-            .fillMaxWidth(),
-        story = story,
-        onClick = {},
-    )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 600.dp, height = 400.dp)
+                .background(color = MaterialTheme.colorScheme.surface),
+        ) {
+            StoryQuizPreviewCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                story = story,
+                onClick = {},
+            )
+        }
+    }
 }

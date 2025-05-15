@@ -7,9 +7,13 @@ import androidx.room.Relation
 data class SentenceToLearnWithWords(
     @Embedded val sentence: SentenceToLearnDbModel,
     @Relation(
-        parentColumn = "sentence_id",
-        entityColumn = "word_id",
-        associateBy = Junction(WordSentenceToLearnCrossRef::class),
+        parentColumn = "id",
+        entityColumn = "id",
+        associateBy = Junction(
+            value = WordSentenceToLearnCrossRef::class,
+            parentColumn = "sentence_id",
+            entityColumn = "word_id"
+        ),
     )
     val words: List<WordToLearnDbModel>,
 )

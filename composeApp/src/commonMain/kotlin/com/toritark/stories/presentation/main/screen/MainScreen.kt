@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Person
@@ -37,24 +36,18 @@ internal fun MainScreen(
     viewModel.onNavigateTo = onNavigateTo
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
                 ),
                 title = {
                     Text(stringResource(Res.string.title_main_screen_topbar))
                 },
                 actions = {
-                    IconButton(onClick = {
-                        // TODO: Open settings screen
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Settings,
-                            contentDescription = null,
-                        )
-                    }
+
                 },
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
             )
@@ -103,6 +96,7 @@ private fun BottomNavigationBar(
     NavigationBar(
         modifier = Modifier
             .fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.background,
     ) {
         BottomNavigationBarItem(
             currentDestination = currentDestination,
@@ -142,6 +136,15 @@ private fun RowScope.BottomNavigationBarItem(
 
     NavigationBarItem(
         selected = currentDestination == targetDestination,
+        colors = NavigationBarItemDefaults.colors(
+            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+
+            selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            selectedTextColor = MaterialTheme.colorScheme.onSurface,
+
+            indicatorColor = MaterialTheme.colorScheme.secondary,
+        ),
         onClick = {
             hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
 
@@ -152,12 +155,14 @@ private fun RowScope.BottomNavigationBarItem(
         label = {
             Text(
                 text = labelText,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         },
         icon = {
             Icon(
                 imageVector = icon,
                 contentDescription = labelText,
+                tint = MaterialTheme.colorScheme.onBackground,
             )
         }
     )

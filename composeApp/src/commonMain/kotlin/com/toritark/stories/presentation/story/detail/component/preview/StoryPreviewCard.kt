@@ -1,5 +1,6 @@
 package com.toritark.stories.presentation.story.detail.component.preview
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
@@ -16,6 +17,7 @@ import com.toritark.stories.presentation.core_ui.animation.FadeAndExpandVertical
 import com.toritark.stories.presentation.core_ui.component.FlatCard
 import com.toritark.stories.presentation.core_ui.icon.AppIcons
 import com.toritark.stories.presentation.core_ui.icon.Story
+import com.toritark.stories.presentation.main.app.AppTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import toritark.composeapp.generated.resources.Res
@@ -30,10 +32,10 @@ internal fun StoryPreviewCard(
     FadeAndExpandVerticallyAnimation {
         FlatCard(
             modifier = modifier,
-            backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+            backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
             cornerRadius = 24.dp,
             rightIcon = Icons.Default.ChevronRight,
-            rightIconTint = MaterialTheme.colorScheme.onPrimaryContainer,
+            rightIconTint = MaterialTheme.colorScheme.onSurfaceVariant,
             onClick = onClick,
         ) {
             CardBody(
@@ -60,7 +62,7 @@ private fun RowScope.CardBody(
         Text(
             text = story.learningLanguageText.joinToString("\n"),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis,
         )
@@ -76,7 +78,7 @@ private fun CardHeader() {
                 .size(24.dp),
             imageVector = AppIcons.Story,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Text(
@@ -85,7 +87,7 @@ private fun CardHeader() {
                 .padding(start = 8.dp),
             text = stringResource(Res.string.title_story_preview_read_your_story),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -106,10 +108,19 @@ private fun StoryPreviewCardPreview() {
         questions = emptyList(),
     )
 
-    StoryPreviewCard(
-        modifier = Modifier
-            .fillMaxWidth(),
-        story = story,
-        onClick = {},
-    )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 600.dp, height = 400.dp)
+                .background(color = MaterialTheme.colorScheme.surface),
+        ) {
+            StoryPreviewCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                story = story,
+                onClick = {},
+            )
+        }
+    }
 }

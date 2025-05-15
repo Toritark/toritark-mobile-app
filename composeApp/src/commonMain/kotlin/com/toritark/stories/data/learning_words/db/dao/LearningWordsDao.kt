@@ -15,21 +15,13 @@ internal interface LearningWordsDao {
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateWords(words: Collection<WordToLearnDbModel>)
 
-//    @Query("SELECT * FROM words_to_learn WHERE id = :wordId")
-//    suspend fun getWordById(wordId: Long): WordToLearnDbModel?
-//
-//    @Query("SELECT * FROM words_to_learn WHERE text = :text")
-//    suspend fun getWordByText(text: String): WordToLearnDbModel?
-//
-//    @Query("SELECT * FROM words_to_learn WHERE is_learned = 0 ORDER BY last_attempt_timestamp ASC LIMIT 1")
-//    suspend fun getNextWordToLearn(): WordToLearnDbModel?
-//
-//    // To observe changes for the next word to learn
-//    @Query("SELECT * FROM words_to_learn WHERE is_learned = 0 ORDER BY last_attempt_timestamp ASC LIMIT 1")
-//    fun getNextWordToLearnFlow(): Flow<WordToLearnDbModel?>
-//
-//    @Transaction // Ensures atomic operation
-//    @Query("SELECT * FROM words_to_learn WHERE word_id = :wordId")
-//    suspend fun getWordWithSentences(wordId: Long): WordWithSentences?
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun updateWord(word: WordToLearnDbModel)
 
+    @Query("SELECT COUNT(id) FROM words_to_learn WHERE is_learned = 0 AND language_code = :languageCode")
+    suspend fun getWordsToLearnCount(languageCode: String): Long
+
+    @Transaction
+    @Query("SELECT COUNT(id) FROM words_to_learn WHERE language_code = :languageCode")
+    suspend fun getTotalWordsCount(languageCode: String): Long
 }

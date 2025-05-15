@@ -1,13 +1,17 @@
 package com.toritark.stories.data.learning_words.repository
 
 import co.touchlab.kermit.Logger
+import com.toritark.stories.data.learning_words.data.model.LearningStats
 import com.toritark.stories.data.learning_words.data.model.SentenceToLearn
 import com.toritark.stories.data.learning_words.db.dao.LearningSentencesDao
 import com.toritark.stories.data.learning_words.db.dao.LearningWordsDao
 import com.toritark.stories.data.learning_words.db.dao.WordsSentencesToLearnCrossRefDao
 import com.toritark.stories.data.learning_words.db.model.SentenceToLearnDbModel
+import com.toritark.stories.data.learning_words.db.model.SentenceToLearnWithWords
 import com.toritark.stories.data.learning_words.db.model.WordSentenceToLearnCrossRef
 import com.toritark.stories.data.learning_words.db.model.WordToLearnDbModel
+import com.toritark.stories.util.core.extension.flow.optionalTypedFlow
+import com.toritark.stories.util.core.extension.flow.typedFlow
 import com.toritark.stories.util.core.extension.flow.unitFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +24,13 @@ internal interface LearningWordsRepository {
         words: Set<String>,
         sentences: Set<SentenceToLearn>,
     ): Flow<Unit>
+
+    fun getNextSentenceToLearn(languageCode: String): Flow<SentenceToLearnWithWords>
+
+    fun getLearningStats(languageCode: String): Flow<LearningStats>
+
+    suspend fun updateWords(words: Collection<WordToLearnDbModel>)
+    suspend fun updateSentence(sentence: SentenceToLearnDbModel)
 }
 
 internal class LearningWordsRepositoryImpl(
@@ -206,6 +217,39 @@ internal class LearningWordsRepositoryImpl(
             .filter { word -> word.isNotBlank() }
             .map { word -> word.lowercase() }
             .toSet()
+    }
+
+    override fun getNextSentenceToLearn(languageCode: String): Flow<SentenceToLearnWithWords> {
+        return optionalTypedFlow {
+            learningSentencesDao.getNextSentenceToLearn(languageCode = languageCode)
+        }.flowOn(ioDispatcher)
+    }
+
+    override fun getLearningStats(languageCode: String): Flow<LearningStats> {
+        return typedFlow {
+            val wordsToLearnCount = learningWordsDao.getWordsToLearnCount(languageCode = languageCode)
+            val totalWordsCount = learningWordsDao.getTotalWordsCount(languageCode = languageCode)
+
+            LearningStats(
+                words = LearningStats.Words(
+                    learned = totalWordsCount - wordsToLearnCount,
+                    toLearn = wordsToLearnCount,
+                    total = totalWordsCount,
+                )
+            )
+        }.flowOn(ioDispatcher)
+    }
+
+    override suspend fun updateWords(words: Collection<WordToLearnDbModel>) {
+        withContext(ioDispatcher) {
+            learningWordsDao.updateWords(words)
+        }
+    }
+
+    override suspend fun updateSentence(sentence: SentenceToLearnDbModel) {
+        withContext(ioDispatcher) {
+            learningSentencesDao.updateSentence(sentence)
+        }
     }
 
     private companion object {

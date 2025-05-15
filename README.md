@@ -25,6 +25,10 @@ A language learning application that helps users learn languages through text st
 
 This project is currently a Work in Progress (WIP). It's being developed as an MVP with the goal of rapid development.
 
+No Compose optimizations performed yet. Will be added after the basic implementation is complete.
+
+Commits are huge because of the same reason.
+
 ## 📱 Platform Support
 
 - ✅ Android (current)

@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -81,14 +82,18 @@ private fun StoryRetellingContent(
     val textFieldBringIntoViewRequester = remember { BringIntoViewRequester() }
     val coroutineScope = rememberCoroutineScope()
 
+    val shape = RoundedCornerShape(24.dp)
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.secondary,
-                shape = RoundedCornerShape(24.dp)
+                shape = shape,
             )
+            .clip(shape)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 8.dp, vertical = 24.dp),
     ) {
         Column(
@@ -303,7 +308,7 @@ private fun StoryRetellingContentPreviewReady() {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
-                .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                .background(color = MaterialTheme.colorScheme.surface)
                 .padding(horizontal = 16.dp, vertical = 24.dp)
         ) {
             StoryRetellingContent(

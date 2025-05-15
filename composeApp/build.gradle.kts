@@ -85,6 +85,8 @@ kotlin {
 
             implementation(libs.ksoup.html)
 
+            implementation(libs.rebugger)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

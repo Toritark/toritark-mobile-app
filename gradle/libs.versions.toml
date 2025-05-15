@@ -37,6 +37,8 @@ firebase-android-bom = "33.13.0"
 
 auth0-android = "3.7.0"
 
+rebugger = "1.0.0-rc03"
+
 androidx-espresso-core = "3.6.1"
 androidx-test-junit = "1.2.1"
 junit = "4.13.2"
@@ -96,6 +98,8 @@ firebase-android-messaging-ktx = { module = "com.google.firebase:firebase-messag
 auth0-android = { module = "com.auth0.android:auth0", version.ref = "auth0-android" }
 
 ksoup-html = { module = "com.mohamedrejeb.ksoup:ksoup-html", version.ref = "ksoup" }
+
+rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

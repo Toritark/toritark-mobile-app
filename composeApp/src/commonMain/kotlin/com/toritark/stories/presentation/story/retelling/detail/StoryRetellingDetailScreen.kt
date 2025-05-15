@@ -23,12 +23,12 @@ import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingSentenceReviewApiModel
-import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import com.toritark.stories.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.stories.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.stories.presentation.core_ui.screen.BaseScreen
 import com.toritark.stories.presentation.core_ui.text.htmlToAnnotatedString
 import com.toritark.stories.presentation.main.app.AppTheme
+import com.toritark.stories.presentation.main.app.LocalExtendedColors
 import com.toritark.stories.presentation.story.retelling.component.StoryRetellingReviewSummary
 import com.toritark.stories.presentation.story.retelling.detail.model.StoryRetellingDetailScreenContent
 import org.jetbrains.compose.resources.stringResource
@@ -121,7 +121,7 @@ private fun RetellingSentenceReview(
     review: StoryRetellingSentenceReviewApiModel,
 ) {
     val color = when (review.status) {
-        StoryRetellingSentenceReviewApiModel.Status.CORRECT -> AppTheme.successColors.success
+        StoryRetellingSentenceReviewApiModel.Status.CORRECT -> LocalExtendedColors.current.success.success
         StoryRetellingSentenceReviewApiModel.Status.WRONG -> MaterialTheme.colorScheme.error
     }
 
@@ -154,7 +154,7 @@ private fun RetellingSentenceReview(
             StoryRetellingSentenceReviewText(
                 text = review.correctedSentence,
                 icon = Icons.Default.Check,
-                color = AppTheme.successColors.success,
+                color = LocalExtendedColors.current.success.success,
             )
         }
 

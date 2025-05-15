@@ -1,5 +1,6 @@
 package com.toritark.stories.presentation.story.detail.component.generate
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.toritark.stories.data.story.model.topic.StoryTopic
 import com.toritark.stories.presentation.core_ui.icon.AppIcons
 import com.toritark.stories.presentation.core_ui.icon.Magic
+import com.toritark.stories.presentation.main.app.AppTheme
 import com.toritark.stories.presentation.story.model.StoryTopicUiModel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -116,6 +118,9 @@ private fun StoryTopicDropdown(
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(12.dp),
             onClick = { expanded = true },
+            colors = AssistChipDefaults.assistChipColors(
+                labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
             label = {
                 Text(
                     text = topicText,
@@ -128,7 +133,7 @@ private fun StoryTopicDropdown(
                 Icon(
                     imageVector = if (expanded) Icons.Filled.ArrowDropUp else Icons.Filled.ArrowDropDown,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             },
         )
@@ -136,6 +141,9 @@ private fun StoryTopicDropdown(
         // Dropdown menu
         DropdownMenu(
             expanded = expanded,
+            containerColor = MaterialTheme.colorScheme.surface,
+            shadowElevation = 0.dp,
+            border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary),
             onDismissRequest = { expanded = false },
             modifier = Modifier
         ) {
@@ -144,7 +152,8 @@ private fun StoryTopicDropdown(
                     text = {
                         Text(
                             text = stringResource(topic.nameResource),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     },
                     onClick = {
@@ -161,39 +170,43 @@ private fun StoryTopicDropdown(
 @Preview
 @Composable
 private fun StoryTopicDropdownPreview() {
-    Box(
-        modifier = Modifier
-            .size(width = 200.dp, height = 200.dp)
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp)
-    ) {
-        StoryTopicDropdown(
-            modifier = Modifier.height(100.dp),
-            topics = previewTopics,
-            selectedTopic = previewTopics.firstOrNull(),
-            onTopicSelected = {},
-        )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 200.dp, height = 200.dp)
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(16.dp)
+        ) {
+            StoryTopicDropdown(
+                modifier = Modifier.height(100.dp),
+                topics = previewTopics,
+                selectedTopic = previewTopics.firstOrNull(),
+                onTopicSelected = {},
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 private fun GenerateStoryHeaderPreview() {
-    Box(
-        modifier = Modifier
-            .size(width = 400.dp, height = 200.dp)
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(16.dp)
-    ) {
-        GenerateStoryHeader(
-            topics = previewTopics,
-            selectedTopic = previewTopics.firstOrNull(),
-            isPromptVisible = false,
-            isGenerateButtonEnabled = true,
-            onTopicSelected = {},
-            onCustomizeClick = {},
-            onGenerateClick = {},
-        )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 200.dp)
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(16.dp)
+        ) {
+            GenerateStoryHeader(
+                topics = previewTopics,
+                selectedTopic = previewTopics.firstOrNull(),
+                isPromptVisible = false,
+                isGenerateButtonEnabled = true,
+                onTopicSelected = {},
+                onCustomizeClick = {},
+                onGenerateClick = {},
+            )
+        }
     }
 }
 

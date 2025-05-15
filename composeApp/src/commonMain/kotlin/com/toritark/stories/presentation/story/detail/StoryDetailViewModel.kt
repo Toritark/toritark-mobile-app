@@ -72,9 +72,16 @@ internal class StoryDetailViewModel(
         updateAndShowContent {
             copy(
                 promptText = prompt,
-                isGenerateButtonEnabled = prompt.isNotBlank(),
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(promptText = prompt),
             )
         }
+    }
+
+    private fun isGeneratedButtonEnabled(
+        promptText: String = contentValue.promptText,
+        storyState: StoryDetailScreenContent.StoryState = contentValue.storyState,
+    ): Boolean {
+        return promptText.isNotBlank() && storyState !is StoryDetailScreenContent.StoryState.Creating
     }
 
     fun togglePromptVisibility() {
@@ -93,6 +100,7 @@ internal class StoryDetailViewModel(
         updateAndShowContent {
             copy(
                 storyState = StoryDetailScreenContent.StoryState.Creating,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenContent.StoryState.Creating),
             )
         }
 
@@ -154,14 +162,16 @@ internal class StoryDetailViewModel(
         logger.d { "onStoryGenerated: storyRequest=$storyRequest" }
 
         updateAndShowContent {
+            val newStoryState = when (storyRequest.story) {
+                null -> StoryDetailScreenContent.StoryState.Empty
+                else -> StoryDetailScreenContent.StoryState.Created(
+                    storyRequestId = storyRequest.id,
+                    story = storyRequest.story
+                )
+            }
             copy(
-                storyState = when (storyRequest.story) {
-                    null -> StoryDetailScreenContent.StoryState.Empty
-                    else -> StoryDetailScreenContent.StoryState.Created(
-                        storyRequestId = storyRequest.id,
-                        story = storyRequest.story
-                    )
-                },
+                storyState = newStoryState,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = newStoryState),
             )
         }
     }
@@ -170,7 +180,10 @@ internal class StoryDetailViewModel(
         logger.w { "onStoryGenerationError: storyRequest=$storyRequest" }
 
         updateAndShowContent {
-            copy(storyState = StoryDetailScreenContent.StoryState.Empty)
+            copy(
+                storyState = StoryDetailScreenContent.StoryState.Empty,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenContent.StoryState.Empty),
+            )
         }
 
         // TODO: Show error

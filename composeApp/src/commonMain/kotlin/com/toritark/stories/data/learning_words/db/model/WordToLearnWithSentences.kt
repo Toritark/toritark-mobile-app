@@ -9,7 +9,11 @@ data class WordToLearnWithSentences(
     @Relation(
         parentColumn = "id",
         entityColumn = "id",
-        associateBy = Junction(WordSentenceToLearnCrossRef::class),
+        associateBy = Junction(
+            value = WordSentenceToLearnCrossRef::class,
+            parentColumn = "word_id",
+            entityColumn = "sentence_id"
+        ),
     )
     val sentences: List<SentenceToLearnDbModel>,
 )

@@ -27,6 +27,8 @@ import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.title_story_text_screen
 
+private val ignoredWords = setOf(".", ",", "!", "?", ":", ";")
+
 @Composable
 internal fun StoryTextScreen(
     story: StoryApiModel,
@@ -90,6 +92,7 @@ private fun StoryTextScreenContent(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
+            // TODO: Store in ViewModel?
             var selectedWords by remember { mutableStateOf(setOf<String>()) }
 
             FadeAndExpandVerticallyAnimation(visible = selectedWords.isNotEmpty()) {
@@ -122,6 +125,8 @@ private fun StoryTextScreenContent(
                 nativeLanguageText = story.nativeLanguageText,
                 selectedWords = selectedWords,
                 onWordSelected = { word ->
+                    if (word in ignoredWords) return@StoryText
+
                     selectedWords = if (selectedWords.contains(word)) {
                         selectedWords - word
                     } else {

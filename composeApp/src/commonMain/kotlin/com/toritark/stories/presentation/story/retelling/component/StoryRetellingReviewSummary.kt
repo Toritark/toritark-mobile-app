@@ -17,6 +17,7 @@ import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingR
 import com.toritark.stories.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.stories.presentation.core_ui.component.AiDisclaimer
 import com.toritark.stories.presentation.main.app.AppTheme
+import com.toritark.stories.presentation.main.app.LocalExtendedColors
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -140,13 +141,13 @@ private fun RetellingReviewScore(
     val color = when {
         score <= 30 -> MaterialTheme.colorScheme.error
         score <= 60 -> MaterialTheme.colorScheme.primary
-        else -> AppTheme.successColors.success
+        else -> LocalExtendedColors.current.success.success
     }
 
     val trackColor = when {
         score <= 30 -> MaterialTheme.colorScheme.errorContainer
         score <= 60 -> MaterialTheme.colorScheme.primaryContainer
-        else -> AppTheme.successColors.successContainer
+        else -> LocalExtendedColors.current.success.successContainer
     }
 
     Column(

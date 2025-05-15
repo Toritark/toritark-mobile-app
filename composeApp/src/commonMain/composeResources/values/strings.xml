@@ -110,4 +110,24 @@
 
     <string name="title_retelling_review_detail_screen">Your retelling review ✨</string>
 
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">No words to learn yet.\nCreate a story and add unknown words to the learning set</string>
+    <string name="title_learning_words_no_words_create_btn">Create a story</string>
+
+    <string name="title_learning_words_next_sentence">Next sentence</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d word learned</item>
+        <item quantity="other">%1$d words learned</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d word to learn</item>
+        <item quantity="other">%1$d words to learn</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Mark these words as learned?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Yes, I've learned them</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">No, show them again later</string>
+
 </resources>
