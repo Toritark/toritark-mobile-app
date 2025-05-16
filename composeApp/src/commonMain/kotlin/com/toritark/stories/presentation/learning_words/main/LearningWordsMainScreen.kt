@@ -50,6 +50,7 @@ internal fun LearningWordsMainScreen(
             onNextClick = viewModel::onNextClick,
             onLearnedClick = viewModel::onLearnedClick,
             onNotLearnedClick = viewModel::onNotLearnedClick,
+            onHelpClick = viewModel::onHelpClick,
         )
     }
 
@@ -64,6 +65,7 @@ private fun ScreenContent(
     onNextClick: () -> Unit,
     onLearnedClick: () -> Unit,
     onNotLearnedClick: () -> Unit,
+    onHelpClick: (partIndex: Int?) -> Unit,
 ) {
     Box(
         modifier = modifier,
@@ -88,6 +90,7 @@ private fun ScreenContent(
                             currentSentence = currentSentence,
                             onInputChange = onInputChange,
                             onNextClick = onNextClick,
+                            onHelpClick = onHelpClick,
                         )
                     }
                 }
@@ -181,6 +184,7 @@ private fun PresentScreen(
     currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onNextClick: () -> Unit,
+    onHelpClick: (partIndex: Int?) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -204,6 +208,7 @@ private fun PresentScreen(
                 currentSentence = currentSentence,
                 onInputChange = onInputChange,
                 onNextClick = onNextClick,
+                onHelpClick = onHelpClick,
             )
         }
     }
@@ -228,6 +233,7 @@ private fun ScreenContentLoadingPreview() {
                 onNextClick = {},
                 onLearnedClick = {},
                 onNotLearnedClick = {},
+                onHelpClick = {},
             )
         }
     }
@@ -252,6 +258,7 @@ private fun ScreenContentEmptyPreview() {
                 onNextClick = {},
                 onLearnedClick = {},
                 onNotLearnedClick = {},
+                onHelpClick = {},
             )
         }
     }
@@ -316,6 +323,7 @@ private fun ScreenContentPresentPreview() {
                 onNextClick = {},
                 onLearnedClick = {},
                 onNotLearnedClick = {},
+                onHelpClick = {},
             )
         }
     }
@@ -370,6 +378,7 @@ private fun ScreenContentPresentCompletePreview() {
                 onNextClick = {},
                 onLearnedClick = {},
                 onNotLearnedClick = {},
+                onHelpClick = {},
             )
         }
     }
@@ -425,6 +434,7 @@ private fun ScreenContentPresentWithLearnedDialogPreview() {
                 onNextClick = {},
                 onLearnedClick = {},
                 onNotLearnedClick = {},
+                onHelpClick = {},
             )
         }
     }

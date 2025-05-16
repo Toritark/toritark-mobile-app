@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -36,12 +39,15 @@ internal fun LearningSentence(
     currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onNextClick: () -> Unit,
+    onHelpClick: (partIndex: Int?) -> Unit,
 ) {
     val hapticFeedback = LocalHapticFeedback.current
 
     val sentence = currentSentence.sentence
 
-    logger.d { "currentSentence: $currentSentence" }
+    val focusedPartIndex = remember(currentSentence.sentence.id) {
+        mutableStateOf<Int?>(null)
+    }
 
     Column(
         modifier = modifier,
@@ -53,49 +59,75 @@ internal fun LearningSentence(
                 .fillMaxWidth(),
             currentSentence = currentSentence,
             onInputChange = onInputChange,
-        )
+            onFocusChange = { index, isFocused ->
+                when {
+                    focusedPartIndex.value == index && !isFocused -> {
+                        focusedPartIndex.value = null
+                    }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 128.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 16.dp)
-            ) {
-                FadeAndExpandVerticallyAnimation(
-                    visible = isComplete,
-                ) {
-                    Column {
-                        Spacer(modifier = Modifier.height(12.dp))
-
-                        CorrectSentenceText(
-                            modifier = Modifier,
-                            sentence = sentence,
-                        )
+                    focusedPartIndex.value != index && isFocused -> {
+                        focusedPartIndex.value = index
                     }
                 }
+            }
+        )
 
+        FadeAndExpandVerticallyAnimation(
+            visible = isComplete,
+        ) {
+            Column {
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
+                CorrectSentenceText(
                     modifier = Modifier,
-                    text = sentence.nativeLanguageText,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    sentence = sentence,
                 )
             }
+        }
 
-            Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-            FadeInAnimation(
+        Text(
+            modifier = Modifier,
+            text = sentence.nativeLanguageText,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        FadeInAnimation(
+            visible = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo,
+        ) {
+            Row(
                 modifier = Modifier
-                    .align(Alignment.Bottom),
-                visible = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo,
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                IconButton(
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
+                            shape = CircleShape,
+                        )
+                        .size(48.dp),
+                    onClick = {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+                        onHelpClick(focusedPartIndex.value)
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(28.dp),
+                        imageVector = Icons.AutoMirrored.Rounded.HelpOutline,
+                        contentDescription = stringResource(Res.string.title_learning_words_next_sentence),
+                        tint = MaterialTheme.colorScheme.onSecondary,
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
                 IconButton(
                     modifier = Modifier
                         .background(
@@ -106,8 +138,7 @@ internal fun LearningSentence(
                             },
                             shape = CircleShape,
                         )
-                        .size(64.dp)
-                        .align(Alignment.Bottom),
+                        .size(64.dp),
                     enabled = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo,
                     onClick = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
@@ -184,7 +215,8 @@ private fun LearningSentencePreview() {
                     ),
                 ),
                 onInputChange = { _, _ -> },
-                onNextClick = { }
+                onNextClick = { },
+                onHelpClick = { },
             )
         }
     }

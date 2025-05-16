@@ -30,12 +30,13 @@ internal fun LearningSentenceText(
     modifier: Modifier = Modifier,
     currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
+    onFocusChange: (index: Int, isFocused: Boolean) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
-    val inputFocusRequesters = remember { mutableListOf<FocusRequester>() }
+    val inputFocusRequesters = remember(currentSentence.sentence.id) { mutableListOf<FocusRequester>() }
 
-    val inputPartIndices = remember(currentSentence.sentence) {
+    val inputPartIndices = remember(currentSentence.sentence.id) {
         currentSentence.sentence.parts.mapIndexedNotNull { index, part ->
             if (part is SentencePart.Input) index else null
         }
@@ -96,6 +97,12 @@ internal fun LearningSentenceText(
                         }
                     }
 
+                    val onFocusChanged = remember(index, onFocusChange) {
+                        { isFocused: Boolean ->
+                            onFocusChange(index, isFocused)
+                        }
+                    }
+
                     if (index != 0 && sentence.parts[index - 1] is SentencePart.Input) {
                         Spacer(modifier = Modifier.width(4.dp))
                     }
@@ -108,6 +115,7 @@ internal fun LearningSentenceText(
                         isEditable = isEditable,
                         onInputChange = onInputChange,
                         onInputDone = onInputDone,
+                        onFocusChanged = onFocusChanged,
                     )
                 }
             }
@@ -172,7 +180,8 @@ private fun LearningSentenceComponentPreview() {
                         nativeLanguageText = "Привет, прекрасный мир!"
                     )
                 ),
-                onInputChange = { _, _ -> }
+                onInputChange = { _, _ -> },
+                onFocusChange = { _, _ -> }
             )
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.*
@@ -67,6 +68,7 @@ internal fun SentenceInputPart(
     isEditable: Boolean,
     onInputChange: (text: String) -> Unit,
     onInputDone: () -> Unit,
+    onFocusChanged: (isFocused: Boolean) -> Unit,
 ) {
     SentenceInputPartText(
         modifier = modifier,
@@ -75,6 +77,7 @@ internal fun SentenceInputPart(
         isEditable = isEditable,
         onInputChange = onInputChange,
         onInputDone = onInputDone,
+        onFocusChanged = onFocusChanged,
     )
 }
 
@@ -86,6 +89,7 @@ private fun SentenceInputPartText(
     isEditable: Boolean,
     onInputChange: (text: String) -> Unit,
     onInputDone: () -> Unit,
+    onFocusChanged: (isFocused: Boolean) -> Unit,
 ) {
     val textMeasurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -104,7 +108,7 @@ private fun SentenceInputPartText(
     val successTextColor = SentenceInputPartDefaults.successColor
     val errorTextColor = SentenceInputPartDefaults.errorColor
 
-    var text by remember { mutableStateOf(part.currentText) }
+    var text by remember(part.currentText) { mutableStateOf(part.currentText) }
 
     val coloredText = remember(text, part.state, part.correctText) {
         styleInputText(
@@ -144,6 +148,7 @@ private fun SentenceInputPartText(
             onInputChange(newText)
         },
         onInputDone = onInputDone,
+        onFocusChanged = onFocusChanged,
     )
 }
 
@@ -156,12 +161,21 @@ private fun InputPartTextField(
     isReadOnly: Boolean,
     onInputChange: (text: String) -> Unit,
     onInputDone: () -> Unit,
+    onFocusChanged: (isFocused: Boolean) -> Unit,
 ) {
     var lastText by remember(textFieldValue.text) { mutableStateOf(textFieldValue.text) }
     var lastTextValue by remember(textFieldValue.annotatedString) { mutableStateOf(textFieldValue) }
 
+    var isFocused by remember { mutableStateOf(false) }
+
     BasicTextField(
-        modifier = modifier,
+        modifier = modifier
+            .onFocusChanged { focusState ->
+                if (focusState.isFocused != isFocused) {
+                    isFocused = focusState.isFocused
+                    onFocusChanged(isFocused)
+                }
+            },
         value = lastTextValue,
         onValueChange = { newValue: TextFieldValue ->
             val newText = newValue.text
@@ -283,7 +297,8 @@ private fun EmptyPartPreview() {
                 ),
                 isEditable = true,
                 onInputChange = { },
-                onInputDone = { }
+                onInputDone = { },
+                onFocusChanged = { },
             )
         }
     }
@@ -310,7 +325,8 @@ private fun EmptyPartWithTextPreview() {
                 ),
                 isEditable = true,
                 onInputChange = { },
-                onInputDone = { }
+                onInputDone = { },
+                onFocusChanged = { },
             )
         }
     }
@@ -337,7 +353,8 @@ private fun IncorrectPartPreview() {
                 ),
                 isEditable = true,
                 onInputChange = { },
-                onInputDone = { }
+                onInputDone = { },
+                onFocusChanged = { },
             )
         }
     }
@@ -364,7 +381,8 @@ private fun CorrectPartPreview() {
                 ),
                 isEditable = true,
                 onInputChange = { },
-                onInputDone = { }
+                onInputDone = { },
+                onFocusChanged = { },
             )
         }
     }

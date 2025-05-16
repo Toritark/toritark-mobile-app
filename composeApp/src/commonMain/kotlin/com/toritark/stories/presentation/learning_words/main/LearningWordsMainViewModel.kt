@@ -12,6 +12,7 @@ import com.toritark.stories.presentation.main.nav.MainScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 internal class LearningWordsMainViewModel(
     private val learningWordsInteractor: LearningWordsInteractor,
@@ -115,7 +116,7 @@ internal class LearningWordsMainViewModel(
 
         for (matchResult in matches) {
             val matchStart = matchResult.range.first
-            val matchEnd = matchResult.range.last + 1 // matchResult.range.last is inclusive, so add 1 for exclusive end
+            val matchEnd = matchResult.range.last + 1 // matchResult.range.last is inclusive
 
             // Add the text part before the current match, if any.
             // This part includes original spacing, punctuation, etc., from the input `text`.
@@ -321,6 +322,60 @@ internal class LearningWordsMainViewModel(
         }
 
         getNextSentence()
+    }
+
+    fun onHelpClick(partIndex: Int?) {
+        logger.d { "onHelpClick: partIndex=$partIndex" }
+
+        val currentSentence =
+            contentValue.currentSentence as? LearningWordsMainScreenContent.CurrentSentence.Present.Todo
+
+        if (currentSentence == null) {
+            logger.e { "onHelpClick: Failed to get current sentence: ${contentValue.currentSentence}" }
+            return
+        }
+
+        val sentence = currentSentence.sentence
+
+        val part = if (partIndex != null) {
+            sentence.parts.getOrNull(partIndex) as? SentencePart.Input
+        } else {
+            sentence.inputParts.firstOrNull { part ->
+                part.currentText.length < part.correctText.length
+            }
+        }
+
+        if (part == null) {
+            logger.d { "onHelpClick: Failed to get part with index $partIndex: $sentence" }
+            return
+        }
+
+        logger.d { "onHelpClick: part=$part" }
+
+        val currentPartTextLength = part.currentText.length
+        val currentPartText = part.correctText.substring(0, min(currentPartTextLength + 1, part.correctText.length))
+
+        val updatedPart = part.copy(
+            currentText = currentPartText,
+        )
+
+        logger.d { "onHelpClick: updatedPart=$updatedPart" }
+
+        val partIndex = sentence.parts.indexOf(part)
+        val updatedSentence = sentence.copy(
+            parts = sentence.parts.toMutableList().apply {
+                set(partIndex, updatedPart)
+            },
+        )
+
+        updateAndShowContent {
+            copy(
+                currentSentence = currentSentence.copy(
+                    sentence = updatedSentence,
+                    isComplete = updatedSentence.areAllPartsComplete,
+                )
+            )
+        }
     }
 
     private fun updateLearningStats() {
