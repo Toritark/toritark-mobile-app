@@ -28,19 +28,22 @@ internal fun CorrectSentenceText(
     FlowRow(
         modifier = modifier,
         itemVerticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         sentence.parts.forEachIndexed { index, part ->
             when (part) {
                 is SentencePart.Text -> {
                     Text(
-                        text = part.text.trim(),
+                        text = part.text,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
 
                 is SentencePart.Input -> {
+                    if (index != 0 && sentence.parts[index - 1] is SentencePart.Input) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                    }
+
                     Text(
                         text = styleInputText(
                             part = part,
@@ -106,15 +109,27 @@ private fun CorrectSentenceTextPreview() {
                     sentence = SentenceWithParts(
                         id = 1,
                         parts = listOf(
-                            SentencePart.Text("Hello, "),
+                            SentencePart.Text("Hello"),
+                            SentencePart.Text(","),
+                            SentencePart.Text(" "),
+                            SentencePart.Text("my"),
+                            SentencePart.Text(" "),
+                            SentencePart.Text("dear"),
+                            SentencePart.Text(" "),
+                            SentencePart.Text("friends"),
+                            SentencePart.Text(" "),
+                            SentencePart.Text("and"),
+                            SentencePart.Text(" "),
                             SentencePart.Input(
-                                state = SentencePart.Input.State.INCORRECT,
+                                state = SentencePart.Input.State.EMPTY,
                                 correctText = "this",
                             ),
-                            SentencePart.Text(" naturally "),
+                            SentencePart.Text(" "),
+                            SentencePart.Text("naturally"),
+                            SentencePart.Text(" "),
                             SentencePart.Input(
-                                state = SentencePart.Input.State.CORRECT,
-                                currentText = "very",
+                                state = SentencePart.Input.State.EMPTY,
+                                currentText = "ve",
                                 correctText = "very",
                             ),
                             SentencePart.Input(
