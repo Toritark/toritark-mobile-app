@@ -115,7 +115,8 @@ internal fun LearningSentence(
                     onClick = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
                         onHelpClick(focusedPartIndex.value)
-                    }
+                    },
+                    enabled = !currentSentence.isComplete,
                 ) {
                     Icon(
                         modifier = Modifier
