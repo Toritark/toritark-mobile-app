@@ -9,7 +9,6 @@ import com.toritark.stories.presentation.language.setup.level.model.LanguageLeve
 import com.toritark.stories.presentation.language.setup.level.model.LanguageLevelUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import toritark.composeapp.generated.resources.*
 
 internal class LanguageLevelChooserViewModel(
     private val languagesRepository: LanguagesRepository,
@@ -32,7 +31,7 @@ internal class LanguageLevelChooserViewModel(
 
     override fun initialize() {
         updateAndShowContent {
-            copy(levels = languageLevels)
+            copy(levels = LanguageLevelUiModel.allLevels)
         }
     }
 
@@ -61,33 +60,5 @@ internal class LanguageLevelChooserViewModel(
 
     private companion object {
         private const val LOG_TAG = "LanguageLevelChooserViewModel"
-
-        private val languageLevels = listOf(
-            LanguageLevelUiModel(
-                languageLevel = LanguageLevel.A1,
-                titleStringResource = Res.string.title_language_level_none,
-                descriptionStringResource = Res.string.desc_language_level_none,
-            ),
-            LanguageLevelUiModel(
-                languageLevel = LanguageLevel.A2,
-                titleStringResource = Res.string.title_language_level_a1,
-                descriptionStringResource = Res.string.desc_language_level_a1,
-            ),
-            LanguageLevelUiModel(
-                languageLevel = LanguageLevel.B1,
-                titleStringResource = Res.string.title_language_level_a2,
-                descriptionStringResource = Res.string.desc_language_level_a2,
-            ),
-            LanguageLevelUiModel(
-                languageLevel = LanguageLevel.B2,
-                titleStringResource = Res.string.title_language_level_b1,
-                descriptionStringResource = Res.string.desc_language_level_b1,
-            ),
-            LanguageLevelUiModel(
-                languageLevel = LanguageLevel.C1,
-                titleStringResource = Res.string.title_language_level_c1,
-                descriptionStringResource = Res.string.desc_language_level_c1,
-            ),
-        )
     }
 }

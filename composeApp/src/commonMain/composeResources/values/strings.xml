@@ -130,4 +130,9 @@
     <string name="title_learning_words_learned_dialog_learned_btn">Yes, I've learned them</string>
     <string name="title_learning_words_learned_dialog_not_learned_btn">No, show them again later</string>
 
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Language you are learning</string>
+    <string name="title_profile_settings_learning_language_level">Your current language level</string>
+    <string name="title_profile_settings_native_language">Your native language</string>
+
 </resources>

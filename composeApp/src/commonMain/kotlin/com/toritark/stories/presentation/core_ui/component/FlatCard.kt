@@ -33,12 +33,10 @@ fun FlatCard(
     rightIconTint: Color = LocalContentColor.current,
     borderColor: Color? = null,
     borderWidth: Dp? = null,
-    onClick: () -> Unit = {},
+    onClick: (() -> Unit)? = null,
     content: @Composable RowScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(size = cornerRadius)
-
-    val hapticFeedback = LocalHapticFeedback.current
 
     Row(
         modifier = modifier
@@ -55,9 +53,17 @@ fun FlatCard(
             }
             .fillMaxWidth()
             .clip(shape)
-            .clickable {
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
-                onClick()
+            .let {
+                if (onClick != null) {
+                    val hapticFeedback = LocalHapticFeedback.current
+
+                    it.clickable {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+                        onClick()
+                    }
+                } else {
+                    it
+                }
             }
             .padding(padding),
     ) {
