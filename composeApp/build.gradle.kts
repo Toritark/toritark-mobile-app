@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.gradle.versions)
+    alias(libs.plugins.google.services)
 }
 
 kotlin {
@@ -109,7 +110,16 @@ kotlin {
             implementation(libs.ktor.client.cio)
             implementation(libs.koin.android)
 
-            implementation(libs.auth0.android)
+            implementation(project.dependencies.platform(libs.firebase.android.bom))
+            implementation(libs.firebase.android.analytics)
+            implementation(libs.firebase.android.messaging)
+            implementation(libs.firebase.android.messaging.ktx)
+            implementation(libs.firebase.android.auth)
+            implementation(libs.firebase.android.auth.ktx)
+
+            implementation(libs.androidx.credentials)
+            implementation(libs.androidx.credentials.play.services.auth)
+            implementation(libs.google.identity.google.id)
         }
 
         iosMain.dependencies {
@@ -156,7 +166,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.toritark.stories"
+        applicationId = "com.toritark.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
