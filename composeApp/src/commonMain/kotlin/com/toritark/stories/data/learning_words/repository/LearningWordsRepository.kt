@@ -6,10 +6,7 @@ import com.toritark.stories.data.learning_words.data.model.SentenceToLearn
 import com.toritark.stories.data.learning_words.db.dao.LearningSentencesDao
 import com.toritark.stories.data.learning_words.db.dao.LearningWordsDao
 import com.toritark.stories.data.learning_words.db.dao.WordsSentencesToLearnCrossRefDao
-import com.toritark.stories.data.learning_words.db.model.SentenceToLearnDbModel
-import com.toritark.stories.data.learning_words.db.model.SentenceToLearnWithWords
-import com.toritark.stories.data.learning_words.db.model.WordSentenceToLearnCrossRef
-import com.toritark.stories.data.learning_words.db.model.WordToLearnDbModel
+import com.toritark.stories.data.learning_words.db.model.*
 import com.toritark.stories.util.core.extension.flow.optionalTypedFlow
 import com.toritark.stories.util.core.extension.flow.typedFlow
 import com.toritark.stories.util.core.extension.flow.unitFlow
@@ -31,6 +28,10 @@ internal interface LearningWordsRepository {
 
     suspend fun updateWords(words: Collection<WordToLearnDbModel>)
     suspend fun updateSentence(sentence: SentenceToLearnDbModel)
+    suspend fun updateSentences(sentences: Collection<SentenceToLearnDbModel>)
+
+    suspend fun getWordsWithSentences(wordsIds: Collection<Long>): List<WordToLearnWithSentences>
+    suspend fun getSentencesWithWords(sentencesIds: Collection<Long>): List<SentenceToLearnWithWords>
 }
 
 internal class LearningWordsRepositoryImpl(
@@ -249,6 +250,24 @@ internal class LearningWordsRepositoryImpl(
     override suspend fun updateSentence(sentence: SentenceToLearnDbModel) {
         withContext(ioDispatcher) {
             learningSentencesDao.updateSentence(sentence)
+        }
+    }
+
+    override suspend fun updateSentences(sentences: Collection<SentenceToLearnDbModel>) {
+        withContext(ioDispatcher) {
+            learningSentencesDao.updateSentences(sentences)
+        }
+    }
+
+    override suspend fun getWordsWithSentences(wordsIds: Collection<Long>): List<WordToLearnWithSentences> {
+        return withContext(ioDispatcher) {
+            learningWordsDao.getWordsWithSentences(wordsIds)
+        }
+    }
+
+    override suspend fun getSentencesWithWords(sentencesIds: Collection<Long>): List<SentenceToLearnWithWords> {
+        return withContext(ioDispatcher) {
+            learningSentencesDao.getSentencesWithWords(sentencesIds = sentencesIds)
         }
     }
 

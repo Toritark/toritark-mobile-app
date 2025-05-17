@@ -139,6 +139,29 @@ internal class LearningWordsInteractorImpl(
 
             learningWordsRepository.updateWords(updatedWords)
             learningWordsRepository.updateSentence(updatedSentence)
+
+            // Not really optimal to do two queries, but leaving as is for now
+            val wordsIds = sentence.words.map { word -> word.id }.toSet()
+            val wordsWithSentences = learningWordsRepository.getWordsWithSentences(wordsIds)
+            val sentencesIds = wordsWithSentences
+                .map { wordWithSentence ->
+                    wordWithSentence.sentences.map { sentenceToLearn -> sentenceToLearn.id }
+                }
+                .flatten()
+            val sentencesToCheck = learningWordsRepository.getSentencesWithWords(sentencesIds)
+
+            val sentencesToUpdate = sentencesToCheck.mapNotNull { sentenceToCheck ->
+                val sentenceWordsIds = sentenceToCheck.words.map { word -> word.id }.toSet()
+                if (sentenceWordsIds.containsAll(wordsIds) && !sentenceToCheck.sentence.isLearned) {
+                    sentenceToCheck.sentence.copy(isLearned = true)
+                } else {
+                    null
+                }
+            }
+
+            if (sentencesToUpdate.isNotEmpty()) {
+                learningWordsRepository.updateSentences(sentencesToUpdate)
+            }
         }
     }
 

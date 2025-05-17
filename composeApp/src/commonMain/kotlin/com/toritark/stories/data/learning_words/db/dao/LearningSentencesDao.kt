@@ -24,4 +24,7 @@ internal interface LearningSentencesDao {
 
     @Query("SELECT * FROM sentences_to_learn WHERE is_learned = 0 AND language_code = :languageCode ORDER BY last_attempt ASC LIMIT 1")
     suspend fun getNextSentenceToLearn(languageCode: String): SentenceToLearnWithWords?
+
+    @Query("SELECT * FROM sentences_to_learn WHERE id IN (:sentencesIds)")
+    suspend fun getSentencesWithWords(sentencesIds: Collection<Long>): List<SentenceToLearnWithWords>
 }

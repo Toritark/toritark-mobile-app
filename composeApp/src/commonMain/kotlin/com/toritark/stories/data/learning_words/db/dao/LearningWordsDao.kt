@@ -2,6 +2,7 @@ package com.toritark.stories.data.learning_words.db.dao
 
 import androidx.room.*
 import com.toritark.stories.data.learning_words.db.model.WordToLearnDbModel
+import com.toritark.stories.data.learning_words.db.model.WordToLearnWithSentences
 
 @Dao
 internal interface LearningWordsDao {
@@ -24,4 +25,7 @@ internal interface LearningWordsDao {
     @Transaction
     @Query("SELECT COUNT(id) FROM words_to_learn WHERE language_code = :languageCode")
     suspend fun getTotalWordsCount(languageCode: String): Long
+
+    @Query("SELECT * FROM words_to_learn WHERE id IN (:wordsIds)")
+    suspend fun getWordsWithSentences(wordsIds: Collection<Long>): List<WordToLearnWithSentences>
 }
