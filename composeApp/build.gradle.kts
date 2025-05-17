@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.*
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -11,6 +12,15 @@ plugins {
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.google.services)
+}
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(localPropertiesFile.inputStream())
+    } else {
+        throw IllegalStateException("local.properties file not found")
+    }
 }
 
 kotlin {
@@ -117,7 +127,7 @@ kotlin {
             implementation(libs.firebase.android.auth)
             implementation(libs.firebase.android.auth.ktx)
 
-            implementation(libs.androidx.credentials)
+            implementation(libs.androidx.credentials.main)
             implementation(libs.androidx.credentials.play.services.auth)
             implementation(libs.google.identity.google.id)
         }
@@ -162,7 +172,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.toritark.stories"
+    namespace = "com.toritark.app"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -187,6 +197,24 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+
+            buildConfigField("boolean", "DEBUG", "false")
+
+            buildConfigField(
+                "String",
+                "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
+                "\"${localProperties.getProperty("googleSignInServerReleaseClientId") ?: ""}\""
+            )
+        }
+
+        getByName("debug") {
+            buildConfigField("boolean", "DEBUG", "true")
+
+            buildConfigField(
+                "String",
+                "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
+                "\"${localProperties.getProperty("googleSignInServerDebugClientId") ?: ""}\""
+            )
         }
     }
     compileOptions {

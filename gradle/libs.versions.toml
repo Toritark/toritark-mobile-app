@@ -19,7 +19,7 @@ kermit = "2.0.5"
 koin = "4.0.4"
 ktor = "3.1.3"
 settings = "1.3.0"
-coil = "3.1.0"
+coil = "3.2.0"
 ksoup = "0.5.0"
 
 androidx-activity-compose = "1.10.1"
@@ -30,6 +30,7 @@ androidx-lifecycle-jb = "2.8.4"
 androidx-room = "2.7.1"
 androidx-sqlite = "2.5.1"
 androidx-credentials = "1.5.0"
+
 google-identity-google-id = "1.1.1"
 
 compose-multiplatform = "1.8.0"
@@ -97,7 +98,7 @@ firebase-android-messaging-ktx = { module = "com.google.firebase:firebase-messag
 firebase-android-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-android-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
+androidx-credentials-main = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
 google-identity-google-id = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "google-identity-google-id" }
 

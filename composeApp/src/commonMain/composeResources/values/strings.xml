@@ -29,6 +29,15 @@
     <string name="desc_language_level_b2">Can understand the main ideas of a complex text on both concrete and abstract topics, including technical discussions in your field of specialisation</string>
     <string name="desc_language_level_c1">Can understand a wide range of demanding, longer texts, and recognize implicit meaning. Can express him/herself fluently and spontaneously without much obvious searching for expressions</string>
 
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Last step: sign in to Toritark and start learning 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Sign in with Google</string>
+    <string name="title_auth_sign_in_apple_btn">Sign in with Apple</string>
+    <string name="title_auth_sign_in_facebook_btn">Sign in with Facebook</string>
+
+    <string name="title_auth_sign_in_failed">Sign in failed: %1$s</string>
+
     <!-- Main screen -->
     <string name="title_main_screen_topbar">Toritark</string>
 
