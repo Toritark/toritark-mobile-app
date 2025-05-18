@@ -1,9 +1,9 @@
-package com.toritark.app.data.auth.repository.api
+package com.toritark.app.data.auth.api.repository
 
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.auth.model.api.AnonymousAuthApiModel
-import com.toritark.app.data.auth.model.api.FirebaseAuthApiModel
-import com.toritark.app.data.auth.resource.AuthApiResources
+import com.toritark.app.data.auth.api.model.AnonymousAuthApiModel
+import com.toritark.app.data.auth.api.model.FirebaseAuthApiModel
+import com.toritark.app.data.auth.api.resource.AuthApiResources
 import com.toritark.app.data.core_api.base.repository.ApiRepository
 import com.toritark.app.data.core_api.base.repository.BaseApiRepository
 import com.toritark.app.data.core_api.jwt.model.JwtResponse
@@ -29,7 +29,7 @@ internal class AuthApiRepositoryImpl(
 ) : BaseApiRepository(
     httpClient = httpClient,
     ioDispatcher = ioDispatcher,
-    defaultDispatcher = defaultDispatcher
+    defaultDispatcher = defaultDispatcher,
 ), AuthApiRepository {
 
     private val logger = Logger.withTag(LOG_TAG)

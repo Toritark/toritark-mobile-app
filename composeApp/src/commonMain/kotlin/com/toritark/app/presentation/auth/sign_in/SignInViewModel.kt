@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.toritark.app.presentation.auth.sign_in
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.auth.model.auth.AuthProvider
 import com.toritark.app.domain.auth.interactor.AuthInteractor
+import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.presentation.auth.sign_in.exception.SignInException
 import com.toritark.app.presentation.auth.sign_in.exception.UserCancelledSignInException
 import com.toritark.app.presentation.auth.sign_in.model.SignInScreenState
@@ -11,9 +14,11 @@ import com.toritark.app.presentation.auth.sign_in.model.provider.AuthProviderUiM
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.main.nav.MainScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import toritark.composeapp.generated.resources.Res
@@ -21,6 +26,7 @@ import toritark.composeapp.generated.resources.title_auth_sign_in_failed
 
 internal class SignInViewModel(
     private val authInteractor: AuthInteractor,
+    private val profileInteractor: ProfileInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -103,10 +109,14 @@ internal class SignInViewModel(
                     throw e
                 }
                 .onErrorShowMessage()
+                .flatMapConcat {
+                    profileInteractor.updateProfile()
+                }
+                .catch { t ->
+                    logger.w(t) { "Failed to update profile" }
+                }
                 .collect {
                     logger.d { "handleSignInToken: authenticated" }
-
-                    // TODO: Load profile
 
                     openNextScreen()
                 }

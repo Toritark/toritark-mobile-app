@@ -2,17 +2,23 @@ package com.toritark.app.presentation.splash
 
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.onboarding.repository.OnboardingRepository
+import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.domain.auth.interactor.AuthInteractor
 import com.toritark.app.domain.auth.model.AuthState
+import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.presentation.auth.nav.AuthScreenDestination
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.main.nav.MainScreenDestination
 import com.toritark.app.presentation.onboarding.nav.OnboardingMainScreenDestination
 import com.toritark.app.presentation.splash.nav.SplashScreenDestination
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.first
 
 class SplashViewModel(
     private val authInteractor: AuthInteractor,
+    private val profileInteractor: ProfileInteractor,
     private val onboardingRepository: OnboardingRepository,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
@@ -38,13 +44,42 @@ class SplashViewModel(
 
                 when (state) {
                     is AuthState.Authenticated -> {
-                        navigateAuthenticated()
+                        handleAuthenticated()
                     }
 
                     else -> {
                         navigateNotAuthenticated()
                     }
                 }
+            }
+        }
+    }
+
+    private suspend fun handleAuthenticated() {
+        logger.d { "handleAuthenticated" }
+
+        val profileState = profileInteractor.profileState.filterNot { it is ProfileState.Unknown }.first()
+
+        when (profileState) {
+            is ProfileState.Missing -> {
+                profileInteractor
+                    .updateProfile()
+                    .catch { t -> logger.w(t) { "Failed to update profile" } }
+                    .collect {
+                        logger.d { "Updated profile" }
+                    }
+
+                navigateAuthenticated()
+            }
+
+            is ProfileState.Present -> {
+                profileInteractor.updateProfileInBackground()
+                navigateAuthenticated()
+            }
+
+            else -> {
+                logger.e { "handleAuthenticated: Profile state is $profileState, unexpected" }
+                navigateAuthenticated()
             }
         }
     }

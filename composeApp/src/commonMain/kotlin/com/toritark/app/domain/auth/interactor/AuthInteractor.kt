@@ -6,7 +6,7 @@ import co.touchlab.kermit.Logger
 import com.russhwolf.settings.Settings
 import com.toritark.app.data.auth.model.auth.AuthProvider
 import com.toritark.app.data.auth.repository.AuthProvidersRepository
-import com.toritark.app.data.auth.repository.api.AuthApiRepository
+import com.toritark.app.data.auth.api.repository.AuthApiRepository
 import com.toritark.app.data.core_api.jwt.model.AccessTokenState
 import com.toritark.app.data.core_api.jwt.repository.JwtTokensRepository
 import com.toritark.app.domain.auth.model.AuthState

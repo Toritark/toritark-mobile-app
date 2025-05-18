@@ -1,7 +1,7 @@
 package com.toritark.app.di.module.auth
 
-import com.toritark.app.data.auth.repository.api.AuthApiRepository
-import com.toritark.app.data.auth.repository.api.AuthApiRepositoryImpl
+import com.toritark.app.data.auth.api.repository.AuthApiRepository
+import com.toritark.app.data.auth.api.repository.AuthApiRepositoryImpl
 import com.toritark.app.data.core_preferences.Preferences
 import com.toritark.app.di.name.AuthSettingsNames
 import com.toritark.app.di.name.DispatchersNames
@@ -45,6 +45,7 @@ val authModule = module {
     viewModel {
         SignInViewModel(
             authInteractor = get(),
+            profileInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

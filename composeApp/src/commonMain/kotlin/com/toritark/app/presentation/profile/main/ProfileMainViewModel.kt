@@ -1,20 +1,21 @@
 package com.toritark.app.presentation.profile.main
 
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.language.repository.LanguagesRepository
+import com.toritark.app.data.profile.model.ProfileState
+import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.language.nav.LanguageSetupScreenDestination
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
 import com.toritark.app.presentation.profile.main.model.ProfileMainScreenState
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 internal class ProfileMainViewModel(
+    private val profileInteractor: ProfileInteractor,
     languagesRepository: LanguagesRepository, // TODO: Use interactor
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
@@ -47,23 +48,45 @@ internal class ProfileMainViewModel(
         initialValue = ProfileMainScreenState.LanguageSettingsState.Loading,
     )
 
+    private val profileState: StateFlow<ProfileMainScreenState.ProfileUiState> = profileInteractor
+        .profileState
+        .map { profileState: ProfileState ->
+            when (profileState) {
+                ProfileState.Unknown, ProfileState.Missing -> ProfileMainScreenState.ProfileUiState.Loading
+                is ProfileState.Present -> ProfileMainScreenState.ProfileUiState.Present(
+                    profile = profileState.profile,
+                )
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = ProfileMainScreenState.ProfileUiState.Loading,
+        )
+
     init {
-        listenToLanguageSettingsState()
+        listenToStates()
     }
 
     fun loadProfile() {
         logger.d { "loadProfile" }
     }
 
-    private fun listenToLanguageSettingsState() {
-        logger.d { "listenToLanguageSettingsState" }
+    private fun listenToStates() {
+        logger.d { "listenToStates" }
 
         viewModelScope.launch {
-            languageSettingsState.collect { state ->
+            combine(
+                languageSettingsState,
+                profileState
+            ) { languageSettingsState, profileState ->
+                contentValue.copy(
+                    profileState = profileState,
+                    languageSettingsState = languageSettingsState,
+                )
+            }.collect { newState ->
                 updateAndShowContent {
-                    copy(
-                        languageSettingsState = state,
-                    )
+                    newState
                 }
             }
         }

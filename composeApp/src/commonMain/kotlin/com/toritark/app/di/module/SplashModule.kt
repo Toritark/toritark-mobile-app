@@ -11,6 +11,7 @@ val splashModule = module {
     viewModel {
         SplashViewModel(
             authInteractor = get(),
+            profileInteractor = get(),
             onboardingRepository = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),

@@ -1,4 +1,4 @@
-package com.toritark.app.data.auth.model.api
+package com.toritark.app.data.auth.api.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

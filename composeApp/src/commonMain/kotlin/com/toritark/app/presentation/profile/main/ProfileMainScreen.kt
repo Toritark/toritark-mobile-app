@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.model.LanguageLevel
+import com.toritark.app.data.profile.api.model.ProfileApiModel
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
@@ -67,9 +69,9 @@ private fun ProfileScreenContent(
     ) {
         Spacer(modifier = Modifier.size(16.dp))
 
-
         ProfileHeaderSection(
             modifier = Modifier.fillMaxWidth(),
+            profileState = contentValue.profileState
         )
 
         Spacer(modifier = Modifier.size(24.dp))
@@ -98,6 +100,26 @@ private fun ProfileScreenContentPreview() {
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentValue = ProfileMainScreenState(
+                    profileState = ProfileMainScreenState.ProfileUiState.Present(
+                        profile = ProfileApiModel(
+                            id = 1L,
+                            isAnonymous = false,
+                            isActive = true,
+                            firstName = "John",
+                            lastName = "Doe",
+                            avatarUrl = null,
+                            email = "test@example.com",
+                            plan = PlanApiModel(
+                                id = 1L,
+                                name = "Free",
+                                storiesPerDay = 1,
+                                retellingsPerDay = 1,
+                                audioStoriesPerDay = 1,
+                                isFree = true,
+                                isDefault = true,
+                            ),
+                        ),
+                    ),
                     languageSettingsState = ProfileMainScreenState.LanguageSettingsState.Present(
                         learningLanguage = Language(
                             isoCode = "en",

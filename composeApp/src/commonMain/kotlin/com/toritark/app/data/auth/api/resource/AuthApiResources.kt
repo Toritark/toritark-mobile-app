@@ -1,4 +1,4 @@
-package com.toritark.app.data.auth.resource
+package com.toritark.app.data.auth.api.resource
 
 import com.toritark.app.data.core_api.base.resource.BaseApiResource
 import io.ktor.resources.*
