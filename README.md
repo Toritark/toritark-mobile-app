@@ -54,7 +54,7 @@ Commits are huge because of the same reason.
 - **Kotlinx Coroutines** - Asynchronous programming
 - **Kotlinx DateTime** - Date and time handling
 - **Coil** - Image loading library
-- **Auth0** - Authentication service
+- **Firebase Auth** - Authentication service (Google & Apple sign in)
 - **RevenueCat** - IAP
 - **KSoup** - HTML parsing (for text highlighting)
 - **Django** - Backend (closed-source)
