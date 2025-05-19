@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Toritark</string>
+
+    <string name="appodeal_app_key" translatable="false">c1a9c2c6f83e756e6bc0572a732474f3d0eefba1bc67e3af</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-4910514618209773~6320347794</string>
 </resources>

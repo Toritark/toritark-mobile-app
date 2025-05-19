@@ -5,15 +5,14 @@ package com.toritark.app.domain.profile.interactor
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.profile.api.repository.ProfileApiRepository
 import com.toritark.app.data.profile.model.ProfileState
+import com.toritark.app.data.profile.model.ProfileSubscriptionState
 import com.toritark.app.data.profile.repository.ProfileRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 interface ProfileInteractor {
     val profileState: StateFlow<ProfileState>
+    val subscriptionState: StateFlow<ProfileSubscriptionState>
 
     fun updateProfile(): Flow<Unit>
     fun updateProfileInBackground()
@@ -30,6 +29,37 @@ internal class ProfileInteractorImpl(
     override val profileState = profileRepository.profileState
 
     private val coroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
+
+    override val subscriptionState: StateFlow<ProfileSubscriptionState> = profileState
+        .map { profileState ->
+            when (profileState) {
+                ProfileState.Unknown, ProfileState.Missing -> ProfileSubscriptionState.Unknown
+                is ProfileState.Present -> {
+                    when (profileState.profile.plan.isFree) {
+                        true -> ProfileSubscriptionState.Free
+                        false -> ProfileSubscriptionState.Paid
+                    }
+                }
+            }
+        }
+        .stateIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = ProfileSubscriptionState.Unknown,
+        )
+
+    init {
+        listenToSubscriptionState()
+    }
+
+    private fun listenToSubscriptionState() {
+        coroutineScope.launch {
+            subscriptionState
+                .collect { state ->
+                    logger.d { "listenToSubscriptionState: state=$state" }
+                }
+        }
+    }
 
     override fun updateProfile(): Flow<Unit> {
         logger.d { "updateProfile" }

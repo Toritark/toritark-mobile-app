@@ -130,6 +130,8 @@ kotlin {
             implementation(libs.androidx.credentials.main)
             implementation(libs.androidx.credentials.play.services.auth)
             implementation(libs.google.identity.google.id)
+
+            implementation(libs.appodeal.sdk)
         }
 
         iosMain.dependencies {
@@ -217,6 +219,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

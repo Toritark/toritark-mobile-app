@@ -29,6 +29,9 @@ No Compose optimizations performed yet. Will be added after the basic implementa
 
 Commits are huge because of the same reason.
 
+It is single-moduled for now, but it's developed keeping in mind future multi-module support, so most of the code is
+ready to be split into modules by copy-paste.
+
 ## 📱 Platform Support
 
 - ✅ Android (current)
@@ -56,6 +59,7 @@ Commits are huge because of the same reason.
 - **Coil** - Image loading library
 - **Firebase Auth** - Authentication service (Google & Apple sign in)
 - **RevenueCat** - IAP
+- **Appodeal** - Ads
 - **KSoup** - HTML parsing (for text highlighting)
 - **Django** - Backend (closed-source)
 
