@@ -1,12 +1,14 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.toritark.app.presentation.story.detail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
@@ -15,14 +17,17 @@ import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
+import com.toritark.app.presentation.story.component.dialog.QuotaExceededDialog
 import com.toritark.app.presentation.story.detail.component.StoryCreationProgressIndicator
 import com.toritark.app.presentation.story.detail.component.generate.GenerateStoryHeader
 import com.toritark.app.presentation.story.detail.component.generate.StoryPrompt
 import com.toritark.app.presentation.story.detail.component.preview.StoryPreviewCard
 import com.toritark.app.presentation.story.detail.component.preview.StoryQuizPreviewCard
 import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
+import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
 import com.toritark.app.presentation.story.retelling.section.StoryRetellingSection
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -37,6 +42,14 @@ internal fun StoryDetailScreen(
     val lazyListState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val coroutineScope = rememberCoroutineScope()
+
+    val quotaExceededSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
+    var quotaExceededMessage by remember { mutableStateOf<QuotaExceededMessage?>(null) }
+
     // Hide the keyboard when scrolling
     LaunchedEffect(lazyListState) {
         snapshotFlow { lazyListState.firstVisibleItemIndex }
@@ -45,27 +58,67 @@ internal fun StoryDetailScreen(
             }
     }
 
+    LaunchedEffect(viewModel) {
+        viewModel.showGenerationQuotaExceededDialog.collect { message ->
+            quotaExceededMessage = message
+
+            quotaExceededSheetState.show()
+        }
+    }
+
     BaseScreen(
         viewModel = viewModel,
     ) { contentValue ->
 
-        BannerContainer(
-            onBannerViewReady = viewModel::onBannerViewReady,
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            StoryScreenContent(
-                modifier = Modifier
-                    .fillMaxSize(),
-                screenState = contentValue,
-                lazyListState = lazyListState,
-                onTopicSelected = viewModel::onStoryTopicSelected,
-                onCustomizeClick = viewModel::togglePromptVisibility,
-                onPromptChange = viewModel::onPromptChange,
-                onGenerateClick = viewModel::onGenerateStoryClick,
-                onStoryClick = viewModel::onStoryClick,
-                onStoryQuizClick = viewModel::onStoryQuestionsClick,
-                onNavigateTo = onNavigateTo,
-                onPopBackStack = onPopBackStack,
-            )
+            BannerContainer(
+                onBannerViewReady = viewModel::onBannerViewReady,
+            ) {
+                StoryScreenContent(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    screenState = contentValue,
+                    lazyListState = lazyListState,
+                    onTopicSelected = viewModel::onStoryTopicSelected,
+                    onCustomizeClick = viewModel::togglePromptVisibility,
+                    onPromptChange = viewModel::onPromptChange,
+                    onGenerateClick = viewModel::onGenerateStoryClick,
+                    onStoryClick = viewModel::onStoryClick,
+                    onStoryQuizClick = viewModel::onStoryQuestionsClick,
+                    onNavigateTo = onNavigateTo,
+                    onPopBackStack = onPopBackStack,
+                )
+            }
+
+            quotaExceededMessage?.let { message ->
+                fun dismissDialog() {
+                    coroutineScope.launch {
+                        quotaExceededMessage = null
+                        quotaExceededSheetState.hide()
+                    }
+                }
+
+                QuotaExceededDialog(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    sheetState = quotaExceededSheetState,
+                    message = message,
+                    onDismissRequest = {
+                        viewModel.onQuotaExceededDialogClosed()
+                        dismissDialog()
+                    },
+                    onWatchAdClick = {
+                        viewModel.onWatchAdToUnlockClick()
+                        dismissDialog()
+                    },
+                    onUpgradePlanClick = {
+                        viewModel.onUpgradePlanToUnlockClick()
+                        dismissDialog()
+                    },
+                )
+            }
         }
 
     }
@@ -86,7 +139,7 @@ private fun StoryScreenContent(
     onPopBackStack: OnPopBackStack,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         state = lazyListState
     ) {
         item {

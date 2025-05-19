@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 interface AdsInteractor {
     fun initialize()
 
+    suspend fun canShowRewardedAd(adPlacement: AdPlacement): Boolean
+
     fun showBannerAd(adPlacement: AdPlacement)
 }
 
@@ -51,6 +53,12 @@ internal class AdsInteractorImpl(
         coroutineScope.launch {
             adsProvider.initialize()
         }
+    }
+
+    override suspend fun canShowRewardedAd(adPlacement: AdPlacement): Boolean {
+        return adsProvider.isRewardedAvailable.value && adsProvider.canShowRewarded(
+            placementName = adPlacement.placementName,
+        )
     }
 
     override fun showBannerAd(adPlacement: AdPlacement) {

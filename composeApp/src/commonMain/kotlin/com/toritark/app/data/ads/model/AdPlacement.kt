@@ -57,5 +57,6 @@ sealed class AdPlacement(
     ) : AdPlacement(placementName) {
 
         data object Generation : Rewarded("rewarded_generation")
+        data object RetellingCheck : Rewarded("rewarded_retelling_check")
     }
 }

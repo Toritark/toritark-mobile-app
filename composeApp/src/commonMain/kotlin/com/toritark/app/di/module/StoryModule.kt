@@ -36,6 +36,7 @@ val storyModule = module {
     viewModel {
         StoryDetailViewModel(
             storiesInteractor = get(),
+            profileInteractor = get(),
             adsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),

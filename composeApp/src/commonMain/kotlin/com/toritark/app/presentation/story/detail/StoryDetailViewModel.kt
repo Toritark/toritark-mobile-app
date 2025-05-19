@@ -3,23 +3,30 @@ package com.toritark.app.presentation.story.detail
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.profile.model.ProfileState
+import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.topic.StoryTopic
 import com.toritark.app.domain.ads.interactor.AdsInteractor
+import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
+import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
 import com.toritark.app.presentation.story.nav.StoryNavDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getPluralString
+import org.jetbrains.compose.resources.getString
 import toritark.composeapp.generated.resources.*
 
 internal class StoryDetailViewModel(
     private val storiesInteractor: StoriesInteractor,
+    private val profileInteractor: ProfileInteractor,
     private val adsInteractor: AdsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
@@ -31,6 +38,9 @@ internal class StoryDetailViewModel(
     defaultContentValue = StoryDetailScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
+
+    private val _showGenerationQuotaExceededDialog = MutableSharedFlow<QuotaExceededMessage>()
+    val showGenerationQuotaExceededDialog = _showGenerationQuotaExceededDialog.asSharedFlow()
 
     init {
         initialize()
@@ -98,6 +108,12 @@ internal class StoryDetailViewModel(
     fun onGenerateStoryClick() {
         logger.d { "onGenerateStoryClick" }
 
+        generateStory()
+    }
+
+    private fun generateStory() {
+        logger.d { "generateStory" }
+
         val prompt = contentValue.promptText.takeIf { it.isNotBlank() } ?: return
 
         updateAndShowContent {
@@ -112,8 +128,14 @@ internal class StoryDetailViewModel(
                 .createStory(
                     prompt = prompt,
                 )
-                .onErrorShowMessage() // FIXME: Not displayed currently!
-                // FIXME: Handle quota exceeded
+                .catch { t ->
+                    if (t is QuotaExceededException) {
+                        onStoryGenerationQuotaExceeded()
+                    } else {
+                        throw t
+                    }
+                }
+                .onErrorShowMessage()
                 .collect { storyRequest ->
                     logger.d { "onGenerateStoryClick: storyRequest=$storyRequest" }
 
@@ -134,6 +156,10 @@ internal class StoryDetailViewModel(
                 storiesInteractor
                     .getStory(storyId)
                     .catch { t ->
+                        if (t is QuotaExceededException) {
+                            onStoryGenerationQuotaExceeded()
+                        }
+
                         logger.w(t) { "startWatchingStory: error=${t.message}" }
                     }
                     .collect { story ->
@@ -190,6 +216,70 @@ internal class StoryDetailViewModel(
         }
 
         // TODO: Show error
+    }
+
+    private fun onStoryGenerationQuotaExceeded() {
+        logger.w { "onStoryGenerationQuotaExceeded" }
+
+        updateAndShowContent {
+            copy(
+                storyState = StoryDetailScreenState.StoryState.Empty,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenState.StoryState.Empty),
+            )
+        }
+
+        viewModelScope.launch {
+            val plan = profileInteractor
+                .profileState
+                .filterIsInstance<ProfileState.Present>()
+                .map { profileState -> profileState.profile.plan }
+                .first()
+
+            val canShowRewardedAd = adsInteractor.canShowRewardedAd(AdPlacement.Rewarded.Generation)
+            val text = if (canShowRewardedAd) {
+                getPluralString(
+                    Res.plurals.desc_monetization_generation_quota_exceeded,
+                    plan.storiesPerDay,
+                    plan.storiesPerDay,
+                    plan.name,
+                )
+            } else {
+                getPluralString(
+                    Res.plurals.desc_monetization_generation_quota_exceeded_no_ads,
+                    plan.storiesPerDay,
+                    plan.storiesPerDay,
+                    plan.name,
+                )
+            }
+
+            val message = QuotaExceededMessage(
+                title = getString(Res.string.title_monetization_generation_quota_exceeded),
+                text = text,
+                canShowRewardedAd = canShowRewardedAd,
+            )
+
+            logger.d { "onStoryGenerationQuotaExceeded: message=$message" }
+
+            _showGenerationQuotaExceededDialog.emit(message)
+        }
+    }
+
+    fun onQuotaExceededDialogClosed() {
+        logger.d { "onQuotaExceededDialogClosed" }
+
+        // TODO
+    }
+
+    fun onWatchAdToUnlockClick() {
+        logger.d { "onWatchAdToUnlockClick" }
+
+        // TODO
+    }
+
+    fun onUpgradePlanToUnlockClick() {
+        logger.d { "onUpgradePlanToUnlockClick" }
+
+        // TODO
     }
 
     fun onStoryClick() {

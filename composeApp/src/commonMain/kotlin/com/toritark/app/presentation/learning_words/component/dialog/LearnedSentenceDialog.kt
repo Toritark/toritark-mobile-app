@@ -143,7 +143,7 @@ internal fun LearnedSentenceDialogPreview() {
                     .padding(top = 16.dp),
                 visible = true,
                 onLearnedClick = {},
-                onNotLearnedClick = {}
+                onNotLearnedClick = {},
             )
         }
     }
