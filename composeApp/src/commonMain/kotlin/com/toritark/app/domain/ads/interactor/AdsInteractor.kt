@@ -23,7 +23,7 @@ interface AdsInteractor {
     suspend fun canShowRewardedAd(adPlacement: AdPlacement): Boolean
 
     fun showBannerAd(adPlacement: AdPlacement)
-
+    fun showInterstitialAd(adPlacement: AdPlacement)
     fun showRewardedAd(rewardedVideoKind: RewardedVideoKind): Flow<Unit>
 }
 
@@ -164,6 +164,26 @@ internal class AdsInteractorImpl(
             }
 
             throw RewardedAdNoBonusAddedException()
+        }
+    }
+
+    override fun showInterstitialAd(adPlacement: AdPlacement) {
+        coroutineScope.launch {
+            if (areAdsDisabled) {
+                logger.d { "showInterstitialAd: adPlacement=$adPlacement, ads disabled" }
+                return@launch
+            }
+
+            waitForSubscriptionType()
+
+            if (isPaidSubscription) {
+                logger.d { "showInterstitialAd: adPlacement=$adPlacement, paid subscription" }
+                return@launch
+            }
+
+            if (adsProvider.canShowInterstitial(adPlacement.placementName)) {
+                adsProvider.showInterstitial(adPlacement.placementName)
+            }
         }
     }
 

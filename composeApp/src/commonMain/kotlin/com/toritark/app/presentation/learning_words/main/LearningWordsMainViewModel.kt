@@ -66,7 +66,6 @@ internal class LearningWordsMainViewModel(
                     showSentenceToLearn(sentenceDbModel = sentence)
                     updateLearningStats()
                 }
-
         }
     }
 
@@ -87,6 +86,8 @@ internal class LearningWordsMainViewModel(
         updateAndShowContent {
             copy(currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(sentenceWithWords))
         }
+
+        adsInteractor.showInterstitialAd(AdPlacement.Interstitial.LearningWords.Main)
     }
 
     private fun getSentenceWithWords(sentenceDbModel: SentenceToLearnWithWords): SentenceWithParts {

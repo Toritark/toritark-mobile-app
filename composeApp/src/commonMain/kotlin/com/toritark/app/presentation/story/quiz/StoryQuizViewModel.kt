@@ -9,7 +9,7 @@ import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.app.presentation.story.quiz.model.QuizQuestionState
 import com.toritark.app.presentation.story.quiz.model.QuizState
-import com.toritark.app.presentation.story.quiz.model.StoryQuizScreenContent
+import com.toritark.app.presentation.story.quiz.model.StoryQuizScreenState
 import com.toritark.app.util.core.extension.iterable.replaceItemAt
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -18,11 +18,11 @@ internal class StoryQuizViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel<StoryQuizScreenContent>(
+) : BaseViewModel<StoryQuizScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = StoryQuizScreenContent(),
+    defaultContentValue = StoryQuizScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 
@@ -137,6 +137,8 @@ internal class StoryQuizViewModel(
                 )
             )
         }
+
+        adsInteractor.showInterstitialAd(AdPlacement.Interstitial.Quiz.Main)
     }
 
     fun onBannerViewReady() {
