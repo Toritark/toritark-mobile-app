@@ -11,6 +11,8 @@ import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.learning_words.component.dialog.model.RewardedAdWaitingDialogState
 import com.toritark.app.presentation.story.model.QuotaExceededMessage
@@ -244,7 +246,9 @@ internal class StoryRetellingViewModel(
     fun onUpgradePlanToUnlockClick() {
         logger.d { "onUpgradePlanToUnlockClick" }
 
-        // TODO
+        // TODO: Report to analytics
+
+        onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.StoryRetellingQuota)) {}
     }
 
     fun onRewardedAdWaitingDialogOkClick() {

@@ -12,6 +12,8 @@ import com.toritark.app.data.story.model.topic.StoryTopic
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.learning_words.component.dialog.model.RewardedAdWaitingDialogState
 import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
@@ -308,7 +310,9 @@ internal class StoryDetailViewModel(
     fun onUpgradePlanToUnlockClick() {
         logger.d { "onUpgradePlanToUnlockClick" }
 
-        // TODO
+        // TODO: Report to analytics
+
+        onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.StoryGenerationQuota)) {}
     }
 
     fun onRewardedAdWaitingDialogOkClick() {

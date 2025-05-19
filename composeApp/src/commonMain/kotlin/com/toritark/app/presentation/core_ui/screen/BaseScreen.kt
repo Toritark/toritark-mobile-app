@@ -14,7 +14,7 @@ private const val MESSAGE_DELAY_MS = 1000L * 3
 @Composable
 fun <C, T : BaseViewModel<C>> BaseScreen(
     viewModel: T,
-    content: @Composable (contentValue: C) -> Unit,
+    content: @Composable (screenState: C) -> Unit,
 ) {
     val screenState by viewModel.screenState.collectAsState()
     var snackbarErrorMessage by remember { mutableStateOf<String?>(null) }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import co.touchlab.kermit.Logger
 import com.toritark.app.presentation.auth.nav.authScreens
+import com.toritark.app.presentation.billing.nav.billingScreens
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.language.nav.languagesScreens
@@ -40,6 +41,7 @@ internal fun AppNavigation(
         onboardingScreens(onNavigateTo = defaultOnNavigateTo)
         authScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         storiesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
+        billingScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         mainScreen(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
     }
 }

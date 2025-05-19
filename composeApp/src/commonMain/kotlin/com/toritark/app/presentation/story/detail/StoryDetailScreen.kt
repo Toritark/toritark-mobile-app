@@ -43,6 +43,7 @@ internal fun StoryDetailScreen(
     viewModel: StoryDetailViewModel = koinViewModel(),
 ) {
     viewModel.onNavigateTo = onNavigateTo
+    viewModel.onPopBackStack = onPopBackStack
 
     val lazyListState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current

@@ -10,6 +10,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.ads.provider.AdsProvider
 import com.toritark.app.domain.ads.provider.AndroidAdsProvider
+import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.presentation.main.app.AppTheme
 import com.toritark.app.presentation.main.app.MainApp
 import org.koin.android.ext.android.get
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var adsProvider: AdsProvider
     private lateinit var adsInteractor: AdsInteractor
+    private lateinit var billingInteractor: BillingInteractor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
         initializeAnalytics()
         initializeAds()
+        initializeBilling()
 
         setContent {
             AndroidAppView()
@@ -47,6 +50,13 @@ class MainActivity : ComponentActivity() {
         adsInteractor = get()
 
         adsInteractor.initialize()
+    }
+
+    private fun initializeBilling() {
+        logger.d { "initializeBilling" }
+
+        billingInteractor = get()
+        billingInteractor.initialize()
     }
 
     override fun onDestroy() {

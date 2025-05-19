@@ -179,4 +179,7 @@
 
     <string name="title_monetization_watch_rewarded_ad_ok_btn">Ok</string>
 
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Upgrade your plan</string>
+
 </resources>

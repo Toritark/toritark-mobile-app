@@ -63,6 +63,12 @@ kotlin {
 //    }
 
     sourceSets {
+        named { it.lowercase().startsWith("ios") }.configureEach {
+            languageSettings {
+                optIn("kotlinx.cinterop.ExperimentalForeignApi")
+            }
+        }
+
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.io.core)
@@ -95,6 +101,10 @@ kotlin {
             implementation(libs.coil.network)
 
             implementation(libs.ksoup.html)
+
+            implementation(libs.revenuecat.purchases.core)
+            implementation(libs.revenuecat.purchases.ui)
+            implementation(libs.revenuecat.purchases.datetime)
 
             implementation(libs.rebugger)
 
@@ -183,13 +193,6 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-
-        manifestPlaceholders.putAll(
-            mapOf(
-                "auth0Domain" to "toritark.eu.auth0.com",
-                "auth0Scheme" to "https",
-            )
-        )
     }
     packaging {
         resources {

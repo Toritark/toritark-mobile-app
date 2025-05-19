@@ -4,7 +4,6 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.api.repository.AdsApiRepository
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
-import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.profile.model.ProfileSubscriptionState
 import com.toritark.app.domain.ads.exception.FailedToShowRewardedAdException
 import com.toritark.app.domain.ads.exception.NoRewardedAdException
@@ -14,7 +13,10 @@ import com.toritark.app.domain.ads.provider.AdsProvider
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.util.core.extension.flow.unitFlow
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 
 interface AdsInteractor {
@@ -62,8 +64,7 @@ internal class AdsInteractorImpl(
 
         coroutineScope.launch {
             profileInteractor
-                .profileState
-                .filterIsInstance<ProfileState.Present>()
+                .presentProfileState
                 .map { profileState -> profileState.profile }
                 .collect { profile ->
                     logger.d { "initialize: profile=$profile" }

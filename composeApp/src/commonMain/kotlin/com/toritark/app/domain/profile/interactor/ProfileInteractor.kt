@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.*
 
 interface ProfileInteractor {
     val profileState: StateFlow<ProfileState>
+    val presentProfileState: Flow<ProfileState.Present>
+
     val subscriptionState: StateFlow<ProfileSubscriptionState>
 
     fun updateProfile(): Flow<Unit>
@@ -21,12 +23,20 @@ interface ProfileInteractor {
 internal class ProfileInteractorImpl(
     private val profileApiRepository: ProfileApiRepository,
     private val profileRepository: ProfileRepository,
-    defaultDispatcher: CoroutineDispatcher,
+    private val defaultDispatcher: CoroutineDispatcher,
 ) : ProfileInteractor {
 
     private val logger = Logger.withTag(LOG_TAG)
 
     override val profileState = profileRepository.profileState
+
+    override val presentProfileState: Flow<ProfileState.Present>
+        get() {
+            return profileState
+                .filterIsInstance<ProfileState.Present>()
+                .distinctUntilChanged()
+                .flowOn(defaultDispatcher)
+        }
 
     private val coroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
 
