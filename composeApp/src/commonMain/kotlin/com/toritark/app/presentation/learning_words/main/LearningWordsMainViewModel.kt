@@ -2,7 +2,7 @@ package com.toritark.app.presentation.learning_words.main
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor

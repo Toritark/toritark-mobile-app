@@ -1,16 +1,21 @@
 package com.toritark.app.domain.ads.interactor
 
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.ads.api.repository.AdsApiRepository
+import com.toritark.app.data.ads.model.placement.AdPlacement
+import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
+import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.profile.model.ProfileSubscriptionState
+import com.toritark.app.domain.ads.exception.FailedToShowRewardedAdException
+import com.toritark.app.domain.ads.exception.NoRewardedAdException
+import com.toritark.app.domain.ads.exception.RewardedAdNoBonusAddedException
+import com.toritark.app.domain.ads.exception.RewardedAdNotFinishedException
 import com.toritark.app.domain.ads.provider.AdsProvider
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import com.toritark.app.util.core.extension.flow.unitFlow
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Clock
 
 interface AdsInteractor {
     fun initialize()
@@ -18,10 +23,13 @@ interface AdsInteractor {
     suspend fun canShowRewardedAd(adPlacement: AdPlacement): Boolean
 
     fun showBannerAd(adPlacement: AdPlacement)
+
+    fun showRewardedAd(rewardedVideoKind: RewardedVideoKind): Flow<Unit>
 }
 
 internal class AdsInteractorImpl(
     private val adsProvider: AdsProvider,
+    private val adsApiRepository: AdsApiRepository,
     private val profileInteractor: ProfileInteractor,
     private val defaultDispatcher: CoroutineDispatcher,
 ) : AdsInteractor {
@@ -50,8 +58,22 @@ internal class AdsInteractorImpl(
     }
 
     override fun initialize() {
+        logger.d { "initialize" }
+
         coroutineScope.launch {
-            adsProvider.initialize()
+            profileInteractor
+                .profileState
+                .filterIsInstance<ProfileState.Present>()
+                .map { profileState -> profileState.profile }
+                .collect { profile ->
+                    logger.d { "initialize: profile=$profile" }
+
+                    adsProvider.initialize(
+                        userId = profile.id,
+                    )
+
+                    logger.d { "initialize: Initialized for userId=${profile.id}" }
+                }
         }
     }
 
@@ -95,6 +117,56 @@ internal class AdsInteractorImpl(
             .first()
     }
 
+    override fun showRewardedAd(rewardedVideoKind: RewardedVideoKind): Flow<Unit> {
+        logger.d { "showRewardedAd: rewardedVideoKind=$rewardedVideoKind" }
+
+        return unitFlow {
+            val adPlacement = when (rewardedVideoKind) {
+                RewardedVideoKind.Generation -> AdPlacement.Rewarded.Generation
+                RewardedVideoKind.RetellingCheck -> AdPlacement.Rewarded.RetellingCheck
+            }
+
+            if (!adsProvider.canShowRewarded(adPlacement.placementName)) {
+                throw NoRewardedAdException()
+            }
+
+            if (!adsProvider.showRewarded(adPlacement.placementName)) {
+                throw FailedToShowRewardedAdException()
+            }
+
+            logger.d { "showRewardedAd: shown, adPlacement=$adPlacement" }
+
+            // Wait for the ad to finish
+            val result = adsProvider.rewardedAdFinishedEvents.first()
+
+            logger.d { "showRewardedAd: finished, adPlacement=$adPlacement, result=$result" }
+
+            if (!result.isFinished) {
+                throw RewardedAdNotFinishedException()
+            }
+
+            // TODO: Start checking on the backend
+            val startTime = Clock.System.now().toEpochMilliseconds()
+
+            while (Clock.System.now().toEpochMilliseconds() - startTime <= MAX_REWARDED_AD_BONUS_CHECK_TIME_MS) {
+                try {
+                    val bonusesCount = adsApiRepository.getNotConsumedRewardedAdBonusesCount()
+                    if (bonusesCount.count > 0) {
+                        logger.d { "showRewardedAd: Bonus added, bonusesCount=${bonusesCount.count}" }
+
+                        return@unitFlow
+                    }
+                } catch (t: Throwable) {
+                    logger.w(t) { "showRewardedAd: Failed to check rewarded ad bonus" }
+                }
+
+                delay(REWARDED_AD_BONUS_CHECK_INTERVAL_MS)
+            }
+
+            throw RewardedAdNoBonusAddedException()
+        }
+    }
+
     private val isPaidSubscription: Boolean
         get() = profileInteractor.subscriptionState.value == ProfileSubscriptionState.Paid
 
@@ -105,5 +177,8 @@ internal class AdsInteractorImpl(
         private const val LOG_TAG = "AdsInteractor"
 
         private const val ADS_DISABLED = false
+
+        private const val MAX_REWARDED_AD_BONUS_CHECK_TIME_MS = 1000L * 60 * 2
+        private const val REWARDED_AD_BONUS_CHECK_INTERVAL_MS = 300L
     }
 }

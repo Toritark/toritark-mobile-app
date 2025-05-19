@@ -75,7 +75,7 @@ internal fun QuotaExceededDialog(
                     ),
                     onClick = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                        onUpgradePlanClick()
+                        onWatchAdClick()
                     }
                 ) {
                     Icon(
@@ -101,7 +101,7 @@ internal fun QuotaExceededDialog(
                 ),
                 onClick = {
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
-                    onWatchAdClick()
+                    onUpgradePlanClick()
                 }
             ) {
                 Icon(
@@ -118,7 +118,6 @@ internal fun QuotaExceededDialog(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
-
     }
 }
 

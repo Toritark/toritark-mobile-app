@@ -157,4 +157,15 @@
     <string name="title_monetization_watch_rewarded_ad_btn">Watch ad to unlock</string>
     <string name="title_monetization_upgrade_plan_btn">Upgrade your plan</string>
 
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Please wait...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">We're upgrading your plan limits</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Oops</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Something went wrong. Please try again or upgrade your plan.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Success</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">We've upgraded your plan limit 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">Ok</string>
+
 </resources>

@@ -12,6 +12,7 @@ import com.appodeal.ads.utils.Log
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentStatus
 import com.toritark.app.R
+import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import com.toritark.app.domain.core.debug.IsDebug
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -43,18 +44,20 @@ internal actual class AdsProviderImpl(
     private val _isRewardedAvailable = MutableStateFlow(false)
     actual override val isRewardedAvailable = _isRewardedAvailable.asStateFlow()
 
-    private val _rewardedAdFinishedEvents = MutableSharedFlow<Unit>()
+    private val _rewardedAdFinishedEvents = MutableSharedFlow<RewardedVideoResult>()
     actual override val rewardedAdFinishedEvents = _rewardedAdFinishedEvents.asSharedFlow()
 
     private var activity: WeakReference<Activity>? = null
 
     private val coroutineScope by lazy { CoroutineScope(defaultDispatcher + SupervisorJob()) }
 
-    actual override suspend fun initialize() {
+    actual override suspend fun initialize(userId: Long) {
         val activity = activity?.get() ?: run {
             logger.w { "initialize: no activity" }
             return
         }
+
+        logger.d { "initialize: userId=$userId" }
 
         Appodeal.setTesting(isDebug())
         Appodeal.setLogLevel(if (isDebug()) Log.LogLevel.verbose else Log.LogLevel.none)
@@ -63,6 +66,8 @@ internal actual class AdsProviderImpl(
         Appodeal.setRewardedVideoCallbacks(rewardedVideoCallbacks)
         Appodeal.setBannerCallbacks(bannerCallbacks)
         Appodeal.setInterstitialCallbacks(interstitialCallbacks)
+
+        Appodeal.setUserId(userId.toString())
 
         Appodeal.initialize(
             context = activity,
@@ -278,6 +283,13 @@ internal actual class AdsProviderImpl(
 
         override fun onRewardedVideoShowFailed() {
             logger.w { "onRewardedVideoShowFailed" }
+
+            coroutineScope.launch {
+                val result = RewardedVideoResult(
+                    isFinished = false,
+                )
+                _rewardedAdFinishedEvents.emit(result)
+            }
         }
 
         override fun onRewardedVideoClicked() {
@@ -291,10 +303,11 @@ internal actual class AdsProviderImpl(
         override fun onRewardedVideoClosed(finished: Boolean) {
             logger.d { "onRewardedVideoClosed: finished=$finished" }
 
-            if (finished) {
-                coroutineScope.launch {
-                    _rewardedAdFinishedEvents.emit(Unit)
-                }
+            coroutineScope.launch {
+                val result = RewardedVideoResult(
+                    isFinished = finished,
+                )
+                _rewardedAdFinishedEvents.emit(result)
             }
         }
 

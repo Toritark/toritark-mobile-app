@@ -12,8 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.presentation.ads.banner.BannerContainer
+import com.toritark.app.presentation.ads.component.dialog.RewardedAdWaitingDialog
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
@@ -30,6 +32,9 @@ import com.toritark.app.presentation.story.retelling.section.StoryRetellingSecti
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+
+private const val LOG_TAG = "StoryDetailScreen"
+private val logger = Logger.withTag(LOG_TAG)
 
 @Composable
 internal fun StoryDetailScreen(
@@ -60,16 +65,21 @@ internal fun StoryDetailScreen(
 
     LaunchedEffect(viewModel) {
         viewModel.showGenerationQuotaExceededDialog.collect { message ->
+            logger.d { "showGenerationQuotaExceededDialog: will show with message=$message" }
+
             quotaExceededMessage = message
 
-            quotaExceededSheetState.show()
+            coroutineScope.launch {
+                quotaExceededSheetState.show()
+
+                logger.d { "showGenerationQuotaExceededDialog: shown with message=$message" }
+            }
         }
     }
 
     BaseScreen(
         viewModel = viewModel,
     ) { contentValue ->
-
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -119,6 +129,13 @@ internal fun StoryDetailScreen(
                     },
                 )
             }
+
+            RewardedAdWaitingDialog(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                state = contentValue.rewardedAdWaitingDialogState,
+                onOkClick = viewModel::onRewardedAdWaitingDialogOkClick,
+            )
         }
 
     }

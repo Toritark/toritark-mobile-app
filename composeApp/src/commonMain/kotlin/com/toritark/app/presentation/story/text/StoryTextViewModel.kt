@@ -2,7 +2,7 @@ package com.toritark.app.presentation.story.text
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.learning_words.data.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor

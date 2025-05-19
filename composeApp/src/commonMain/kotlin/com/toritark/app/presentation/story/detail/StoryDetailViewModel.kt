@@ -2,7 +2,8 @@ package com.toritark.app.presentation.story.detail
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.ads.model.placement.AdPlacement
+import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
@@ -12,6 +13,7 @@ import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
+import com.toritark.app.presentation.learning_words.component.dialog.model.RewardedAdWaitingDialogState
 import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
 import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
@@ -267,19 +269,61 @@ internal class StoryDetailViewModel(
     fun onQuotaExceededDialogClosed() {
         logger.d { "onQuotaExceededDialogClosed" }
 
-        // TODO
+        // TODO: Report to analytics
     }
 
     fun onWatchAdToUnlockClick() {
         logger.d { "onWatchAdToUnlockClick" }
 
-        // TODO
+        updateAndShowContent {
+            copy(
+                rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Waiting,
+            )
+        }
+
+        viewModelScope.launch {
+            adsInteractor
+                .showRewardedAd(RewardedVideoKind.Generation)
+                .catch { t ->
+                    logger.w(t) { "onWatchAdToUnlockClick: error=${t.message}" }
+
+                    updateAndShowContent {
+                        copy(
+                            rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Fail,
+                        )
+                    }
+                }
+                .collect {
+                    logger.d { "onWatchAdToUnlockClick: result=$it" }
+
+                    updateAndShowContent {
+                        copy(
+                            rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Success,
+                        )
+                    }
+                }
+        }
     }
 
     fun onUpgradePlanToUnlockClick() {
         logger.d { "onUpgradePlanToUnlockClick" }
 
         // TODO
+    }
+
+    fun onRewardedAdWaitingDialogOkClick() {
+        logger.d { "onRewardedAdWaitingDialogOkClick" }
+
+        if (contentValue.rewardedAdWaitingDialogState == RewardedAdWaitingDialogState.Success) {
+            logger.d { "onRewardedAdWaitingDialogOkClick: generating story again." }
+            generateStory()
+        }
+
+        updateAndShowContent {
+            copy(
+                rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.None,
+            )
+        }
     }
 
     fun onStoryClick() {

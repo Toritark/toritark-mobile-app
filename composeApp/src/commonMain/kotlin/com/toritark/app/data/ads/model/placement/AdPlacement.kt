@@ -1,4 +1,4 @@
-package com.toritark.app.data.ads.model
+package com.toritark.app.data.ads.model.placement
 
 sealed class AdPlacement(
     val placementName: String? = null,

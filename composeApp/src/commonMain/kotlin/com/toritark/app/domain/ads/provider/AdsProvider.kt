@@ -2,6 +2,7 @@
 
 package com.toritark.app.domain.ads.provider
 
+import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -10,9 +11,9 @@ interface AdsProvider {
     val isInterstitialAvailable: StateFlow<Boolean>
     val isRewardedAvailable: StateFlow<Boolean>
 
-    val rewardedAdFinishedEvents: SharedFlow<Unit>
+    val rewardedAdFinishedEvents: SharedFlow<RewardedVideoResult>
 
-    suspend fun initialize()
+    suspend fun initialize(userId: Long)
     suspend fun checkConsent()
 
     suspend fun canShowBanner(placementName: String? = null): Boolean
@@ -31,9 +32,9 @@ internal expect class AdsProviderImpl : AdsProvider {
     override val isInterstitialAvailable: StateFlow<Boolean>
     override val isRewardedAvailable: StateFlow<Boolean>
 
-    override val rewardedAdFinishedEvents: SharedFlow<Unit>
+    override val rewardedAdFinishedEvents: SharedFlow<RewardedVideoResult>
 
-    override suspend fun initialize()
+    override suspend fun initialize(userId: Long)
 
     override suspend fun checkConsent()
 

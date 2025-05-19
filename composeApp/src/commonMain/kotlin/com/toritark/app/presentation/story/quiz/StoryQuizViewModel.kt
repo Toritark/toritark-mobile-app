@@ -1,7 +1,7 @@
 package com.toritark.app.presentation.story.quiz
 
 import co.touchlab.kermit.Logger
-import com.toritark.app.data.ads.model.AdPlacement
+import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
