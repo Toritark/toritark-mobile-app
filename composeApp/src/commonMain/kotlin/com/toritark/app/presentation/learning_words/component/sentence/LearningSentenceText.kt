@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
 import com.toritark.app.presentation.learning_words.component.part.SentenceInputPart
 import com.toritark.app.presentation.learning_words.component.part.SentenceTextPart
-import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenContent
+import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 import com.toritark.app.presentation.main.app.AppTheme
@@ -28,7 +28,7 @@ private val logger = Logger.withTag(LOG_TAG)
 @Composable
 internal fun LearningSentenceText(
     modifier: Modifier = Modifier,
-    currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
+    currentSentence: LearningWordsMainScreenState.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onFocusChange: (index: Int, isFocused: Boolean) -> Unit,
 ) {
@@ -77,7 +77,7 @@ internal fun LearningSentenceText(
                     val currentInputIndex = inputPartIndex
                     inputPartIndex++
 
-                    val isEditable = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo &&
+                    val isEditable = currentSentence is LearningWordsMainScreenState.CurrentSentence.Present.Todo &&
                             part.state != SentencePart.Input.State.CORRECT
 
                     val onInputChange = remember(index, onInputChange) {
@@ -137,7 +137,7 @@ private fun LearningSentenceComponentPreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 24.dp),
-                currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(
+                currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
                     sentence = SentenceWithParts(
                         id = 1,
                         parts = listOf(

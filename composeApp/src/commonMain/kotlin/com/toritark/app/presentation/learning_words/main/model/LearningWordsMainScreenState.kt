@@ -5,7 +5,7 @@ import com.toritark.app.data.learning_words.data.model.LearningStats
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 
 @Immutable
-internal data class LearningWordsMainScreenContent(
+internal data class LearningWordsMainScreenState(
     val currentSentence: CurrentSentence = CurrentSentence.Loading,
     val learningStatsState: LearningStatsState = LearningStatsState.Empty,
     val showLearnedDialog: Boolean = false,

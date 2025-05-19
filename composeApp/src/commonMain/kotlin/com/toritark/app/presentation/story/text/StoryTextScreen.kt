@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.story.story.StoryApiModel
+import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.app.presentation.core_ui.clipboard.clipEntryOf
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
@@ -45,16 +46,20 @@ internal fun StoryTextScreen(
 
     BaseScreen(viewModel) { contentValue ->
         contentValue.story?.let { story ->
-            StoryTextScreenContent(
-                story = story,
-                onCloseClick = viewModel::onCloseClick,
-                onCopyClick = {
-                    coroutineScope.launch {
-                        clipboard.setClipEntry(clipEntryOf(story.learningLanguageText.joinToString("\n")))
-                    }
-                },
-                onAddWordsToLearningSetClick = viewModel::onAddWordsToLearningSetClick,
-            )
+            BannerContainer(
+                onBannerViewReady = viewModel::onBannerViewReady,
+            ) {
+                StoryTextScreenContent(
+                    story = story,
+                    onCloseClick = viewModel::onCloseClick,
+                    onCopyClick = {
+                        coroutineScope.launch {
+                            clipboard.setClipEntry(clipEntryOf(story.learningLanguageText.joinToString("\n")))
+                        }
+                    },
+                    onAddWordsToLearningSetClick = viewModel::onAddWordsToLearningSetClick,
+                )
+            }
         }
     }
 }

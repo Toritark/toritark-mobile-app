@@ -69,6 +69,7 @@ val learningWordsModule = module {
     viewModel {
         LearningWordsMainViewModel(
             learningWordsInteractor = get(),
+            adsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

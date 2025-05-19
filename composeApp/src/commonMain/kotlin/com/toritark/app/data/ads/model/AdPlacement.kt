@@ -18,6 +18,13 @@ sealed class AdPlacement(
             data object Text : Story("banner_story_text")
         }
 
+        sealed class Quiz(
+            placementName: String? = null,
+        ) : Banner(placementName) {
+
+            data object Main : Quiz("banner_quiz_main")
+        }
+
         sealed class LearningWords(
             placementName: String? = null,
         ) : Banner(placementName) {
@@ -35,6 +42,13 @@ sealed class AdPlacement(
         ) : Interstitial(placementName) {
 
             data object Main : LearningWords("interstitial_learning_words")
+        }
+
+        sealed class Quiz(
+            placementName: String? = null,
+        ) : Interstitial(placementName) {
+
+            data object Main : Quiz("interstitial_quiz")
         }
     }
 

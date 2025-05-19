@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
 import com.toritark.app.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
-import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenContent
+import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 import com.toritark.app.presentation.main.app.AppTheme
@@ -36,7 +36,7 @@ private val logger = Logger.withTag(LOG_TAG)
 @Composable
 internal fun LearningSentence(
     modifier: Modifier = Modifier,
-    currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
+    currentSentence: LearningWordsMainScreenState.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onNextClick: () -> Unit,
     onHelpClick: (partIndex: Int?) -> Unit,
@@ -97,7 +97,7 @@ internal fun LearningSentence(
         Spacer(modifier = Modifier.height(16.dp))
 
         FadeInAnimation(
-            visible = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo,
+            visible = currentSentence is LearningWordsMainScreenState.CurrentSentence.Present.Todo,
         ) {
             Row(
                 modifier = Modifier
@@ -140,7 +140,7 @@ internal fun LearningSentence(
                             shape = CircleShape,
                         )
                         .size(64.dp),
-                    enabled = currentSentence is LearningWordsMainScreenContent.CurrentSentence.Present.Todo,
+                    enabled = currentSentence is LearningWordsMainScreenState.CurrentSentence.Present.Todo,
                     onClick = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.Confirm)
                         onNextClick()
@@ -172,7 +172,7 @@ private fun LearningSentencePreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 24.dp),
-                currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(
+                currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
                     sentence = SentenceWithParts(
                         id = 1,
                         parts = listOf(

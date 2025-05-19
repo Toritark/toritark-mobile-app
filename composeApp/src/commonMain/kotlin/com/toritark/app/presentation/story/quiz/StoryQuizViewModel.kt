@@ -1,8 +1,10 @@
 package com.toritark.app.presentation.story.quiz
 
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.ads.model.AdPlacement
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
+import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.app.presentation.story.quiz.model.QuizQuestionState
@@ -12,6 +14,7 @@ import com.toritark.app.util.core.extension.iterable.replaceItemAt
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class StoryQuizViewModel(
+    private val adsInteractor: AdsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -134,6 +137,12 @@ internal class StoryQuizViewModel(
                 )
             )
         }
+    }
+
+    fun onBannerViewReady() {
+        logger.d { "onBannerViewReady" }
+
+        adsInteractor.showBannerAd(AdPlacement.Banner.Quiz.Main)
     }
 
     private companion object {

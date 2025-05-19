@@ -3,7 +3,7 @@ package com.toritark.app.presentation.story.detail.model
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
 
-internal data class StoryDetailScreenContent(
+internal data class StoryDetailScreenState(
     val topics: List<StoryTopicUiModel> = emptyList(),
     val selectedTopic: StoryTopicUiModel? = null,
     val promptText: String = "",

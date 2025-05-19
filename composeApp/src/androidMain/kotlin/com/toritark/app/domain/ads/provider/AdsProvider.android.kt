@@ -156,7 +156,7 @@ internal actual class AdsProviderImpl(
             return false
         }
 
-        logger.d { "showInterstitial: adType=$adType, placementName=$placementName: Showing" }
+        logger.d { "showAd: adType=$adType, placementName=$placementName: Showing" }
 
         return placementName
             ?.let { placementName ->

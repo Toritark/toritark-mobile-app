@@ -36,6 +36,7 @@ val storyModule = module {
     viewModel {
         StoryDetailViewModel(
             storiesInteractor = get(),
+            adsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),
@@ -45,6 +46,7 @@ val storyModule = module {
     viewModel {
         StoryTextViewModel(
             learningWordsInteractor = get(),
+            adsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),
@@ -53,6 +55,7 @@ val storyModule = module {
 
     viewModel {
         StoryQuizViewModel(
+            adsInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),

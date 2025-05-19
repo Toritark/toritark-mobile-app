@@ -2,11 +2,13 @@ package com.toritark.app.presentation.story.text
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.ads.model.AdPlacement
 import com.toritark.app.data.learning_words.data.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
+import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
-import com.toritark.app.presentation.story.text.model.StoryTextScreenContent
+import com.toritark.app.presentation.story.text.model.StoryTextScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getPluralString
@@ -15,14 +17,15 @@ import toritark.composeapp.generated.resources.message_added_selected_words_to_l
 
 internal class StoryTextViewModel(
     private val learningWordsInteractor: LearningWordsInteractor,
+    private val adsInteractor: AdsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel<StoryTextScreenContent>(
+) : BaseViewModel<StoryTextScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = StoryTextScreenContent(),
+    defaultContentValue = StoryTextScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 
@@ -71,6 +74,12 @@ internal class StoryTextViewModel(
                     )
                 }
         }
+    }
+
+    fun onBannerViewReady() {
+        logger.d { "onBannerViewReady" }
+
+        adsInteractor.showBannerAd(AdPlacement.Banner.Story.Text)
     }
 
     private companion object {

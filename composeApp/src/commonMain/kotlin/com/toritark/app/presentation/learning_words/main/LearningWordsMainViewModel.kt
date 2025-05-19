@@ -2,10 +2,12 @@ package com.toritark.app.presentation.learning_words.main
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.ads.model.AdPlacement
 import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
+import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
-import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenContent
+import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 import com.toritark.app.presentation.main.nav.MainScreenDestination
@@ -16,14 +18,15 @@ import kotlin.math.min
 
 internal class LearningWordsMainViewModel(
     private val learningWordsInteractor: LearningWordsInteractor,
+    private val adsInteractor: AdsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel<LearningWordsMainScreenContent>(
+) : BaseViewModel<LearningWordsMainScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = LearningWordsMainScreenContent(),
+    defaultContentValue = LearningWordsMainScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 
@@ -37,14 +40,14 @@ internal class LearningWordsMainViewModel(
         updateAndShowContent {
             copy(
                 currentSentence = when (currentSentence) {
-                    is LearningWordsMainScreenContent.CurrentSentence.Present -> {
-                        LearningWordsMainScreenContent.CurrentSentence.Present.Checking(
+                    is LearningWordsMainScreenState.CurrentSentence.Present -> {
+                        LearningWordsMainScreenState.CurrentSentence.Present.Checking(
                             sentence = currentSentence.sentence,
                             isComplete = currentSentence.sentence.areAllPartsComplete,
                         )
                     }
 
-                    else -> LearningWordsMainScreenContent.CurrentSentence.Loading
+                    else -> LearningWordsMainScreenState.CurrentSentence.Loading
                 }
             )
         }
@@ -71,7 +74,7 @@ internal class LearningWordsMainViewModel(
         this.currentSentenceDbModel = null
 
         updateAndShowContent {
-            copy(currentSentence = LearningWordsMainScreenContent.CurrentSentence.Empty)
+            copy(currentSentence = LearningWordsMainScreenState.CurrentSentence.Empty)
         }
     }
 
@@ -82,7 +85,7 @@ internal class LearningWordsMainViewModel(
         this.currentSentenceDbModel = sentenceDbModel
 
         updateAndShowContent {
-            copy(currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(sentenceWithWords))
+            copy(currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(sentenceWithWords))
         }
     }
 
@@ -167,7 +170,7 @@ internal class LearningWordsMainViewModel(
         logger.d { "onInputChange: partIndex=$partIndex, text=$text" }
 
         val currentSentence =
-            contentValue.currentSentence as? LearningWordsMainScreenContent.CurrentSentence.Present.Todo
+            contentValue.currentSentence as? LearningWordsMainScreenState.CurrentSentence.Present.Todo
         if (currentSentence == null) {
             logger.e { "onInputChange: Failed to get current sentence: ${contentValue.currentSentence}" }
             return
@@ -220,7 +223,7 @@ internal class LearningWordsMainViewModel(
         logger.d { "onNextClick" }
 
         val currentSentence =
-            contentValue.currentSentence as? LearningWordsMainScreenContent.CurrentSentence.Present.Todo
+            contentValue.currentSentence as? LearningWordsMainScreenState.CurrentSentence.Present.Todo
 
         if (currentSentence == null) {
             logger.e { "onNextClick: Failed to get current sentence: ${contentValue.currentSentence}" }
@@ -235,7 +238,7 @@ internal class LearningWordsMainViewModel(
 
         updateAndShowContent {
             copy(
-                currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Checking(
+                currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Checking(
                     sentence = currentSentence.sentence,
                     isComplete = currentSentence.sentence.areAllPartsComplete,
                 )
@@ -328,7 +331,7 @@ internal class LearningWordsMainViewModel(
         logger.d { "onHelpClick: partIndex=$partIndex" }
 
         val currentSentence =
-            contentValue.currentSentence as? LearningWordsMainScreenContent.CurrentSentence.Present.Todo
+            contentValue.currentSentence as? LearningWordsMainScreenState.CurrentSentence.Present.Todo
 
         if (currentSentence == null) {
             logger.e { "onHelpClick: Failed to get current sentence: ${contentValue.currentSentence}" }
@@ -389,8 +392,8 @@ internal class LearningWordsMainViewModel(
                     logger.d { "updateLearningStats: learningStats=$learningStats" }
 
                     val newState = when {
-                        learningStats.isEmpty -> LearningWordsMainScreenContent.LearningStatsState.Empty
-                        else -> LearningWordsMainScreenContent.LearningStatsState.Present(stats = learningStats)
+                        learningStats.isEmpty -> LearningWordsMainScreenState.LearningStatsState.Empty
+                        else -> LearningWordsMainScreenState.LearningStatsState.Present(stats = learningStats)
                     }
 
                     updateAndShowContent {
@@ -400,6 +403,12 @@ internal class LearningWordsMainViewModel(
                     }
                 }
         }
+    }
+
+    fun onBannerViewReady() {
+        logger.d { "onBannerViewReady" }
+
+        adsInteractor.showBannerAd(AdPlacement.Banner.LearningWords.Main)
     }
 
     private companion object {

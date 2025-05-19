@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.toritark.app.data.learning_words.data.model.LearningStats
+import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.core_ui.component.FlatCard
 import com.toritark.app.presentation.core_ui.icon.AppIcons
@@ -19,7 +20,7 @@ import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.learning_words.component.dialog.LearnedSentenceDialog
 import com.toritark.app.presentation.learning_words.component.sentence.LearningSentence
 import com.toritark.app.presentation.learning_words.component.stats.LearningStatsBlock
-import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenContent
+import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 import com.toritark.app.presentation.main.app.AppTheme
@@ -42,16 +43,20 @@ internal fun LearningWordsMainScreen(
     BaseScreen(
         viewModel = viewModel,
     ) { contentValue ->
-        ScreenContent(
-            modifier = Modifier.fillMaxSize(),
-            contentValue = contentValue,
-            onGoToStoryScreenClick = viewModel::onGoToStoryScreenClick,
-            onInputChange = viewModel::onInputChange,
-            onNextClick = viewModel::onNextClick,
-            onLearnedClick = viewModel::onLearnedClick,
-            onNotLearnedClick = viewModel::onNotLearnedClick,
-            onHelpClick = viewModel::onHelpClick,
-        )
+        BannerContainer(
+            onBannerViewReady = viewModel::onBannerViewReady,
+        ) {
+            ScreenContent(
+                modifier = Modifier.fillMaxSize(),
+                contentValue = contentValue,
+                onGoToStoryScreenClick = viewModel::onGoToStoryScreenClick,
+                onInputChange = viewModel::onInputChange,
+                onNextClick = viewModel::onNextClick,
+                onLearnedClick = viewModel::onLearnedClick,
+                onNotLearnedClick = viewModel::onNotLearnedClick,
+                onHelpClick = viewModel::onHelpClick,
+            )
+        }
     }
 
 }
@@ -59,7 +64,7 @@ internal fun LearningWordsMainScreen(
 @Composable
 private fun ScreenContent(
     modifier: Modifier = Modifier,
-    contentValue: LearningWordsMainScreenContent,
+    contentValue: LearningWordsMainScreenState,
     onGoToStoryScreenClick: () -> Unit,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onNextClick: () -> Unit,
@@ -76,15 +81,15 @@ private fun ScreenContent(
                 .fillMaxWidth(),
         ) {
             when (val currentSentence = contentValue.currentSentence) {
-                is LearningWordsMainScreenContent.CurrentSentence.Loading -> {
+                is LearningWordsMainScreenState.CurrentSentence.Loading -> {
                     FadeInAnimation { LoadingScreen() }
                 }
 
-                is LearningWordsMainScreenContent.CurrentSentence.Empty -> {
+                is LearningWordsMainScreenState.CurrentSentence.Empty -> {
                     FadeInAnimation { EmptyScreen(onGoToStoryScreenClick = onGoToStoryScreenClick) }
                 }
 
-                is LearningWordsMainScreenContent.CurrentSentence.Present -> {
+                is LearningWordsMainScreenState.CurrentSentence.Present -> {
                     FadeInAnimation {
                         PresentScreen(
                             currentSentence = currentSentence,
@@ -99,7 +104,7 @@ private fun ScreenContent(
             Spacer(modifier = Modifier.height(16.dp))
 
             when (val learningStatsState = contentValue.learningStatsState) {
-                is LearningWordsMainScreenContent.LearningStatsState.Present -> {
+                is LearningWordsMainScreenState.LearningStatsState.Present -> {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     LearningStatsBlock(
@@ -181,7 +186,7 @@ private fun EmptyScreen(
 
 @Composable
 private fun PresentScreen(
-    currentSentence: LearningWordsMainScreenContent.CurrentSentence.Present,
+    currentSentence: LearningWordsMainScreenState.CurrentSentence.Present,
     onInputChange: (partIndex: Int, text: String) -> Unit,
     onNextClick: () -> Unit,
     onHelpClick: (partIndex: Int?) -> Unit,
@@ -225,8 +230,8 @@ private fun ScreenContentLoadingPreview() {
         ) {
             ScreenContent(
                 modifier = Modifier.fillMaxSize(),
-                contentValue = LearningWordsMainScreenContent(
-                    currentSentence = LearningWordsMainScreenContent.CurrentSentence.Loading,
+                contentValue = LearningWordsMainScreenState(
+                    currentSentence = LearningWordsMainScreenState.CurrentSentence.Loading,
                 ),
                 onGoToStoryScreenClick = {},
                 onInputChange = { _, _ -> },
@@ -250,8 +255,8 @@ private fun ScreenContentEmptyPreview() {
         ) {
             ScreenContent(
                 modifier = Modifier.fillMaxSize(),
-                contentValue = LearningWordsMainScreenContent(
-                    currentSentence = LearningWordsMainScreenContent.CurrentSentence.Empty,
+                contentValue = LearningWordsMainScreenState(
+                    currentSentence = LearningWordsMainScreenState.CurrentSentence.Empty,
                 ),
                 onGoToStoryScreenClick = {},
                 onInputChange = { _, _ -> },
@@ -275,8 +280,8 @@ private fun ScreenContentPresentPreview() {
         ) {
             ScreenContent(
                 modifier = Modifier.fillMaxSize(),
-                contentValue = LearningWordsMainScreenContent(
-                    currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(
+                contentValue = LearningWordsMainScreenState(
+                    currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
                         sentence = SentenceWithParts(
                             id = 1,
                             parts = listOf(
@@ -308,7 +313,7 @@ private fun ScreenContentPresentPreview() {
                             nativeLanguageText = "Привет, прекрасный мир!"
                         ),
                     ),
-                    learningStatsState = LearningWordsMainScreenContent.LearningStatsState.Present(
+                    learningStatsState = LearningWordsMainScreenState.LearningStatsState.Present(
                         stats = LearningStats(
                             words = LearningStats.Words(
                                 total = 110,
@@ -340,8 +345,8 @@ private fun ScreenContentPresentCompletePreview() {
         ) {
             ScreenContent(
                 modifier = Modifier.fillMaxSize(),
-                contentValue = LearningWordsMainScreenContent(
-                    currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(
+                contentValue = LearningWordsMainScreenState(
+                    currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
                         sentence = SentenceWithParts(
                             id = 1,
                             parts = listOf(
@@ -395,8 +400,8 @@ private fun ScreenContentPresentWithLearnedDialogPreview() {
         ) {
             ScreenContent(
                 modifier = Modifier.fillMaxSize(),
-                contentValue = LearningWordsMainScreenContent(
-                    currentSentence = LearningWordsMainScreenContent.CurrentSentence.Present.Todo(
+                contentValue = LearningWordsMainScreenState(
+                    currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
                         sentence = SentenceWithParts(
                             id = 1,
                             parts = listOf(

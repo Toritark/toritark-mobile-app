@@ -2,12 +2,14 @@ package com.toritark.app.presentation.story.detail
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.ads.model.AdPlacement
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.topic.StoryTopic
+import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
-import com.toritark.app.presentation.story.detail.model.StoryDetailScreenContent
+import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
 import com.toritark.app.presentation.story.nav.StoryNavDestination
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,14 +20,15 @@ import toritark.composeapp.generated.resources.*
 
 internal class StoryDetailViewModel(
     private val storiesInteractor: StoriesInteractor,
+    private val adsInteractor: AdsInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseViewModel<StoryDetailScreenContent>(
+) : BaseViewModel<StoryDetailScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = StoryDetailScreenContent(),
+    defaultContentValue = StoryDetailScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 
@@ -79,9 +82,9 @@ internal class StoryDetailViewModel(
 
     private fun isGeneratedButtonEnabled(
         promptText: String = contentValue.promptText,
-        storyState: StoryDetailScreenContent.StoryState = contentValue.storyState,
+        storyState: StoryDetailScreenState.StoryState = contentValue.storyState,
     ): Boolean {
-        return promptText.isNotBlank() && storyState !is StoryDetailScreenContent.StoryState.Creating
+        return promptText.isNotBlank() && storyState !is StoryDetailScreenState.StoryState.Creating
     }
 
     fun togglePromptVisibility() {
@@ -99,8 +102,8 @@ internal class StoryDetailViewModel(
 
         updateAndShowContent {
             copy(
-                storyState = StoryDetailScreenContent.StoryState.Creating,
-                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenContent.StoryState.Creating),
+                storyState = StoryDetailScreenState.StoryState.Creating,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenState.StoryState.Creating),
             )
         }
 
@@ -163,8 +166,8 @@ internal class StoryDetailViewModel(
 
         updateAndShowContent {
             val newStoryState = when (storyRequest.story) {
-                null -> StoryDetailScreenContent.StoryState.Empty
-                else -> StoryDetailScreenContent.StoryState.Created(
+                null -> StoryDetailScreenState.StoryState.Empty
+                else -> StoryDetailScreenState.StoryState.Created(
                     storyRequestId = storyRequest.id,
                     story = storyRequest.story
                 )
@@ -181,8 +184,8 @@ internal class StoryDetailViewModel(
 
         updateAndShowContent {
             copy(
-                storyState = StoryDetailScreenContent.StoryState.Empty,
-                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenContent.StoryState.Empty),
+                storyState = StoryDetailScreenState.StoryState.Empty,
+                isGenerateButtonEnabled = isGeneratedButtonEnabled(storyState = StoryDetailScreenState.StoryState.Empty),
             )
         }
 
@@ -213,10 +216,16 @@ internal class StoryDetailViewModel(
         ) {}
     }
 
+    fun onBannerViewReady() {
+        logger.d { "onBannerViewReady" }
+
+        adsInteractor.showBannerAd(AdPlacement.Banner.Story.Main)
+    }
+
     private val story: StoryApiModel?
         get() {
             return when (val storyState = contentValue.storyState) {
-                is StoryDetailScreenContent.StoryState.Created -> storyState.story
+                is StoryDetailScreenState.StoryState.Created -> storyState.story
                 else -> null
             }
         }

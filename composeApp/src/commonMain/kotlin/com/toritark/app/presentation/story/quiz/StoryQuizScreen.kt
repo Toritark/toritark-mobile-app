@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
+import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
@@ -36,12 +37,16 @@ internal fun StoryQuizScreen(
 
     BaseScreen(viewModel) { contentValue ->
         contentValue.quizState?.let { quizState ->
-            StoryQuizScreenContent(
-                quizState = quizState,
-                onCloseClick = viewModel::onCloseClick,
-                onAnswerSelected = viewModel::onAnswerSelected,
-                onNextClick = viewModel::onNextClick,
-            )
+            BannerContainer(
+                onBannerViewReady = viewModel::onBannerViewReady,
+            ) {
+                StoryQuizScreenContent(
+                    quizState = quizState,
+                    onCloseClick = viewModel::onCloseClick,
+                    onAnswerSelected = viewModel::onAnswerSelected,
+                    onNextClick = viewModel::onNextClick,
+                )
+            }
         }
     }
 }
