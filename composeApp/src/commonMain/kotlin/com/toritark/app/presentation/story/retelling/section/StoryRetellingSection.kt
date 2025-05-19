@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.toritark.app.presentation.story.retelling.section
 
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.app.data.story.model.story.story.StoryApiModel
+import com.toritark.app.presentation.ads.component.dialog.RewardedAdWaitingDialog
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.core_ui.icon.AppIcons
 import com.toritark.app.presentation.core_ui.icon.MagicChange
@@ -32,9 +35,11 @@ import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.story.component.dialog.QuotaExceededDialog
+import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.retelling.component.StoryRetellingReviewInProgress
 import com.toritark.app.presentation.story.retelling.component.StoryRetellingReviewSummary
-import com.toritark.app.presentation.story.retelling.section.model.StoryRetellingScreenContent
+import com.toritark.app.presentation.story.retelling.section.model.StoryRetellingScreenState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -58,14 +63,71 @@ internal fun StoryRetellingSection(
     viewModel.onNavigateTo = onNavigateTo
     viewModel.onPopBackStack = onPopBackStack
 
+    val coroutineScope = rememberCoroutineScope()
+
+    val quotaExceededSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
+    var quotaExceededMessage by remember { mutableStateOf<QuotaExceededMessage?>(null) }
+
+    LaunchedEffect(viewModel) {
+        viewModel.showRetellingCheckQuotaExceededDialog.collect { message ->
+            quotaExceededMessage = message
+
+            coroutineScope.launch {
+                quotaExceededSheetState.show()
+            }
+        }
+    }
+
     BaseScreen(viewModel) { contentValue ->
-        StoryRetellingContent(
-            modifier = modifier,
-            screenContent = contentValue,
-            onTextInputChange = viewModel::onTextChange,
-            onSubmitClick = viewModel::onSubmitButtonClick,
-            onDetailsClick = viewModel::onDetailsClick,
-        )
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            StoryRetellingContent(
+                modifier = modifier,
+                screenContent = contentValue,
+                onTextInputChange = viewModel::onTextChange,
+                onSubmitClick = viewModel::onSubmitButtonClick,
+                onDetailsClick = viewModel::onDetailsClick,
+            )
+
+            quotaExceededMessage?.let { message ->
+                fun dismissDialog() {
+                    coroutineScope.launch {
+                        quotaExceededMessage = null
+                        quotaExceededSheetState.hide()
+                    }
+                }
+
+                QuotaExceededDialog(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    sheetState = quotaExceededSheetState,
+                    message = message,
+                    onDismissRequest = {
+                        viewModel.onQuotaExceededDialogClosed()
+                        dismissDialog()
+                    },
+                    onWatchAdClick = {
+                        viewModel.onWatchAdToUnlockClick()
+                        dismissDialog()
+                    },
+                    onUpgradePlanClick = {
+                        viewModel.onUpgradePlanToUnlockClick()
+                        dismissDialog()
+                    },
+                )
+            }
+
+            RewardedAdWaitingDialog(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                state = contentValue.rewardedAdWaitingDialogState,
+                onOkClick = viewModel::onRewardedAdWaitingDialogOkClick,
+            )
+        }
     }
 }
 
@@ -73,7 +135,7 @@ internal fun StoryRetellingSection(
 @Composable
 private fun StoryRetellingContent(
     modifier: Modifier = Modifier,
-    screenContent: StoryRetellingScreenContent,
+    screenContent: StoryRetellingScreenState,
     onTextInputChange: (text: String) -> Unit,
     onSubmitClick: () -> Unit,
     onDetailsClick: () -> Unit,
@@ -106,15 +168,15 @@ private fun StoryRetellingContent(
 
             // Scroll when the review appears
             LaunchedEffect(screenContent.reviewResult) {
-                if (screenContent.reviewResult is StoryRetellingScreenContent.ReviewResult.InProgress ||
-                    screenContent.reviewResult is StoryRetellingScreenContent.ReviewResult.Ready
+                if (screenContent.reviewResult is StoryRetellingScreenState.ReviewResult.InProgress ||
+                    screenContent.reviewResult is StoryRetellingScreenState.ReviewResult.Ready
                 ) {
                     contentBringIntoViewRequester.bringIntoView()
                 }
             }
 
             when (val reviewResult = screenContent.reviewResult) {
-                is StoryRetellingScreenContent.ReviewResult.None -> {
+                is StoryRetellingScreenState.ReviewResult.None -> {
                     RetellingForm(
                         screenContent = screenContent,
                         onTextInputChange = onTextInputChange,
@@ -124,7 +186,7 @@ private fun StoryRetellingContent(
                     )
                 }
 
-                is StoryRetellingScreenContent.ReviewResult.InProgress -> {
+                is StoryRetellingScreenState.ReviewResult.InProgress -> {
                     Spacer(modifier = Modifier.height(32.dp))
 
                     FadeInAnimation {
@@ -132,7 +194,7 @@ private fun StoryRetellingContent(
                     }
                 }
 
-                is StoryRetellingScreenContent.ReviewResult.Ready -> {
+                is StoryRetellingScreenState.ReviewResult.Ready -> {
                     FadeInAnimation {
                         StoryRetellingReviewSummary(
                             modifier = Modifier.fillMaxWidth(),
@@ -174,7 +236,7 @@ private fun CardHeader() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun RetellingForm(
-    screenContent: StoryRetellingScreenContent,
+    screenContent: StoryRetellingScreenState,
     onTextInputChange: (text: String) -> Unit,
     onSubmitClick: () -> Unit,
     textFieldBringIntoViewRequester: BringIntoViewRequester,
@@ -183,7 +245,7 @@ private fun RetellingForm(
     var inputText by remember { mutableStateOf(screenContent.retellingText) }
     val focusRequester = remember { FocusRequester() }
 
-    val isLoading = screenContent.reviewResult is StoryRetellingScreenContent.ReviewResult.InProgress
+    val isLoading = screenContent.reviewResult is StoryRetellingScreenState.ReviewResult.InProgress
 
     CardHeader()
 
@@ -264,7 +326,7 @@ private fun StoryRetellingContentPreviewNormal() {
         ) {
             StoryRetellingContent(
                 modifier = Modifier,
-                screenContent = StoryRetellingScreenContent(
+                screenContent = StoryRetellingScreenState(
                     retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
                     isSubmitButtonEnabled = true,
                 ),
@@ -288,10 +350,10 @@ private fun StoryRetellingContentPreviewInProgress() {
         ) {
             StoryRetellingContent(
                 modifier = Modifier,
-                screenContent = StoryRetellingScreenContent(
+                screenContent = StoryRetellingScreenState(
                     retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
                     isSubmitButtonEnabled = true,
-                    reviewResult = StoryRetellingScreenContent.ReviewResult.InProgress,
+                    reviewResult = StoryRetellingScreenState.ReviewResult.InProgress,
                 ),
                 onTextInputChange = {},
                 onSubmitClick = {},
@@ -313,10 +375,10 @@ private fun StoryRetellingContentPreviewReady() {
         ) {
             StoryRetellingContent(
                 modifier = Modifier,
-                screenContent = StoryRetellingScreenContent(
+                screenContent = StoryRetellingScreenState(
                     retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
                     isSubmitButtonEnabled = true,
-                    reviewResult = StoryRetellingScreenContent.ReviewResult.Ready(
+                    reviewResult = StoryRetellingScreenState.ReviewResult.Ready(
                         result = StoryRetellingReviewApiModel(
                             overallReview = "This is a very good retelling. I like it very much.\nSome mistakes were made, but they are not significant.",
                             scores = StoryRetellingScoresApiModel(

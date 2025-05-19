@@ -30,7 +30,7 @@ import com.toritark.app.presentation.core_ui.text.htmlToAnnotatedString
 import com.toritark.app.presentation.main.app.AppTheme
 import com.toritark.app.presentation.main.app.LocalExtendedColors
 import com.toritark.app.presentation.story.retelling.component.StoryRetellingReviewSummary
-import com.toritark.app.presentation.story.retelling.detail.model.StoryRetellingDetailScreenContent
+import com.toritark.app.presentation.story.retelling.detail.model.StoryRetellingDetailScreenState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -59,7 +59,7 @@ internal fun StoryRetellingDetailScreen(
 
 @Composable
 private fun StoryRetellingDetailScreenContent(
-    content: StoryRetellingDetailScreenContent,
+    content: StoryRetellingDetailScreenState,
     onCloseClick: () -> Unit,
 ) {
     Scaffold(
@@ -221,7 +221,7 @@ private fun StoryRetellingDetailScreenContentPreview() {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             StoryRetellingDetailScreenContent(
-                content = StoryRetellingDetailScreenContent(
+                content = StoryRetellingDetailScreenState(
                     review = StoryRetellingReviewApiModel(
                         overallReview = "This is a very good retelling. I like it very much.\nSome mistakes were made, but they are not significant.",
                         scores = StoryRetellingScoresApiModel(

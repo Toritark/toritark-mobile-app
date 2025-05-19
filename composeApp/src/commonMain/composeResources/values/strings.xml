@@ -154,6 +154,17 @@
         <item quantity="one">You can create %1$d story per day on your plan (%2$s).\nPlease upgrade your plan to create a new story and get even more advantages.</item>
         <item quantity="other">You can create %1$d stories per day on your plan (%2$s).\nPlease upgrade your plan to create a new story and get even more advantages.</item>
     </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Oops, retellings limit exceeded</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">You can check retelling of %1$d story per day on your plan (%2$s).\nPlease watch a short ad to check retelling, or upgrade your plan to get even more advantages.</item>
+        <item quantity="other">You can check retelling of %1$d stories per day on your plan (%2$s).\nPlease watch a short ad to check retelling, or upgrade your plan to get even more advantages.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">You can check retelling of %1$d story per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
+        <item quantity="other">You can check retelling of %1$d stories per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
+    </plurals>
+
     <string name="title_monetization_watch_rewarded_ad_btn">Watch ad to unlock</string>
     <string name="title_monetization_upgrade_plan_btn">Upgrade your plan</string>
 
