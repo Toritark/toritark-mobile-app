@@ -50,6 +50,8 @@
     <string name="title_story_customize_prompt_dropdown">Customize the story</string>
     <string name="hint_story_customize_prompt">Enter your story instructions here...</string>
 
+    <string name="title_story_detail_empty_hint">Choose a topic and click on this button to create your story 🚀</string>
+
     <string name="title_story_topic_daily_routine">Daily routine</string>
     <string name="title_story_topic_store_dialog">Store dialog</string>
     <string name="title_story_topic_favorite_animal">Favorite animal</string>

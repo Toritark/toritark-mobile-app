@@ -20,6 +20,7 @@ import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.story.component.dialog.QuotaExceededDialog
+import com.toritark.app.presentation.story.detail.component.EmptyStoryDetailScreenPlaceholder
 import com.toritark.app.presentation.story.detail.component.StoryCreationProgressIndicator
 import com.toritark.app.presentation.story.detail.component.generate.GenerateStoryHeader
 import com.toritark.app.presentation.story.detail.component.generate.StoryPrompt
@@ -215,7 +216,16 @@ private fun StoryScreenContent(
                 }
             }
 
-            StoryDetailScreenState.StoryState.Empty -> {}
+            StoryDetailScreenState.StoryState.Empty -> {
+                item {
+                    EmptyStoryDetailScreenPlaceholder(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp, vertical = 8.dp)
+                            .heightIn(max = 250.dp),
+                    )
+                }
+            }
         }
     }
 }
