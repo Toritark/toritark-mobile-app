@@ -12,10 +12,13 @@ import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import com.toritark.app.presentation.core_ui.component.MainTopBar
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.learning_words.main.LearningWordsMainScreen
@@ -24,7 +27,10 @@ import com.toritark.app.presentation.profile.main.ProfileMainScreen
 import com.toritark.app.presentation.story.detail.StoryDetailScreen
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import toritark.composeapp.generated.resources.*
+import toritark.composeapp.generated.resources.Res
+import toritark.composeapp.generated.resources.title_main_bottom_nav_learning_words
+import toritark.composeapp.generated.resources.title_main_bottom_nav_profile
+import toritark.composeapp.generated.resources.title_main_bottom_nav_story
 
 @Composable
 internal fun MainScreen(
@@ -35,21 +41,16 @@ internal fun MainScreen(
 ) {
     viewModel.onNavigateTo = onNavigateTo
 
+    val profileState by viewModel.profileState.collectAsState()
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                ),
-                title = {
-                    Text(stringResource(Res.string.title_main_screen_topbar))
-                },
-                actions = {
-
-                },
-                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+            MainTopBar(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                profileState = profileState,
+                onUpgradeClick = viewModel::onTopBarUpgradeClick,
             )
         },
         bottomBar = {

@@ -40,6 +40,7 @@
 
     <!-- Main screen -->
     <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Upgrade ✨</string>
 
     <string name="title_main_bottom_nav_story">Story</string>
     <string name="title_main_bottom_nav_learning_words">Learn words</string>

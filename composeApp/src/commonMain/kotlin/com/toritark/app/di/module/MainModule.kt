@@ -10,6 +10,7 @@ val mainModule = module {
 
     viewModel {
         MainViewModel(
+            profileInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
             mainDispatcher = get(named(DispatchersNames.MAIN)),
