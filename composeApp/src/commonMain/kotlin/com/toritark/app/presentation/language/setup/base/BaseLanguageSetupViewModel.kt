@@ -1,10 +1,10 @@
 package com.toritark.app.presentation.language.setup.base
 
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
-import com.toritark.app.presentation.language.setup.base.model.BaseLanguageSetupScreenContent
+import com.toritark.app.presentation.language.setup.base.model.BaseLanguageSetupScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 
-internal abstract class BaseLanguageSetupViewModel<C : BaseLanguageSetupScreenContent>(
+internal abstract class BaseLanguageSetupViewModel<C : BaseLanguageSetupScreenState>(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,

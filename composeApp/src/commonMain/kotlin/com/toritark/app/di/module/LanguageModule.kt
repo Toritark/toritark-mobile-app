@@ -22,7 +22,6 @@ val languageModule = module {
 
     single<LanguagesRepository> {
         LanguagesRepositoryImpl(
-            httpClient = get(named(HttpClientNames.DEFAULT)),
             settings = get(named(LanguageSettingsNames.LANGUAGE)),
             ioDispatcher = get(named(DispatchersNames.IO)),
         )

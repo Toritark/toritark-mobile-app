@@ -1,5 +1,110 @@
 package com.toritark.app.data.language.model
 
+val learningLanguages = listOf(
+    Language(
+        isoCode = "en",
+        nameEn = "English",
+        name = "English",
+        flagUnicode = "🇬🇧",
+    ),
+    Language(
+        isoCode = "es",
+        nameEn = "Spanish",
+        name = "Español",
+        flagUnicode = "🇪🇸",
+    ),
+    Language(
+        isoCode = "de",
+        nameEn = "German",
+        name = "Deutsch",
+        flagUnicode = "🇩🇪",
+    ),
+    Language(
+        isoCode = "fr",
+        nameEn = "French",
+        name = "Français",
+        flagUnicode = "🇫🇷",
+    ),
+    Language(
+        isoCode = "it",
+        nameEn = "Italian",
+        name = "Italiano",
+        flagUnicode = "🇮🇹",
+    ),
+    Language(
+        isoCode = "ru",
+        nameEn = "Russian",
+        name = "Русский язык",
+        flagUnicode = "🇷🇺",
+    ),
+    Language(
+        isoCode = "uk",
+        nameEn = "Ukrainian",
+        name = "Українська",
+        flagUnicode = "🇺🇦",
+    ),
+    Language(
+        isoCode = "pl",
+        nameEn = "Polish",
+        name = "Polski",
+        flagUnicode = "🇵🇱",
+    ),
+    Language(
+        isoCode = "cs",
+        nameEn = "Czech",
+        name = "Český jazyk",
+        flagUnicode = "🇨🇿",
+    ),
+    Language(
+        isoCode = "sr",
+        nameEn = "Serbian",
+        name = "Српски језик",
+        flagUnicode = "🇷🇸",
+    ),
+    Language(
+        isoCode = "pt",
+        nameEn = "Portuguese",
+        name = "Português",
+        flagUnicode = "🇵🇹",
+    ),
+    Language(
+        isoCode = "fi",
+        nameEn = "Finnish",
+        name = "Suomi",
+        flagUnicode = "🇫🇮",
+    ),
+    Language(
+        isoCode = "sv",
+        nameEn = "Swedish",
+        name = "Svenska",
+        flagUnicode = "🇸🇪",
+    ),
+    Language(
+        isoCode = "et",
+        nameEn = "Estonian",
+        name = "Eesti keel",
+        flagUnicode = "🇪🇪",
+    ),
+    Language(
+        isoCode = "lv",
+        nameEn = "Latvian",
+        name = "Latviešu valoda",
+        flagUnicode = "🇱🇻",
+    ),
+    Language(
+        isoCode = "lt",
+        nameEn = "Lithuanian",
+        name = "Lietuvių kalba",
+        flagUnicode = "🇱🇹",
+    ),
+    Language(
+        isoCode = "lb",
+        nameEn = "Luxembourgish",
+        name = "Lëtzebuergesch",
+        flagUnicode = "🇱🇺",
+    ),
+)
+
 internal val allLanguages = listOf(
     Language(
         isoCode = "aa",

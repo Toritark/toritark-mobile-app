@@ -5,6 +5,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.domain.core.language.GetDeviceLanguageCode
+import com.toritark.app.presentation.language.model.LanguageUiModel
 import com.toritark.app.presentation.language.setup.base.language.BaseLanguageChooserViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.mapNotNull
@@ -38,25 +39,29 @@ internal class NativeLanguageChooserViewModel(
         viewModelScope.launch {
             val deviceLanguageCode = getDeviceLanguageCode().takeIf { it.isNotBlank() } ?: return@launch
 
-            languagesRepository
-                .getLanguages()
-                .mapNotNull { languages ->
-                    languages.find { it.isoCode == deviceLanguageCode }
-                }
-                .collect { language ->
-                    logger.d { "initializeNativeLanguage: language=$language from device language '$deviceLanguageCode'" }
+            val allLanguages = languagesRepository.getAllLanguages()
+            selectedLanguage = allLanguages.find { it.isoCode == deviceLanguageCode }?.toLanguageUiModel()
 
-                    selectedLanguage = language
-
-                    updateAndShowContent {
-                        copy(
-                            preSelectedLanguage = language,
-                            isNextButtonEnabled = true
-                        )
-                    }
-                }
-
+            updateAndShowContent {
+                copy(
+                    preSelectedLanguage = selectedLanguage,
+                    isNextButtonEnabled = true
+                )
+            }
         }
+    }
+
+    override suspend fun getLanguages(): List<LanguageUiModel> {
+        return languagesRepository.getAllLanguages().map { language ->
+            language.toLanguageUiModel()
+        }
+    }
+
+    private fun Language.toLanguageUiModel(): LanguageUiModel {
+        return LanguageUiModel(
+            language = this,
+            displayName = this.name,
+        )
     }
 
     override suspend fun saveLanguage(language: Language) {

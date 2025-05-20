@@ -5,13 +5,12 @@ import com.russhwolf.settings.Settings
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.model.LanguageLevel
 import com.toritark.app.data.language.model.allLanguages
-import com.toritark.app.data.language.resources.LanguagesApiResources
-import com.toritark.app.util.core.extension.flow.typedFlow
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.resources.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import com.toritark.app.data.language.model.learningLanguages
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
 
 interface LanguagesRepository {
     val areAllParametersSet: StateFlow<Boolean?>
@@ -20,7 +19,8 @@ interface LanguagesRepository {
     val nativeLanguage: StateFlow<Language?>
     val languageLevel: StateFlow<LanguageLevel?>
 
-    fun getLanguages(): Flow<List<Language>>
+    fun getAllLanguages(): List<Language>
+    fun getLearningLanguages(): List<Language>
 
     suspend fun setLearningLanguage(language: Language)
     suspend fun setNativeLanguage(language: Language)
@@ -28,14 +28,11 @@ interface LanguagesRepository {
 }
 
 internal class LanguagesRepositoryImpl(
-    private val httpClient: HttpClient,
     private val settings: Settings,
     private val ioDispatcher: CoroutineDispatcher,
 ) : LanguagesRepository {
 
     private val logger = Logger.withTag(LOG_TAG)
-
-    private var cachedLanguages: List<Language>? = null
 
     private val _areAllParametersSet = MutableStateFlow<Boolean?>(null)
     override val areAllParametersSet = _areAllParametersSet.asStateFlow()
@@ -54,20 +51,10 @@ internal class LanguagesRepositoryImpl(
     }
 
     private fun initializeLanguages() {
-        CoroutineScope(ioDispatcher + SupervisorJob()).launch {
-            getLanguages()
-                .flowOn(ioDispatcher)
-                .collect { languages ->
-                    initializeLanguages(languages = languages)
-                }
-        }
-    }
+        logger.d { "initializeLanguages" }
 
-    private fun initializeLanguages(languages: List<Language>) {
-        logger.d { "initializeLanguages: languages=${languages.size}" }
-
-        _learningLanguage.value = getLanguage(key = LEARNING_LANGUAGE_KEY, languages = languages)
-        _nativeLanguage.value = getLanguage(key = NATIVE_LANGUAGE_KEY, languages = languages)
+        _learningLanguage.value = getLanguage(key = LEARNING_LANGUAGE_KEY, languages = getLearningLanguages())
+        _nativeLanguage.value = getLanguage(key = NATIVE_LANGUAGE_KEY, languages = getAllLanguages())
         _languageLevel.value = settings.getStringOrNull(LANGUAGE_LEVEL_KEY)?.let(LanguageLevel::fromValue)
 
         updateAreAllParametersSet()
@@ -112,23 +99,12 @@ internal class LanguagesRepositoryImpl(
                 _languageLevel.value != null
     }
 
-    override fun getLanguages(): Flow<List<Language>> {
-        cachedLanguages?.let { return flowOf(it) }
+    override fun getAllLanguages(): List<Language> {
+        return allLanguages
+    }
 
-        logger.d { "getLanguages: no cached languages, fetching from the backend" }
-
-        return typedFlow {
-            httpClient
-                .get(LanguagesApiResources.List())
-                .body<List<Language>>()
-                .also { cachedLanguages = it }
-        }
-            .catch { t ->
-                logger.w(t) { "getLanguages: failed, ${t.message}" }
-
-                emit(allLanguages)
-            }
-            .flowOn(ioDispatcher)
+    override fun getLearningLanguages(): List<Language> {
+        return learningLanguages
     }
 
     private companion object {

@@ -3,8 +3,9 @@ package com.toritark.app.presentation.language.setup.base.language
 import androidx.lifecycle.viewModelScope
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
+import com.toritark.app.presentation.language.model.LanguageUiModel
 import com.toritark.app.presentation.language.setup.base.BaseLanguageSetupViewModel
-import com.toritark.app.presentation.language.setup.base.language.model.LanguageChooserScreenContent
+import com.toritark.app.presentation.language.setup.base.language.model.LanguageChooserScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
@@ -13,31 +14,31 @@ internal abstract class BaseLanguageChooserViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseLanguageSetupViewModel<LanguageChooserScreenContent>(
+) : BaseLanguageSetupViewModel<LanguageChooserScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = LanguageChooserScreenContent(),
+    defaultContentValue = LanguageChooserScreenState(),
 ) {
-    protected var selectedLanguage: Language? = null
+    protected var selectedLanguage: LanguageUiModel? = null
 
     override fun initialize() {
-        setLoadingScreenState()
+        logger.d { "initialize" }
 
         viewModelScope.launch {
-            languagesRepository.getLanguages().collect {
-                logger.d { "initialize: languages=${it.size}" }
+            val languages = getLanguages()
 
-                updateAndShowContent {
-                    copy(languages = it)
-                }
-
-                setContentScreenState()
+            updateAndShowContent {
+                copy(
+                    languages = languages,
+                )
             }
         }
     }
 
-    fun onLanguageSelected(language: Language) {
+    protected abstract suspend fun getLanguages(): List<LanguageUiModel>
+
+    fun onLanguageSelected(language: LanguageUiModel) {
         logger.d { "onLanguageSelected: language=$language" }
 
         selectedLanguage = language
@@ -55,7 +56,7 @@ internal abstract class BaseLanguageChooserViewModel(
         val selectedLanguage = selectedLanguage ?: return
 
         viewModelScope.launch {
-            saveLanguage(selectedLanguage)
+            saveLanguage(selectedLanguage.language)
 
             onPopBackStack()
         }

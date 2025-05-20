@@ -5,7 +5,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.language.model.LanguageLevel
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.presentation.language.setup.base.BaseLanguageSetupViewModel
-import com.toritark.app.presentation.language.setup.level.model.LanguageLevelChooserScreenContent
+import com.toritark.app.presentation.language.setup.level.model.LanguageLevelChooserScreenState
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -15,11 +15,11 @@ internal class LanguageLevelChooserViewModel(
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
-) : BaseLanguageSetupViewModel<LanguageLevelChooserScreenContent>(
+) : BaseLanguageSetupViewModel<LanguageLevelChooserScreenState>(
     defaultDispatcher = defaultDispatcher,
     ioDispatcher = ioDispatcher,
     mainDispatcher = mainDispatcher,
-    defaultContentValue = LanguageLevelChooserScreenContent(),
+    defaultContentValue = LanguageLevelChooserScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 

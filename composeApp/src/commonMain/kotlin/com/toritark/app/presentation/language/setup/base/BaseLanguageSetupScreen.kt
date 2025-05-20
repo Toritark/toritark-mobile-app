@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
-import com.toritark.app.presentation.language.setup.base.model.BaseLanguageSetupScreenContent
+import com.toritark.app.presentation.language.setup.base.model.BaseLanguageSetupScreenState
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun <C : BaseLanguageSetupScreenContent> BaseLanguageSetupScreen(
+internal fun <C : BaseLanguageSetupScreenState> BaseLanguageSetupScreen(
     titleStringResource: StringResource,
     nextButtonStringResource: StringResource,
     viewModel: BaseLanguageSetupViewModel<C>,

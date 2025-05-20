@@ -1,5 +1,5 @@
 package com.toritark.app.presentation.language.setup.base.model
 
-internal interface BaseLanguageSetupScreenContent {
+internal interface BaseLanguageSetupScreenState {
     val isNextButtonEnabled: Boolean
 }

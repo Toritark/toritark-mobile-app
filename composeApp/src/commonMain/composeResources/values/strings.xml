@@ -183,4 +183,23 @@
     <!-- Paywall -->
     <string name="title_paywall_screen">Upgrade your plan</string>
 
+    <!-- Languages -->
+    <string name="title_language_name_english">English</string>
+    <string name="title_language_name_spanish">Spanish</string>
+    <string name="title_language_name_german">German</string>
+    <string name="title_language_name_french">French</string>
+    <string name="title_language_name_italian">Italian</string>
+    <string name="title_language_name_russian">Russian</string>
+    <string name="title_language_name_ukrainian">Ukrainian</string>
+    <string name="title_language_name_polish">Polish</string>
+    <string name="title_language_name_czech">Czech</string>
+    <string name="title_language_name_serbian">Serbian</string>
+    <string name="title_language_name_portuguese">Portuguese</string>
+    <string name="title_language_name_finnish">Finnish</string>
+    <string name="title_language_name_swedish">Swedish</string>
+    <string name="title_language_name_estonian">Estonian</string>
+    <string name="title_language_name_latvian">Latvian</string>
+    <string name="title_language_name_lithuanian">Lithuanian</string>
+    <string name="title_language_name_luxembourgish">Luxembourgish</string>
+
 </resources>

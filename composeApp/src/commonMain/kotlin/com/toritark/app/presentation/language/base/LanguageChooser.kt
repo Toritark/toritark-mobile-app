@@ -17,7 +17,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.toritark.app.data.language.model.Language
+import com.toritark.app.presentation.language.model.LanguageUiModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import toritark.composeapp.generated.resources.Res
@@ -26,9 +26,9 @@ import toritark.composeapp.generated.resources.title_search_languages_field
 @Composable
 fun LanguageChooser(
     modifier: Modifier = Modifier,
-    languages: List<Language>,
-    selectedLanguage: Language?,
-    onSelectLanguage: (Language) -> Unit,
+    languages: List<LanguageUiModel>,
+    selectedLanguage: LanguageUiModel?,
+    onSelectLanguage: (LanguageUiModel) -> Unit,
 ) {
     val searchQuery = remember { mutableStateOf("") }
     val listState = rememberLazyListState()
@@ -48,8 +48,9 @@ fun LanguageChooser(
                 languages
             } else {
                 languages.filter {
-                    it.name.lowercase().contains(query) ||
-                            it.nameEn.lowercase().contains(query)
+                    it.displayName.lowercase().contains(query) ||
+                            it.language.name.lowercase().contains(query) ||
+                            it.language.nameEn.lowercase().contains(query)
                 }
             }
         }
@@ -116,7 +117,7 @@ private fun SearchField(
 
 @Composable
 private fun LanguageItem(
-    language: Language,
+    language: LanguageUiModel,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -137,16 +138,16 @@ private fun LanguageItem(
     ) {
         // Flag
         Text(
-            text = language.flagUnicode,
+            text = language.language.flagUnicode,
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(end = 16.dp)
         )
 
         // Language details
         Column {
-            // Native name
+            // Display name
             Text(
-                text = language.name,
+                text = language.displayName,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
@@ -155,7 +156,7 @@ private fun LanguageItem(
 
             // English name
             Text(
-                text = language.nameEn,
+                text = language.language.nameEn,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
