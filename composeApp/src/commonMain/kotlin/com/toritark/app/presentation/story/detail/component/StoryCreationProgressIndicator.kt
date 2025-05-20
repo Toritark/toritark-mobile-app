@@ -48,6 +48,7 @@ internal fun StoryCreationProgressIndicator(
                 modifier = Modifier
                     .size(64.dp)
                     .align(Alignment.CenterHorizontally),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.size(16.dp))

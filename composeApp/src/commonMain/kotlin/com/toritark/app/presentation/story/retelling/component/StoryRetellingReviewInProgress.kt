@@ -52,6 +52,7 @@ internal fun StoryRetellingReviewInProgress(
                 modifier = Modifier
                     .size(56.dp)
                     .align(Alignment.CenterHorizontally),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.size(16.dp))
