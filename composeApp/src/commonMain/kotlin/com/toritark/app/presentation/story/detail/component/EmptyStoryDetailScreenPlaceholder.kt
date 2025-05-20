@@ -25,7 +25,8 @@ internal fun EmptyStoryDetailScreenPlaceholder(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            color = MaterialTheme.colorScheme.tertiary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            strokeWidth = 1.5.dp,
         )
 
         Spacer(modifier = Modifier.height(4.dp))

@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,7 +33,7 @@ internal fun GenerateStoryArrowHint(
         val startX = canvasWidth * 0.5f
         val startY = canvasHeight * 0.99f
 
-        val endX = canvasWidth * 0.95f
+        val endX = canvasWidth * 0.9f
         val endY = canvasHeight * 0.02f
 
         val control1X = canvasWidth * 0.05f
@@ -50,14 +47,23 @@ internal fun GenerateStoryArrowHint(
             cubicTo(control1X, control1Y, control2X, control2Y, endX, endY)
         }
 
+        val dashPathEffect = PathEffect.dashPathEffect(
+            intervals = floatArrayOf(
+                strokeWidthPx * 2f,
+                strokeWidthPx * 2f,
+            ),
+            phase = 0f,
+        )
+
         drawPath(
             path = arrowShaftPath,
             color = color,
             style = Stroke(
                 width = strokeWidthPx,
                 cap = StrokeCap.Round,
-                join = StrokeJoin.Round
-            )
+                join = StrokeJoin.Round,
+                pathEffect = dashPathEffect,
+            ),
         )
 
         val arrowHeadLength = (size.minDimension * 0.06f).coerceAtLeast(strokeWidthPx * 3.0f)
@@ -82,8 +88,8 @@ internal fun GenerateStoryArrowHint(
             style = Stroke(
                 width = strokeWidthPx,
                 cap = StrokeCap.Round,
-                join = StrokeJoin.Round
-            )
+                join = StrokeJoin.Round,
+            ),
         )
     }
 }
@@ -103,6 +109,7 @@ private fun GenerateStoryArrowHintPreview() {
                     .fillMaxWidth()
                     .height(400.dp),
                 color = MaterialTheme.colorScheme.tertiary,
+                strokeWidth = 1.5.dp,
             )
         }
     }
