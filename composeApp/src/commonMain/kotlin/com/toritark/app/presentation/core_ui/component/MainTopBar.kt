@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.profile.api.model.ProfileApiModel
@@ -82,6 +83,7 @@ private fun MainTopBarTitle(
                 .align(Alignment.Bottom),
             text = stringResource(Res.string.title_main_screen_topbar),
             style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface,
         )
 
