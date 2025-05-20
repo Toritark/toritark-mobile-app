@@ -24,7 +24,7 @@ import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import toritark.composeapp.generated.resources.Res

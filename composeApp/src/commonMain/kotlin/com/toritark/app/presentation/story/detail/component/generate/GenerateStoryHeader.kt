@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.topic.StoryTopic
 import com.toritark.app.presentation.core_ui.icon.AppIcons
 import com.toritark.app.presentation.core_ui.icon.Magic
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

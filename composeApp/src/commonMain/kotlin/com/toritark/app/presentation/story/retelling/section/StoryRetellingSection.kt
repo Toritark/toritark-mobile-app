@@ -34,7 +34,7 @@ import com.toritark.app.presentation.core_ui.icon.MagicChange
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.component.dialog.QuotaExceededDialog
 import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.retelling.component.StoryRetellingReviewInProgress

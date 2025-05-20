@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.app.presentation.core_ui.component.AiDisclaimer
-import com.toritark.app.presentation.main.app.AppTheme
-import com.toritark.app.presentation.main.app.LocalExtendedColors
+import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

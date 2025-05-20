@@ -16,7 +16,7 @@ import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.model.LanguageLevel
 import com.toritark.app.presentation.core_ui.component.FlatCard
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.profile.main.model.ProfileMainScreenState
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource

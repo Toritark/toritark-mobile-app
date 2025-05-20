@@ -11,7 +11,7 @@ import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.ads.provider.AdsProvider
 import com.toritark.app.domain.ads.provider.AndroidAdsProvider
 import com.toritark.app.domain.billing.interactor.BillingInteractor
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.main.app.MainApp
 import org.koin.android.ext.android.get
 

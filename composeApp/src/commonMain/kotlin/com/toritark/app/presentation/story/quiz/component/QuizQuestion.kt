@@ -25,7 +25,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.toritark.app.presentation.main.app.AppTheme
-import com.toritark.app.presentation.main.app.LocalExtendedColors
+import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource

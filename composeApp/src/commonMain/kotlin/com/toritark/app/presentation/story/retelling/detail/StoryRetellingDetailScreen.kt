@@ -27,8 +27,8 @@ import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.core_ui.text.htmlToAnnotatedString
-import com.toritark.app.presentation.main.app.AppTheme
-import com.toritark.app.presentation.main.app.LocalExtendedColors
+import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import com.toritark.app.presentation.story.retelling.component.StoryRetellingReviewSummary
 import com.toritark.app.presentation.story.retelling.detail.model.StoryRetellingDetailScreenState
 import org.jetbrains.compose.resources.stringResource

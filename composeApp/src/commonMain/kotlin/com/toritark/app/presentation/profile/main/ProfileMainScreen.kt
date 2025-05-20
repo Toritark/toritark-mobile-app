@@ -17,7 +17,7 @@ import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.profile.main.component.ProfileHeaderSection
 import com.toritark.app.presentation.profile.main.component.ProfileSettingsSection
 import com.toritark.app.presentation.profile.main.model.ProfileMainScreenState

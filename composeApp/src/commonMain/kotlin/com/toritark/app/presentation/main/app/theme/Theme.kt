@@ -1,4 +1,4 @@
-package com.toritark.app.presentation.main.app
+package com.toritark.app.presentation.main.app.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
@@ -264,7 +264,8 @@ fun AppTheme(
     ) {
         MaterialTheme(
             colorScheme = colors,
-            content = content
+//            typography = AinoTypography(),
+            content = content,
         )
     }
 }

@@ -13,7 +13,7 @@ import com.toritark.app.presentation.auth.icon.Apple
 import com.toritark.app.presentation.auth.icon.Google
 import com.toritark.app.presentation.auth.sign_in.model.provider.AuthProviderUiModel
 import com.toritark.app.presentation.core_ui.icon.AppIcons
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import toritark.composeapp.generated.resources.Res

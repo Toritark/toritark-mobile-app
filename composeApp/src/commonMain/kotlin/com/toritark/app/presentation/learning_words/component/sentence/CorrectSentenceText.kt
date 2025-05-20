@@ -16,8 +16,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
-import com.toritark.app.presentation.main.app.AppTheme
-import com.toritark.app.presentation.main.app.LocalExtendedColors
+import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

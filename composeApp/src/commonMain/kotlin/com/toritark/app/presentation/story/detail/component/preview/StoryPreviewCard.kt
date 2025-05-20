@@ -17,7 +17,7 @@ import com.toritark.app.presentation.core_ui.animation.FadeAndExpandVerticallyAn
 import com.toritark.app.presentation.core_ui.component.FlatCard
 import com.toritark.app.presentation.core_ui.icon.AppIcons
 import com.toritark.app.presentation.core_ui.icon.Story
-import com.toritark.app.presentation.main.app.AppTheme
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import toritark.composeapp.generated.resources.Res
