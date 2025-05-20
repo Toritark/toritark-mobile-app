@@ -99,7 +99,7 @@ private fun MainTopBarTitle(
                     .padding(horizontal = 12.dp, vertical = 6.dp)
                     .align(Alignment.Top),
                 text = profileState.profile.plan.name.uppercase(),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onPrimary,
             )
 
@@ -115,7 +115,7 @@ private fun MainTopBarTitle(
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                         .align(Alignment.Top),
                     text = stringResource(Res.string.title_main_screen_topbar_upgrade),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.labelSmall,
                     color = LocalExtendedColors.current.success.onSuccess,
                 )
             }
