@@ -15,7 +15,7 @@
     <string name="title_choose_native_language_screen">Choose your native language</string>
     <string name="title_choose_native_language_next_btn">Next</string>
 
-    <string name="title_language_level_none">None</string>
+    <string name="title_language_level_none">--</string>
     <string name="title_language_level_a1">A1</string>
     <string name="title_language_level_a2">A2</string>
     <string name="title_language_level_b1">B1</string>

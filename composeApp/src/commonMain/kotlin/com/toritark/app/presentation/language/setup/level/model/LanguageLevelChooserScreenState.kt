@@ -4,5 +4,6 @@ import com.toritark.app.presentation.language.setup.base.model.BaseLanguageSetup
 
 internal data class LanguageLevelChooserScreenState(
     val levels: List<LanguageLevelUiModel> = emptyList(),
+    val selectedLevel: LanguageLevelUiModel? = null,
     override val isNextButtonEnabled: Boolean = false,
 ) : BaseLanguageSetupScreenState

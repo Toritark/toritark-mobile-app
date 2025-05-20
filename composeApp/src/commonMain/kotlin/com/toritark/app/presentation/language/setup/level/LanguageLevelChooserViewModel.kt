@@ -41,7 +41,10 @@ internal class LanguageLevelChooserViewModel(
         this.languageLevel = languageLevel.languageLevel
 
         updateAndShowContent {
-            copy(isNextButtonEnabled = true)
+            copy(
+                selectedLevel = languageLevel,
+                isNextButtonEnabled = true,
+            )
         }
     }
 
