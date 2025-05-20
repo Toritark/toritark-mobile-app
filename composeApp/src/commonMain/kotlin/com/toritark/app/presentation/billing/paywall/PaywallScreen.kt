@@ -80,7 +80,7 @@ private fun PaywallScreenContent(
                         )
                     }
                 },
-                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
             )
         },
     ) { innerPadding ->
