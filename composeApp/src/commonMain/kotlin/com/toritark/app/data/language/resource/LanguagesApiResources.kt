@@ -1,4 +1,4 @@
-package com.toritark.app.data.language.resources
+package com.toritark.app.data.language.resource
 
 import com.toritark.app.data.core_api.base.resource.BaseApiResource
 import io.ktor.resources.*
