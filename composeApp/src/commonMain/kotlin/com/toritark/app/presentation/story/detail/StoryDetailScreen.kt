@@ -16,6 +16,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.ads.component.dialog.RewardedAdWaitingDialog
+import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
@@ -218,12 +219,16 @@ private fun StoryScreenContent(
 
             StoryDetailScreenState.StoryState.Empty -> {
                 item {
-                    EmptyStoryDetailScreenPlaceholder(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp, vertical = 8.dp)
-                            .heightIn(max = 250.dp),
-                    )
+                    FadeInAnimation(
+                        visible = !screenState.isPromptInputVisible,
+                    ) {
+                        EmptyStoryDetailScreenPlaceholder(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp, vertical = 8.dp)
+                                .heightIn(max = 250.dp),
+                        )
+                    }
                 }
             }
         }
