@@ -45,14 +45,57 @@ internal class StoriesInteractorImpl(
             return errorFlow(CreateStoryException.CreateStoryConfigurationException())
         }
 
+        val finalPrompt = getPrompt(rawPrompt = prompt)
+
+        logger.d { "createStory: finalPrompt='$finalPrompt'" }
+
         return storyRequestsApiRepository
             .createStoryRequest(
                 learningLanguage = learningLanguage,
                 nativeLanguage = nativeLanguage,
                 languageLevel = languageLevel,
-                prompt = prompt,
+                prompt = finalPrompt,
             )
             .flowOn(ioDispatcher)
+    }
+
+    private fun getPrompt(rawPrompt: String): String {
+        var result = rawPrompt
+        val replacements = getRandomPromptPlaceholders()
+        replacements.forEach { (placeholder, replacement) ->
+            result = result.replace(placeholder, replacement)
+        }
+
+        return result
+    }
+
+    private fun getRandomPromptPlaceholders(): Collection<PromptPlaceholderReplacement> {
+        return listOf(
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_AGE_GROUP,
+                replacement = ageGroups.random(),
+            ),
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_GENDER,
+                replacement = genders.random(),
+            ),
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_SETTLEMENT,
+                replacement = settlements.random(),
+            ),
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_OCCUPATION,
+                replacement = occupations.random(),
+            ),
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_TRANSPORT_1,
+                replacement = transports.random(),
+            ),
+            PromptPlaceholderReplacement(
+                placeholder = PROMPT_PLACEHOLDER_TRANSPORT_2,
+                replacement = transports.random(),
+            )
+        )
     }
 
     override fun getStory(requestId: Long): Flow<StoryRequestApiModel> {
@@ -85,7 +128,88 @@ internal class StoriesInteractorImpl(
             .flowOn(ioDispatcher)
     }
 
+    data class PromptPlaceholderReplacement(
+        val placeholder: String,
+        val replacement: String,
+    )
+
     private companion object {
         private const val LOG_TAG = "StoriesInteractor"
+
+        private const val PROMPT_PLACEHOLDER_AGE_GROUP = "{AGE_GROUP}"
+        private const val PROMPT_PLACEHOLDER_GENDER = "{GENDER}"
+        private const val PROMPT_PLACEHOLDER_SETTLEMENT = "{SETTLEMENT}"
+        private const val PROMPT_PLACEHOLDER_OCCUPATION = "{OCCUPATION}"
+        private const val PROMPT_PLACEHOLDER_TRANSPORT_1 = "{TRANSPORT_1}"
+        private const val PROMPT_PLACEHOLDER_TRANSPORT_2 = "{TRANSPORT_2}"
+
+        val ageGroups = setOf(
+            "child",
+            "teenager",
+            "young adult",
+            "middle-aged",
+            "elderly",
+        )
+
+        val genders = setOf(
+            "male",
+            "female",
+        )
+
+        val occupations = setOf(
+            "student",
+            "artist",
+            "scientist",
+            "teacher",
+            "farmer",
+            "driver",
+            "manager",
+            "nurse",
+            "engineer",
+            "chef",
+            "musician",
+            "writer",
+            "electrician",
+            "police officer",
+            "salesperson",
+            "pilot",
+            "doctor",
+            "architect",
+            "entrepreneur",
+            "journalist",
+            "pharmacist",
+            "veterinarian",
+            "designer",
+            "firefighter",
+            "mechanic",
+            "barista",
+            "construction worker",
+            "postman",
+            "courier",
+        )
+
+        val settlements = setOf(
+            "big city",
+            "average city",
+            "small town",
+            "suburb",
+            "village",
+            "seaside town",
+            "island",
+            "port city",
+        )
+
+        val transports = setOf(
+            "car",
+            "bike",
+            "train",
+            "subway",
+            "bus",
+            "tram",
+            "foot",
+            "taxi",
+            "electric scooter",
+        )
+
     }
 }
