@@ -15,6 +15,7 @@ val billingModule = module {
     single<BillingProvider> {
         BillingProviderImpl(
             isDebug = get(),
+            getEnvironment = get(),
         )
     }
 
