@@ -1,6 +1,9 @@
 package com.toritark.app.di.module.billing
 
+import com.toritark.app.data.billing.api.repository.BillingApiRepository
+import com.toritark.app.data.billing.api.repository.BillingApiRepositoryImpl
 import com.toritark.app.di.name.DispatchersNames
+import com.toritark.app.di.name.HttpClientNames
 import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.billing.interactor.BillingInteractorImpl
 import com.toritark.app.domain.billing.provider.BillingProvider
@@ -19,8 +22,16 @@ val billingModule = module {
         )
     }
 
+    single<BillingApiRepository> {
+        BillingApiRepositoryImpl(
+            httpClient = get(named(HttpClientNames.DEFAULT)),
+            ioDispatcher = get(named(DispatchersNames.IO)),
+        )
+    }
+
     single<BillingInteractor> {
         BillingInteractorImpl(
+            billingApiRepository = get(),
             billingProvider = get(),
             profileInteractor = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),

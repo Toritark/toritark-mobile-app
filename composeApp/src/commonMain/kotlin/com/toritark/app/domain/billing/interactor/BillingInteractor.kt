@@ -1,19 +1,27 @@
 package com.toritark.app.domain.billing.interactor
 
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.billing.api.model.PlanApiModel
+import com.toritark.app.data.billing.api.repository.BillingApiRepository
+import com.toritark.app.domain.billing.model.plan.PlanUpgradeCheckEvent
 import com.toritark.app.domain.billing.provider.BillingProvider
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 
 interface BillingInteractor {
     fun initialize()
+
+    fun waitForPlanToUpgrade(initialPlan: PlanApiModel?): Flow<PlanUpgradeCheckEvent>
+    suspend fun triggerPlanCheck()
 }
 
 internal class BillingInteractorImpl(
+    private val billingApiRepository: BillingApiRepository,
     private val billingProvider: BillingProvider,
     private val profileInteractor: ProfileInteractor,
     private val defaultDispatcher: CoroutineDispatcher,
@@ -38,7 +46,70 @@ internal class BillingInteractorImpl(
         }
     }
 
+    /**
+     * A bit hacky approach, will find a better one later
+     */
+    override fun waitForPlanToUpgrade(initialPlan: PlanApiModel?): Flow<PlanUpgradeCheckEvent> {
+        logger.d { "waitForPlanToUpgrade" }
+
+        return flow {
+            val initialPlan = initialPlan ?: profileInteractor.getCurrentPlan()
+
+            logger.d { "waitForPlanToUpgrade: initialPlan=$initialPlan" }
+
+            val startTimestamp = Clock.System.now().toEpochMilliseconds()
+            var lastCheckTriggerTimestamp = 0L
+
+            while (currentCoroutineContext().isActive) {
+                withContext(defaultDispatcher) {
+                    delay(PLAN_UPGRADE_CHECK_INTERVAL_MS)
+                }
+
+                try {
+                    profileInteractor.updateProfile().collect()
+                } catch (t: Throwable) {
+                    // Catch & mute all exceptions here as they are not important
+                    logger.w(t) { "waitForPlanToChange: Failed to update profile" }
+                }
+                val currentPlan = profileInteractor.getCurrentPlan()
+                logger.d { "waitForPlanToChange: currentPlan=$currentPlan" }
+
+                if (!currentPlan.isFree && currentPlan.id != initialPlan.id) {
+                    logger.i { "waitForPlanToChange: plan changed to $currentPlan" }
+                    emit(PlanUpgradeCheckEvent.Success(currentPlan))
+                    break
+                }
+
+                val currentTimestamp = Clock.System.now().toEpochMilliseconds()
+
+                emit(PlanUpgradeCheckEvent.Waiting(timeMs = currentTimestamp - startTimestamp))
+
+                if (currentTimestamp - startTimestamp >= PLAN_UPGRADE_CHECK_TRIGGER_CHECK_MIN_TIME_MS) {
+                    if (currentTimestamp - lastCheckTriggerTimestamp >= PLAN_UPGRADE_CHECK_TRIGGER_CHECK_INTERVAL_MS) {
+                        logger.i { "waitForPlanToChange: trigger check" }
+                        lastCheckTriggerTimestamp = currentTimestamp
+                        triggerPlanCheck()
+                        logger.i { "waitForPlanToChange: check triggered" }
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun triggerPlanCheck() {
+        try {
+            billingApiRepository.triggerPlanCheck()
+        } catch (t: Throwable) {
+            // Catch & mute all exceptions here as they are not important
+            logger.w(t) { "triggerPlanCheck: Failed to trigger plan check" }
+        }
+    }
+
     private companion object {
         private const val LOG_TAG = "BillingInteractor"
+
+        private const val PLAN_UPGRADE_CHECK_INTERVAL_MS = 1_000L
+        private const val PLAN_UPGRADE_CHECK_TRIGGER_CHECK_MIN_TIME_MS = 1_000L * 15
+        private const val PLAN_UPGRADE_CHECK_TRIGGER_CHECK_INTERVAL_MS = 1_000L * 15
     }
 }

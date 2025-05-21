@@ -3,6 +3,7 @@
 package com.toritark.app.domain.profile.interactor
 
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.profile.api.repository.ProfileApiRepository
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.profile.model.ProfileSubscriptionState
@@ -18,6 +19,8 @@ interface ProfileInteractor {
 
     fun updateProfile(): Flow<Unit>
     fun updateProfileInBackground()
+
+    suspend fun getCurrentPlan(): PlanApiModel
 }
 
 internal class ProfileInteractorImpl(
@@ -93,6 +96,13 @@ internal class ProfileInteractorImpl(
                     logger.d { "updateProfileInBackground: done" }
                 }
         }
+    }
+
+    override suspend fun getCurrentPlan(): PlanApiModel {
+        return profileState
+            .filterIsInstance<ProfileState.Present>()
+            .map { it.profile.plan }
+            .first()
     }
 
     private companion object {

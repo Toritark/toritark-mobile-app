@@ -2,22 +2,28 @@
 
 package com.toritark.app.presentation.billing.paywall
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.revenuecat.purchases.kmp.models.CustomerInfo
 import com.revenuecat.purchases.kmp.models.Package
 import com.revenuecat.purchases.kmp.models.PurchasesError
 import com.revenuecat.purchases.kmp.models.StoreTransaction
 import com.toritark.app.presentation.billing.component.PaywallComponent
+import com.toritark.app.presentation.billing.paywall.component.PurchaseResultDialog
+import com.toritark.app.presentation.billing.paywall.model.PaywallScreenState
 import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
@@ -39,6 +45,7 @@ internal fun PaywallScreen(
         viewModel = viewModel,
     ) { screenState ->
         PaywallScreenContent(
+            screenState = screenState,
             onPurchaseStarted = viewModel::onPurchaseStarted,
             onPurchaseCompleted = viewModel::onPurchaseCompleted,
             onPurchaseError = viewModel::onPurchaseError,
@@ -47,12 +54,15 @@ internal fun PaywallScreen(
             onRestoreCompleted = viewModel::onRestoreCompleted,
             onRestoreError = viewModel::onRestoreError,
             onCloseClick = viewModel::onCloseClick,
+            onResultDialogDismissed = viewModel::onResultDialogDismissed,
+            onResultDialogOkClick = viewModel::onResultDialogOkClick,
         )
     }
 }
 
 @Composable
 private fun PaywallScreenContent(
+    screenState: PaywallScreenState,
     onPurchaseStarted: (rcPackage: Package) -> Unit,
     onPurchaseCompleted: (customerInfo: CustomerInfo, storeTransaction: StoreTransaction) -> Unit,
     onPurchaseError: (error: PurchasesError) -> Unit,
@@ -61,7 +71,15 @@ private fun PaywallScreenContent(
     onRestoreCompleted: (customerInfo: CustomerInfo) -> Unit,
     onRestoreError: (error: PurchasesError) -> Unit,
     onCloseClick: () -> Unit,
+    onResultDialogDismissed: () -> Unit,
+    onResultDialogOkClick: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
+    val resultSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -84,18 +102,60 @@ private fun PaywallScreenContent(
             )
         },
     ) { innerPadding ->
-        PaywallComponent(
+        Box(
             modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            onPurchaseStarted = onPurchaseStarted,
-            onPurchaseCompleted = onPurchaseCompleted,
-            onPurchaseError = onPurchaseError,
-            onPurchaseCancelled = onPurchaseCancelled,
-            onRestoreStarted = onRestoreStarted,
-            onRestoreCompleted = onRestoreCompleted,
-            onRestoreError = onRestoreError,
-            onDismissRequest = onCloseClick,
-        )
+                .padding(innerPadding),
+        ) {
+            PaywallComponent(
+                modifier = Modifier
+                    .fillMaxSize(),
+                onPurchaseStarted = onPurchaseStarted,
+                onPurchaseCompleted = onPurchaseCompleted,
+                onPurchaseError = onPurchaseError,
+                onPurchaseCancelled = onPurchaseCancelled,
+                onRestoreStarted = onRestoreStarted,
+                onRestoreCompleted = onRestoreCompleted,
+                onRestoreError = onRestoreError,
+                onDismissRequest = {}, // We're checking the plan state later, so don't auto-close
+            )
+
+            when (val dialogState = screenState.dialogState) {
+                PaywallScreenState.DialogState.Hidden -> {
+                    coroutineScope.launch {
+                        if (resultSheetState.isVisible) {
+                            resultSheetState.hide()
+                        }
+                    }
+                }
+
+                is PaywallScreenState.DialogState.Visible -> {
+                    PurchaseResultDialog(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        sheetState = resultSheetState,
+                        state = dialogState,
+                        onDismissRequest = {
+                            coroutineScope.launch {
+                                resultSheetState.hide()
+                                onResultDialogDismissed()
+                            }
+                        },
+                        onOkClick = {
+                            coroutineScope.launch {
+                                resultSheetState.hide()
+                                onResultDialogOkClick()
+                                onResultDialogDismissed()
+                            }
+                        }
+                    )
+
+                    coroutineScope.launch {
+                        if (!resultSheetState.isVisible) {
+                            resultSheetState.show()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

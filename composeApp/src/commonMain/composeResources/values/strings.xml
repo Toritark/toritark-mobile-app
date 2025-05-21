@@ -185,6 +185,21 @@
     <!-- Paywall -->
     <string name="title_paywall_screen">Upgrade your plan</string>
 
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Please wait a bit</string>
+    <string name="desc_paywall_result_dialog_checking_normal">We're upgrading your subscription...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Please wait a bit</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">We're upgrading your subscription...\nIt takes more time than we expected, we're trying hard to make it faster 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Oops</string>
+    <string name="desc_paywall_result_dialog_fail">Something went wrong. Please try again.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Success!</string>
+    <string name="desc_paywall_result_dialog_success">Your plan has been upgraded — Enjoy learning!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Got it</string>
+
+
     <!-- Languages -->
     <string name="title_language_name_english">English</string>
     <string name="title_language_name_spanish">Spanish</string>
