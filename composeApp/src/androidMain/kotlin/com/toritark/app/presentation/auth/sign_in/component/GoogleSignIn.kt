@@ -10,14 +10,13 @@ import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.GetCredentialInterruptedException
 import androidx.credentials.exceptions.NoCredentialException
 import co.touchlab.kermit.Logger
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.toritark.app.BuildConfig
+import com.toritark.app.BuildKonfig
 import com.toritark.app.presentation.auth.sign_in.exception.FirebaseSignInException
 import com.toritark.app.presentation.auth.sign_in.exception.InvalidCredentialTypeException
 import com.toritark.app.presentation.auth.sign_in.exception.SignInException
@@ -98,7 +97,7 @@ private fun createGoogleGetCredentialRequest(filterByAuthorizedAccounts: Boolean
 //        .setAutoSelectEnabled(filterByAuthorizedAccounts)
 //        .build()
 
-    val getSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_SIGN_IN_SERVER_CLIENT_ID)
+    val getSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(BuildKonfig.GOOGLE_SIGN_IN_SERVER_CLIENT_ID)
         .build()
 
     return GetCredentialRequest.Builder()

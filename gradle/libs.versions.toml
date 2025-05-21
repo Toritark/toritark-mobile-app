@@ -3,6 +3,7 @@ agp = "8.9.3"
 kotlin = "2.1.20"
 ksp = "2.1.20-2.0.0"
 gradle-versions = "0.52.0"
+build-konfig = "0.17.1"
 
 google-services = "4.4.2"
 
@@ -36,7 +37,7 @@ google-identity-google-id = "1.1.1"
 compose-multiplatform = "1.8.0"
 compose-material-icons = "1.7.3"
 
-firebase-android-bom = "33.13.0"
+firebase-android-bom = "33.14.0"
 
 appodeal-sdk = "3.5.2.1"
 revenuecat = "1.7.8+13.32.0"
@@ -137,6 +138,8 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 
 gradle-versions = { id = "com.github.ben-manes.versions", version.ref = "gradle-versions" }
+
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig" }
 
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

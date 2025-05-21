@@ -1,3 +1,4 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.*
@@ -11,6 +12,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.gradle.versions)
+    alias(libs.plugins.build.konfig)
     alias(libs.plugins.google.services)
 }
 
@@ -183,6 +185,135 @@ kotlin {
     }
 }
 
+buildkonfig {
+    packageName = "com.toritark.app"
+
+    defaultConfigs {
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "ENVIRONMENT",
+            "",
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
+            "",
+        )
+
+        // API
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "API_HOST",
+            "",
+        )
+
+        buildConfigField(
+            FieldSpec.Type.INT,
+            "API_PORT",
+            "0",
+        )
+
+        buildConfigField(
+            FieldSpec.Type.BOOLEAN,
+            "API_IS_HTTPS",
+            "false",
+        )
+    }
+
+    defaultConfigs("local") {
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "ENVIRONMENT",
+            "local",
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
+            requireNotNull(localProperties.getProperty("signIn.local.google.serverClientId")) {
+                "Set signIn.local.google.serverClientId in local.properties file"
+            },
+        )
+
+        // API
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "API_HOST",
+            requireNotNull(localProperties.getProperty("api.local.host")) {
+                "Set api.local.host in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.INT,
+            "API_PORT",
+            requireNotNull(localProperties.getProperty("api.local.port")) {
+                "Set api.local.port in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.BOOLEAN,
+            "API_IS_HTTPS",
+            requireNotNull(localProperties.getProperty("api.local.isHttps")) {
+                "Set api.local.isHttps in local.properties file"
+            },
+        )
+    }
+
+    defaultConfigs("production") {
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "ENVIRONMENT",
+            "production",
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
+            requireNotNull(localProperties.getProperty("signIn.production.google.serverClientId")) {
+                "Set signIn.production.google.serverClientId in local.properties file"
+            },
+        )
+
+        // API
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "API_HOST",
+            requireNotNull(localProperties.getProperty("api.production.host")) {
+                "Set api.production.host in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.INT,
+            "API_PORT",
+            requireNotNull(localProperties.getProperty("api.production.port")) {
+                "Set api.production.port in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.BOOLEAN,
+            "API_IS_HTTPS",
+            requireNotNull(localProperties.getProperty("api.production.isHttps")) {
+                "Set api.production.isHttps in local.properties file"
+            },
+        )
+    }
+
+    targetConfigs {
+        create("android") {
+
+        }
+
+        create("ios") {
+
+        }
+    }
+}
+
 android {
     namespace = "com.toritark.app"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -204,22 +335,10 @@ android {
             isMinifyEnabled = false
 
             buildConfigField("boolean", "DEBUG", "false")
-
-            buildConfigField(
-                "String",
-                "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
-                "\"${localProperties.getProperty("googleSignInServerReleaseClientId") ?: ""}\""
-            )
         }
 
         getByName("debug") {
             buildConfigField("boolean", "DEBUG", "true")
-
-            buildConfigField(
-                "String",
-                "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
-                "\"${localProperties.getProperty("googleSignInServerDebugClientId") ?: ""}\""
-            )
         }
     }
 
