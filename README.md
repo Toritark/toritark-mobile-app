@@ -25,18 +25,20 @@ A language learning application that helps users learn languages through text st
 
 This project is currently a Work in Progress (WIP). It's being developed as an MVP with the goal of rapid development.
 
-No Compose optimizations performed yet. Will be added after the basic implementation is complete.
+That's why:
 
-Commits are huge because of the same reason.
-
-It is single-moduled for now, but it's developed keeping in mind future multi-module support, so most of the code is
-ready to be split into modules by copy-paste.
+- There are no Compose optimizations performed yet. Will be added after the basic implementation is complete.
+- Single module. However, it's being developed keeping in mind future multi-module support, so most of the code is
+  ready to be split into modules by copy-paste.
+- No separation to Data/Domain level models. Will add later.
+- Commits are that huge
+- No tests. The most important ATM part-backend - is fully covered by tests, but not the client. Will add tests later.
 
 ## 📱 Platform Support
 
 - ✅ Android (current)
-- 🔜 iOS (planned)
-- 🌐 Web (planned)
+- 🔜 iOS (planned, soon — right after Android)
+- 🌐 Web (planned, much later)
 
 ## 📋 Features
 
