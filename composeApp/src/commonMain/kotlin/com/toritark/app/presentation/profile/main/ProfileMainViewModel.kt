@@ -1,10 +1,10 @@
 package com.toritark.app.presentation.profile.main
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.data.profile.model.ProfileState
+import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.language.nav.LanguageSetupScreenDestination
@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 
 internal class ProfileMainViewModel(
     private val profileInteractor: ProfileInteractor,
+    private val billingInteractor: BillingInteractor,
     languagesRepository: LanguagesRepository, // TODO: Use interactor
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
@@ -108,6 +109,14 @@ internal class ProfileMainViewModel(
         logger.d { "onChooseNativeLanguageClick" }
 
         onNavigateTo(LanguageSetupScreenDestination.NativeLanguageChooser) {}
+    }
+
+    fun onProfileImageTripleClick() {
+        logger.d { "onProfileImageTripleClick" }
+
+        viewModelScope.launch {
+            billingInteractor.triggerPlanCheck()
+        }
     }
 
     private companion object {

@@ -49,6 +49,7 @@ val profileModule = module {
     viewModel {
         ProfileMainViewModel(
             profileInteractor = get(),
+            billingInteractor = get(),
             languagesRepository = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),

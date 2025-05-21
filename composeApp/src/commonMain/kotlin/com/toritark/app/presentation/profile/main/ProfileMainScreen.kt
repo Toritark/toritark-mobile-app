@@ -50,6 +50,7 @@ internal fun ProfileMainScreen(
             onChooseLearningLanguageClick = viewModel::onChooseLearningLanguageClick,
             onChooseLanguageLevelClick = viewModel::onChooseLanguageLevelClick,
             onChooseNativeLanguageClick = viewModel::onChooseNativeLanguageClick,
+            onProfileImageTripleClick = viewModel::onProfileImageTripleClick
         )
     }
 }
@@ -61,6 +62,7 @@ private fun ProfileScreenContent(
     onChooseLearningLanguageClick: () -> Unit,
     onChooseLanguageLevelClick: () -> Unit,
     onChooseNativeLanguageClick: () -> Unit,
+    onProfileImageTripleClick: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -71,7 +73,8 @@ private fun ProfileScreenContent(
 
         ProfileHeaderSection(
             modifier = Modifier.fillMaxWidth(),
-            profileState = contentValue.profileState
+            profileState = contentValue.profileState,
+            onTripleClick = onProfileImageTripleClick
         )
 
         Spacer(modifier = Modifier.size(24.dp))
@@ -143,6 +146,7 @@ private fun ProfileScreenContentPreview() {
                 onChooseLearningLanguageClick = {},
                 onChooseLanguageLevelClick = {},
                 onChooseNativeLanguageClick = {},
+                onProfileImageTripleClick = {},
             )
         }
     }

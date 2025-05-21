@@ -5,8 +5,16 @@ sealed class StoryTopic(
 ) {
 
     data object DailyRoutine : StoryTopic(
-        prompt = "A story where a character describes their typical day from waking up to going to bed. " +
-                "Include many details.",
+        prompt = """
+            A story where a character describes their typical day from waking up to going to bed.
+            
+            Before writing, please choose **randomly**:
+            1.  An age group for the character (e.g., child, teenager, young adult, middle-aged, elderly).
+            2.  An occupation or primary role for the character (e.g., student, artist, scientist, teacher, farmer, driver, manager, or any other real-world occupation of your choice).
+            3.  A general setting/time period of your choice.
+            
+            Include many details specific to their chosen age, occupation, and setting, including sensory information (sights, sounds, smells, tastes, touch) and their inner thoughts/feelings as they go through their day.
+        """.trimIndent(),
     )
 
     data object StoreDialogue : StoryTopic(
