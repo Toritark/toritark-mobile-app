@@ -168,6 +168,8 @@ internal class StoryRetellingViewModel(
             copy(reviewResult = StoryRetellingScreenState.ReviewResult.None)
         }
 
+        profileInteractor.updateProfileInBackground()
+
         viewModelScope.launch {
             val plan = profileInteractor
                 .profileState

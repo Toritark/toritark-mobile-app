@@ -232,6 +232,8 @@ internal class StoryDetailViewModel(
             )
         }
 
+        profileInteractor.updateProfileInBackground()
+
         viewModelScope.launch {
             val plan = profileInteractor
                 .profileState
