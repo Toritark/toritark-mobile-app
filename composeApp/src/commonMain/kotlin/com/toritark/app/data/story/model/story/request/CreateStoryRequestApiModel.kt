@@ -1,6 +1,7 @@
 package com.toritark.app.data.story.model.story.request
 
 import com.toritark.app.data.language.model.LanguageLevel
+import com.toritark.app.data.story.model.story.story.StoryTopicApiModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,6 +13,8 @@ data class CreateStoryRequestApiModel(
     val nativeLanguageCode: String,
     @SerialName("language_level")
     val languageLevel: LanguageLevel,
+    @SerialName("topic")
+    val topic: StoryTopicApiModel,
     @SerialName("prompt")
-    val prompt: String,
+    val prompt: String?,
 )

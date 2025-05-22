@@ -170,10 +170,8 @@ private fun StoryScreenContent(
                     .padding(start = 16.dp, end = 16.dp, top = 16.dp),
                 topics = screenState.topics,
                 selectedTopic = screenState.selectedTopic,
-                isPromptVisible = screenState.isPromptInputVisible,
                 isGenerateButtonEnabled = screenState.isGenerateButtonEnabled,
                 onTopicSelected = onTopicSelected,
-                onCustomizeClick = onCustomizeClick,
                 onGenerateClick = onGenerateClick,
             )
         }

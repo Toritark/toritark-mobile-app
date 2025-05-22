@@ -8,7 +8,7 @@ import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
 import com.toritark.app.data.story.model.story.story.StoryApiModel
-import com.toritark.app.data.story.model.topic.StoryTopic
+import com.toritark.app.data.story.model.story.story.StoryTopicApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import com.toritark.app.domain.story.interactor.StoriesInteractor
@@ -19,6 +19,7 @@ import com.toritark.app.presentation.learning_words.component.dialog.model.Rewar
 import com.toritark.app.presentation.story.detail.model.StoryDetailScreenState
 import com.toritark.app.presentation.story.model.QuotaExceededMessage
 import com.toritark.app.presentation.story.model.StoryTopicUiModel
+import com.toritark.app.presentation.story.model.storyTopics
 import com.toritark.app.presentation.story.nav.StoryNavDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -26,7 +27,10 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getPluralString
 import org.jetbrains.compose.resources.getString
-import toritark.composeapp.generated.resources.*
+import toritark.composeapp.generated.resources.Res
+import toritark.composeapp.generated.resources.desc_monetization_generation_quota_exceeded
+import toritark.composeapp.generated.resources.desc_monetization_generation_quota_exceeded_no_ads
+import toritark.composeapp.generated.resources.title_monetization_generation_quota_exceeded
 
 internal class StoryDetailViewModel(
     private val storiesInteractor: StoriesInteractor,
@@ -57,28 +61,20 @@ internal class StoryDetailViewModel(
     private fun initializeStoryTopics() {
         updateAndShowContent {
             copy(
-                topics = defaultStoryTopics,
-                selectedTopic = defaultStoryTopics.first(),
+                topics = storyTopics,
+                selectedTopic = storyTopics.first(),
             )
         }
-        onPromptChange(contentValue.selectedTopic?.storyTopic?.prompt ?: "")
+        onPromptChange("")
     }
 
     fun onStoryTopicSelected(storyTopic: StoryTopicUiModel) {
         logger.d { "onStoryTopicSelected: storyTopic=${storyTopic.storyTopic}" }
 
-        val previousStoryTopic = contentValue.selectedTopic
-
-        onPromptChange(storyTopic.storyTopic.prompt)
-
         updateAndShowContent {
             copy(
                 selectedTopic = storyTopic,
-                isPromptInputVisible = when {
-                    storyTopic.storyTopic is StoryTopic.Custom -> true
-                    contentValue.isPromptInputVisible && previousStoryTopic?.storyTopic is StoryTopic.Custom -> false
-                    else -> contentValue.isPromptInputVisible
-                }
+                isPromptInputVisible = storyTopic.storyTopic == StoryTopicApiModel.CUSTOM,
             )
         }
     }
@@ -98,7 +94,12 @@ internal class StoryDetailViewModel(
         promptText: String = contentValue.promptText,
         storyState: StoryDetailScreenState.StoryState = contentValue.storyState,
     ): Boolean {
-        return promptText.isNotBlank() && storyState !is StoryDetailScreenState.StoryState.Creating
+        val isPromptOk = when (contentValue.selectedTopic?.storyTopic) {
+            null -> false
+            StoryTopicApiModel.CUSTOM -> promptText.isNotBlank()
+            else -> true
+        }
+        return isPromptOk && storyState !is StoryDetailScreenState.StoryState.Creating
     }
 
     fun togglePromptVisibility() {
@@ -118,7 +119,8 @@ internal class StoryDetailViewModel(
     private fun generateStory() {
         logger.d { "generateStory" }
 
-        val prompt = contentValue.promptText.takeIf { it.isNotBlank() } ?: return
+        val topic = contentValue.selectedTopic?.storyTopic ?: return
+        val prompt = contentValue.promptText.takeIf { topic == StoryTopicApiModel.CUSTOM && it.isNotBlank() }
 
         updateAndShowContent {
             copy(
@@ -130,6 +132,7 @@ internal class StoryDetailViewModel(
         viewModelScope.launch {
             storiesInteractor
                 .createStory(
+                    topic = topic,
                     prompt = prompt,
                 )
                 .catch { t ->
@@ -374,48 +377,5 @@ internal class StoryDetailViewModel(
         private const val LOG_TAG = "StoryDetailViewModel"
 
         private const val WATCH_STORY_CHECK_INTERVAL_MS = 300L
-
-        private val defaultStoryTopics = listOf(
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.DailyRoutine,
-                nameResource = Res.string.title_story_topic_daily_routine,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.StoreDialogue,
-                nameResource = Res.string.title_story_topic_store_dialog,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.FavoriteAnimal,
-                nameResource = Res.string.title_story_topic_favorite_animal,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.Walk,
-                nameResource = Res.string.title_story_topic_walk,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.MeetingNewFriend,
-                nameResource = Res.string.title_story_topic_meeting_new_friend,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.SpecialDay,
-                nameResource = Res.string.title_story_topic_special_day,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.MyDream,
-                nameResource = Res.string.title_story_topic_my_dream,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.MyRoom,
-                nameResource = Res.string.title_story_topic_my_room,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.Family,
-                nameResource = Res.string.title_story_topic_family,
-            ),
-            StoryTopicUiModel(
-                storyTopic = StoryTopic.Custom,
-                nameResource = Res.string.title_story_topic_custom,
-            ),
-        )
     }
 }

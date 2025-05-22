@@ -7,6 +7,7 @@ import com.toritark.app.data.story.model.retelling.request.CreateStoryRetellingR
 import com.toritark.app.data.story.model.retelling.request.StoryRetellingReviewRequestApiModel
 import com.toritark.app.data.story.model.story.request.CreateStoryRequestApiModel
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
+import com.toritark.app.data.story.model.story.story.StoryTopicApiModel
 import com.toritark.app.data.story.resource.StoryApiResources
 import com.toritark.app.util.core.extension.flow.typedFlow
 import io.ktor.client.*
@@ -26,7 +27,8 @@ internal interface StoryRequestsApiRepository {
         learningLanguage: Language,
         nativeLanguage: Language,
         languageLevel: LanguageLevel,
-        prompt: String,
+        topic: StoryTopicApiModel,
+        prompt: String?,
     ): Flow<StoryRequestApiModel>
 
     fun getStoryRequest(id: Long): Flow<StoryRequestApiModel>
@@ -48,12 +50,14 @@ internal class StoryRequestsApiRepositoryImpl(
         learningLanguage: Language,
         nativeLanguage: Language,
         languageLevel: LanguageLevel,
-        prompt: String,
+        topic: StoryTopicApiModel,
+        prompt: String?,
     ): Flow<StoryRequestApiModel> {
         val request = CreateStoryRequestApiModel(
             learningLanguageCode = learningLanguage.isoCode,
             nativeLanguageCode = nativeLanguage.isoCode,
             languageLevel = languageLevel,
+            topic = topic,
             prompt = prompt,
         )
 

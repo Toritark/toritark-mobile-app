@@ -3,21 +3,18 @@ package com.toritark.app.presentation.story.detail.component.generate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.toritark.app.data.story.model.topic.StoryTopic
+import com.toritark.app.data.story.model.story.story.StoryTopicApiModel
 import com.toritark.app.presentation.core_ui.icon.AppIcons
 import com.toritark.app.presentation.core_ui.icon.Magic
 import com.toritark.app.presentation.main.app.theme.AppTheme
@@ -31,10 +28,8 @@ internal fun GenerateStoryHeader(
     modifier: Modifier = Modifier,
     topics: List<StoryTopicUiModel>,
     selectedTopic: StoryTopicUiModel?,
-    isPromptVisible: Boolean,
     isGenerateButtonEnabled: Boolean,
     onTopicSelected: (StoryTopicUiModel) -> Unit,
-    onCustomizeClick: () -> Unit,
     onGenerateClick: () -> Unit,
 ) {
 
@@ -52,27 +47,6 @@ internal fun GenerateStoryHeader(
             selectedTopic = selectedTopic,
             onTopicSelected = onTopicSelected,
         )
-
-        // Customize topic prompt
-        IconButton(
-            modifier = Modifier.fillMaxHeight(),
-            onClick = {
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
-                onCustomizeClick()
-            }
-        ) {
-            Icon(
-                modifier = Modifier
-                    .background(
-                        color = if (isPromptVisible) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent,
-                        shape = CircleShape,
-                    )
-                    .padding(6.dp),
-                imageVector = Icons.Default.Settings,
-                contentDescription = null,
-                tint = if (isPromptVisible) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-            )
-        }
 
         // Generate button
         Button(
@@ -200,10 +174,8 @@ private fun GenerateStoryHeaderPreview() {
             GenerateStoryHeader(
                 topics = previewTopics,
                 selectedTopic = previewTopics.firstOrNull(),
-                isPromptVisible = false,
                 isGenerateButtonEnabled = true,
                 onTopicSelected = {},
-                onCustomizeClick = {},
                 onGenerateClick = {},
             )
         }
@@ -213,24 +185,24 @@ private fun GenerateStoryHeaderPreview() {
 private val previewTopics by lazy {
     listOf(
         StoryTopicUiModel(
-            storyTopic = StoryTopic.Family,
+            storyTopic = StoryTopicApiModel.DAILY_ROUTINE,
             nameResource = Res.string.title_story_topic_daily_routine,
         ),
         StoryTopicUiModel(
-            storyTopic = StoryTopic.Family,
+            storyTopic = StoryTopicApiModel.STORE_DIALOG,
             nameResource = Res.string.title_story_topic_store_dialog,
         ),
         StoryTopicUiModel(
-            storyTopic = StoryTopic.Family,
+            storyTopic = StoryTopicApiModel.FAVORITE_ANIMAL,
+            nameResource = Res.string.title_story_topic_favorite_animal,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopicApiModel.WALK,
+            nameResource = Res.string.title_story_topic_walk,
+        ),
+        StoryTopicUiModel(
+            storyTopic = StoryTopicApiModel.MEETING_NEW_FRIEND,
             nameResource = Res.string.title_story_topic_meeting_new_friend,
-        ),
-        StoryTopicUiModel(
-            storyTopic = StoryTopic.Family,
-            nameResource = Res.string.title_story_topic_family,
-        ),
-        StoryTopicUiModel(
-            storyTopic = StoryTopic.Family,
-            nameResource = Res.string.title_story_topic_my_room,
         ),
     )
 }
