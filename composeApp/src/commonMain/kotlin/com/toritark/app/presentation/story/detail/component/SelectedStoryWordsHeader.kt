@@ -3,7 +3,11 @@ package com.toritark.app.presentation.story.detail.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.AddToHomeScreen
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.NoteAdd
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
+import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -67,8 +71,10 @@ private fun ButtonsRow(
         horizontalArrangement = Arrangement.End,
     ) {
         TextButton(
+            modifier = Modifier
+                .padding(horizontal = 8.dp),
             colors = ButtonDefaults.textButtonColors().copy(
-                contentColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary,
             ),
             onClick = onClearClick,
         ) {
@@ -88,19 +94,23 @@ private fun ButtonsRow(
         Spacer(modifier = Modifier.width(16.dp))
 
         TextButton(
+            modifier = Modifier
+                .padding(horizontal = 8.dp),
             onClick = onAddAllClick,
         ) {
-            Text(
-                text = stringResource(Res.string.title_story_selected_words_add_to_learning),
+            Icon(
+                modifier = Modifier.size(20.dp),
+                imageVector = Icons.AutoMirrored.Default.PlaylistAdd,
+                contentDescription = null,
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            Icon(
-                modifier = Modifier.size(20.dp),
-                imageVector = Icons.AutoMirrored.Default.ArrowForward,
-                contentDescription = null,
+            Text(
+                text = stringResource(Res.string.title_story_selected_words_add_to_learning),
             )
+
+
         }
     }
 }
@@ -111,7 +121,7 @@ private fun SelectedStoryWordsHeaderPreview() {
     AppTheme {
         Box(
             modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(color = MaterialTheme.colorScheme.surface)
                 .size(width = 400.dp, height = 400.dp)
                 .padding(16.dp),
         ) {

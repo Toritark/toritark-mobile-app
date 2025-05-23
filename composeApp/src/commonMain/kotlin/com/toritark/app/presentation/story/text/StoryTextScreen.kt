@@ -21,6 +21,7 @@ import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.story.detail.component.SelectWordsHint
 import com.toritark.app.presentation.story.detail.component.SelectedStoryWordsHeader
 import com.toritark.app.presentation.story.detail.component.StoryText
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
+import toritark.composeapp.generated.resources.title_story_selected_words_empty
 import toritark.composeapp.generated.resources.title_story_text_screen
 
 private val ignoredWords = setOf(".", ",", "!", "?", ":", ";")
@@ -103,9 +105,19 @@ private fun StoryTextScreenContent(
             // TODO: Store in ViewModel?
             var selectedWords by remember { mutableStateOf(setOf<String>()) }
 
+            FadeAndExpandVerticallyAnimation(visible = selectedWords.isEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SelectWordsHint(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                )
+            }
+
             FadeAndExpandVerticallyAnimation(visible = selectedWords.isNotEmpty()) {
                 Column {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     SelectedStoryWordsHeader(
                         modifier = Modifier

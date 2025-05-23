@@ -81,12 +81,14 @@
     <string name="title_story_text_screen">Your personal story ✨</string>
 
     <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Press and hold any unknown word to add it to the learning set</string>
+
     <plurals name="title_story_selected_words">
-        <item quantity="one">Selected %1$d word to learn. Add them to the learning set!</item>
-        <item quantity="other">Selected %1$d words to learn. Add them to the learning set!</item>
+        <item quantity="one">Selected %1$d word to learn. Add them to the learning set, or keep adding other unknown words by pressing &amp; holding them.</item>
+        <item quantity="other">Selected %1$d words to learn. Add them to the learning set, or keep adding other unknown words by pressing &amp; holding them.</item>
     </plurals>
 
-    <string name="title_story_selected_words_remove_all">Remove all</string>
+    <string name="title_story_selected_words_remove_all">Remove</string>
     <string name="title_story_selected_words_add_to_learning">Add to learning set</string>
     <plurals name="message_added_selected_words_to_learning">
         <item quantity="one">Added %1$d word to learn</item>
@@ -123,7 +125,7 @@
     <string name="title_retelling_review_detail_screen">Your retelling review ✨</string>
 
     <!-- Learning words -->
-    <string name="title_learning_words_no_words">No words to learn yet.\nCreate a story and add unknown words to the learning set</string>
+    <string name="title_learning_words_no_words">No words to learn yet.\nCreate a story and press &amp; hold any unknown words to add them to the learning set</string>
     <string name="title_learning_words_no_words_create_btn">Create a story</string>
 
     <string name="title_learning_words_next_sentence">Next sentence</string>

@@ -32,10 +32,12 @@ internal fun StoryPreviewCard(
     FadeAndExpandVerticallyAnimation {
         FlatCard(
             modifier = modifier,
-            backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+            backgroundColor = MaterialTheme.colorScheme.background,
             cornerRadius = 24.dp,
+            borderWidth = 1.dp,
+            borderColor = MaterialTheme.colorScheme.onBackground,
             rightIcon = Icons.Default.ChevronRight,
-            rightIconTint = MaterialTheme.colorScheme.onSurfaceVariant,
+            rightIconTint = MaterialTheme.colorScheme.onBackground,
             onClick = onClick,
         ) {
             CardBody(
@@ -62,7 +64,7 @@ private fun RowScope.CardBody(
         Text(
             text = story.learningLanguageText.joinToString("\n"),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onBackground,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis,
         )
@@ -78,7 +80,7 @@ private fun CardHeader() {
                 .size(24.dp),
             imageVector = AppIcons.Story,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = MaterialTheme.colorScheme.onBackground,
         )
 
         Text(
@@ -87,7 +89,7 @@ private fun CardHeader() {
                 .padding(start = 8.dp),
             text = stringResource(Res.string.title_story_preview_read_your_story),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }

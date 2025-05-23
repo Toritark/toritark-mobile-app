@@ -57,10 +57,6 @@ internal fun StoryText(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
-        AiDisclaimer()
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         learningLanguageText.forEachIndexed { index, learningSentence ->
             val nativeSentence = nativeLanguageText.getOrNull(index)
 
@@ -84,6 +80,10 @@ internal fun StoryText(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        AiDisclaimer()
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         IconButton(
             modifier = Modifier
                 .align(Alignment.End),
@@ -99,6 +99,7 @@ internal fun StoryText(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+
     }
 }
 
