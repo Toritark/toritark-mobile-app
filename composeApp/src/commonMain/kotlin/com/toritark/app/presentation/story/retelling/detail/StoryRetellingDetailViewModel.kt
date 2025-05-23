@@ -1,10 +1,13 @@
 package com.toritark.app.presentation.story.retelling.detail
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.retelling.detail.model.StoryRetellingDetailScreenState
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 internal class StoryRetellingDetailViewModel(
     defaultDispatcher: CoroutineDispatcher,
@@ -17,6 +20,16 @@ internal class StoryRetellingDetailViewModel(
     defaultContentValue = StoryRetellingDetailScreenState()
 ) {
     override val logger = Logger.withTag(LOG_TAG)
+
+    init {
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
+    }
 
     fun setReview(review: StoryRetellingReviewApiModel) {
         logger.d { "setReview: review=$review" }
@@ -36,5 +49,7 @@ internal class StoryRetellingDetailViewModel(
 
     private companion object {
         private const val LOG_TAG = "StoryRetellingDetailViewModel"
+
+        private const val SCREEN_NAME = "StoryRetellingDetail"
     }
 }

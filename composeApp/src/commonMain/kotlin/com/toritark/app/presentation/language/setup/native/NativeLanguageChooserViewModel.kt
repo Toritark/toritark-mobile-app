@@ -2,13 +2,13 @@ package com.toritark.app.presentation.language.setup.native
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.domain.core.language.GetDeviceLanguageCode
 import com.toritark.app.presentation.language.model.LanguageUiModel
 import com.toritark.app.presentation.language.setup.base.language.BaseLanguageChooserViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
 internal class NativeLanguageChooserViewModel(
@@ -32,7 +32,15 @@ internal class NativeLanguageChooserViewModel(
     override fun initialize() {
         super.initialize()
 
+        logScreenView()
+
         initializeNativeLanguage()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     private fun initializeNativeLanguage() {
@@ -70,5 +78,7 @@ internal class NativeLanguageChooserViewModel(
 
     private companion object {
         private const val LOG_TAG = "LearningLanguageChooserViewModel"
+
+        private const val SCREEN_NAME = "NativeLanguageChooserScreen"
     }
 }

@@ -2,6 +2,7 @@ package com.toritark.app.presentation.profile.main
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.domain.billing.interactor.BillingInteractor
@@ -67,6 +68,14 @@ internal class ProfileMainViewModel(
 
     init {
         listenToStates()
+
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     fun loadProfile() {
@@ -121,5 +130,7 @@ internal class ProfileMainViewModel(
 
     private companion object {
         private const val LOG_TAG = "ProfileMainViewModel"
+
+        private const val SCREEN_NAME = "ProfileMainScreen"
     }
 }

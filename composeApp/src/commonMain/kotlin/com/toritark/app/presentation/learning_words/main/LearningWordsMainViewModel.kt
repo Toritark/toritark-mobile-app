@@ -3,6 +3,7 @@ package com.toritark.app.presentation.learning_words.main
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
@@ -34,6 +35,13 @@ internal class LearningWordsMainViewModel(
 
     init {
         getNextSentence()
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     fun getNextSentence() {
@@ -414,6 +422,8 @@ internal class LearningWordsMainViewModel(
 
     private companion object {
         private const val LOG_TAG = "LearningWordsMainViewModel"
+
+        private const val SCREEN_NAME = "LearningWordsMainScreen"
 
         private val tokenizerRegex = Regex("""\w+|[^\w\s]+|\s+""")
     }

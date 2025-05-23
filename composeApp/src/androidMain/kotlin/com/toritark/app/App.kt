@@ -3,6 +3,8 @@ package com.toritark.app
 import android.app.Application
 import co.touchlab.kermit.Logger
 import com.toritark.app.di.configureModules
+import com.toritark.app.domain.analytics.InitializeAnalytics
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
@@ -24,6 +26,15 @@ class App : Application() {
 
             configureModules()
         }
+
+        initializeAnalytics()
+    }
+
+    private fun initializeAnalytics() {
+        logger.d { "initializeAnalytics" }
+
+        val initializeAnalytics: InitializeAnalytics = get()
+        initializeAnalytics()
     }
 
     private companion object {

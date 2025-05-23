@@ -60,7 +60,7 @@ internal actual class AdsProviderImpl(
         logger.d { "initialize: userId=$userId" }
 
         Appodeal.setTesting(isDebug())
-        Appodeal.setLogLevel(if (isDebug()) Log.LogLevel.verbose else Log.LogLevel.none)
+        Appodeal.setLogLevel(if (isDebug()) Log.LogLevel.debug else Log.LogLevel.none)
         Appodeal.muteVideosIfCallsMuted(true)
 
         Appodeal.setRewardedVideoCallbacks(rewardedVideoCallbacks)

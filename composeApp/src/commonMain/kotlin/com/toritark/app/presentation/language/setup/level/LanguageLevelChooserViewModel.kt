@@ -2,6 +2,7 @@ package com.toritark.app.presentation.language.setup.level
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.language.model.LanguageLevel
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.presentation.language.setup.base.BaseLanguageSetupViewModel
@@ -27,11 +28,19 @@ internal class LanguageLevelChooserViewModel(
 
     init {
         initialize()
+
+        logScreenView()
     }
 
     override fun initialize() {
         updateAndShowContent {
             copy(levels = LanguageLevelUiModel.allLevels)
+        }
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
         }
     }
 
@@ -63,5 +72,7 @@ internal class LanguageLevelChooserViewModel(
 
     private companion object {
         private const val LOG_TAG = "LanguageLevelChooserViewModel"
+
+        private const val SCREEN_NAME = "LanguageLevelChooserScreen"
     }
 }

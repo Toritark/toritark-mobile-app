@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
@@ -52,6 +53,14 @@ internal class StoryDetailViewModel(
 
     init {
         initialize()
+
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     private fun initialize() {
@@ -100,14 +109,6 @@ internal class StoryDetailViewModel(
             else -> true
         }
         return isPromptOk && storyState !is StoryDetailScreenState.StoryState.Creating
-    }
-
-    fun togglePromptVisibility() {
-        logger.d { "togglePromptVisibility: current=${contentValue.isPromptInputVisible}" }
-
-        updateAndShowContent {
-            copy(isPromptInputVisible = !isPromptInputVisible)
-        }
     }
 
     fun onGenerateStoryClick() {
@@ -375,6 +376,8 @@ internal class StoryDetailViewModel(
 
     private companion object {
         private const val LOG_TAG = "StoryDetailViewModel"
+
+        private const val SCREEN_NAME = "StoryDetail"
 
         private const val WATCH_STORY_CHECK_INTERVAL_MS = 300L
     }

@@ -1,7 +1,9 @@
 package com.toritark.app.presentation.story.quiz
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
@@ -12,6 +14,7 @@ import com.toritark.app.presentation.story.quiz.model.QuizState
 import com.toritark.app.presentation.story.quiz.model.StoryQuizScreenState
 import com.toritark.app.util.core.extension.iterable.replaceItemAt
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 internal class StoryQuizViewModel(
     private val adsInteractor: AdsInteractor,
@@ -25,6 +28,16 @@ internal class StoryQuizViewModel(
     defaultContentValue = StoryQuizScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
+
+    init {
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
+    }
 
     fun setStory(story: StoryApiModel) {
         logger.d { "setStory: story=$story" }
@@ -149,5 +162,7 @@ internal class StoryQuizViewModel(
 
     private companion object {
         private const val LOG_TAG = "QuizViewModel"
+
+        private const val SCREEN_NAME = "StoryQuiz"
     }
 }

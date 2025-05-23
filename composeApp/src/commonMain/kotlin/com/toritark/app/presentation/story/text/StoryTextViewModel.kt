@@ -3,6 +3,7 @@ package com.toritark.app.presentation.story.text
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.learning_words.data.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
@@ -28,6 +29,16 @@ internal class StoryTextViewModel(
     defaultContentValue = StoryTextScreenState(),
 ) {
     override val logger = Logger.withTag(LOG_TAG)
+
+    init {
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
+    }
 
     fun setStory(story: StoryApiModel) {
         logger.d { "setStory: story=$story" }
@@ -84,5 +95,7 @@ internal class StoryTextViewModel(
 
     private companion object {
         private const val LOG_TAG = "StoryTextViewModel"
+
+        private const val SCREEN_NAME = "StoryText"
     }
 }

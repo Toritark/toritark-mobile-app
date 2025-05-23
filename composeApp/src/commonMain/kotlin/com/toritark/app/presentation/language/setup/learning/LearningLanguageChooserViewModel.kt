@@ -1,11 +1,14 @@
 package com.toritark.app.presentation.language.setup.learning
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.presentation.language.model.LanguageUiModel
 import com.toritark.app.presentation.language.setup.base.language.BaseLanguageChooserViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 internal class LearningLanguageChooserViewModel(
     languagesRepository: LanguagesRepository,
@@ -22,6 +25,14 @@ internal class LearningLanguageChooserViewModel(
 
     init {
         initialize()
+
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     override suspend fun getLanguages(): List<LanguageUiModel> {
@@ -36,5 +47,7 @@ internal class LearningLanguageChooserViewModel(
 
     private companion object {
         private const val LOG_TAG = "LearningLanguageChooserViewModel"
+
+        private const val SCREEN_NAME = "LearningLanguageChooserScreen"
     }
 }
