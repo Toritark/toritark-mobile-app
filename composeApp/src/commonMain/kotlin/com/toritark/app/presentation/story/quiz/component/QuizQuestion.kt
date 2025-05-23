@@ -2,6 +2,7 @@ package com.toritark.app.presentation.story.quiz.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +27,7 @@ import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionApiModel
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -54,10 +56,11 @@ internal fun QuizQuestion(
 
         // Question
         Text(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(horizontal = 8.dp),
             text = question.question,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -126,26 +129,31 @@ private fun QuizAnswer(
     state: QuizAnswerState,
     onClick: () -> Unit,
 ) {
-    val backgroundColor = when (state) {
-        QuizAnswerState.NONE -> MaterialTheme.colorScheme.surfaceVariant
-        QuizAnswerState.CORRECT -> MaterialTheme.colorScheme.primaryContainer
-        QuizAnswerState.WRONG -> MaterialTheme.colorScheme.errorContainer
+    val textColor = when (state) {
+        QuizAnswerState.NONE -> MaterialTheme.colorScheme.onBackground
+        QuizAnswerState.CORRECT -> LocalExtendedColors.current.success.success
+        QuizAnswerState.WRONG -> MaterialTheme.colorScheme.error
     }
-    val animatedBackgroundColor by animateColorAsState(backgroundColor)
+    val animatedTextColor by animateColorAsState(textColor)
 
-    val shape = RoundedCornerShape(18.dp)
+    val shape = RoundedCornerShape(size = 24.dp)
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 12.dp)
             .background(
-                color = animatedBackgroundColor,
+                color = MaterialTheme.colorScheme.background,
+                shape = shape,
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary,
                 shape = shape,
             )
             .clip(shape)
             .clickable(enabled = enabled, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
     ) {
         // Text
         Text(
@@ -154,11 +162,7 @@ private fun QuizAnswer(
                 .weight(1f),
             text = answer.answer,
             style = MaterialTheme.typography.bodyLarge,
-            color = when (state) {
-                QuizAnswerState.NONE -> MaterialTheme.colorScheme.onSurfaceVariant
-                QuizAnswerState.CORRECT -> MaterialTheme.colorScheme.onPrimaryContainer
-                QuizAnswerState.WRONG -> MaterialTheme.colorScheme.onErrorContainer
-            },
+            color = animatedTextColor,
         )
 
         // Icon
@@ -175,6 +179,7 @@ private fun QuizAnswer(
                         else -> throw IllegalStateException("Invalid state for answer: $state")
                     },
                     contentDescription = null,
+                    tint = animatedTextColor,
                 )
             }
         }
@@ -188,7 +193,7 @@ private fun QuizQuestionEmptyPreview() {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(color = MaterialTheme.colorScheme.surface)
         ) {
             QuizQuestion(
                 modifier = Modifier
@@ -215,7 +220,7 @@ private fun QuizQuestionAnsweredPreview() {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(color = MaterialTheme.colorScheme.surface)
         ) {
             QuizQuestion(
                 modifier = Modifier

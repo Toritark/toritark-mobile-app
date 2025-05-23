@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionApiModel
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.app.presentation.story.quiz.model.QuizQuestionState
 import com.toritark.app.presentation.story.quiz.model.QuizState
@@ -31,7 +32,7 @@ internal fun StoryQuiz(
             stripHeight = 8.dp,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         QuizQuestion(
             modifier = Modifier
@@ -49,58 +50,60 @@ internal fun StoryQuiz(
 @Preview
 @Composable
 private fun StoryQuizPreview() {
-    Box(
-        modifier = Modifier
-            .size(width = 400.dp, height = 600.dp)
-            .background(color = MaterialTheme.colorScheme.background)
-    ) {
-        StoryQuiz(
+    AppTheme {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            quizState = QuizState(
-                questions = listOf(
-                    StoryQuestionApiModel(
-                        question = "Hello, World! Testing multi-line text.\nLong, long text.",
-                        answers = listOf(
-                            StoryQuestionAnswerApiModel(
-                                answer = "Option 1",
-                                isCorrect = false,
+                .size(width = 400.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surface)
+        ) {
+            StoryQuiz(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                quizState = QuizState(
+                    questions = listOf(
+                        StoryQuestionApiModel(
+                            question = "Hello, World! Testing multi-line text.\nLong, long text.",
+                            answers = listOf(
+                                StoryQuestionAnswerApiModel(
+                                    answer = "Option 1",
+                                    isCorrect = false,
+                                ),
+                                StoryQuestionAnswerApiModel(
+                                    answer = "Option 2",
+                                    isCorrect = true,
+                                ),
+                                StoryQuestionAnswerApiModel(
+                                    answer = "Option 3. This should be multi-line text. Long, long text that does not fit the screen.",
+                                    isCorrect = false,
+                                ),
+                                StoryQuestionAnswerApiModel(
+                                    answer = "Option 4",
+                                    isCorrect = false,
+                                ),
                             ),
-                            StoryQuestionAnswerApiModel(
-                                answer = "Option 2",
-                                isCorrect = true,
-                            ),
-                            StoryQuestionAnswerApiModel(
-                                answer = "Option 3. This should be multi-line text. Long, long text that does not fit the screen.",
-                                isCorrect = false,
-                            ),
-                            StoryQuestionAnswerApiModel(
-                                answer = "Option 4",
-                                isCorrect = false,
-                            ),
-                        ),
-                    )
+                        )
+                    ),
+                    questionsStates = listOf(
+                        QuizQuestionState.WRONG,
+                        QuizQuestionState.CORRECT,
+                        QuizQuestionState.CURRENT,
+                        QuizQuestionState.NONE,
+                    ),
+                    currentQuestionIndex = 0,
+                    answersStates = listOf(
+                        QuizAnswerState.NONE,
+                        QuizAnswerState.CORRECT,
+                        QuizAnswerState.WRONG,
+                        QuizAnswerState.NONE,
+                    ),
+                    isLastQuestion = false,
+                    correctAnswers = 1,
+                    wrongAnswers = 1,
                 ),
-                questionsStates = listOf(
-                    QuizQuestionState.WRONG,
-                    QuizQuestionState.CORRECT,
-                    QuizQuestionState.CURRENT,
-                    QuizQuestionState.NONE,
-                ),
-                currentQuestionIndex = 0,
-                answersStates = listOf(
-                    QuizAnswerState.NONE,
-                    QuizAnswerState.CORRECT,
-                    QuizAnswerState.WRONG,
-                    QuizAnswerState.NONE,
-                ),
-                isLastQuestion = false,
-                correctAnswers = 1,
-                wrongAnswers = 1,
-            ),
-            onAnswerSelected = {},
-            onNextClick = {},
-        )
+                onAnswerSelected = {},
+                onNextClick = {},
+            )
+        }
     }
 }

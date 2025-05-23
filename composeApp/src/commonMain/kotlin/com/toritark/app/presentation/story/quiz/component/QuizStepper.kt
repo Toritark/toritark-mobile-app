@@ -6,7 +6,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -16,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
 import com.toritark.app.presentation.story.quiz.model.QuizQuestionState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -98,9 +98,9 @@ private fun StepIndicatorItem(
 private fun QuizQuestionState.toColor(): Color {
     return when (this) {
         QuizQuestionState.NONE -> MaterialTheme.colorScheme.surfaceVariant
-        QuizQuestionState.CURRENT -> MaterialTheme.colorScheme.inversePrimary
-        QuizQuestionState.CORRECT -> MaterialTheme.colorScheme.primaryContainer
-        QuizQuestionState.WRONG -> MaterialTheme.colorScheme.errorContainer
+        QuizQuestionState.CURRENT -> MaterialTheme.colorScheme.primary
+        QuizQuestionState.CORRECT -> LocalExtendedColors.current.success.success
+        QuizQuestionState.WRONG -> MaterialTheme.colorScheme.error
     }
 }
 
@@ -152,7 +152,7 @@ fun HorizontalStepperPreview() {
 @Preview // Dark background
 @Composable
 fun HorizontalStepperDarkPreview() {
-    MaterialTheme(colorScheme = darkColorScheme()) {
+    AppTheme(darkTheme = true) {
         Column {
             QuizStepper(
                 states = listOf(
