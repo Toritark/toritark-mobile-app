@@ -66,8 +66,8 @@ private fun StoryRetellingDetailScreenContent(
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
                 ),
                 title = {
                     Text(stringResource(Res.string.title_retelling_review_detail_screen))
@@ -88,6 +88,7 @@ private fun StoryRetellingDetailScreenContent(
 
         Column(
             modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.surface)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
