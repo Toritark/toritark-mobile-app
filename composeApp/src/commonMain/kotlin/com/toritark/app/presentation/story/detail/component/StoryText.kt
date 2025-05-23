@@ -1,6 +1,7 @@
 package com.toritark.app.presentation.story.detail.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
 import com.toritark.app.presentation.core_ui.animation.FadeAndExpandVerticallyAnimation
 import com.toritark.app.presentation.core_ui.component.AiDisclaimer
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private const val LOG_TAG = "StoryText"
@@ -65,6 +67,8 @@ internal fun StoryText(
             SentenceItem(
                 learningLanguageText = learningSentence,
                 nativeLanguageText = nativeSentence,
+                isFirst = index == 0,
+                isLast = index == learningLanguageText.lastIndex,
                 isExpanded = expandedSentenceIndex == index,
                 hapticFeedback = hapticFeedback,
                 selectedWords = selectedWords,
@@ -102,31 +106,51 @@ internal fun StoryText(
 private fun SentenceItem(
     learningLanguageText: String,
     nativeLanguageText: String?,
+    isFirst: Boolean,
+    isLast: Boolean,
     isExpanded: Boolean,
     hapticFeedback: HapticFeedback,
     selectedWords: Set<String>,
     onClick: () -> Unit,
     onWordSelected: (word: String) -> Unit,
 ) {
-    val backgroundColor = if (isExpanded) {
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f)
-    } else {
-        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)
-    }
+    val shape = when {
+        isFirst && isLast -> RoundedCornerShape(
+            size = 24.dp,
+        )
 
-    val textColor = if (isExpanded) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSecondaryContainer
-    }
+        isFirst -> RoundedCornerShape(
+            topStart = 24.dp,
+            topEnd = 24.dp,
+        )
 
-    val shape = RoundedCornerShape(20.dp)
+        isLast -> RoundedCornerShape(
+            bottomStart = 24.dp,
+            bottomEnd = 24.dp,
+        )
+
+        else -> RoundedCornerShape(size = 4.dp)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .background(color = backgroundColor, shape = shape)
+            .background(
+                color = MaterialTheme.colorScheme.background,
+                shape = shape,
+            )
+            .let { modifier ->
+                if (isExpanded) {
+                    modifier.border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = shape,
+                    )
+                } else {
+                    modifier
+                }
+            }
             .clip(shape)
             .clickable {
                 hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
@@ -136,7 +160,7 @@ private fun SentenceItem(
     ) {
         LearningLanguageSentenceItem(
             text = learningLanguageText,
-            textColor = textColor,
+            textColor = MaterialTheme.colorScheme.onBackground,
             selectedWords = selectedWords,
             onClick = onClick,
             onWordSelected = onWordSelected,
@@ -148,7 +172,7 @@ private fun SentenceItem(
             ) {
                 NativeSentenceItem(
                     text = nativeLanguageText,
-                    textColor = textColor,
+                    textColor = MaterialTheme.colorScheme.onBackground,
                 )
             }
         }
@@ -269,31 +293,33 @@ private fun highlightSelectedWords(
 @Preview
 @Composable
 private fun StoryTextPreview() {
-    Box(
-        modifier = Modifier
-            .size(width = 400.dp, height = 500.dp)
-            .background(color = MaterialTheme.colorScheme.surface)
-    ) {
-        StoryText(
-            learningLanguageText = listOf(
-                "Hello, my name is Toritark.",
-                "I am a developer.",
-                "I like to code.",
-                "I am learning Kotlin.",
-                "I am learning Jetpack Compose. This is a long, multi-line sentence",
-            ),
-            nativeLanguageText = listOf(
-                "Tere, mina olen Toritark.",
-                "Mina olen arendaja.",
-                "Test test test",
-                "Mina elan Tartus.",
-                "Mina olen 32 aastat vana.",
-            ),
-            selectedWords = setOf("code", "kotlin"),
-            modifier = Modifier.fillMaxWidth(),
-            onWordSelected = { _ -> },
-            onCopyClick = {},
-        )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 500.dp)
+                .background(color = MaterialTheme.colorScheme.surface)
+        ) {
+            StoryText(
+                learningLanguageText = listOf(
+                    "Hello, my name is Toritark.",
+                    "I am a developer.",
+                    "I like to code.",
+                    "I am learning Kotlin.",
+                    "I am learning Jetpack Compose. This is a long, multi-line sentence",
+                ),
+                nativeLanguageText = listOf(
+                    "Tere, mina olen Toritark.",
+                    "Mina olen arendaja.",
+                    "Test test test",
+                    "Mina elan Tartus.",
+                    "Mina olen 32 aastat vana.",
+                ),
+                selectedWords = setOf("code", "kotlin"),
+                modifier = Modifier.fillMaxWidth(),
+                onWordSelected = { _ -> },
+                onCopyClick = {},
+            )
+        }
     }
 }
 

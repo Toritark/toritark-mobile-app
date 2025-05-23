@@ -2,6 +2,7 @@
 
 package com.toritark.app.presentation.story.text
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +20,7 @@ import com.toritark.app.presentation.core_ui.clipboard.clipEntryOf
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.detail.component.SelectedStoryWordsHeader
 import com.toritark.app.presentation.story.detail.component.StoryText
 import kotlinx.coroutines.launch
@@ -95,6 +97,7 @@ private fun StoryTextScreenContent(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.surface)
                 .padding(innerPadding)
         ) {
             // TODO: Store in ViewModel?
@@ -173,14 +176,18 @@ private fun StoryTextScreenPreview() {
         questions = emptyList(),
     )
 
-    Box(
-        modifier = Modifier.size(width = 400.dp, height = 500.dp)
-    ) {
-        StoryTextScreenContent(
-            story = story,
-            onCloseClick = {},
-            onAddWordsToLearningSetClick = {},
-            onCopyClick = {},
-        )
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 500.dp)
+                .background(color = MaterialTheme.colorScheme.surface)
+        ) {
+            StoryTextScreenContent(
+                story = story,
+                onCloseClick = {},
+                onAddWordsToLearningSetClick = {},
+                onCopyClick = {},
+            )
+        }
     }
 }
