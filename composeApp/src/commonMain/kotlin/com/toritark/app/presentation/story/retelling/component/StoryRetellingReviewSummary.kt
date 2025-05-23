@@ -191,7 +191,7 @@ private fun StoryRetellingReviewSummaryPreview() {
         Box(
             modifier = Modifier
                 .size(width = 400.dp, height = 600.dp)
-                .background(color = MaterialTheme.colorScheme.background),
+                .background(color = MaterialTheme.colorScheme.surface),
         ) {
             StoryRetellingReviewSummary(
                 modifier = Modifier

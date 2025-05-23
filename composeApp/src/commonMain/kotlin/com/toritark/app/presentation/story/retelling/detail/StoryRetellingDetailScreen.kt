@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingReviewApiModel
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingScoresApiModel
 import com.toritark.app.data.story.model.retelling.retelling.StoryRetellingSentenceReviewApiModel
+import com.toritark.app.presentation.core_ui.component.FlatCard
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
@@ -95,19 +96,32 @@ private fun StoryRetellingDetailScreenContent(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            StoryRetellingReviewSummary(
-                modifier = Modifier.fillMaxWidth(),
-                review = review,
-                showDetailsButton = false,
-                onDetailsClick = {},
-            )
+            FlatCard(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                backgroundColor = MaterialTheme.colorScheme.background,
+                cornerRadius = 24.dp,
+                borderWidth = 1.dp,
+                borderColor = MaterialTheme.colorScheme.secondary,
+            ) {
+                StoryRetellingReviewSummary(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    review = review,
+                    showDetailsButton = false,
+                    onDetailsClick = {},
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            review.sentences.forEach { sentence ->
+            review.sentences.forEachIndexed { index, sentence ->
                 RetellingSentenceReview(
                     modifier = Modifier.fillMaxWidth(),
                     review = sentence,
+                    isFirst = index == 0,
+                    isLast = index == review.sentences.lastIndex,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -120,8 +134,10 @@ private fun StoryRetellingDetailScreenContent(
 private fun RetellingSentenceReview(
     modifier: Modifier = Modifier,
     review: StoryRetellingSentenceReviewApiModel,
+    isFirst: Boolean,
+    isLast: Boolean,
 ) {
-    val color = when (review.status) {
+    val textColor = when (review.status) {
         StoryRetellingSentenceReviewApiModel.Status.CORRECT -> LocalExtendedColors.current.success.success
         StoryRetellingSentenceReviewApiModel.Status.WRONG -> MaterialTheme.colorScheme.error
     }
@@ -131,22 +147,39 @@ private fun RetellingSentenceReview(
         StoryRetellingSentenceReviewApiModel.Status.WRONG -> Icons.Default.Close
     }
 
-    val shape = RoundedCornerShape(20.dp)
+    val shape = when {
+        isFirst && isLast -> RoundedCornerShape(
+            size = 24.dp,
+        )
+
+        isFirst -> RoundedCornerShape(
+            topStart = 24.dp,
+            topEnd = 24.dp,
+        )
+
+        isLast -> RoundedCornerShape(
+            bottomStart = 24.dp,
+            bottomEnd = 24.dp,
+        )
+
+        else -> RoundedCornerShape(size = 4.dp)
+    }
 
     Column(
         modifier = modifier
+            .clip(shape)
+            .background(color = MaterialTheme.colorScheme.background)
             .border(
                 width = 1.dp,
-                color = color,
+                color = MaterialTheme.colorScheme.secondary,
                 shape = shape
             )
-            .clip(shape)
             .padding(horizontal = 12.dp, vertical = 12.dp),
     ) {
         StoryRetellingSentenceReviewText(
             text = review.sentence,
             icon = icon,
-            color = color,
+            color = textColor,
         )
 
         if (review.correctedSentence != null) {
