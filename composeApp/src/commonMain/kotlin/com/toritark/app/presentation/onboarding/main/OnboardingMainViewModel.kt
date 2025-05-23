@@ -2,6 +2,7 @@ package com.toritark.app.presentation.onboarding.main
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.data.onboarding.repository.OnboardingRepository
 import com.toritark.app.presentation.auth.nav.AuthScreenDestination
@@ -25,6 +26,16 @@ internal class OnboardingMainViewModel(
     defaultContentValue = Unit,
 ) {
     override val logger = Logger.withTag(LOG_TAG)
+
+    init {
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
+    }
 
     fun update() {
         logger.d { "update" }
@@ -80,5 +91,7 @@ internal class OnboardingMainViewModel(
 
     private companion object {
         private const val LOG_TAG = "OnboardingViewModel"
+
+        private const val SCREEN_NAME = "OnboardingScreen"
     }
 }

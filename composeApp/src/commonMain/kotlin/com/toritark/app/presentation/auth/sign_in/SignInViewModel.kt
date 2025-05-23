@@ -4,6 +4,7 @@ package com.toritark.app.presentation.auth.sign_in
 
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.auth.model.auth.AuthProvider
 import com.toritark.app.domain.auth.interactor.AuthInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
@@ -43,6 +44,14 @@ internal class SignInViewModel(
 
     init {
         initialize()
+
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     fun onSignInClick(authProviderUiModel: AuthProviderUiModel) {
@@ -145,5 +154,7 @@ internal class SignInViewModel(
 
     private companion object {
         private const val LOG_TAG = "SignInViewModel"
+
+        private const val SCREEN_NAME = "SignInScreen"
     }
 }

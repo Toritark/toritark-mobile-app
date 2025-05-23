@@ -1,6 +1,8 @@
 package com.toritark.app.presentation.splash
 
+import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.onboarding.repository.OnboardingRepository
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.domain.auth.interactor.AuthInteractor
@@ -35,6 +37,14 @@ class SplashViewModel(
 
     init {
         initialize()
+
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+        }
     }
 
     private fun initialize() {
@@ -127,5 +137,7 @@ class SplashViewModel(
 
     private companion object {
         private const val LOG_TAG = "SplashViewModel"
+
+        private const val SCREEN_NAME = "SplashScreen"
     }
 }

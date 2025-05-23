@@ -11,6 +11,10 @@ class FirebaseAnalyticsSystem : AnalyticsSystem(name = "Firebase") {
 
     private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 
+    override fun setUserId(userId: String) {
+        firebaseAnalytics.setUserId(userId)
+    }
+
     override fun setPropertyInternal(property: AnalyticsProperty) {
         firebaseAnalytics.setUserProperty(
             property.name,

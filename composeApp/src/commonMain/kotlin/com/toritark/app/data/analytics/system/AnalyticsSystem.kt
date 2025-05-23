@@ -22,6 +22,8 @@ abstract class AnalyticsSystem(
         logger.d { "initialize" }
     }
 
+    open fun setUserId(userId: String) {}
+
     fun setProperty(property: AnalyticsProperty) {
         renamePropertyIfNeeded(property).let(::setPropertyInternal)
     }

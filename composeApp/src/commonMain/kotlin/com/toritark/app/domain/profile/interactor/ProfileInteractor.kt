@@ -3,6 +3,7 @@
 package com.toritark.app.domain.profile.interactor
 
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.profile.api.repository.ProfileApiRepository
 import com.toritark.app.data.profile.model.ProfileState
@@ -48,6 +49,8 @@ internal class ProfileInteractorImpl(
             when (profileState) {
                 ProfileState.Unknown, ProfileState.Missing -> ProfileSubscriptionState.Unknown
                 is ProfileState.Present -> {
+                    Analytics.setUserId(userId = profileState.profile.id.toString())
+
                     when (profileState.profile.plan.isFree) {
                         true -> ProfileSubscriptionState.Free
                         false -> ProfileSubscriptionState.Paid
