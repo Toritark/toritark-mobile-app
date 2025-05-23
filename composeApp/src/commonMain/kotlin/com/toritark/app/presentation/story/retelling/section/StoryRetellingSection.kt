@@ -5,6 +5,7 @@ package com.toritark.app.presentation.story.retelling.section
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -146,6 +147,8 @@ private fun StoryRetellingContent(
 
     val shape = RoundedCornerShape(24.dp)
 
+    val hapticFeedback = LocalHapticFeedback.current
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -156,6 +159,13 @@ private fun StoryRetellingContent(
             )
             .clip(shape)
             .background(color = MaterialTheme.colorScheme.background)
+            .clickable(onClick = {
+                hapticFeedback.performHapticFeedback(HapticFeedbackType.ContextClick)
+
+                if (screenContent.reviewResult is StoryRetellingScreenState.ReviewResult.Ready) {
+                    onDetailsClick()
+                }
+            })
             .padding(horizontal = 8.dp, vertical = 24.dp),
     ) {
         Column(
