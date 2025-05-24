@@ -141,7 +141,8 @@ val DarkSuccessColors = SuccessColors(
 )
 
 private val LocalSuccessColors = staticCompositionLocalOf {
-    SuccessColors( // Default to unspecified, will be overridden
+    SuccessColors(
+        // Default to unspecified, will be overridden
         success = Color.Unspecified,
         onSuccess = Color.Unspecified,
         successContainer = Color.Unspecified,
@@ -227,7 +228,7 @@ val DarkColorScheme = darkColorScheme(
     surfaceVariant = DarkSurfaceVariant,
     onSurfaceVariant = DarkOnSurfaceVariant,
 
-    surfaceTint = DarkPrimary, // Use primary for surface tint
+    surfaceTint = DarkPrimary,
 
     inverseSurface = DarkInverseSurface,
     inverseOnSurface = DarkInverseOnSurface,
@@ -242,7 +243,6 @@ val DarkColorScheme = darkColorScheme(
 
     scrim = DarkScrim,
 
-    // M3 Surface Tones
     surfaceBright = DarkSurfaceBright,
     surfaceContainer = DarkSurfaceContainer,
     surfaceContainerHigh = DarkSurfaceContainerHigh,
@@ -257,9 +257,6 @@ data class ExtendedColors(
     val success: SuccessColors,
 )
 
-// Default to Light scheme values for the LocalExtendedColors provider
-// This ensures that if AppTheme is somehow not used at the root,
-// previews or other components still get some sensible defaults.
 val LocalExtendedColors = staticCompositionLocalOf {
     ExtendedColors(LightColorScheme, LightSuccessColors)
 }
@@ -269,17 +266,18 @@ fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
-    val successColors = if (darkTheme) DarkSuccessColors else LightSuccessColors
+    // Dark theme is disabled for now
+//    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+//    val successColors = if (darkTheme) DarkSuccessColors else LightSuccessColors
 
-    // Provide both the Material color scheme and custom success colors
+    val colorScheme = LightColorScheme
+    val successColors = LightSuccessColors
+
     CompositionLocalProvider(
         LocalExtendedColors provides ExtendedColors(colorScheme, successColors)
     ) {
         MaterialTheme(
-            colorScheme = colorScheme, // This is the standard MaterialTheme colors
-            // typography = Typography, // Add your typography if you have one
-            // shapes = Shapes, // Add your shapes if you have them
+            colorScheme = colorScheme,
             content = content,
         )
     }
