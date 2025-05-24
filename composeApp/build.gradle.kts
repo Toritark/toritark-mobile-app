@@ -145,7 +145,17 @@ kotlin {
 
             implementation(libs.appodeal.sdk)
 
+            implementation(libs.play.services.ads.id)
+            implementation(libs.play.services.app.set)
+            implementation(libs.android.install.referrer)
+
             implementation(libs.amplitude.android)
+            implementation(libs.mixpanel.android)
+            implementation(libs.facebook.sdk.android.core)
+            implementation(libs.facebook.sdk.android.marketing)
+            implementation(libs.kochava.android.tracker)
+            implementation(libs.kochava.android.events)
+            implementation(libs.kochava.android.datapoints)
         }
 
         iosMain.dependencies {
@@ -228,6 +238,22 @@ buildkonfig {
             "AMPLITUDE_API_KEY",
             requireNotNull(localProperties.getProperty("amplitude.apiKey")) {
                 "Set amplitude.apiKey in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "MIXPANEL_API_KEY",
+            requireNotNull(localProperties.getProperty("mixpanel.apiKey")) {
+                "Set mixpanel.apiKey in local.properties file"
+            },
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "KOCHAVA_APP_GUID",
+            requireNotNull(localProperties.getProperty("kochava.android.appGuid")) {
+                "Set kochava.android.appGuid in local.properties file"
             },
         )
     }

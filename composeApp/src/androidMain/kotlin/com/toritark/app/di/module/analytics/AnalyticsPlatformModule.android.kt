@@ -2,7 +2,9 @@ package com.toritark.app.di.module.analytics
 
 import android.content.Context
 import com.toritark.app.data.analytics.system.AmplitudeAnalyticsSystem
+import com.toritark.app.data.analytics.system.FacebookAnalyticsSystem
 import com.toritark.app.data.analytics.system.FirebaseAnalyticsSystem
+import com.toritark.app.data.analytics.system.MixpanelAnalyticsSystem
 import com.toritark.app.domain.analytics.InitializeAnalytics
 import com.toritark.app.domain.analytics.InitializeAnalyticsImpl
 import com.toritark.app.domain.core.debug.IsDebug
@@ -20,7 +22,13 @@ actual val analyticsPlatformModule = module {
                 AmplitudeAnalyticsSystem(
                     context = context,
                     isDebug = isDebug,
-                )
+                ),
+                MixpanelAnalyticsSystem(
+                    context = context,
+                ),
+                FacebookAnalyticsSystem(
+                    context = context,
+                ),
             )
         )
     }

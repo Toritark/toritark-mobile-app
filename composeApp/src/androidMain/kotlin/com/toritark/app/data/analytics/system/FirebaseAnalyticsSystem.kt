@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.toritark.app.data.analytics.extension.bundleParameters
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 
@@ -23,24 +24,7 @@ internal class FirebaseAnalyticsSystem : AnalyticsSystem(name = "Firebase") {
     }
 
     override fun logEventInternal(event: AnalyticsEvent) {
-        val paramsBundle = Bundle().apply {
-            event.parameters.forEach { (key, value) ->
-                when (value) {
-                    null -> putString(key, null)
-                    is String -> putString(key, value)
-                    is Int -> putInt(key, value)
-                    is Boolean -> putBoolean(key, value)
-                    is Float -> putFloat(key, value)
-                    is Double -> putDouble(key, value)
-                    is Long -> putLong(key, value)
-                    else -> {
-                        logger.d { "Unknown event type: $key=$value" }
-                    }
-                }
-            }
-        }
-
-        firebaseAnalytics.logEvent(event.name, paramsBundle)
+        firebaseAnalytics.logEvent(event.name, event.bundleParameters)
     }
 
     override fun logScreenViewInternal(screenName: String) {

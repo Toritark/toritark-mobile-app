@@ -43,6 +43,15 @@ appodeal-sdk = "3.5.2.1"
 revenuecat = "1.7.8+13.32.0"
 
 amplitude-android = "1.21.0"
+mixpanel-android = "8.1.0"
+facebook-sdk-android-core = "18.0.2"
+facebook-sdk-android-marketing = "7.0.1"
+kochava-android = "5.6.0"
+
+play-services-ads-id = "18.2.0"
+play-services-app-set = "16.1.0"
+android-install-referrer = "2.2"
+
 
 rebugger = "1.0.0-rc03"
 
@@ -117,6 +126,18 @@ revenuecat-purchases-ui = { module = "com.revenuecat.purchases:purchases-kmp-ui"
 revenuecat-purchases-datetime = { module = "com.revenuecat.purchases:purchases-kmp-datetime", version.ref = "revenuecat" }
 
 amplitude-android = { module = "com.amplitude:analytics-android", version.ref = "amplitude-android" }
+mixpanel-android = { module = "com.mixpanel.android:mixpanel-android", version.ref = "mixpanel-android" }
+
+facebook-sdk-android-core = { module = "com.facebook.android:facebook-core", version.ref = "facebook-sdk-android-core" }
+facebook-sdk-android-marketing = { module = "com.facebook.android:facebook-marketing", version.ref = "facebook-sdk-android-marketing" }
+
+kochava-android-tracker = { module = "com.kochava.tracker:tracker", version.ref = "kochava-android" }
+kochava-android-events = { module = "com.kochava.tracker:events", version.ref = "kochava-android" }
+kochava-android-datapoints = { module = "com.kochava.tracker:datapointnetwork", version.ref = "kochava-android" }
+
+play-services-ads-id = { module = "com.google.android.gms:play-services-ads-identifier", version.ref = "play-services-ads-id" }
+play-services-app-set = { module = "com.google.android.gms:play-services-appset", version.ref = "play-services-app-set" }
+android-install-referrer = { module = "com.android.installreferrer:installreferrer", version.ref = "android-install-referrer" }
 
 rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
 
