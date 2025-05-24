@@ -3,6 +3,7 @@ package com.toritark.app.presentation.profile.main
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.domain.billing.interactor.BillingInteractor
@@ -105,11 +106,15 @@ internal class ProfileMainViewModel(
     fun onChooseLearningLanguageClick() {
         logger.d { "onChooseLearningLanguageClick" }
 
+        Analytics.logEvent(AnalyticsEvent(name = "profile_choose_learning_lang_click"))
+
         onNavigateTo(LanguageSetupScreenDestination.LearningLanguageChooser) {}
     }
 
     fun onChooseLanguageLevelClick() {
         logger.d { "onChooseLanguageLevelClick" }
+
+        Analytics.logEvent(AnalyticsEvent(name = "profile_choose_lang_lvl_click"))
 
         onNavigateTo(LanguageSetupScreenDestination.LanguageLevelChooser) {}
     }
@@ -117,11 +122,15 @@ internal class ProfileMainViewModel(
     fun onChooseNativeLanguageClick() {
         logger.d { "onChooseNativeLanguageClick" }
 
+        Analytics.logEvent(AnalyticsEvent(name = "profile_choose_native_lang_click"))
+
         onNavigateTo(LanguageSetupScreenDestination.NativeLanguageChooser) {}
     }
 
     fun onProfileImageTripleClick() {
         logger.d { "onProfileImageTripleClick" }
+
+        Analytics.logEvent(AnalyticsEvent(name = "profile_image_triple_click"))
 
         viewModelScope.launch {
             billingInteractor.triggerPlanCheck()

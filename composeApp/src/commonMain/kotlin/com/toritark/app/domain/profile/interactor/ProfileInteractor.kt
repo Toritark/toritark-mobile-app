@@ -4,6 +4,7 @@ package com.toritark.app.domain.profile.interactor
 
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsProperty
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.profile.api.repository.ProfileApiRepository
 import com.toritark.app.data.profile.model.ProfileState
@@ -84,6 +85,19 @@ internal class ProfileInteractorImpl(
             .getProfile()
             .map { profile ->
                 profileRepository.setProfile(profile)
+
+                Analytics.setProperty(
+                    AnalyticsProperty(
+                        name = "plan",
+                        value = profile.plan.name,
+                    )
+                )
+                Analytics.setProperty(
+                    AnalyticsProperty(
+                        name = "is_free_plan",
+                        value = profile.plan.isFree,
+                    )
+                )
             }
     }
 
