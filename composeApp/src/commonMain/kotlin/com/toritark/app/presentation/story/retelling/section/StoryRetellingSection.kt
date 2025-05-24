@@ -410,3 +410,92 @@ private fun StoryRetellingContentPreviewReady() {
         }
     }
 }
+
+// Dark previews
+
+@Preview
+@Composable
+private fun StoryRetellingContentDarkPreviewNormal() {
+    AppTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                .padding(horizontal = 16.dp, vertical = 24.dp)
+        ) {
+            StoryRetellingContent(
+                modifier = Modifier,
+                screenContent = StoryRetellingScreenState(
+                    retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
+                    isSubmitButtonEnabled = true,
+                ),
+                onTextInputChange = {},
+                onSubmitClick = {},
+                onDetailsClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun StoryRetellingContentDarkPreviewInProgress() {
+    AppTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                .padding(horizontal = 16.dp, vertical = 24.dp)
+        ) {
+            StoryRetellingContent(
+                modifier = Modifier,
+                screenContent = StoryRetellingScreenState(
+                    retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
+                    isSubmitButtonEnabled = true,
+                    reviewResult = StoryRetellingScreenState.ReviewResult.InProgress,
+                ),
+                onTextInputChange = {},
+                onSubmitClick = {},
+                onDetailsClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun StoryRetellingContentDarkPreviewReady() {
+    AppTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .size(width = 400.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surface)
+                .padding(horizontal = 16.dp, vertical = 24.dp)
+        ) {
+            StoryRetellingContent(
+                modifier = Modifier,
+                screenContent = StoryRetellingScreenState(
+                    retellingText = "Hello, World! Testing multi-line text.\nLong, long text.\n".repeat(3),
+                    isSubmitButtonEnabled = true,
+                    reviewResult = StoryRetellingScreenState.ReviewResult.Ready(
+                        result = StoryRetellingReviewApiModel(
+                            overallReview = "This is a very good retelling. I like it very much.\nSome mistakes were made, but they are not significant.",
+                            scores = StoryRetellingScoresApiModel(
+                                overall = 90,
+                                completeness = 80,
+                                grammar = 50,
+                                vocabulary = 30,
+                                spelling = 20,
+                                punctuation = 0,
+                            ),
+                            sentences = emptyList(),
+                        ),
+                    ),
+                ),
+                onTextInputChange = {},
+                onSubmitClick = {},
+                onDetailsClick = {},
+            )
+        }
+    }
+}

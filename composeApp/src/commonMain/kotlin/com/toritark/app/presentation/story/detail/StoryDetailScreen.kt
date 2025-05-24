@@ -2,11 +2,13 @@
 
 package com.toritark.app.presentation.story.detail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -20,6 +22,7 @@ import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.core_ui.nav.OnNavigateTo
 import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
+import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.story.component.dialog.QuotaExceededDialog
 import com.toritark.app.presentation.story.detail.component.EmptyStoryDetailScreenPlaceholder
 import com.toritark.app.presentation.story.detail.component.StoryCreationProgressIndicator
@@ -277,7 +280,49 @@ private fun StoryContent(
 @Preview
 @Composable
 private fun StoryContentPreview() {
-    val story = StoryApiModel(
+    AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 500.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surface),
+        ) {
+            StoryContent(
+                modifier = Modifier.fillMaxWidth(),
+                storyRequestId = 0L,
+                story = previewStory,
+                onStoryClick = {},
+                onStoryQuizClick = {},
+                onNavigateTo = { _, _ -> },
+                onPopBackStack = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun StoryContentDarkPreview() {
+    AppTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .size(width = 500.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surface),
+        ) {
+            StoryContent(
+                modifier = Modifier.fillMaxWidth(),
+                storyRequestId = 0L,
+                story = previewStory,
+                onStoryClick = {},
+                onStoryQuizClick = {},
+                onNavigateTo = { _, _ -> },
+                onPopBackStack = {},
+            )
+        }
+    }
+}
+
+private val previewStory by lazy {
+    StoryApiModel(
         learningLanguageText = listOf(
             "Hello, my name is Toritark.",
             "I am a developer, writing code in Kotlin and Python.",
@@ -288,15 +333,5 @@ private fun StoryContentPreview() {
         ),
         nativeLanguageText = emptyList(),
         questions = emptyList(),
-    )
-
-    StoryContent(
-        modifier = Modifier.fillMaxWidth(),
-        storyRequestId = 0L,
-        story = story,
-        onStoryClick = {},
-        onStoryQuizClick = {},
-        onNavigateTo = { _, _ -> },
-        onPopBackStack = {},
     )
 }

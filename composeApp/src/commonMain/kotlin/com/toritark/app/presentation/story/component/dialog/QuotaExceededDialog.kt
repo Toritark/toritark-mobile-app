@@ -53,6 +53,8 @@ internal fun QuotaExceededDialog(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp),
                 text = message.title,
                 style = MaterialTheme.typography.titleLarge,
             )
@@ -60,6 +62,8 @@ internal fun QuotaExceededDialog(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp),
                 text = message.text,
                 style = MaterialTheme.typography.bodyLarge,
             )
@@ -131,6 +135,43 @@ internal fun QuotaExceededDialogPreview() {
     val coroutineScope = rememberCoroutineScope()
 
     AppTheme {
+        Box(
+            modifier = Modifier
+                .size(width = 500.dp, height = 600.dp)
+                .background(color = MaterialTheme.colorScheme.surface),
+        ) {
+            QuotaExceededDialog(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                message = QuotaExceededMessage(
+                    title = "Oops, story limit exceeded",
+                    text = "You can create 1 story per day on your plan (Free).\nPlease watch a short ad to create a new story, or upgrade your plan to get even more advantages.",
+                    canShowRewardedAd = true,
+                ),
+                sheetState = quotaExceededSheetState,
+                onDismissRequest = {},
+                onWatchAdClick = {},
+                onUpgradePlanClick = {},
+            )
+        }
+    }
+
+    coroutineScope.launch {
+        quotaExceededSheetState.show()
+    }
+}
+
+@Preview
+@Composable
+internal fun QuotaExceededDialogDarkPreview() {
+    val quotaExceededSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
+
+    val coroutineScope = rememberCoroutineScope()
+
+    AppTheme(darkTheme = true) {
         Box(
             modifier = Modifier
                 .size(width = 500.dp, height = 600.dp)
