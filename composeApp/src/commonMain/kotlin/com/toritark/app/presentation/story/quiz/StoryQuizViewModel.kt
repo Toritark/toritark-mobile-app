@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
@@ -36,6 +37,12 @@ internal class StoryQuizViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "show_story_quiz",
+                )
+            )
         }
     }
 
@@ -64,6 +71,12 @@ internal class StoryQuizViewModel(
 
     fun onCloseClick() {
         logger.d { "onCloseClick" }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_quiz_close",
+            )
+        )
 
         onPopBackStack()
     }
@@ -112,10 +125,27 @@ internal class StoryQuizViewModel(
         updateAndShowContent {
             copy(quizState = quizState)
         }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_quiz_answer_selected",
+                parameters = mapOf(
+                    "question_index" to state.currentQuestionIndex,
+                    "answer_index" to currentAnswerIndex,
+                    "is_correct" to answer.isCorrect,
+                )
+            )
+        )
     }
 
     fun onNextClick() {
         logger.d { "onNextClick" }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_quiz_next_click",
+            )
+        )
 
         if (contentValue.quizState?.isLastQuestion == false) {
             showNextQuestion()

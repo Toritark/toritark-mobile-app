@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
+import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.retelling.request.StoryRetellingReviewRequestApiModel
@@ -76,6 +78,15 @@ internal class StoryRetellingViewModel(
 
     fun onSubmitButtonClick() {
         logger.d { "onSubmitButtonClick" }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_retelling_submit_click",
+                parameters = mapOf(
+                    "retelling_length" to contentValue.retellingText.length,
+                )
+            )
+        )
 
         checkRetelling()
     }
@@ -159,6 +170,22 @@ internal class StoryRetellingViewModel(
                 },
             )
         }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_retelling_ready",
+                parameters = mapOf(
+                    "retelling_length" to contentValue.retellingText.length,
+                    "review_sentences_count" to request.review?.sentences?.size,
+                    "review_score_overall" to request.review?.scores?.overall,
+                    "review_score_completeness" to request.review?.scores?.completeness,
+                    "review_score_grammar" to request.review?.scores?.grammar,
+                    "review_score_vocabulary" to request.review?.scores?.vocabulary,
+                    "review_score_spelling" to request.review?.scores?.spelling,
+                    "review_score_punctuation" to request.review?.scores?.punctuation,
+                )
+            )
+        )
     }
 
     private fun onRetellingCheckQuotaExceeded() {
@@ -203,13 +230,28 @@ internal class StoryRetellingViewModel(
             logger.d { "onStoryGenerationQuotaExceeded: message=$message" }
 
             _showGenerationQuotaExceededDialog.emit(message)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "retelling_review_quota_exceeded",
+                    parameters = mapOf(
+                        "can_show_rewarded_ad" to canShowRewardedAd,
+                        "plan_is_free" to plan.isFree,
+                        "plan_name" to plan.name,
+                    ),
+                )
+            )
         }
     }
 
     fun onQuotaExceededDialogClosed() {
         logger.d { "onQuotaExceededDialogClosed" }
 
-        // TODO: Report to analytics
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "retelling_review_quota_exceeded_dialog_closed",
+            )
+        )
     }
 
     fun onWatchAdToUnlockClick() {
@@ -222,6 +264,12 @@ internal class StoryRetellingViewModel(
         }
 
         viewModelScope.launch {
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "retelling_review_watch_ad_click",
+                )
+            )
+
             adsInteractor
                 .showRewardedAd(RewardedVideoKind.RetellingCheck)
                 .catch { t ->
@@ -232,6 +280,12 @@ internal class StoryRetellingViewModel(
                             rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Fail,
                         )
                     }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "retelling_review_watch_ad_failed",
+                        )
+                    )
                 }
                 .collect {
                     logger.d { "onWatchAdToUnlockClick: result=$it" }
@@ -241,6 +295,12 @@ internal class StoryRetellingViewModel(
                             rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Success,
                         )
                     }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "retelling_review_watch_ad_success",
+                        )
+                    )
                 }
         }
     }
@@ -248,7 +308,11 @@ internal class StoryRetellingViewModel(
     fun onUpgradePlanToUnlockClick() {
         logger.d { "onUpgradePlanToUnlockClick" }
 
-        // TODO: Report to analytics
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "retelling_review_upgrade_click",
+            )
+        )
 
         onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.StoryRetellingQuota)) {}
     }
@@ -282,6 +346,22 @@ internal class StoryRetellingViewModel(
         logger.d { "onDetailsClick" }
 
         val review = (contentValue.reviewResult as? StoryRetellingScreenState.ReviewResult.Ready)?.result ?: return
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "retelling_review_detail_click",
+                parameters = mapOf(
+                    "retelling_length" to contentValue.retellingText.length,
+                    "review_sentences_count" to review.sentences.size,
+                    "review_score_overall" to review.scores.overall,
+                    "review_score_completeness" to review.scores.completeness,
+                    "review_score_grammar" to review.scores.grammar,
+                    "review_score_vocabulary" to review.scores.vocabulary,
+                    "review_score_spelling" to review.scores.spelling,
+                    "review_score_punctuation" to review.scores.punctuation,
+                )
+            )
+        )
 
         onNavigateTo(StoryNavDestination.RetellingReviewDetail(review = review)) {}
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.learning_words.data.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
@@ -37,6 +38,12 @@ internal class StoryTextViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "show_generated_story",
+                )
+            )
         }
     }
 
@@ -50,6 +57,12 @@ internal class StoryTextViewModel(
 
     fun onCloseClick() {
         logger.d { "onCloseClick" }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "show_generated_story_close",
+            )
+        )
 
         onPopBackStack()
     }
@@ -66,6 +79,16 @@ internal class StoryTextViewModel(
                     nativeLanguageText = story.nativeLanguageText[index],
                 )
             }.toSet()
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "add_words_to_learning_set",
+                    parameters = mapOf(
+                        "words_count" to words.size,
+                        "sentences_count" to sentences.size,
+                    )
+                )
+            )
 
             learningWordsInteractor
                 .addWords(

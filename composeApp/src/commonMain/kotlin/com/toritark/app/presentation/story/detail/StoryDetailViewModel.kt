@@ -5,6 +5,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoKind
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.data.story.exception.QuotaExceededException
 import com.toritark.app.data.story.model.story.request.StoryRequestApiModel
@@ -86,6 +87,15 @@ internal class StoryDetailViewModel(
                 isPromptInputVisible = storyTopic.storyTopic == StoryTopicApiModel.CUSTOM,
             )
         }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "story_topic_selected",
+                parameters = mapOf(
+                    "topic" to storyTopic.storyTopic.value,
+                ),
+            )
+        )
     }
 
     fun onPromptChange(prompt: String) {
@@ -115,6 +125,15 @@ internal class StoryDetailViewModel(
         logger.d { "onGenerateStoryClick" }
 
         generateStory()
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "generate_story_click",
+                parameters = mapOf(
+                    "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                ),
+            )
+        )
     }
 
     private fun generateStory() {
@@ -271,13 +290,32 @@ internal class StoryDetailViewModel(
             logger.d { "onStoryGenerationQuotaExceeded: message=$message" }
 
             _showGenerationQuotaExceededDialog.emit(message)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "generate_story_quota_exceeded",
+                    parameters = mapOf(
+                        "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                        "can_show_rewarded_ad" to canShowRewardedAd,
+                        "plan_is_free" to plan.isFree,
+                        "plan_name" to plan.name,
+                    ),
+                )
+            )
         }
     }
 
     fun onQuotaExceededDialogClosed() {
         logger.d { "onQuotaExceededDialogClosed" }
 
-        // TODO: Report to analytics
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "generate_story_quota_exceeded_dialog_closed",
+                parameters = mapOf(
+                    "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                ),
+            )
+        )
     }
 
     fun onWatchAdToUnlockClick() {
@@ -290,6 +328,15 @@ internal class StoryDetailViewModel(
         }
 
         viewModelScope.launch {
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "generate_story_watch_ad_click",
+                    parameters = mapOf(
+                        "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                    ),
+                )
+            )
+
             adsInteractor
                 .showRewardedAd(RewardedVideoKind.Generation)
                 .catch { t ->
@@ -300,6 +347,15 @@ internal class StoryDetailViewModel(
                             rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Fail,
                         )
                     }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "generate_story_watch_ad_failed",
+                            parameters = mapOf(
+                                "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                            ),
+                        )
+                    )
                 }
                 .collect {
                     logger.d { "onWatchAdToUnlockClick: result=$it" }
@@ -309,6 +365,15 @@ internal class StoryDetailViewModel(
                             rewardedAdWaitingDialogState = RewardedAdWaitingDialogState.Success,
                         )
                     }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "generate_story_watch_ad_success",
+                            parameters = mapOf(
+                                "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                            ),
+                        )
+                    )
                 }
         }
     }
@@ -316,7 +381,14 @@ internal class StoryDetailViewModel(
     fun onUpgradePlanToUnlockClick() {
         logger.d { "onUpgradePlanToUnlockClick" }
 
-        // TODO: Report to analytics
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "generate_story_upgrade_click",
+                parameters = mapOf(
+                    "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                ),
+            )
+        )
 
         onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.StoryGenerationQuota)) {}
     }
@@ -341,6 +413,15 @@ internal class StoryDetailViewModel(
 
         val story = story ?: return
 
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "generated_story_click",
+                parameters = mapOf(
+                    "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                ),
+            )
+        )
+
         onNavigateTo(
             StoryNavDestination.Text(
                 story = story,
@@ -352,6 +433,15 @@ internal class StoryDetailViewModel(
         logger.d { "onStoryQuestionsClick" }
 
         val story = story ?: return
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "generated_story_questions_click",
+                parameters = mapOf(
+                    "topic" to contentValue.selectedTopic?.storyTopic?.value,
+                ),
+            )
+        )
 
         onNavigateTo(
             StoryNavDestination.Quiz(

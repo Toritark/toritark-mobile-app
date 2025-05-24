@@ -13,6 +13,8 @@ import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentStatus
 import com.toritark.app.R
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
+import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.domain.core.debug.IsDebug
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -197,6 +199,12 @@ internal actual class AdsProviderImpl(
     private val bannerCallbacks = object : BannerCallbacks {
         override fun onBannerClicked() {
             logger.d { "onBannerClicked" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_banner_click",
+                )
+            )
         }
 
         override fun onBannerExpired() {
@@ -230,6 +238,12 @@ internal actual class AdsProviderImpl(
     private val interstitialCallbacks = object : InterstitialCallbacks {
         override fun onInterstitialClicked() {
             logger.d { "onInterstitialClicked" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_interstitial_click",
+                )
+            )
         }
 
         override fun onInterstitialClosed() {
@@ -294,10 +308,26 @@ internal actual class AdsProviderImpl(
 
         override fun onRewardedVideoClicked() {
             logger.d { "onRewardedVideoClicked" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_rewarded_video_click",
+                )
+            )
         }
 
         override fun onRewardedVideoFinished(amount: Double, currency: String) {
             logger.d { "onRewardedVideoFinished: amount=$amount, currency=$currency" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_rewarded_video_finished",
+                    parameters = mapOf(
+                        "amount" to amount,
+                        "currency" to currency,
+                    )
+                )
+            )
         }
 
         override fun onRewardedVideoClosed(finished: Boolean) {
@@ -309,6 +339,15 @@ internal actual class AdsProviderImpl(
                 )
                 _rewardedAdFinishedEvents.emit(result)
             }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_rewarded_video_close",
+                    parameters = mapOf(
+                        "is_finished" to finished,
+                    )
+                )
+            )
         }
 
         override fun onRewardedVideoExpired() {
