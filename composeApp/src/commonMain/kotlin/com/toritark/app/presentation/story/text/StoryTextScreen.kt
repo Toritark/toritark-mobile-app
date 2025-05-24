@@ -113,6 +113,8 @@ private fun StoryTextScreenContent(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
 
             FadeAndExpandVerticallyAnimation(visible = selectedWords.isNotEmpty()) {
