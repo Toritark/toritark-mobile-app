@@ -7,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 
-class FirebaseAnalyticsSystem : AnalyticsSystem(name = "Firebase") {
+internal class FirebaseAnalyticsSystem : AnalyticsSystem(name = "Firebase") {
 
     private val firebaseAnalytics: FirebaseAnalytics by lazy { Firebase.analytics }
 

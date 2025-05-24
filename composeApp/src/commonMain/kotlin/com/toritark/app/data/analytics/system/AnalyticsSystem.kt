@@ -33,7 +33,7 @@ abstract class AnalyticsSystem(
         return property.copy(name = newName)
     }
 
-    protected abstract fun setPropertyInternal(property: AnalyticsProperty)
+    protected open fun setPropertyInternal(property: AnalyticsProperty) {}
 
     fun logEvent(event: AnalyticsEvent) {
         renameEventAndParametersIfNeeded(event).let(::logEventInternal)
@@ -70,7 +70,7 @@ abstract class AnalyticsSystem(
         )
     }
 
-    abstract fun logEventInternal(event: AnalyticsEvent)
+    protected open fun logEventInternal(event: AnalyticsEvent) {}
 
     fun logScreenView(screenName: String) {
         logger.d { "logScreenView: $screenName" }

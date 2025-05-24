@@ -42,6 +42,8 @@ firebase-android-bom = "33.14.0"
 appodeal-sdk = "3.5.2.1"
 revenuecat = "1.7.8+13.32.0"
 
+amplitude-android = "1.21.0"
+
 rebugger = "1.0.0-rc03"
 
 androidx-espresso-core = "3.6.1"
@@ -113,6 +115,8 @@ appodeal-sdk = { module = "com.appodeal.ads:sdk", version.ref = "appodeal-sdk" }
 revenuecat-purchases-core = { module = "com.revenuecat.purchases:purchases-kmp-core", version.ref = "revenuecat" }
 revenuecat-purchases-ui = { module = "com.revenuecat.purchases:purchases-kmp-ui", version.ref = "revenuecat" }
 revenuecat-purchases-datetime = { module = "com.revenuecat.purchases:purchases-kmp-datetime", version.ref = "revenuecat" }
+
+amplitude-android = { module = "com.amplitude:analytics-android", version.ref = "amplitude-android" }
 
 rebugger = { module = "io.github.theapache64:rebugger", version.ref = "rebugger" }
 

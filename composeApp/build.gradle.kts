@@ -144,6 +144,8 @@ kotlin {
             implementation(libs.google.identity.google.id)
 
             implementation(libs.appodeal.sdk)
+
+            implementation(libs.amplitude.android)
         }
 
         iosMain.dependencies {
@@ -218,6 +220,15 @@ buildkonfig {
             FieldSpec.Type.BOOLEAN,
             "API_IS_HTTPS",
             "false",
+        )
+
+        // Analytics
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "AMPLITUDE_API_KEY",
+            requireNotNull(localProperties.getProperty("amplitude.apiKey")) {
+                "Set amplitude.apiKey in local.properties file"
+            },
         )
     }
 
