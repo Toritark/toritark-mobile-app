@@ -6,6 +6,7 @@ import com.revenuecat.purchases.kmp.models.CustomerInfo
 import com.revenuecat.purchases.kmp.models.Package
 import com.revenuecat.purchases.kmp.models.PurchasesError
 import com.revenuecat.purchases.kmp.models.StoreTransaction
+import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.billing.model.plan.PlanUpgradeCheckEvent
@@ -16,7 +17,6 @@ import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 
 internal class PaywallViewModel(
     private val billingInteractor: BillingInteractor,
@@ -38,6 +38,20 @@ internal class PaywallViewModel(
 
     init {
         initializeInitialPlan()
+        logScreenView()
+    }
+
+    private fun logScreenView() {
+        viewModelScope.launch {
+            Analytics.logScreenView(SCREEN_NAME)
+
+            Analytics.logEvent(
+                eventName = "paywall_show",
+                parameters = mapOf(
+                    "source" to paywallSource.name,
+                )
+            )
+        }
     }
 
     /**
@@ -52,7 +66,12 @@ internal class PaywallViewModel(
     fun onCloseClick() {
         logger.d { "onCloseClick" }
 
-        // TODO: Analytics
+        Analytics.logEvent(
+            eventName = "paywall_close_click",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+            )
+        )
 
         onPopBackStack()
     }
@@ -60,13 +79,37 @@ internal class PaywallViewModel(
     fun onPurchaseStarted(rcPackage: Package) {
         logger.d { "onPurchaseStarted: rcPackage=$rcPackage" }
 
-        // TODO
+        Analytics.logEvent(
+            eventName = "paywall_purchase_start",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+                "package_identifier" to rcPackage.identifier,
+                "package_type" to rcPackage.packageType.name,
+                "store_product_id" to rcPackage.storeProduct.id,
+                "store_product_type" to rcPackage.storeProduct.type.name,
+                "store_product_price_formatted" to rcPackage.storeProduct.price.formatted,
+                "store_product_price_amount" to rcPackage.storeProduct.price.amountMicros,
+                "store_product_price_currency" to rcPackage.storeProduct.price.currencyCode,
+                "store_product_title" to rcPackage.storeProduct.title,
+                "offering_identifier" to rcPackage.presentedOfferingContext.offeringIdentifier,
+                "offering_placement_identifier" to rcPackage.presentedOfferingContext.placementIdentifier,
+            )
+        )
     }
 
     fun onPurchaseCompleted(customerInfo: CustomerInfo, storeTransaction: StoreTransaction) {
         logger.d { "onPurchaseCompleted: customerInfo=$customerInfo, storeTransaction=$storeTransaction" }
 
-        // TODO: Analytics
+        Analytics.logEvent(
+            eventName = "paywall_purchase_completed",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+                "first_active_entitlement" to customerInfo.entitlements.active.keys.firstOrNull(),
+                "first_active_subscription" to customerInfo.activeSubscriptions.firstOrNull(),
+                "transaction_id" to storeTransaction.transactionId,
+                "first_product_id" to storeTransaction.productIds.firstOrNull(),
+            )
+        )
 
         waitForPlanToChange()
     }
@@ -74,33 +117,53 @@ internal class PaywallViewModel(
     fun onPurchaseError(error: PurchasesError) {
         logger.w { "onPurchaseError: error=$error" }
 
-        // TODO: Analytics
-
         updateAndShowContent {
             copy(
                 dialogState = PaywallScreenState.DialogState.Visible.Fail,
             )
         }
+
+        Analytics.logEvent(
+            eventName = "paywall_purchase_error",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+                "error_code" to error.code.code,
+                "error_description" to error.code.description,
+                "underlying_error_message" to error.underlyingErrorMessage,
+            )
+        )
     }
 
     fun onPurchaseCancelled() {
         logger.d { "onPurchaseCancelled" }
 
-        // TODO: Analytics
+        Analytics.logEvent(
+            eventName = "paywall_purchase_cancelled",
+        )
     }
 
     fun onRestoreStarted() {
         logger.d { "onRestoreStarted" }
 
-        // TODO
+        Analytics.logEvent(
+            eventName = "paywall_restore_started",
+        )
     }
 
     fun onRestoreCompleted(customerInfo: CustomerInfo) {
         logger.d { "onRestoreCompleted: customerInfo=$customerInfo" }
 
-        // TODO: Analytics
 
         waitForPlanToChange()
+
+        Analytics.logEvent(
+            eventName = "paywall_restore_completed",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+                "first_active_entitlement" to customerInfo.entitlements.active.keys.firstOrNull(),
+                "first_active_subscription" to customerInfo.activeSubscriptions.firstOrNull(),
+            )
+        )
     }
 
     fun onRestoreError(error: PurchasesError) {
@@ -111,6 +174,16 @@ internal class PaywallViewModel(
                 dialogState = PaywallScreenState.DialogState.Visible.Fail,
             )
         }
+
+        Analytics.logEvent(
+            eventName = "paywall_restore_error",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+                "error_code" to error.code.code,
+                "error_description" to error.code.description,
+                "underlying_error_message" to error.underlyingErrorMessage,
+            )
+        )
     }
 
 
@@ -124,8 +197,6 @@ internal class PaywallViewModel(
         }
 
         viewModelScope.launch {
-            val startTimestamp = Clock.System.now().toEpochMilliseconds()
-
             billingInteractor
                 .waitForPlanToUpgrade(initialPlan = initialPlan)
                 .flowOn(defaultDispatcher)
@@ -138,6 +209,18 @@ internal class PaywallViewModel(
                                     dialogState = PaywallScreenState.DialogState.Visible.Success,
                                 )
                             }
+
+                            Analytics.logEvent(
+                                eventName = "paywall_plan_changed",
+                                parameters = mapOf(
+                                    "source" to paywallSource.name,
+                                    "time_ms" to event.timeMs,
+                                    "old_plan_name" to initialPlan?.name,
+                                    "old_plan_is_free" to initialPlan?.isFree,
+                                    "new_plan_name" to event.newPlan.name,
+                                    "new_plan_is_free" to event.newPlan.isFree,
+                                )
+                            )
                         }
 
                         is PlanUpgradeCheckEvent.Waiting -> {
@@ -162,13 +245,23 @@ internal class PaywallViewModel(
     fun onResultDialogOkClick() {
         logger.d { "onResultDialogOkClick" }
 
-        // TODO: Analytics
+        Analytics.logEvent(
+            eventName = "paywall_result_dialog_ok_click",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+            )
+        )
     }
 
     fun onResultDialogDismissed() {
         logger.d { "onResultDialogDismissed" }
 
-        // TODO: Analytics
+        Analytics.logEvent(
+            eventName = "paywall_result_dialog_dismissed",
+            parameters = mapOf(
+                "source" to paywallSource.name,
+            )
+        )
 
         if (contentValue.dialogState is PaywallScreenState.DialogState.Visible.Success) {
             onPopBackStack()
@@ -177,6 +270,8 @@ internal class PaywallViewModel(
 
     private companion object {
         private const val LOG_TAG = "PaywallViewModel"
+
+        private const val SCREEN_NAME = "PaywallScreen"
 
         private const val CHECK_TOO_LONG_TIME_MS = 1_000L * 10
     }

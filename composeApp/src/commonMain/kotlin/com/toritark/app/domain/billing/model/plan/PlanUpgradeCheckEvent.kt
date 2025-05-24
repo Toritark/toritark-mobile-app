@@ -8,6 +8,7 @@ sealed interface PlanUpgradeCheckEvent {
     ) : PlanUpgradeCheckEvent
 
     data class Success(
+        val timeMs: Long,
         val newPlan: PlanApiModel,
     ) : PlanUpgradeCheckEvent
 }

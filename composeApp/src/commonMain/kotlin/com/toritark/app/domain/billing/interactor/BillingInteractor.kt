@@ -74,13 +74,18 @@ internal class BillingInteractorImpl(
                 val currentPlan = profileInteractor.getCurrentPlan()
                 logger.d { "waitForPlanToChange: currentPlan=$currentPlan" }
 
+                val currentTimestamp = Clock.System.now().toEpochMilliseconds()
+
                 if (!currentPlan.isFree && currentPlan.id != initialPlan.id) {
                     logger.i { "waitForPlanToChange: plan changed to $currentPlan" }
-                    emit(PlanUpgradeCheckEvent.Success(currentPlan))
+                    emit(
+                        PlanUpgradeCheckEvent.Success(
+                            timeMs = currentTimestamp - startTimestamp,
+                            newPlan = currentPlan,
+                        )
+                    )
                     break
                 }
-
-                val currentTimestamp = Clock.System.now().toEpochMilliseconds()
 
                 emit(PlanUpgradeCheckEvent.Waiting(timeMs = currentTimestamp - startTimestamp))
 

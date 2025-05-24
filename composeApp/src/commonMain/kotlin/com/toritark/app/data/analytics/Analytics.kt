@@ -27,7 +27,7 @@ object Analytics {
         analyticsSystems.forEach { analyticsSystem -> analyticsSystem.setUserId(userId) }
     }
 
-    fun logEvent(eventName: String, parameters: Map<String, Any> = emptyMap()) {
+    fun logEvent(eventName: String, parameters: Map<String, Any?> = emptyMap()) {
         logEvent(AnalyticsEvent(eventName, parameters))
     }
 
