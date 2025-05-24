@@ -58,4 +58,8 @@ internal class AmplitudeAnalyticsSystem(
             event.parameters,
         )
     }
+
+    override fun logScreenViewInternal(screenName: String) {
+        logScreenViewAsEvent(screenName)
+    }
 }

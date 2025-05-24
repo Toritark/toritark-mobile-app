@@ -37,4 +37,8 @@ internal class KochavaAnalyticsSystem(
             }
             .send()
     }
+
+    override fun logScreenViewInternal(screenName: String) {
+        logScreenViewAsEvent(screenName)
+    }
 }

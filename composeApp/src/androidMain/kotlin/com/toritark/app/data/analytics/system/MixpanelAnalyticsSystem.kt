@@ -38,4 +38,8 @@ internal class MixpanelAnalyticsSystem(
 
         mixpanel?.track(event.name, eventProperties)
     }
+
+    override fun logScreenViewInternal(screenName: String) {
+        logScreenViewAsEvent(screenName)
+    }
 }

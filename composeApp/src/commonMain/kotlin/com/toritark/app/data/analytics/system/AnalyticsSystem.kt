@@ -79,4 +79,15 @@ abstract class AnalyticsSystem(
     }
 
     protected open fun logScreenViewInternal(screenName: String) {}
+
+    protected fun logScreenViewAsEvent(screenName: String) {
+        logEvent(
+            AnalyticsEvent(
+                name = "screen_view",
+                parameters = mapOf(
+                    "screen_name" to screenName
+                )
+            )
+        )
+    }
 }

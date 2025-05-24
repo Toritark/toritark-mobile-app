@@ -18,4 +18,8 @@ internal class FacebookAnalyticsSystem(
     override fun logEventInternal(event: AnalyticsEvent) {
         appEventsLogger?.logEvent(event.name, event.bundleParameters)
     }
+
+    override fun logScreenViewInternal(screenName: String) {
+        logScreenViewAsEvent(screenName)
+    }
 }
