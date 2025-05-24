@@ -5,6 +5,7 @@ import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
 import com.amplitude.common.Logger
+import com.amplitude.core.ServerZone
 import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
@@ -26,6 +27,7 @@ internal class AmplitudeAnalyticsSystem(
             Configuration(
                 apiKey = BuildKonfig.AMPLITUDE_API_KEY,
                 context = context,
+                serverZone = ServerZone.EU,
             )
         ).apply {
             logger.logMode = if (isDebug()) Logger.LogMode.DEBUG else Logger.LogMode.OFF
