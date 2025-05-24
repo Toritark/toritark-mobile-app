@@ -4,6 +4,7 @@ import android.content.Context
 import com.toritark.app.data.analytics.system.AmplitudeAnalyticsSystem
 import com.toritark.app.data.analytics.system.FacebookAnalyticsSystem
 import com.toritark.app.data.analytics.system.FirebaseAnalyticsSystem
+import com.toritark.app.data.analytics.system.KochavaAnalyticsSystem
 import com.toritark.app.data.analytics.system.MixpanelAnalyticsSystem
 import com.toritark.app.domain.analytics.InitializeAnalytics
 import com.toritark.app.domain.analytics.InitializeAnalyticsImpl
@@ -27,6 +28,9 @@ actual val analyticsPlatformModule = module {
                     context = context,
                 ),
                 FacebookAnalyticsSystem(
+                    context = context,
+                ),
+                KochavaAnalyticsSystem(
                     context = context,
                 ),
             )
