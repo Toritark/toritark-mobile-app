@@ -5,6 +5,7 @@ package com.toritark.app.presentation.auth.sign_in
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.auth.model.auth.AuthProvider
 import com.toritark.app.domain.auth.interactor.AuthInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
@@ -42,6 +43,8 @@ internal class SignInViewModel(
     private val _signInRequestEvents = MutableSharedFlow<AuthProvider>()
     val signInRequestEvents = _signInRequestEvents.asSharedFlow()
 
+    private var selectedAuthProvider: AuthProvider? = null
+
     init {
         initialize()
 
@@ -51,6 +54,12 @@ internal class SignInViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "show_sign_in",
+                )
+            )
         }
     }
 
@@ -59,6 +68,17 @@ internal class SignInViewModel(
 
         viewModelScope.launch {
             _signInRequestEvents.emit(authProviderUiModel.provider)
+
+            selectedAuthProvider = authProviderUiModel.provider
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "sign_in_click",
+                    parameters = mapOf(
+                        "auth_provider" to authProviderUiModel.provider.value.lowercase(),
+                    )
+                )
+            )
         }
     }
 
@@ -123,9 +143,27 @@ internal class SignInViewModel(
                 }
                 .catch { t ->
                     logger.w(t) { "Failed to update profile" }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "sign_in_failed",
+                            parameters = mapOf(
+                                "auth_provider" to selectedAuthProvider?.value?.lowercase(),
+                            )
+                        )
+                    )
                 }
                 .collect {
                     logger.d { "handleSignInToken: authenticated" }
+
+                    Analytics.logEvent(
+                        AnalyticsEvent(
+                            name = "sign_in_success",
+                            parameters = mapOf(
+                                "auth_provider" to selectedAuthProvider?.value?.lowercase(),
+                            )
+                        )
+                    )
 
                     openNextScreen()
                 }
@@ -139,12 +177,32 @@ internal class SignInViewModel(
 
         if (exception is UserCancelledSignInException) {
             logger.d { "handleSignInException: Cancelled by user, not an error" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "sign_in_cancelled",
+                    parameters = mapOf(
+                        "auth_provider" to selectedAuthProvider?.value?.lowercase(),
+                    )
+                )
+            )
+
             return
         }
 
         viewModelScope.launch {
             val errorMessage = getString(Res.string.title_auth_sign_in_failed, exception.message.orEmpty())
             showErrorMessage(errorMessage)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "sign_in_failed",
+                    parameters = mapOf(
+                        "auth_provider" to selectedAuthProvider?.value?.lowercase(),
+                        "message" to exception.message,
+                    )
+                )
+            )
         }
     }
 

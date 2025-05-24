@@ -3,6 +3,7 @@ package com.toritark.app.presentation.language.setup.learning
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.presentation.language.model.LanguageUiModel
@@ -32,6 +33,15 @@ internal class LearningLanguageChooserViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            val isInitialSetup = languagesRepository.learningLanguage.value == null
+            val event = if (isInitialSetup) {
+                AnalyticsEvent("show_choose_learning_lang_initial")
+            } else {
+                AnalyticsEvent("show_choose_learning_lang")
+            }
+
+            Analytics.logEvent(event)
         }
     }
 
@@ -39,6 +49,32 @@ internal class LearningLanguageChooserViewModel(
         return languagesRepository.getLearningLanguages().map { language ->
             LanguageUiModel.fromLanguage(language)
         }
+    }
+
+    override fun onLanguageSelected(language: LanguageUiModel) {
+        super.onLanguageSelected(language)
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "select_learning_lang",
+                parameters = mapOf(
+                    "language" to language.language.isoCode,
+                )
+            )
+        )
+    }
+
+    override fun onNextButtonClick() {
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "choose_learning_lang_next_click",
+                parameters = mapOf(
+                    "language" to selectedLanguage?.language?.isoCode,
+                )
+            )
+        )
+
+        super.onNextButtonClick()
     }
 
     override suspend fun saveLanguage(language: Language) {

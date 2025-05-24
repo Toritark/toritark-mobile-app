@@ -3,6 +3,7 @@ package com.toritark.app.presentation.language.setup.native
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.language.model.Language
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.domain.core.language.GetDeviceLanguageCode
@@ -40,6 +41,15 @@ internal class NativeLanguageChooserViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            val isInitialSetup = languagesRepository.nativeLanguage.value == null
+            val event = if (isInitialSetup) {
+                AnalyticsEvent("show_choose_native_lang_initial")
+            } else {
+                AnalyticsEvent("show_choose_native_lang")
+            }
+
+            Analytics.logEvent(event)
         }
     }
 
@@ -70,6 +80,32 @@ internal class NativeLanguageChooserViewModel(
             language = this,
             displayName = this.name,
         )
+    }
+
+    override fun onLanguageSelected(language: LanguageUiModel) {
+        super.onLanguageSelected(language)
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "select_native_lang",
+                parameters = mapOf(
+                    "language" to language.language.isoCode,
+                )
+            )
+        )
+    }
+
+    override fun onNextButtonClick() {
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "choose_native_lang_next_click",
+                parameters = mapOf(
+                    "language" to selectedLanguage?.language?.isoCode,
+                )
+            )
+        )
+
+        super.onNextButtonClick()
     }
 
     override suspend fun saveLanguage(language: Language) {

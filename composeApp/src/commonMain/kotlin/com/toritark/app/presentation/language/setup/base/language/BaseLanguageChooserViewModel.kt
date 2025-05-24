@@ -38,7 +38,7 @@ internal abstract class BaseLanguageChooserViewModel(
 
     protected abstract suspend fun getLanguages(): List<LanguageUiModel>
 
-    fun onLanguageSelected(language: LanguageUiModel) {
+    open fun onLanguageSelected(language: LanguageUiModel) {
         logger.d { "onLanguageSelected: language=$language" }
 
         selectedLanguage = language

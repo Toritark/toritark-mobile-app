@@ -3,6 +3,7 @@ package com.toritark.app.presentation.language.setup.level
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.language.model.LanguageLevel
 import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.presentation.language.setup.base.BaseLanguageSetupViewModel
@@ -41,6 +42,15 @@ internal class LanguageLevelChooserViewModel(
     private fun logScreenView() {
         viewModelScope.launch {
             Analytics.logScreenView(SCREEN_NAME)
+
+            val isInitialSetup = languagesRepository.languageLevel.value == null
+            val event = if (isInitialSetup) {
+                AnalyticsEvent("show_choose_lang_lvl_initial")
+            } else {
+                AnalyticsEvent("show_choose_lang_lvl")
+            }
+
+            Analytics.logEvent(event)
         }
     }
 
@@ -55,6 +65,15 @@ internal class LanguageLevelChooserViewModel(
                 isNextButtonEnabled = true,
             )
         }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "select_lang_lvl",
+                parameters = mapOf(
+                    "level" to languageLevel.languageLevel.value.lowercase(),
+                )
+            )
+        )
     }
 
     override fun onNextButtonClick() {
@@ -66,6 +85,16 @@ internal class LanguageLevelChooserViewModel(
 
         viewModelScope.launch {
             languagesRepository.setLanguageLevel(languageLevel)
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "choose_lang_lvl_next_click",
+                    parameters = mapOf(
+                        "level" to languageLevel.value.lowercase(),
+                    )
+                )
+            )
+
             onPopBackStack()
         }
     }

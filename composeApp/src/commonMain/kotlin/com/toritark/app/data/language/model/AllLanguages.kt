@@ -359,12 +359,6 @@ internal val allLanguages = listOf(
         flagUnicode = "🇬🇧",
     ),
     Language(
-        isoCode = "eo",
-        nameEn = "Esperanto",
-        name = "Esperanto",
-        flagUnicode = "🏳️",
-    ),
-    Language(
         isoCode = "et",
         nameEn = "Estonian",
         name = "Eesti keel",
