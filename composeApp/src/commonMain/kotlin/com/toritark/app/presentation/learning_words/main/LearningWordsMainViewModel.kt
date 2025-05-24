@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
@@ -96,6 +97,20 @@ internal class LearningWordsMainViewModel(
         }
 
         adsInteractor.showInterstitialAd(AdPlacement.Interstitial.LearningWords.Main)
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = "learning_words_show_sentence",
+                parameters = mapOf(
+                    "learning_language" to sentenceDbModel.sentence.languageCode,
+                    "correct_attempts" to sentenceDbModel.sentence.correctAttempts,
+                    "incorrect_attempts" to sentenceDbModel.sentence.incorrectAttempts,
+                    "total_attempts" to sentenceDbModel.sentence.correctAttempts + sentenceDbModel.sentence.incorrectAttempts,
+                    "total_words_count" to sentenceDbModel.words.size,
+                    "total_words_to_learn_count" to sentenceDbModel.words.count { !it.isLearned },
+                )
+            )
+        )
     }
 
     private fun getSentenceWithWords(sentenceDbModel: SentenceToLearnWithWords): SentenceWithParts {
@@ -226,6 +241,41 @@ internal class LearningWordsMainViewModel(
                 )
             )
         }
+
+        when (state) {
+            SentencePart.Input.State.EMPTY -> {}
+            SentencePart.Input.State.INCORRECT -> {
+                logLearningWordsEvent("learning_words_input_incorrect")
+            }
+
+            SentencePart.Input.State.CORRECT -> {
+                logLearningWordsEvent("learning_words_input_correct")
+            }
+        }
+    }
+
+    fun logLearningWordsEvent(eventName: String, parameters: Map<String, Any> = emptyMap()) {
+        val correctAttempts = currentSentenceDbModel?.sentence?.correctAttempts
+        val incorrectAttempts = currentSentenceDbModel?.sentence?.incorrectAttempts
+        val totalAttempts = if (correctAttempts != null && incorrectAttempts != null) {
+            correctAttempts + incorrectAttempts
+        } else {
+            null
+        }
+
+        Analytics.logEvent(
+            AnalyticsEvent(
+                name = eventName,
+                parameters = mapOf(
+                    "learning_language" to currentSentenceDbModel?.sentence?.languageCode,
+                    "correct_attempts" to correctAttempts,
+                    "incorrect_attempts" to incorrectAttempts,
+                    "total_attempts" to totalAttempts,
+                    "total_words_count" to currentSentenceDbModel?.words?.size,
+                    "total_words_to_learn_count" to currentSentenceDbModel?.words?.count { !it.isLearned },
+                ) + parameters
+            )
+        )
     }
 
     fun onNextClick() {
@@ -298,6 +348,8 @@ internal class LearningWordsMainViewModel(
                         getNextSentence()
                     }
                 }
+
+            logLearningWordsEvent(eventName = "learning_words_next_click")
         }
     }
 
@@ -315,6 +367,8 @@ internal class LearningWordsMainViewModel(
         }
 
         viewModelScope.launch {
+            logLearningWordsEvent(eventName = "learning_words_learned_click")
+
             learningWordsInteractor
                 .setSentenceLearned(sentence = currentSentenceDbModel)
                 .onErrorShowMessage()
@@ -332,6 +386,8 @@ internal class LearningWordsMainViewModel(
         updateAndShowContent {
             copy(showLearnedDialog = false)
         }
+
+        logLearningWordsEvent(eventName = "learning_words_not_learned_click")
 
         getNextSentence()
     }
@@ -388,6 +444,8 @@ internal class LearningWordsMainViewModel(
                 )
             )
         }
+
+        logLearningWordsEvent(eventName = "learning_words_help_click")
     }
 
     private fun updateLearningStats() {
