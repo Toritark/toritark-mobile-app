@@ -161,7 +161,13 @@ internal class StoryQuizViewModel(
             showNextQuestion()
         } else {
             // TODO: Show results
-            onPopBackStack()
+            viewModelScope.launch {
+                if (billingInteractor.shouldShowPaywall()) {
+                    onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+                } else {
+                    onPopBackStack()
+                }
+            }
         }
     }
 
