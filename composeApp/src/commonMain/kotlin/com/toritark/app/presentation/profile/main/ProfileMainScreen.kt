@@ -1,13 +1,18 @@
 package com.toritark.app.presentation.profile.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.language.model.Language
@@ -18,14 +23,19 @@ import com.toritark.app.presentation.core_ui.nav.OnPopBackStack
 import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
 import com.toritark.app.presentation.main.app.theme.AppTheme
+import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
+import com.toritark.app.presentation.profile.main.component.ManageSubscriptionsSection
 import com.toritark.app.presentation.profile.main.component.ProfileHeaderSection
 import com.toritark.app.presentation.profile.main.component.ProfileSettingsSection
 import com.toritark.app.presentation.profile.main.model.ProfileMainScreenState
+import com.toritark.app.presentation.profile.main.model.ProfileMainScreenState.ProfileUiState
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.desc_language_level_a2
 import toritark.composeapp.generated.resources.title_language_level_a2
+import toritark.composeapp.generated.resources.title_profile_upgrade_subscription_btn
 
 @Composable
 internal fun ProfileMainScreen(
@@ -46,11 +56,12 @@ internal fun ProfileMainScreen(
     ) { contentValue ->
         ProfileScreenContent(
             modifier = Modifier.fillMaxSize(),
-            contentValue = contentValue,
+            screenState = contentValue,
             onChooseLearningLanguageClick = viewModel::onChooseLearningLanguageClick,
             onChooseLanguageLevelClick = viewModel::onChooseLanguageLevelClick,
             onChooseNativeLanguageClick = viewModel::onChooseNativeLanguageClick,
-            onProfileImageTripleClick = viewModel::onProfileImageTripleClick
+            onProfileImageTripleClick = viewModel::onProfileImageTripleClick,
+            onUpgradeSubscriptionClick = viewModel::onUpgradeSubscriptionClick,
         )
     }
 }
@@ -58,34 +69,68 @@ internal fun ProfileMainScreen(
 @Composable
 private fun ProfileScreenContent(
     modifier: Modifier = Modifier,
-    contentValue: ProfileMainScreenState,
+    screenState: ProfileMainScreenState,
     onChooseLearningLanguageClick: () -> Unit,
     onChooseLanguageLevelClick: () -> Unit,
     onChooseNativeLanguageClick: () -> Unit,
-    onProfileImageTripleClick: () -> Unit = {},
+    onProfileImageTripleClick: () -> Unit,
+    onUpgradeSubscriptionClick: () -> Unit,
 ) {
+    val hasActiveSubscription =
+        screenState.profileState is ProfileUiState.Present && screenState.profileState.profile.plan.isFree.not()
+
     Column(
         modifier = modifier
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
     ) {
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         ProfileHeaderSection(
             modifier = Modifier.fillMaxWidth(),
-            profileState = contentValue.profileState,
+            profileState = screenState.profileState,
             onTripleClick = onProfileImageTripleClick
         )
 
-        Spacer(modifier = Modifier.size(24.dp))
+        if (!hasActiveSubscription) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            val upgradeSubscriptionShape = RoundedCornerShape(24.dp)
+
+            Text(
+                modifier = Modifier
+                    .background(
+                        color = LocalExtendedColors.current.success.success,
+                        shape = upgradeSubscriptionShape
+                    )
+                    .clip(upgradeSubscriptionShape)
+                    .clickable(onClick = onUpgradeSubscriptionClick)
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .align(Alignment.CenterHorizontally),
+                text = stringResource(Res.string.title_profile_upgrade_subscription_btn),
+                style = MaterialTheme.typography.labelMedium,
+                color = LocalExtendedColors.current.success.onSuccess,
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         ProfileSettingsSection(
             modifier = Modifier.fillMaxWidth(),
-            languageSettingsState = contentValue.languageSettingsState,
+            languageSettingsState = screenState.languageSettingsState,
             onChooseLearningLanguageClick = onChooseLearningLanguageClick,
             onChooseLanguageLevelClick = onChooseLanguageLevelClick,
             onChooseNativeLanguageClick = onChooseNativeLanguageClick,
         )
+
+        if (hasActiveSubscription) {
+            Spacer(modifier = Modifier.height(24.dp))
+
+            ManageSubscriptionsSection(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+            )
+        }
     }
 }
 
@@ -102,7 +147,7 @@ private fun ProfileScreenContentPreview() {
             ProfileScreenContent(
                 modifier = Modifier
                     .fillMaxWidth(),
-                contentValue = ProfileMainScreenState(
+                screenState = ProfileMainScreenState(
                     profileState = ProfileMainScreenState.ProfileUiState.Present(
                         profile = ProfileApiModel(
                             id = 1L,
@@ -147,6 +192,7 @@ private fun ProfileScreenContentPreview() {
                 onChooseLanguageLevelClick = {},
                 onChooseNativeLanguageClick = {},
                 onProfileImageTripleClick = {},
+                onUpgradeSubscriptionClick = {},
             )
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
@@ -90,12 +91,15 @@ private fun MainTopBarTitle(
         if (profileState is ProfileState.Present) {
             Spacer(modifier = Modifier.width(8.dp))
 
+            val roundedButtonShape = RoundedCornerShape(24.dp)
+
             Text(
                 modifier = Modifier
                     .background(
                         color = MaterialTheme.colorScheme.primary,
-                        shape = RoundedCornerShape(24.dp)
+                        shape = roundedButtonShape,
                     )
+                    .clip(roundedButtonShape)
                     .padding(horizontal = 12.dp, vertical = 6.dp)
                     .align(Alignment.Top),
                 text = profileState.profile.plan.name.uppercase(),
@@ -110,8 +114,9 @@ private fun MainTopBarTitle(
                     modifier = Modifier
                         .background(
                             color = LocalExtendedColors.current.success.success,
-                            shape = RoundedCornerShape(24.dp)
+                            shape = roundedButtonShape
                         )
+                        .clip(roundedButtonShape)
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                         .align(Alignment.Top),
                     text = stringResource(Res.string.title_main_screen_topbar_upgrade),

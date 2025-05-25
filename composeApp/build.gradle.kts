@@ -256,6 +256,13 @@ buildkonfig {
                 "Set kochava.android.appGuid in local.properties file"
             },
         )
+
+        // Subscriptions management URL
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "SUBSCRIPTIONS_MANAGEMENT_URL",
+            "",
+        )
     }
 
     defaultConfigs("local") {
@@ -342,11 +349,21 @@ buildkonfig {
 
     targetConfigs {
         create("android") {
-
+            // Subscriptions management URL
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "SUBSCRIPTIONS_MANAGEMENT_URL",
+                "https://play.google.com/store/account/subscriptions",
+            )
         }
 
         create("ios") {
-
+            // Subscriptions management URL
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "SUBSCRIPTIONS_MANAGEMENT_URL",
+                "https://apps.apple.com/account/subscriptions",
+            )
         }
     }
 }

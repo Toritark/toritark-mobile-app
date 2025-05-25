@@ -8,6 +8,8 @@ import com.toritark.app.data.language.repository.LanguagesRepository
 import com.toritark.app.data.profile.model.ProfileState
 import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.language.nav.LanguageSetupScreenDestination
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
@@ -135,6 +137,14 @@ internal class ProfileMainViewModel(
         viewModelScope.launch {
             billingInteractor.triggerPlanCheck()
         }
+    }
+
+    fun onUpgradeSubscriptionClick() {
+        logger.d { "onUpgradeSubscriptionClick" }
+
+        Analytics.logEvent(AnalyticsEvent(name = "profile_upgrade_subscription_click"))
+
+        onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.Profile)) {}
     }
 
     private companion object {

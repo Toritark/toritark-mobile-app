@@ -148,6 +148,8 @@
     <string name="title_profile_settings_learning_language">Language you are learning</string>
     <string name="title_profile_settings_learning_language_level">Your current language level</string>
     <string name="title_profile_settings_native_language">Your native language</string>
+    <string name="title_profile_manage_subscriptions_btn">Manage subscriptions</string>
+    <string name="title_profile_upgrade_subscription_btn">Upgrade your subscription ✨</string>
 
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Oops, story limit exceeded</string>
