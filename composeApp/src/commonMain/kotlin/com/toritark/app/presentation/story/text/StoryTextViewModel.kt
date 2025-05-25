@@ -8,7 +8,10 @@ import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.learning_words.data.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
+import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.text.model.StoryTextScreenState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,6 +23,7 @@ import toritark.composeapp.generated.resources.message_added_selected_words_to_l
 internal class StoryTextViewModel(
     private val learningWordsInteractor: LearningWordsInteractor,
     private val adsInteractor: AdsInteractor,
+    private val billingInteractor: BillingInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -64,7 +68,13 @@ internal class StoryTextViewModel(
             )
         )
 
-        onPopBackStack()
+        viewModelScope.launch {
+            if (billingInteractor.shouldShowPaywall()) {
+                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.StoryOffering)) {}
+            } else {
+                onPopBackStack()
+            }
+        }
     }
 
     fun onAddWordsToLearningSetClick(words: Set<String>) {

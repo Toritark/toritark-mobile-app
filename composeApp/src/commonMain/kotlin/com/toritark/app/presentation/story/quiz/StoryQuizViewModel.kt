@@ -8,6 +8,9 @@ import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.data.story.model.story.story.StoryQuestionAnswerApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
+import com.toritark.app.domain.billing.interactor.BillingInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.quiz.model.QuizAnswerState
 import com.toritark.app.presentation.story.quiz.model.QuizQuestionState
@@ -19,6 +22,7 @@ import kotlinx.coroutines.launch
 
 internal class StoryQuizViewModel(
     private val adsInteractor: AdsInteractor,
+    private val billingInteractor: BillingInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -78,7 +82,13 @@ internal class StoryQuizViewModel(
             )
         )
 
-        onPopBackStack()
+        viewModelScope.launch {
+            if (billingInteractor.shouldShowPaywall()) {
+                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+            } else {
+                onPopBackStack()
+            }
+        }
     }
 
     fun onAnswerSelected(answer: StoryQuestionAnswerApiModel) {

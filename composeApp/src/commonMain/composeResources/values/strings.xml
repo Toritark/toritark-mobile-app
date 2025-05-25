@@ -187,7 +187,7 @@
     <string name="title_monetization_watch_rewarded_ad_ok_btn">Ok</string>
 
     <!-- Paywall -->
-    <string name="title_paywall_screen">Upgrade your plan</string>
+    <string name="title_paywall_screen">Get Toritark Plus</string>
 
     <string name="title_paywall_result_dialog_checking_normal">🕜 Please wait a bit</string>
     <string name="desc_paywall_result_dialog_checking_normal">We're upgrading your subscription...</string>

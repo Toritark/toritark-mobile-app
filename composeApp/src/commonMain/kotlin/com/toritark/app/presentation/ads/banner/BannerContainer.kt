@@ -9,10 +9,11 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun BannerContainer(
+    modifier: Modifier = Modifier,
     onBannerViewReady: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
                 .weight(1f)

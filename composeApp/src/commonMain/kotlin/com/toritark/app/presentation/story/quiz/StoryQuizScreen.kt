@@ -29,7 +29,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.title_story_quiz_screen
-import toritark.composeapp.generated.resources.title_story_text_screen
 
 @Composable
 internal fun StoryQuizScreen(
@@ -45,6 +44,7 @@ internal fun StoryQuizScreen(
     BaseScreen(viewModel) { contentValue ->
         contentValue.quizState?.let { quizState ->
             BannerContainer(
+                modifier = Modifier.padding(bottom = 24.dp),
                 onBannerViewReady = viewModel::onBannerViewReady,
             ) {
                 StoryQuizScreenContent(

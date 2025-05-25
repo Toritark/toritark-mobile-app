@@ -3,14 +3,12 @@ package com.toritark.app.domain.billing.interactor
 import co.touchlab.kermit.Logger
 import com.toritark.app.data.billing.api.model.PlanApiModel
 import com.toritark.app.data.billing.api.repository.BillingApiRepository
+import com.toritark.app.data.billing.repository.BillingSettingsRepository
 import com.toritark.app.domain.billing.model.plan.PlanUpgradeCheckEvent
 import com.toritark.app.domain.billing.provider.BillingProvider
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Clock
 
 interface BillingInteractor {
@@ -18,10 +16,13 @@ interface BillingInteractor {
 
     fun waitForPlanToUpgrade(initialPlan: PlanApiModel?): Flow<PlanUpgradeCheckEvent>
     suspend fun triggerPlanCheck()
+
+    suspend fun shouldShowPaywall(): Boolean
 }
 
 internal class BillingInteractorImpl(
     private val billingApiRepository: BillingApiRepository,
+    private val billingSettingsRepository: BillingSettingsRepository,
     private val billingProvider: BillingProvider,
     private val profileInteractor: ProfileInteractor,
     private val defaultDispatcher: CoroutineDispatcher,
@@ -110,11 +111,32 @@ internal class BillingInteractorImpl(
         }
     }
 
+    override suspend fun shouldShowPaywall(): Boolean {
+        return withContext(defaultDispatcher) {
+            if (!profileInteractor.presentProfileState.first().profile.plan.isFree) {
+                return@withContext false
+            }
+
+            val lastPaywallShowAt = billingSettingsRepository.getLastPaywallShowAt()
+            val now = Clock.System.now().toEpochMilliseconds()
+
+            if (now - lastPaywallShowAt > SHOW_PAYWALL_INTERVAL_MS) {
+                billingSettingsRepository.setLastPaywallShowNow()
+
+                return@withContext true
+            }
+
+            return@withContext false
+        }
+    }
+
     private companion object {
         private const val LOG_TAG = "BillingInteractor"
 
         private const val PLAN_UPGRADE_CHECK_INTERVAL_MS = 1_000L
         private const val PLAN_UPGRADE_CHECK_TRIGGER_CHECK_MIN_TIME_MS = 1_000L * 15
         private const val PLAN_UPGRADE_CHECK_TRIGGER_CHECK_INTERVAL_MS = 1_000L * 15
+
+        private const val SHOW_PAYWALL_INTERVAL_MS = 1_000L * 60 * 60 * 24 * 3 // 3 days
     }
 }

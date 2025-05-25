@@ -7,7 +7,10 @@ import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
 import com.toritark.app.domain.ads.interactor.AdsInteractor
+import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
+import com.toritark.app.presentation.billing.nav.BillingNavDestination
+import com.toritark.app.presentation.billing.paywall.model.PaywallSource
 import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.learning_words.main.model.LearningWordsMainScreenState
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentencePart
@@ -21,6 +24,7 @@ import kotlin.math.min
 internal class LearningWordsMainViewModel(
     private val learningWordsInteractor: LearningWordsInteractor,
     private val adsInteractor: AdsInteractor,
+    private val billingInteractor: BillingInteractor,
     defaultDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher,
     mainDispatcher: CoroutineDispatcher,
@@ -75,6 +79,14 @@ internal class LearningWordsMainViewModel(
                     showSentenceToLearn(sentenceDbModel = sentence)
                     updateLearningStats()
                 }
+        }
+
+        viewModelScope.launch {
+            if (billingInteractor.shouldShowPaywall()) {
+                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.LearningWordsOffering)) {}
+            } else {
+                onPopBackStack()
+            }
         }
     }
 
