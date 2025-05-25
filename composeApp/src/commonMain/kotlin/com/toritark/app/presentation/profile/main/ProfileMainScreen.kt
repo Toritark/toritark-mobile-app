@@ -43,7 +43,6 @@ internal fun ProfileMainScreen(
     onPopBackStack: OnPopBackStack,
     viewModel: ProfileMainViewModel = koinViewModel(),
 ) {
-    // TODO: Profile Screen
     viewModel.onNavigateTo = onNavigateTo
     viewModel.onPopBackStack = onPopBackStack
 

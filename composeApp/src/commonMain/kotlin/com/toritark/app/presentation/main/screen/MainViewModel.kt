@@ -25,8 +25,6 @@ internal class MainViewModel(
     fun onTopBarUpgradeClick() {
         logger.d { "onTopBarUpgradeClick" }
 
-        // TODO: Analytics
-
         onNavigateTo(BillingNavDestination.Paywall(source = PaywallSource.TopBar)) {}
     }
 

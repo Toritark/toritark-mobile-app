@@ -28,7 +28,6 @@ val learningWordsModule = module {
         dbBuilder
 //            .addMigrations(MIGRATIONS)
             .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
-            .fallbackToDestructiveMigration(dropAllTables = true) // FIXME: Remove on release
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(ioDispatcher)
             .build()
