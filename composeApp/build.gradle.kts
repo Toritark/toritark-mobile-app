@@ -217,19 +217,19 @@ buildkonfig {
         buildConfigField(
             FieldSpec.Type.STRING,
             "API_HOST",
-            "",
+            project.findProperty("apiHost") as String? ?: "192.168.1.3",
         )
 
         buildConfigField(
             FieldSpec.Type.INT,
             "API_PORT",
-            "0",
+            project.findProperty("apiPort") as String? ?: "8000",
         )
 
         buildConfigField(
             FieldSpec.Type.BOOLEAN,
             "API_IS_HTTPS",
-            "false",
+            project.findProperty("apiIsHttps") as String? ?: "false",
         )
 
         // Analytics
@@ -279,31 +279,6 @@ buildkonfig {
                 "Set signIn.local.google.serverClientId in local.properties file"
             },
         )
-
-        // API
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "API_HOST",
-            requireNotNull(localProperties.getProperty("api.local.host")) {
-                "Set api.local.host in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.INT,
-            "API_PORT",
-            requireNotNull(localProperties.getProperty("api.local.port")) {
-                "Set api.local.port in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.BOOLEAN,
-            "API_IS_HTTPS",
-            requireNotNull(localProperties.getProperty("api.local.isHttps")) {
-                "Set api.local.isHttps in local.properties file"
-            },
-        )
     }
 
     defaultConfigs("production") {
@@ -318,31 +293,6 @@ buildkonfig {
             "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
             requireNotNull(localProperties.getProperty("signIn.production.google.serverClientId")) {
                 "Set signIn.production.google.serverClientId in local.properties file"
-            },
-        )
-
-        // API
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "API_HOST",
-            requireNotNull(localProperties.getProperty("api.production.host")) {
-                "Set api.production.host in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.INT,
-            "API_PORT",
-            requireNotNull(localProperties.getProperty("api.production.port")) {
-                "Set api.production.port in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.BOOLEAN,
-            "API_IS_HTTPS",
-            requireNotNull(localProperties.getProperty("api.production.isHttps")) {
-                "Set api.production.isHttps in local.properties file"
             },
         )
     }

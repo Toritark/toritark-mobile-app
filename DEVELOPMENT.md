@@ -6,12 +6,6 @@
 
 ```properties
 sdk.dir=/home/user/Android/Sdk
-api.local.host=192.168.1.3
-api.local.port=8000
-api.local.isHttps=false
-api.production.host=api.toritark.com
-api.production.port=443
-api.production.isHttps=true
 signIn.local.google.serverClientId=...
 signIn.production.google.serverClientId=...
 amplitude.apiKey=...
@@ -24,4 +18,5 @@ kochava.android.appGuid=...
 Edit the Android run configuration.
 
 1. Remove `Gradle-aware make` from `Before Launch`
-2. Add `Gradle task`, task = `build`, arguments = `-Pbuildkonfig.flavor=local`
+2. Add `Gradle task`, task = `build`, arguments = `-Pbuildkonfig.flavor=production -PapiHost=api.toritark.com -PapiPort=443 -PapiIsHttps=true`
+2. For local version, add `Gradle task`, task = `build`, arguments = `-Pbuildkonfig.flavor=local -PapiHost=192.168.1.3 -PapiPort=8000 -PapiIsHttps=false`
