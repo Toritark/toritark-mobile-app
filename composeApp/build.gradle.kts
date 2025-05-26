@@ -197,6 +197,81 @@ kotlin {
     }
 }
 
+android {
+    namespace = "com.toritark.app"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    defaultConfig {
+        applicationId = "com.toritark.app"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = getVersionCode()
+        versionName = getVersionName()
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+
+            buildConfigField("boolean", "DEBUG", "false")
+        }
+
+        getByName("debug") {
+            buildConfigField("boolean", "DEBUG", "true")
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    testOptions {
+        packaging {
+            resources.excludes.add("META-INF/*")
+        }
+    }
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
+
+    // Room
+    add("kspAndroid", libs.androidx.room.compiler)
+//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+tasks.withType<Test> {
+    if (name == "mergeDebugAndroidTestAssets") {
+        enabled = false
+    }
+}
+
+tasks.withType<Test> {
+    if (name == "copyRoomSchemasToAndroidTestAssetsDebugAndroidTest") {
+        enabled = false
+    }
+}
+
+tasks.whenTaskAdded {
+    if (name.contains("copyRoomSchemasToAndroidTestAssetsDebugAndroidTest")) {
+        enabled = false
+    }
+}
+
 buildkonfig {
     packageName = "com.toritark.app"
 
@@ -318,77 +393,67 @@ buildkonfig {
     }
 }
 
-android {
-    namespace = "com.toritark.app"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+fun getVersionCode(): Int {
+    val yearStr = libs.versions.app.version.year.get()
+    val monthStr = libs.versions.app.version.month.get()
+    val dateStr = libs.versions.app.version.date.get()
+    val buildStr = libs.versions.app.version.build.get()
 
-    defaultConfig {
-        applicationId = "com.toritark.app"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-
-            buildConfigField("boolean", "DEBUG", "false")
-        }
-
-        getByName("debug") {
-            buildConfigField("boolean", "DEBUG", "true")
-        }
+    val currentYearYY = yearStr.toIntOrNull()
+        ?: throw IllegalArgumentException("Invalid app-version-year: '$yearStr'. Must be an integer.")
+    if (yearStr.length != 2 || currentYearYY < 0 || currentYearYY > 99) {
+        throw IllegalArgumentException(
+            "Invalid app-version-year: '$yearStr'. Must be a two-digit number (00-99)."
+        )
     }
 
-    buildFeatures {
-        buildConfig = true
+    val month = monthStr.toIntOrNull()
+        ?: throw IllegalArgumentException("Invalid app-version-month: '$monthStr'. Must be an integer.")
+    if (monthStr.length != 2 || month !in 1..12) {
+        throw IllegalArgumentException("Invalid app-version-month: '$monthStr'. Must be a two-digit number between 01 and 12.")
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+    val day = dateStr.toIntOrNull() ?: throw IllegalArgumentException(
+        "Invalid app-version-date: '$dateStr'. Must be an integer."
+    )
+    if (dateStr.length != 2 || day !in 1..31) {
+        throw IllegalArgumentException("Invalid app-version-date: '$dateStr'. Must be a two-digit number between 01 and 31.")
+    }
+    val build = buildStr.toIntOrNull() ?: throw IllegalArgumentException(
+        "Invalid app-version-build: '$buildStr'. Must be an integer."
+    )
+    if (buildStr.isEmpty() || buildStr.length > 3 || build < 0 || build > 999) {
+        throw IllegalArgumentException(
+            "Invalid app-version-build: '$buildStr'. Must be a 1 to 3 digit number between 0 and 999."
+        )
+    }
+    val baseYearYY = 24
+
+    val processedYear = currentYearYY - baseYearYY
+    if (processedYear < 0) {
+        throw IllegalStateException(
+            "app-version-year ('$yearStr') is earlier than the configured baseYearYY ('$baseYearYY'). " +
+                    "Ensure baseYearYY is appropriate or versions are always increasing."
+        )
     }
 
-    testOptions {
-        packaging {
-            resources.excludes.add("META-INF/*")
-        }
-    }
+    val versionCode = (processedYear * 10_000_000) +
+            (month * 100_000) +
+            (day * 1_000) +
+            (build)
+
+    return versionCode
 }
 
-dependencies {
-    debugImplementation(compose.uiTooling)
 
-    // Room
-    add("kspAndroid", libs.androidx.room.compiler)
-//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
-}
-
-tasks.withType<Test> {
-    if (name == "mergeDebugAndroidTestAssets") {
-        enabled = false
-    }
-}
-
-tasks.withType<Test> {
-    if (name == "copyRoomSchemasToAndroidTestAssetsDebugAndroidTest") {
-        enabled = false
-    }
-}
-
-tasks.whenTaskAdded {
-    if (name.contains("copyRoomSchemasToAndroidTestAssetsDebugAndroidTest")) {
-        enabled = false
+fun getVersionName(): String {
+    return buildString {
+        libs.versions.app.version.year.get().let(::append)
+        append(".")
+        libs.versions.app.version.month.get().let(::append)
+        append(".")
+        libs.versions.app.version.date.get().let(::append)
+        append(".")
+        libs.versions.app.version.build.get().let(::append)
     }
 }
