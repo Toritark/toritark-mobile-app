@@ -22,15 +22,15 @@
     <string name="title_language_level_b2">B2</string>
     <string name="title_language_level_c1">C1</string>
 
-    <string name="desc_language_level_none">You're just starting and have zero level knowledge</string>
+    <string name="desc_language_level_none">You are just starting and have no prior knowledge.</string>
     <string name="desc_language_level_a1">Can understand and use familiar everyday expressions and very basic phrases</string>
     <string name="desc_language_level_a2">Can understand sentences and frequently used expressions</string>
     <string name="desc_language_level_b1">Can understand the main points of clear standard input on familiar matters regularly encountered in work, school, leisure</string>
-    <string name="desc_language_level_b2">Can understand the main ideas of a complex text on both concrete and abstract topics, including technical discussions in your field of specialisation</string>
+    <string name="desc_language_level_b2">Can understand the main ideas of a complex text on both concrete and abstract topics, including technical discussions in your field of specialization</string>
     <string name="desc_language_level_c1">Can understand a wide range of demanding, longer texts, and recognize implicit meaning. Can express him/herself fluently and spontaneously without much obvious searching for expressions</string>
 
     <!-- Auth -->
-    <string name="title_auth_sign_in_screen">Last step: sign in to Toritark and start learning 🚀</string>
+    <string name="title_auth_sign_in_screen">Last step: Sign in to Toritark and start learning 🚀</string>
 
     <string name="title_auth_sign_in_google_btn">Sign in with Google</string>
     <string name="title_auth_sign_in_apple_btn">Sign in with Apple</string>
@@ -50,7 +50,7 @@
     <string name="title_story_customize_prompt_dropdown">Customize the story</string>
     <string name="hint_story_customize_prompt">Enter your story instructions here...</string>
 
-    <string name="title_story_detail_empty_hint">Choose a topic and click on this button to create your story 🚀</string>
+    <string name="title_story_detail_empty_hint">Choose a topic and tap this button to create your story 🚀</string>
 
     <string name="title_story_topic_daily_routine">Daily routine</string>
     <string name="title_story_topic_store_dialog">Store dialog</string>
@@ -69,8 +69,8 @@
 
     <string name="title_story_quiz">Check yourself</string>
     <plurals name="desc_story_quiz">
-        <item quantity="one">Answer on a question about this story to check yourself!</item>
-        <item quantity="other">Answer on %1$d questions about this story to check yourself!</item>
+        <item quantity="one">Answer a question about this story to check yourself!</item>
+        <item quantity="other">Answer %1$d questions about this story to check yourself!</item>
     </plurals>
 
     <string name="title_story_creation_progress_1">Brewing idea…</string>
@@ -84,7 +84,7 @@
     <string name="title_story_selected_words_empty">Press and hold any unknown word to add it to the learning set</string>
 
     <plurals name="title_story_selected_words">
-        <item quantity="one">Selected %1$d word to learn. Add them to the learning set, or keep adding other unknown words by pressing &amp; holding them.</item>
+        <item quantity="one">Selected %1$d word to learn. Add it to the learning set, or keep adding other unknown words by pressing &amp; holding them.</item>
         <item quantity="other">Selected %1$d words to learn. Add them to the learning set, or keep adding other unknown words by pressing &amp; holding them.</item>
     </plurals>
 
@@ -162,14 +162,14 @@
         <item quantity="other">You can create %1$d stories per day on your plan (%2$s).\nPlease upgrade your plan to create a new story and get even more advantages.</item>
     </plurals>
 
-    <string name="title_monetization_retelling_check_quota_exceeded">Oops, retellings limit exceeded</string>
+    <string name="title_monetization_retelling_check_quota_exceeded">Oops, retelling limit exceeded</string>
     <plurals name="desc_monetization_retelling_check_quota_exceeded">
-        <item quantity="one">You can check retelling of %1$d story per day on your plan (%2$s).\nPlease watch a short ad to check retelling, or upgrade your plan to get even more advantages.</item>
-        <item quantity="other">You can check retelling of %1$d stories per day on your plan (%2$s).\nPlease watch a short ad to check retelling, or upgrade your plan to get even more advantages.</item>
+        <item quantity="one">You can check %1$d retelling per day on your plan (%2$s).\nPlease watch a short ad to check a retelling, or upgrade your plan to get even more advantages.</item>
+        <item quantity="other">You can check %1$d retellings per day on your plan (%2$s).\nPlease watch a short ad to check retellings, or upgrade your plan to get even more advantages.</item>
     </plurals>
     <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
-        <item quantity="one">You can check retelling of %1$d story per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
-        <item quantity="other">You can check retelling of %1$d stories per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
+        <item quantity="one">>You can check %1$d retelling per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
+        <item quantity="other">You can check %1$d retellings per day on your plan (%2$s).\nPlease upgrade your plan to check retelling and get even more advantages.</item>
     </plurals>
 
     <string name="title_monetization_watch_rewarded_ad_btn">Watch ad to unlock</string>
@@ -182,7 +182,7 @@
     <string name="desc_monetization_watch_rewarded_ad_fail">Something went wrong. Please try again or upgrade your plan.</string>
 
     <string name="title_monetization_watch_rewarded_ad_success">✅ Success</string>
-    <string name="desc_monetization_watch_rewarded_ad_success">We've upgraded your plan limit 🎉</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">We've upgraded your plan limits 🎉</string>
 
     <string name="title_monetization_watch_rewarded_ad_ok_btn">Ok</string>
 
@@ -193,7 +193,7 @@
     <string name="desc_paywall_result_dialog_checking_normal">We're upgrading your subscription...</string>
 
     <string name="title_paywall_result_dialog_checking_too_long">🕜 Please wait a bit</string>
-    <string name="desc_paywall_result_dialog_checking_too_long">We're upgrading your subscription...\nIt takes more time than we expected, we're trying hard to make it faster 😰</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">We're upgrading your subscription...\nIt's taking longer than expected, but we're working to complete it quickly 😰</string>
 
     <string name="title_paywall_result_dialog_fail">😥 Oops</string>
     <string name="desc_paywall_result_dialog_fail">Something went wrong. Please try again.</string>
