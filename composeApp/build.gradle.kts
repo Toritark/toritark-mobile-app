@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.build.konfig)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 val localProperties = Properties().apply {
@@ -134,6 +135,7 @@ kotlin {
 
             implementation(project.dependencies.platform(libs.firebase.android.bom))
             implementation(libs.firebase.android.analytics)
+            implementation(libs.firebase.android.crashlytics)
             implementation(libs.firebase.android.messaging)
             implementation(libs.firebase.android.messaging.ktx)
             implementation(libs.firebase.android.auth)

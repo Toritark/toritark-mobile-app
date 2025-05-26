@@ -5,6 +5,7 @@ ksp = "2.1.20-2.0.0"
 gradle-versions = "0.52.0"
 build-konfig = "0.17.1"
 google-services = "4.4.2"
+firebase-crashlytics = "3.0.3"
 
 app-version-year = "25"
 app-version-month = "05"
@@ -111,6 +112,7 @@ coil-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "
 
 firebase-android-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-android-bom" }
 firebase-android-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-android-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-android-messaging = { module = "com.google.firebase:firebase-messaging" }
 firebase-android-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
 firebase-android-auth = { module = "com.google.firebase:firebase-auth" }
@@ -176,3 +178,4 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidx-room = { id = "androidx.room", version.ref = "androidx-room" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = {id = "com.google.firebase.crashlytics", version.ref="firebase-crashlytics"}
