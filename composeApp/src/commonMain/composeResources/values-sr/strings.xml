@@ -1,0 +1,243 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI može da pogreši. Proverite važne informacije.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Pretraži jezike</string>
+
+    <string name="title_choose_learning_language_screen">Izaberite jezik koji učite</string>
+    <string name="title_choose_learning_language_next_btn">Dalje</string>
+
+    <string name="title_choose_language_level_screen">Izaberite vaš trenutni nivo jezika</string>
+    <string name="title_choose_language_level_next_btn">Dalje</string>
+
+    <string name="title_choose_native_language_screen">Izaberite vaš maternji jezik</string>
+    <string name="title_choose_native_language_next_btn">Dalje</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Tek počinjete i nemate prethodno znanje.</string>
+    <string name="desc_language_level_a1">Može da razume i koristi poznate svakodnevne izraze i vrlo osnovne fraze</string>
+    <string name="desc_language_level_a2">Može da razume rečenice i često korišćene izraze</string>
+    <string name="desc_language_level_b1">Može da razume glavne tačke jasnog standardnog teksta o poznatim temama koje se redovno sreću na poslu, u školi, u slobodno vreme</string>
+    <string name="desc_language_level_b2">Može da razume glavne ideje složenog teksta o konkretnim i apstraktnim temama, uključujući tehničke diskusije u svojoj oblasti specijalizacije</string>
+    <string name="desc_language_level_c1">Može da razume širok spektar zahtevnih, dužih tekstova i prepozna implicitno značenje. Može da se izražava tečno i spontano bez mnogo očiglednog traženja izraza</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Poslednji korak: Prijavite se na Toritark i počnite da učite 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Prijavi se preko Google-a</string>
+    <string name="title_auth_sign_in_apple_btn">Prijavi se preko Apple-a</string>
+    <string name="title_auth_sign_in_facebook_btn">Prijavi se preko Facebook-a</string>
+
+    <string name="title_auth_sign_in_failed">Prijava neuspešna: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Nadogradi ✨</string>
+
+    <string name="title_main_bottom_nav_story">Priča</string>
+    <string name="title_main_bottom_nav_learning_words">Uči reči</string>
+    <string name="title_main_bottom_nav_profile">Profil</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Prilagodi priču</string>
+    <string name="hint_story_customize_prompt">Unesite ovde svoja uputstva za priču...</string>
+
+    <string name="title_story_detail_empty_hint">Izaberite temu i dodirnite ovo dugme da biste kreirali svoju priču 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Dnevna rutina</string>
+    <string name="title_story_topic_store_dialog">Dijalog u prodavnici</string>
+    <string name="title_story_topic_favorite_animal">Omiljena životinja</string>
+    <string name="title_story_topic_walk">Šetnja</string>
+    <string name="title_story_topic_meeting_new_friend">Upoznavanje novog prijatelja</string>
+    <string name="title_story_topic_special_day">Poseban dan</string>
+    <string name="title_story_topic_my_dream">Moj san</string>
+    <string name="title_story_topic_room">Soba</string>
+    <string name="title_story_topic_family">Porodica</string>
+    <string name="title_story_topic_custom">Prilagođeno</string>
+
+    <string name="title_story_generate_btn">Kreiraj</string>
+
+    <string name="title_story_preview_read_your_story">Pročitajte svoju priču</string>
+
+    <string name="title_story_quiz">Proverite sebe</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Odgovorite na %1$d pitanje o ovoj priči da biste proverili sebe!</item>
+        <item quantity="few">Odgovorite na %1$d pitanja o ovoj priči da biste proverili sebe!</item>
+        <item quantity="many">Odgovorite na %1$d pitanja o ovoj priči da biste proverili sebe!</item>
+        <item quantity="other">Odgovorite na %1$d pitanja o ovoj priči da biste proverili sebe!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Smišljam ideju…</string>
+    <string name="title_story_creation_progress_2">Razmišljam dublje…</string>
+    <string name="title_story_creation_progress_3">Dodajem maštu…</string>
+    <string name="title_story_creation_progress_4">Dodajem magiju…</string>
+
+    <string name="title_story_text_screen">Vaša lična priča ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Pritisnite i zadržite bilo koju nepoznatu reč da biste je dodali u set za učenje</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Izabrana %1$d reč za učenje. Dodajte je u set za učenje ili nastavite da dodajete druge nepoznate reči pritiskom i držanjem.</item>
+        <item quantity="few">Izabrane %1$d reči za učenje. Dodajte ih u set za učenje ili nastavite da dodajete druge nepoznate reči pritiskom i držanjem.</item>
+        <item quantity="many">Izabrano %1$d reči za učenje. Dodajte ih u set za učenje ili nastavite da dodajete druge nepoznate reči pritiskom i držanjem.</item>
+        <item quantity="other">Izabrano %1$d reči za učenje. Dodajte ih u set za učenje ili nastavite da dodajete druge nepoznate reči pritiskom i držanjem.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Ukloni</string>
+    <string name="title_story_selected_words_add_to_learning">Dodaj u set za učenje</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Dodata %1$d reč za učenje</item>
+        <item quantity="few">Dodate %1$d reči za učenje</item>
+        <item quantity="many">Dodato %1$d reči za učenje</item>
+        <item quantity="other">Dodato %1$d reči za učenje</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Proverite sebe ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Sledeće pitanje</string>
+    <string name="title_story_quiz_question_finish_btn">Završi</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Prepričaj priču</string>
+    <string name="desc_story_retelling_card">Prepričajte priču, a naš AI će je proveriti i oceniti</string>
+    <string name="title_story_retelling_check_btn">Proveri prepričavanje</string>
+
+    <string name="title_story_retelling_review_progress_1">Proveravam potpunost…</string>
+    <string name="title_story_retelling_review_progress_2">Proveravam gramatiku…</string>
+    <string name="title_story_retelling_review_progress_3">Proveravam vokabular…</string>
+    <string name="title_story_retelling_review_progress_4">Proveravam interpunkciju…</string>
+    <string name="title_story_retelling_review_progress_5">Proveravam pravopis…</string>
+    <string name="title_story_retelling_review_progress_6">Završavam provere…</string>
+
+    <string name="title_retelling_review_summary_header">Vaš rezultat prepričavanja: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Pogledajte detaljnu recenziju</string>
+
+    <string name="title_retelling_review_score_completeness">Potpunost</string>
+    <string name="title_retelling_review_score_grammar">Gramatika</string>
+    <string name="title_retelling_review_score_vocabulary">Vokabular</string>
+    <string name="title_retelling_review_score_spelling">Pravopis</string>
+    <string name="title_retelling_review_score_punctuation">Interpunkcija</string>
+
+    <string name="title_retelling_review_detail_screen">Recenzija vašeg prepričavanja ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Još nema reči za učenje.\nKreirajte priču i pritisnite i zadržite bilo koju nepoznatu reč da biste je dodali u set za učenje</string>
+    <string name="title_learning_words_no_words_create_btn">Kreiraj priču</string>
+
+    <string name="title_learning_words_next_sentence">Sledeća rečenica</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d reč naučena</item>
+        <item quantity="few">%1$d reči naučene</item>
+        <item quantity="many">%1$d reči naučeno</item>
+        <item quantity="other">%1$d reči naučeno</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d reč za učenje</item>
+        <item quantity="few">%1$d reči za učenje</item>
+        <item quantity="many">%1$d reči za učenje</item>
+        <item quantity="other">%1$d reči za učenje</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Označiti ove reči kao naučene?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Da, naučio sam ih</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Ne, prikaži ih kasnije</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Jezik koji učite</string>
+    <string name="title_profile_settings_learning_language_level">Vaš trenutni nivo jezika</string>
+    <string name="title_profile_settings_native_language">Vaš maternji jezik</string>
+    <string name="title_profile_manage_subscriptions_btn">Upravljaj pretplatama</string>
+    <string name="title_profile_upgrade_subscription_btn">Nadogradi svoju pretplatu ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Ups, limit priča prekoračen</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Možete kreirati %1$d priču dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste kreirali novu priču, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="few">Možete kreirati %1$d priče dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste kreirali novu priču, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="many">Možete kreirati %1$d priča dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste kreirali novu priču, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="other">Možete kreirati %1$d priča dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste kreirali novu priču, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Možete kreirati %1$d priču dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste kreirali novu priču i dobili još više prednosti.</item>
+        <item quantity="few">Možete kreirati %1$d priče dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste kreirali novu priču i dobili još više prednosti.</item>
+        <item quantity="many">Možete kreirati %1$d priča dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste kreirali novu priču i dobili još više prednosti.</item>
+        <item quantity="other">Možete kreirati %1$d priča dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste kreirali novu priču i dobili još više prednosti.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Ups, limit provera prepričavanja prekoračen</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Možete proveriti %1$d prepričavanje dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste proverili prepričavanje, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="few">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste proverili prepričavanje, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="many">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste proverili prepričavanja, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+        <item quantity="other">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo pogledajte kratku reklamu da biste proverili prepričavanja, ili nadogradite svoj plan da biste dobili još više prednosti.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Možete proveriti %1$d prepričavanje dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste proverili prepričavanje i dobili još više prednosti.</item>
+        <item quantity="few">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste proverili prepričavanje i dobili još više prednosti.</item>
+        <item quantity="many">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste proverili prepričavanja i dobili još više prednosti.</item>
+        <item quantity="other">Možete proveriti %1$d prepričavanja dnevno sa vašim planom (%2$s).\nMolimo nadogradite svoj plan da biste proverili prepričavanja i dobili još više prednosti.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Pogledaj reklamu za otključavanje</string>
+    <string name="title_monetization_upgrade_plan_btn">Nadogradi svoj plan</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Molimo sačekajte...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Ažuriramo limite vašeg plana</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Ups</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Nešto je pošlo naopako. Molimo pokušajte ponovo ili nadogradite svoj plan.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Uspeh</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Ažurirali smo limite vašeg plana 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Nabavite Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Molimo sačekajte malo</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Ažuriramo vašu pretplatu...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Molimo sačekajte malo</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Ažuriramo vašu pretplatu...\nTraje duže nego što se očekivalo, ali radimo na tome da je brzo završimo 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Ups</string>
+    <string name="desc_paywall_result_dialog_fail">Nešto je pošlo naopako. Molimo pokušajte ponovo.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Uspeh!</string>
+    <string name="desc_paywall_result_dialog_success">Vaš plan je nadograđen — Uživajte u učenju!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Razumem</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Engleski</string>
+    <string name="title_language_name_spanish">Španski</string>
+    <string name="title_language_name_german">Nemački</string>
+    <string name="title_language_name_french">Francuski</string>
+    <string name="title_language_name_italian">Italijanski</string>
+    <string name="title_language_name_russian">Ruski</string>
+    <string name="title_language_name_ukrainian">Ukrajinski</string>
+    <string name="title_language_name_polish">Poljski</string>
+    <string name="title_language_name_czech">Češki</string>
+    <string name="title_language_name_serbian">Srpski</string>
+    <string name="title_language_name_portuguese">Portugalski</string>
+    <string name="title_language_name_finnish">Finski</string>
+    <string name="title_language_name_swedish">Švedski</string>
+    <string name="title_language_name_estonian">Estonski</string>
+    <string name="title_language_name_latvian">Letonski</string>
+    <string name="title_language_name_lithuanian">Litvanski</string>
+    <string name="title_language_name_luxembourgish">Luksemburški</string>
+
+</resources>
