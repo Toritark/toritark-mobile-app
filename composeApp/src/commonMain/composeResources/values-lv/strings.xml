@@ -1,0 +1,225 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI var kļūdīties. Pārbaudiet svarīgu informāciju.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Meklēt valodas</string>
+
+    <string name="title_choose_learning_language_screen">Izvēlieties valodu, ko mācāties</string>
+    <string name="title_choose_learning_language_next_btn">Tālāk</string>
+
+    <string name="title_choose_language_level_screen">Izvēlieties savu pašreizējo valodas līmeni</string>
+    <string name="title_choose_language_level_next_btn">Tālāk</string>
+
+    <string name="title_choose_native_language_screen">Izvēlieties savu dzimto valodu</string>
+    <string name="title_choose_native_language_next_btn">Tālāk</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Jūs tikko sākat un jums nav iepriekšēju zināšanu.</string>
+    <string name="desc_language_level_a1">Var saprast un lietot pazīstamus ikdienas izteicienus un ļoti pamata frāzes</string>
+    <string name="desc_language_level_a2">Var saprast teikumus un bieži lietotus izteicienus</string>
+    <string name="desc_language_level_b1">Var saprast galvenos punktus skaidrā standarta tekstā par pazīstamiem jautājumiem, ar kuriem regulāri saskaras darbā, skolā, brīvajā laikā</string>
+    <string name="desc_language_level_b2">Var saprast galvenās idejas sarežģītā tekstā par gan konkrētām, gan abstraktām tēmām, ieskaitot tehniskas diskusijas savā specializācijas jomā</string>
+    <string name="desc_language_level_c1">Var saprast plašu sarežģītu, garāku tekstu klāstu un atpazīt netiešo nozīmi. Var izteikties tekoši un spontāni bez acīmredzamas izteicienu meklēšanas</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Pēdējais solis: Pierakstieties Toritarkā un sāciet mācīties 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Pierakstīties ar Google</string>
+    <string name="title_auth_sign_in_apple_btn">Pierakstīties ar Apple</string>
+    <string name="title_auth_sign_in_facebook_btn">Pierakstīties ar Facebook</string>
+
+    <string name="title_auth_sign_in_failed">Pierakstīšanās neizdevās: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Jaunināt ✨</string>
+
+    <string name="title_main_bottom_nav_story">Stāsts</string>
+    <string name="title_main_bottom_nav_learning_words">Mācīties vārdus</string>
+    <string name="title_main_bottom_nav_profile">Profils</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Pielāgot stāstu</string>
+    <string name="hint_story_customize_prompt">Ievadiet savas instrukcijas stāstam šeit...</string>
+
+    <string name="title_story_detail_empty_hint">Izvēlieties tēmu un pieskarieties šai pogai, lai izveidotu savu stāstu 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Ikdienas rutīna</string>
+    <string name="title_story_topic_store_dialog">Dialogs veikalā</string>
+    <string name="title_story_topic_favorite_animal">Mīļākais dzīvnieks</string>
+    <string name="title_story_topic_walk">Pastaiga</string>
+    <string name="title_story_topic_meeting_new_friend">Tikšanās ar jaunu draugu</string>
+    <string name="title_story_topic_special_day">Īpaša diena</string>
+    <string name="title_story_topic_my_dream">Mans sapnis</string>
+    <string name="title_story_topic_room">Istaba</string>
+    <string name="title_story_topic_family">Ģimene</string>
+    <string name="title_story_topic_custom">Pielāgots</string>
+
+    <string name="title_story_generate_btn">Izveidot</string>
+
+    <string name="title_story_preview_read_your_story">Izlasiet savu stāstu</string>
+
+    <string name="title_story_quiz">Pārbaudiet sevi</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Atbildiet uz %1$d jautājumu par šo stāstu, lai pārbaudītu sevi!</item>
+        <item quantity="other">Atbildiet uz %1$d jautājumiem par šo stāstu, lai pārbaudītu sevi!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Idejas brūvēšana…</string>
+    <string name="title_story_creation_progress_2">Dziļāka domāšana…</string>
+    <string name="title_story_creation_progress_3">Iztēles pievienošana…</string>
+    <string name="title_story_creation_progress_4">Maģijas pievienošana…</string>
+
+    <string name="title_story_text_screen">Jūsu personīgais stāsts ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Nospiediet un turiet jebkuru nezināmu vārdu, lai to pievienotu mācību komplektam</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Izvēlēts %1$d vārds mācībām. Pievienojiet to mācību komplektam vai turpiniet pievienot citus nezināmus vārdus, nospiežot &amp; turot tos.</item>
+        <item quantity="other">Izvēlēti %1$d vārdi mācībām. Pievienojiet tos mācību komplektam vai turpiniet pievienot citus nezināmus vārdus, nospiežot &amp; turot tos.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Noņemt</string>
+    <string name="title_story_selected_words_add_to_learning">Pievienot mācību komplektam</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Pievienots %1$d vārds mācībām</item>
+        <item quantity="other">Pievienoti %1$d vārdi mācībām</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Pārbaudiet sevi ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Nākamais jautājums</string>
+    <string name="title_story_quiz_question_finish_btn">Pabeigt</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Pārstāstīt stāstu</string>
+    <string name="desc_story_retelling_card">Pārstāstiet stāstu, un mūsu AI to pārbaudīs un novērtēs</string>
+    <string name="title_story_retelling_check_btn">Pārbaudīt pārstāstījumu</string>
+
+    <string name="title_story_retelling_review_progress_1">Pārbauda pilnīgumu…</string>
+    <string name="title_story_retelling_review_progress_2">Pārbauda gramatiku…</string>
+    <string name="title_story_retelling_review_progress_3">Pārbauda vārdu krājumu…</string>
+    <string name="title_story_retelling_review_progress_4">Pārbauda pieturzīmes…</string>
+    <string name="title_story_retelling_review_progress_5">Pārbauda pareizrakstību…</string>
+    <string name="title_story_retelling_review_progress_6">Pabeidz pārbaudes…</string>
+
+    <string name="title_retelling_review_summary_header">Jūsu pārstāstījuma vērtējums: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Skatīt detalizētu pārskatu</string>
+
+    <string name="title_retelling_review_score_completeness">Pilnīgums</string>
+    <string name="title_retelling_review_score_grammar">Gramatika</string>
+    <string name="title_retelling_review_score_vocabulary">Vārdu krājums</string>
+    <string name="title_retelling_review_score_spelling">Pareizrakstība</string>
+    <string name="title_retelling_review_score_punctuation">Pieturzīmes</string>
+
+    <string name="title_retelling_review_detail_screen">Jūsu pārstāstījuma pārskats ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Vēl nav vārdu mācībām.\nIzveidojiet stāstu un nospiediet un turiet jebkuru nezināmu vārdu, lai to pievienotu mācību komplektam</string>
+    <string name="title_learning_words_no_words_create_btn">Izveidot stāstu</string>
+
+    <string name="title_learning_words_next_sentence">Nākamais teikums</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d vārds apgūts</item>
+        <item quantity="other">%1$d vārdi apgūti</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d vārds mācībām</item>
+        <item quantity="other">%1$d vārdi mācībām</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Atzīmēt šos vārdus kā apgūtus?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Jā, es tos apguvu</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Nē, parādīt tos vēlāk</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Valoda, ko mācāties</string>
+    <string name="title_profile_settings_learning_language_level">Jūsu pašreizējais valodas līmenis</string>
+    <string name="title_profile_settings_native_language">Jūsu dzimtā valoda</string>
+    <string name="title_profile_manage_subscriptions_btn">Pārvaldīt abonementus</string>
+    <string name="title_profile_upgrade_subscription_btn">Jauniniet savu abonementu ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Ups, stāstu limits pārsniegts</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Jūs varat izveidot %1$d stāstu dienā ar savu plānu (%2$s).\nLūdzu, noskatieties īsu reklāmu, lai izveidotu jaunu stāstu, vai jauniniet savu plānu, lai iegūtu vēl vairāk priekšrocību.</item>
+        <item quantity="other">Jūs varat izveidot %1$d stāstus dienā ar savu plānu (%2$s).\nLūdzu, noskatieties īsu reklāmu, lai izveidotu jaunu stāstu, vai jauniniet savu plānu, lai iegūtu vēl vairāk priekšrocību.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Jūs varat izveidot %1$d stāstu dienā ar savu plānu (%2$s).\nLūdzu, jauniniet savu plānu, lai izveidotu jaunu stāstu un iegūtu vēl vairāk priekšrocību.</item>
+        <item quantity="other">Jūs varat izveidot %1$d stāstus dienā ar savu plānu (%2$s).\nLūdzu, jauniniet savu plānu, lai izveidotu jaunu stāstu un iegūtu vēl vairāk priekšrocību.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Ups, pārstāstījumu pārbaudes limits pārsniegts</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Jūs varat pārbaudīt %1$d pārstāstījumu dienā ar savu plānu (%2$s).\nLūdzu, noskatieties īsu reklāmu, lai pārbaudītu pārstāstījumu, vai jauniniet savu plānu, lai iegūtu vēl vairāk priekšrocību.</item>
+        <item quantity="other">Jūs varat pārbaudīt %1$d pārstāstījumus dienā ar savu plānu (%2$s).\nLūdzu, noskatieties īsu reklāmu, lai pārbaudītu pārstāstījumus, vai jauniniet savu plānu, lai iegūtu vēl vairāk priekšrocību.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Jūs varat pārbaudīt %1$d pārstāstījumu dienā ar savu plānu (%2$s).\nLūdzu, jauniniet savu plānu, lai pārbaudītu pārstāstījumu un iegūtu vēl vairāk priekšrocību.</item>
+        <item quantity="other">Jūs varat pārbaudīt %1$d pārstāstījumus dienā ar savu plānu (%2$s).\nLūdzu, jauniniet savu plānu, lai pārbaudītu pārstāstījumus un iegūtu vēl vairāk priekšrocību.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Skatīties reklāmu, lai atbloķētu</string>
+    <string name="title_monetization_upgrade_plan_btn">Jauniniet savu plānu</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Lūdzu, uzgaidiet...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Mēs atjaunojam jūsu plāna limitus</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Ups</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz vai jauniniet savu plānu.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Veiksmīgi!</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Mēs esam atjaunojuši jūsu plāna limitus 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">Labi</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Iegūstiet Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Lūdzu, nedaudz uzgaidiet</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Mēs atjaunojam jūsu abonementu...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Lūdzu, nedaudz uzgaidiet</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Mēs atjaunojam jūsu abonementu...\nTas aizņem ilgāku laiku nekā gaidīts, bet mēs strādājam, lai to ātri pabeigtu 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Ups</string>
+    <string name="desc_paywall_result_dialog_fail">Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Veiksmīgi!</string>
+    <string name="desc_paywall_result_dialog_success">Jūsu plāns ir jaunināts — Izbaudiet mācīšanos!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Sapratu</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Angļu</string>
+    <string name="title_language_name_spanish">Spāņu</string>
+    <string name="title_language_name_german">Vācu</string>
+    <string name="title_language_name_french">Franču</string>
+    <string name="title_language_name_italian">Itāļu</string>
+    <string name="title_language_name_russian">Krievu</string>
+    <string name="title_language_name_ukrainian">Ukraiņu</string>
+    <string name="title_language_name_polish">Poļu</string>
+    <string name="title_language_name_czech">Čehu</string>
+    <string name="title_language_name_serbian">Serbu</string>
+    <string name="title_language_name_portuguese">Portugāļu</string>
+    <string name="title_language_name_finnish">Somu</string>
+    <string name="title_language_name_swedish">Zviedru</string>
+    <string name="title_language_name_estonian">Igauņu</string>
+    <string name="title_language_name_latvian">Latviešu</string>
+    <string name="title_language_name_lithuanian">Lietuviešu</string>
+    <string name="title_language_name_luxembourgish">Luksemburgiešu</string>
+
+</resources>
