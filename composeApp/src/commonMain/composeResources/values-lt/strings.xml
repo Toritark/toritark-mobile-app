@@ -1,0 +1,243 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI gali klysti. Patikrinkite svarbią informaciją.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Ieškoti kalbų</string>
+
+    <string name="title_choose_learning_language_screen">Pasirinkite kalbą, kurios mokotės</string>
+    <string name="title_choose_learning_language_next_btn">Toliau</string>
+
+    <string name="title_choose_language_level_screen">Pasirinkite savo dabartinį kalbos lygį</string>
+    <string name="title_choose_language_level_next_btn">Toliau</string>
+
+    <string name="title_choose_native_language_screen">Pasirinkite savo gimtąją kalbą</string>
+    <string name="title_choose_native_language_next_btn">Toliau</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Jūs tik pradedate ir neturite jokių ankstesnių žinių.</string>
+    <string name="desc_language_level_a1">Gali suprasti ir naudoti pažįstamus kasdienius posakius ir labai paprastas frazes</string>
+    <string name="desc_language_level_a2">Gali suprasti sakinius ir dažnai vartojamus posakius</string>
+    <string name="desc_language_level_b1">Gali suprasti pagrindinius aiškaus standartinio teksto punktus pažįstamomis temomis, su kuriomis reguliariai susiduria darbe, mokykloje, laisvalaikiu</string>
+    <string name="desc_language_level_b2">Gali suprasti pagrindines sudėtingo teksto idėjas tiek konkrečiomis, tiek abstrakčiomis temomis, įskaitant technines diskusijas savo specializacijos srityje</string>
+    <string name="desc_language_level_c1">Gali suprasti platų sudėtingų, ilgesnių tekstų spektrą ir atpažinti numanomą prasmę. Gali sklandžiai ir spontaniškai reikšti mintis be akivaizdaus žodžių ieškojimo</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Paskutinis žingsnis: Prisijunkite prie Toritark ir pradėkite mokytis 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Prisijungti su Google</string>
+    <string name="title_auth_sign_in_apple_btn">Prisijungti su Apple</string>
+    <string name="title_auth_sign_in_facebook_btn">Prisijungti su Facebook</string>
+
+    <string name="title_auth_sign_in_failed">Prisijungti nepavyko: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Atnaujinti ✨</string>
+
+    <string name="title_main_bottom_nav_story">Istorija</string>
+    <string name="title_main_bottom_nav_learning_words">Mokytis žodžių</string>
+    <string name="title_main_bottom_nav_profile">Profilis</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Pritaikyti istoriją</string>
+    <string name="hint_story_customize_prompt">Įveskite savo instrukcijas istorijai čia...</string>
+
+    <string name="title_story_detail_empty_hint">Pasirinkite temą ir bakstelėkite šį mygtuką, kad sukurtumėte savo istoriją 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Dienos rutina</string>
+    <string name="title_story_topic_store_dialog">Pokalbis parduotuvėje</string>
+    <string name="title_story_topic_favorite_animal">Mėgstamiausias gyvūnas</string>
+    <string name="title_story_topic_walk">Pasivaikščiojimas</string>
+    <string name="title_story_topic_meeting_new_friend">Susitikimas su nauju draugu</string>
+    <string name="title_story_topic_special_day">Ypatinga diena</string>
+    <string name="title_story_topic_my_dream">Mano svajonė</string>
+    <string name="title_story_topic_room">Kambarys</string>
+    <string name="title_story_topic_family">Šeima</string>
+    <string name="title_story_topic_custom">Pasirinktinis</string>
+
+    <string name="title_story_generate_btn">Sukurti</string>
+
+    <string name="title_story_preview_read_your_story">Perskaitykite savo istoriją</string>
+
+    <string name="title_story_quiz">Pasitikrinkite</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Atsakykite į %1$d klausimą apie šią istoriją, kad pasitikrintumėte!</item>
+        <item quantity="few">Atsakykite į %1$d klausimus apie šią istoriją, kad pasitikrintumėte!</item>
+        <item quantity="many">Atsakykite į %1$d klausimų apie šią istoriją, kad pasitikrintumėte!</item>
+        <item quantity="other">Atsakykite į %1$d klausimų apie šią istoriją, kad pasitikrintumėte!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Kuriama idėja…</string>
+    <string name="title_story_creation_progress_2">Mąstoma giliau…</string>
+    <string name="title_story_creation_progress_3">Pridedama vaizduotės…</string>
+    <string name="title_story_creation_progress_4">Pridedama magijos…</string>
+
+    <string name="title_story_text_screen">Jūsų asmeninė istorija ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Paspauskite ir palaikykite bet kurį nežinomą žodį, kad pridėtumėte jį į mokymosi rinkinį</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Pasirinktas %1$d žodis mokytis. Pridėkite jį į mokymosi rinkinį arba toliau pridėkite kitus nežinomus žodžius, paspaudę &amp; palaikę juos.</item>
+        <item quantity="few">Pasirinkti %1$d žodžiai mokytis. Pridėkite juos į mokymosi rinkinį arba toliau pridėkite kitus nežinomus žodžius, paspaudę &amp; palaikę juos.</item>
+        <item quantity="many">Pasirinkta %1$d žodžių mokytis. Pridėkite juos į mokymosi rinkinį arba toliau pridėkite kitus nežinomus žodžius, paspaudę &amp; palaikę juos.</item>
+        <item quantity="other">Pasirinkta %1$d žodžių mokytis. Pridėkite juos į mokymosi rinkinį arba toliau pridėkite kitus nežinomus žodžius, paspaudę &amp; palaikę juos.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Pašalinti</string>
+    <string name="title_story_selected_words_add_to_learning">Pridėti į mokymosi rinkinį</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Pridėtas %1$d žodis mokytis</item>
+        <item quantity="few">Pridėti %1$d žodžiai mokytis</item>
+        <item quantity="many">Pridėta %1$d žodžių mokytis</item>
+        <item quantity="other">Pridėta %1$d žodžių mokytis</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Pasitikrinkite ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Kitas klausimas</string>
+    <string name="title_story_quiz_question_finish_btn">Baigti</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Perpasakoti istoriją</string>
+    <string name="desc_story_retelling_card">Perpasakokite istoriją, ir mūsų AI ją patikrins ir įvertins</string>
+    <string name="title_story_retelling_check_btn">Patikrinti perpasakojimą</string>
+
+    <string name="title_story_retelling_review_progress_1">Tikrinamas išsamumas…</string>
+    <string name="title_story_retelling_review_progress_2">Tikrinama gramatika…</string>
+    <string name="title_story_retelling_review_progress_3">Tikrinamas žodynas…</string>
+    <string name="title_story_retelling_review_progress_4">Tikrinama skyryba…</string>
+    <string name="title_story_retelling_review_progress_5">Tikrinama rašyba…</string>
+    <string name="title_story_retelling_review_progress_6">Baigiami tikrinimai…</string>
+
+    <string name="title_retelling_review_summary_header">Jūsų perpasakojimo balas: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Žiūrėti išsamią apžvalgą</string>
+
+    <string name="title_retelling_review_score_completeness">Išsamumas</string>
+    <string name="title_retelling_review_score_grammar">Gramatika</string>
+    <string name="title_retelling_review_score_vocabulary">Žodynas</string>
+    <string name="title_retelling_review_score_spelling">Rašyba</string>
+    <string name="title_retelling_review_score_punctuation">Skyryba</string>
+
+    <string name="title_retelling_review_detail_screen">Jūsų perpasakojimo apžvalga ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Kol kas nėra žodžių mokytis.\nSukurkite istoriją ir paspauskite &amp; palaikykite bet kurį nežinomą žodį, kad pridėtumėte jį į mokymosi rinkinį</string>
+    <string name="title_learning_words_no_words_create_btn">Sukurti istoriją</string>
+
+    <string name="title_learning_words_next_sentence">Kitas sakinys</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d žodis išmoktas</item>
+        <item quantity="few">%1$d žodžiai išmokti</item>
+        <item quantity="many">%1$d žodžių išmokta</item>
+        <item quantity="other">%1$d žodžių išmokta</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d žodis mokytis</item>
+        <item quantity="few">%1$d žodžiai mokytis</item>
+        <item quantity="many">%1$d žodžių mokytis</item>
+        <item quantity="other">%1$d žodžių mokytis</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Pažymėti šiuos žodžius kaip išmoktus?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Taip, aš juos išmokau</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Ne, parodyti juos vėliau</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Kalba, kurios mokotės</string>
+    <string name="title_profile_settings_learning_language_level">Jūsų dabartinis kalbos lygis</string>
+    <string name="title_profile_settings_native_language">Jūsų gimtoji kalba</string>
+    <string name="title_profile_manage_subscriptions_btn">Tvarkyti prenumeratas</string>
+    <string name="title_profile_upgrade_subscription_btn">Atnaujinti savo prenumeratą ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Oi, viršytas istorijų limitas</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Galite sukurti %1$d istoriją per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad sukurtumėte naują istoriją, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="few">Galite sukurti %1$d istorijas per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad sukurtumėte naują istoriją, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="many">Galite sukurti %1$d istorijų per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad sukurtumėte naują istoriją, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="other">Galite sukurti %1$d istorijų per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad sukurtumėte naują istoriją, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Galite sukurti %1$d istoriją per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad sukurtumėte naują istoriją ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="few">Galite sukurti %1$d istorijas per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad sukurtumėte naują istoriją ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="many">Galite sukurti %1$d istorijų per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad sukurtumėte naują istoriją ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="other">Galite sukurti %1$d istorijų per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad sukurtumėte naują istoriją ir gautumėte dar daugiau privalumų.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Oi, viršytas perpasakojimų limitas</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Galite patikrinti %1$d perpasakojimą per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad patikrintumėte perpasakojimą, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="few">Galite patikrinti %1$d perpasakojimus per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad patikrintumėte perpasakojimą, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="many">Galite patikrinti %1$d perpasakojimų per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad patikrintumėte perpasakojimus, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+        <item quantity="other">Galite patikrinti %1$d perpasakojimų per dieną pagal savo planą (%2$s).\nPrašome pažiūrėti trumpą reklamą, kad patikrintumėte perpasakojimus, arba atnaujinkite savo planą, kad gautumėte dar daugiau privalumų.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Galite patikrinti %1$d perpasakojimą per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad patikrintumėte perpasakojimą ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="few">Galite patikrinti %1$d perpasakojimus per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad patikrintumėte perpasakojimą ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="many">Galite patikrinti %1$d perpasakojimų per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad patikrintumėte perpasakojimus ir gautumėte dar daugiau privalumų.</item>
+        <item quantity="other">Galite patikrinti %1$d perpasakojimų per dieną pagal savo planą (%2$s).\nPrašome atnaujinti savo planą, kad patikrintumėte perpasakojimus ir gautumėte dar daugiau privalumų.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Žiūrėti reklamą, kad atrakintumėte</string>
+    <string name="title_monetization_upgrade_plan_btn">Atnaujinti savo planą</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Prašome palaukti...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Atnaujiname jūsų plano limitus</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Oi</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Kažkas nepavyko. Prašome bandyti dar kartą arba atnaujinti savo planą.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Pavyko!</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Atnaujinome jūsų plano limitus 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">Gerai</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Gaukite Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Prašome šiek tiek palaukti</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Atnaujiname jūsų prenumeratą...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Prašome šiek tiek palaukti</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Atnaujiname jūsų prenumeratą...\nTai užtrunka ilgiau nei tikėtasi, bet mes stengiamės greitai užbaigti 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Oi</string>
+    <string name="desc_paywall_result_dialog_fail">Kažkas nepavyko. Prašome bandyti dar kartą.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Pavyko!</string>
+    <string name="desc_paywall_result_dialog_success">Jūsų planas atnaujintas — Mėgaukitės mokymusi!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Supratau</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Anglų</string>
+    <string name="title_language_name_spanish">Ispanų</string>
+    <string name="title_language_name_german">Vokiečių</string>
+    <string name="title_language_name_french">Prancūzų</string>
+    <string name="title_language_name_italian">Italų</string>
+    <string name="title_language_name_russian">Rusų</string>
+    <string name="title_language_name_ukrainian">Ukrainiečių</string>
+    <string name="title_language_name_polish">Lenkų</string>
+    <string name="title_language_name_czech">Čekų</string>
+    <string name="title_language_name_serbian">Serbų</string>
+    <string name="title_language_name_portuguese">Portugalų</string>
+    <string name="title_language_name_finnish">Suomių</string>
+    <string name="title_language_name_swedish">Švedų</string>
+    <string name="title_language_name_estonian">Estų</string>
+    <string name="title_language_name_latvian">Latvių</string>
+    <string name="title_language_name_lithuanian">Lietuvių</string>
+    <string name="title_language_name_luxembourgish">Liuksemburgiečių</string>
+
+</resources>
