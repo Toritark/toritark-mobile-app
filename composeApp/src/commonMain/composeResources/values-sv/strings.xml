@@ -1,0 +1,225 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI kan göra misstag. Kontrollera viktig information.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Sök språk</string>
+
+    <string name="title_choose_learning_language_screen">Välj språket du lär dig</string>
+    <string name="title_choose_learning_language_next_btn">Nästa</string>
+
+    <string name="title_choose_language_level_screen">Välj din nuvarande språknivå</string>
+    <string name="title_choose_language_level_next_btn">Nästa</string>
+
+    <string name="title_choose_native_language_screen">Välj ditt modersmål</string>
+    <string name="title_choose_native_language_next_btn">Nästa</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Du har precis börjat och har inga tidigare kunskaper.</string>
+    <string name="desc_language_level_a1">Kan förstå och använda välbekanta vardagliga uttryck och mycket grundläggande fraser</string>
+    <string name="desc_language_level_a2">Kan förstå meningar och ofta använda uttryck</string>
+    <string name="desc_language_level_b1">Kan förstå huvudpunkterna i tydlig standardspråk om välbekanta ämnen som regelbundet förekommer i arbete, skola, fritid</string>
+    <string name="desc_language_level_b2">Kan förstå huvudidéerna i en komplex text om både konkreta och abstrakta ämnen, inklusive tekniska diskussioner inom sitt specialområde</string>
+    <string name="desc_language_level_c1">Kan förstå ett brett utbud av krävande, längre texter och känna igen underförstådd mening. Kan uttrycka sig flytande och spontant utan att behöva leta efter uttryck</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Sista steget: Logga in på Toritark och börja lära dig 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Logga in med Google</string>
+    <string name="title_auth_sign_in_apple_btn">Logga in med Apple</string>
+    <string name="title_auth_sign_in_facebook_btn">Logga in med Facebook</string>
+
+    <string name="title_auth_sign_in_failed">Inloggning misslyckades: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Uppgradera ✨</string>
+
+    <string name="title_main_bottom_nav_story">Berättelse</string>
+    <string name="title_main_bottom_nav_learning_words">Lär dig ord</string>
+    <string name="title_main_bottom_nav_profile">Profil</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Anpassa berättelsen</string>
+    <string name="hint_story_customize_prompt">Skriv dina instruktioner för berättelsen här...</string>
+
+    <string name="title_story_detail_empty_hint">Välj ett ämne och tryck på den här knappen för att skapa din berättelse 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Daglig rutin</string>
+    <string name="title_story_topic_store_dialog">Butiksdialog</string>
+    <string name="title_story_topic_favorite_animal">Favoritdjur</string>
+    <string name="title_story_topic_walk">Promenad</string>
+    <string name="title_story_topic_meeting_new_friend">Träffa en ny vän</string>
+    <string name="title_story_topic_special_day">Speciell dag</string>
+    <string name="title_story_topic_my_dream">Min dröm</string>
+    <string name="title_story_topic_room">Rum</string>
+    <string name="title_story_topic_family">Familj</string>
+    <string name="title_story_topic_custom">Anpassad</string>
+
+    <string name="title_story_generate_btn">Skapa</string>
+
+    <string name="title_story_preview_read_your_story">Läs din berättelse</string>
+
+    <string name="title_story_quiz">Testa dig själv</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Svara på en fråga om den här berättelsen för att testa dig själv!</item>
+        <item quantity="other">Svara på %1$d frågor om den här berättelsen för att testa dig själv!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Brygger idé…</string>
+    <string name="title_story_creation_progress_2">Tänker djupare…</string>
+    <string name="title_story_creation_progress_3">Lägger till fantasi…</string>
+    <string name="title_story_creation_progress_4">Lägger till magi…</string>
+
+    <string name="title_story_text_screen">Din personliga berättelse ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Tryck och håll ned valfritt okänt ord för att lägga till det i inlärningssetet</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">%1$d ord valt att lära sig. Lägg till det i inlärningssetet, eller fortsätt lägga till andra okända ord genom att trycka &amp; hålla ned dem.</item>
+        <item quantity="other">%1$d ord valda att lära sig. Lägg till dem i inlärningssetet, eller fortsätt lägga till andra okända ord genom att trycka &amp; hålla ned dem.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Ta bort</string>
+    <string name="title_story_selected_words_add_to_learning">Lägg till i inlärningssetet</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Lade till %1$d ord att lära sig</item>
+        <item quantity="other">Lade till %1$d ord att lära sig</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Testa dig själv ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Nästa fråga</string>
+    <string name="title_story_quiz_question_finish_btn">Slutför</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Återberätta historien</string>
+    <string name="desc_story_retelling_card">Återberätta historien, och vår AI kommer att kontrollera och betygsätta den</string>
+    <string name="title_story_retelling_check_btn">Kontrollera återberättelsen</string>
+
+    <string name="title_story_retelling_review_progress_1">Kontrollerar fullständighet…</string>
+    <string name="title_story_retelling_review_progress_2">Kontrollerar grammatik…</string>
+    <string name="title_story_retelling_review_progress_3">Kontrollerar ordförråd…</string>
+    <string name="title_story_retelling_review_progress_4">Kontrollerar interpunktion…</string>
+    <string name="title_story_retelling_review_progress_5">Kontrollerar stavning…</string>
+    <string name="title_story_retelling_review_progress_6">Slutför kontroller…</string>
+
+    <string name="title_retelling_review_summary_header">Ditt betyg för återberättelsen: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Se detaljerad recension</string>
+
+    <string name="title_retelling_review_score_completeness">Fullständighet</string>
+    <string name="title_retelling_review_score_grammar">Grammatik</string>
+    <string name="title_retelling_review_score_vocabulary">Ordförråd</string>
+    <string name="title_retelling_review_score_spelling">Stavning</string>
+    <string name="title_retelling_review_score_punctuation">Interpunktion</string>
+
+    <string name="title_retelling_review_detail_screen">Recension av din återberättelse ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Inga ord att lära sig än.\nSkapa en berättelse och tryck och håll ned valfritt okänt ord för att lägga till det i inlärningssetet</string>
+    <string name="title_learning_words_no_words_create_btn">Skapa en berättelse</string>
+
+    <string name="title_learning_words_next_sentence">Nästa mening</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d ord lärt</item>
+        <item quantity="other">%1$d ord lärda</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d ord att lära sig</item>
+        <item quantity="other">%1$d ord att lära sig</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Markera dessa ord som lärda?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Ja, jag har lärt mig dem</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Nej, visa dem igen senare</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Språk du lär dig</string>
+    <string name="title_profile_settings_learning_language_level">Din nuvarande språknivå</string>
+    <string name="title_profile_settings_native_language">Ditt modersmål</string>
+    <string name="title_profile_manage_subscriptions_btn">Hantera prenumerationer</string>
+    <string name="title_profile_upgrade_subscription_btn">Uppgradera din prenumeration ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Hoppsan, gränsen för berättelser överskriden</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Du kan skapa %1$d berättelse per dag med din plan (%2$s).\nVänligen titta på en kort annons för att skapa en ny berättelse, eller uppgradera din plan för att få ännu fler fördelar.</item>
+        <item quantity="other">Du kan skapa %1$d berättelser per dag med din plan (%2$s).\nVänligen titta på en kort annons för att skapa en ny berättelse, eller uppgradera din plan för att få ännu fler fördelar.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Du kan skapa %1$d berättelse per dag med din plan (%2$s).\nVänligen uppgradera din plan för att skapa en ny berättelse och få ännu fler fördelar.</item>
+        <item quantity="other">Du kan skapa %1$d berättelser per dag med din plan (%2$s).\nVänligen uppgradera din plan för att skapa en ny berättelse och få ännu fler fördelar.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Hoppsan, gränsen för återberättelsekontroller överskriden</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Du kan kontrollera %1$d återberättelse per dag med din plan (%2$s).\nVänligen titta på en kort annons för att kontrollera en återberättelse, eller uppgradera din plan för att få ännu fler fördelar.</item>
+        <item quantity="other">Du kan kontrollera %1$d återberättelser per dag med din plan (%2$s).\nVänligen titta på en kort annons för att kontrollera återberättelser, eller uppgradera din plan för att få ännu fler fördelar.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Du kan kontrollera %1$d återberättelse per dag med din plan (%2$s).\nVänligen uppgradera din plan för att kontrollera en återberättelse och få ännu fler fördelar.</item>
+        <item quantity="other">Du kan kontrollera %1$d återberättelser per dag med din plan (%2$s).\nVänligen uppgradera din plan för att kontrollera återberättelser och få ännu fler fördelar.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Titta på annons för att låsa upp</string>
+    <string name="title_monetization_upgrade_plan_btn">Uppgradera din plan</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Vänligen vänta...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Vi uppdaterar gränserna för din plan</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Hoppsan</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Något gick fel. Vänligen försök igen eller uppgradera din plan.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Klart!</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Vi har uppdaterat gränserna för din plan 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Skaffa Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Vänligen vänta en stund</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Vi uppdaterar din prenumeration...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Vänligen vänta en stund</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Vi uppdaterar din prenumeration...\nDet tar längre tid än förväntat, men vi arbetar för att slutföra det snabbt 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Hoppsan</string>
+    <string name="desc_paywall_result_dialog_fail">Något gick fel. Vänligen försök igen.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Klart!</string>
+    <string name="desc_paywall_result_dialog_success">Din plan har uppgraderats — Njut av att lära dig!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Förstått</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Engelska</string>
+    <string name="title_language_name_spanish">Spanska</string>
+    <string name="title_language_name_german">Tyska</string>
+    <string name="title_language_name_french">Franska</string>
+    <string name="title_language_name_italian">Italienska</string>
+    <string name="title_language_name_russian">Ryska</string>
+    <string name="title_language_name_ukrainian">Ukrainska</string>
+    <string name="title_language_name_polish">Polska</string>
+    <string name="title_language_name_czech">Tjeckiska</string>
+    <string name="title_language_name_serbian">Serbiska</string>
+    <string name="title_language_name_portuguese">Portugisiska</string>
+    <string name="title_language_name_finnish">Finska</string>
+    <string name="title_language_name_swedish">Svenska</string>
+    <string name="title_language_name_estonian">Estniska</string>
+    <string name="title_language_name_latvian">Lettiska</string>
+    <string name="title_language_name_lithuanian">Litauiska</string>
+    <string name="title_language_name_luxembourgish">Luxemburgiska</string>
+
+</resources>
