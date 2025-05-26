@@ -1,0 +1,243 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI se může mýlit. Zkontrolujte důležité informace.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Hledat jazyky</string>
+
+    <string name="title_choose_learning_language_screen">Vyberte jazyk, který se učíte</string>
+    <string name="title_choose_learning_language_next_btn">Další</string>
+
+    <string name="title_choose_language_level_screen">Vyberte svou aktuální úroveň jazyka</string>
+    <string name="title_choose_language_level_next_btn">Další</string>
+
+    <string name="title_choose_native_language_screen">Vyberte svůj rodný jazyk</string>
+    <string name="title_choose_native_language_next_btn">Další</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Právě začínáte a nemáte žádné předchozí znalosti.</string>
+    <string name="desc_language_level_a1">Rozumí a umí používat známé každodenní výrazy a velmi základní fráze</string>
+    <string name="desc_language_level_a2">Rozumí větám a často používaným výrazům</string>
+    <string name="desc_language_level_b1">Rozumí hlavním bodům jasného standardního textu o známých tématech, se kterými se pravidelně setkává v práci, ve škole, ve volném čase</string>
+    <string name="desc_language_level_b2">Rozumí hlavním myšlenkám složitého textu na konkrétní i abstraktní témata, včetně technických diskusí ve svém oboru specializace</string>
+    <string name="desc_language_level_c1">Rozumí široké škále náročných, delších textů a rozpoznává skrytý význam. Umí se vyjadřovat plynule a spontánně bez zjevného hledání výrazů</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Poslední krok: Přihlaste se do Toritark a začněte se učit 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Přihlásit se přes Google</string>
+    <string name="title_auth_sign_in_apple_btn">Přihlásit se přes Apple</string>
+    <string name="title_auth_sign_in_facebook_btn">Přihlásit se přes Facebook</string>
+
+    <string name="title_auth_sign_in_failed">Přihlášení se nezdařilo: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Vylepšit ✨</string>
+
+    <string name="title_main_bottom_nav_story">Příběh</string>
+    <string name="title_main_bottom_nav_learning_words">Učit se slova</string>
+    <string name="title_main_bottom_nav_profile">Profil</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Přizpůsobit příběh</string>
+    <string name="hint_story_customize_prompt">Zadejte zde své pokyny pro příběh...</string>
+
+    <string name="title_story_detail_empty_hint">Vyberte téma a klepněte na toto tlačítko pro vytvoření svého příběhu 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Denní rutina</string>
+    <string name="title_story_topic_store_dialog">Dialog v obchodě</string>
+    <string name="title_story_topic_favorite_animal">Oblíbené zvíře</string>
+    <string name="title_story_topic_walk">Procházka</string>
+    <string name="title_story_topic_meeting_new_friend">Setkání s novým přítelem</string>
+    <string name="title_story_topic_special_day">Zvláštní den</string>
+    <string name="title_story_topic_my_dream">Můj sen</string>
+    <string name="title_story_topic_room">Pokoj</string>
+    <string name="title_story_topic_family">Rodina</string>
+    <string name="title_story_topic_custom">Vlastní</string>
+
+    <string name="title_story_generate_btn">Vytvořit</string>
+
+    <string name="title_story_preview_read_your_story">Přečtěte si svůj příběh</string>
+
+    <string name="title_story_quiz">Otestujte se</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Odpovězte na %1$d otázku k tomuto příběhu, abyste se otestovali!</item>
+        <item quantity="few">Odpovězte na %1$d otázky k tomuto příběhu, abyste se otestovali!</item>
+        <item quantity="many">Odpovězte na %1$d otázek k tomuto příběhu, abyste se otestovali!</item>
+        <item quantity="other">Odpovězte na %1$d otázek k tomuto příběhu, abyste se otestovali!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Vaření nápadu…</string>
+    <string name="title_story_creation_progress_2">Hlubší přemýšlení…</string>
+    <string name="title_story_creation_progress_3">Přidávání fantazie…</string>
+    <string name="title_story_creation_progress_4">Přidávání magie…</string>
+
+    <string name="title_story_text_screen">Váš osobní příběh ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Stiskněte a podržte libovolné neznámé slovo, abyste ho přidali do sady k učení</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Vybráno %1$d slovo k učení. Přidejte ho do sady k učení nebo pokračujte v přidávání dalších neznámých slov stisknutím a podržením.</item>
+        <item quantity="few">Vybrána %1$d slova k učení. Přidejte je do sady k učení nebo pokračujte v přidávání dalších neznámých slov stisknutím a podržením.</item>
+        <item quantity="many">Vybráno %1$d slov k učení. Přidejte je do sady k učení nebo pokračujte v přidávání dalších neznámých slov stisknutím a podržením.</item>
+        <item quantity="other">Vybráno %1$d slov k učení. Přidejte je do sady k učení nebo pokračujte v přidávání dalších neznámých slov stisknutím a podržením.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Odebrat</string>
+    <string name="title_story_selected_words_add_to_learning">Přidat do sady k učení</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Přidáno %1$d slovo k učení</item>
+        <item quantity="few">Přidána %1$d slova k učení</item>
+        <item quantity="many">Přidáno %1$d slov k učení</item>
+        <item quantity="other">Přidáno %1$d slov k učení</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Otestujte se ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Další otázka</string>
+    <string name="title_story_quiz_question_finish_btn">Dokončit</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Převyprávět příběh</string>
+    <string name="desc_story_retelling_card">Převyprávějte příběh a naše AI ho zkontroluje a ohodnotí</string>
+    <string name="title_story_retelling_check_btn">Zkontrolovat převyprávění</string>
+
+    <string name="title_story_retelling_review_progress_1">Kontrola úplnosti…</string>
+    <string name="title_story_retelling_review_progress_2">Kontrola gramatiky…</string>
+    <string name="title_story_retelling_review_progress_3">Kontrola slovní zásoby…</string>
+    <string name="title_story_retelling_review_progress_4">Kontrola interpunkce…</string>
+    <string name="title_story_retelling_review_progress_5">Kontrola pravopisu…</string>
+    <string name="title_story_retelling_review_progress_6">Dokončování kontrol…</string>
+
+    <string name="title_retelling_review_summary_header">Vaše skóre převyprávění: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Zobrazit podrobnou recenzi</string>
+
+    <string name="title_retelling_review_score_completeness">Úplnost</string>
+    <string name="title_retelling_review_score_grammar">Gramatika</string>
+    <string name="title_retelling_review_score_vocabulary">Slovní zásoba</string>
+    <string name="title_retelling_review_score_spelling">Pravopis</string>
+    <string name="title_retelling_review_score_punctuation">Interpunkce</string>
+
+    <string name="title_retelling_review_detail_screen">Recenze vašeho převyprávění ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Zatím žádná slova k učení.\nVytvořte příběh a stiskněte a podržte libovolné neznámé slovo, abyste ho přidali do sady k učení</string>
+    <string name="title_learning_words_no_words_create_btn">Vytvořit příběh</string>
+
+    <string name="title_learning_words_next_sentence">Další věta</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d slovo naučeno</item>
+        <item quantity="few">%1$d slova naučena</item>
+        <item quantity="many">%1$d slov naučeno</item>
+        <item quantity="other">%1$d slov naučeno</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d slovo k učení</item>
+        <item quantity="few">%1$d slova k učení</item>
+        <item quantity="many">%1$d slov k učení</item>
+        <item quantity="other">%1$d slov k učení</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Označit tato slova jako naučená?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Ano, naučil jsem se je</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Ne, zobrazit je později</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Jazyk, který se učíte</string>
+    <string name="title_profile_settings_learning_language_level">Vaše aktuální úroveň jazyka</string>
+    <string name="title_profile_settings_native_language">Váš rodný jazyk</string>
+    <string name="title_profile_manage_subscriptions_btn">Spravovat předplatné</string>
+    <string name="title_profile_upgrade_subscription_btn">Vylepšit své předplatné ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Jejda, limit příběhů překročen</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Můžete vytvořit %1$d příběh denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro vytvoření nového příběhu, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="few">Můžete vytvořit %1$d příběhy denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro vytvoření nového příběhu, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="many">Můžete vytvořit %1$d příběhů denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro vytvoření nového příběhu, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="other">Můžete vytvořit %1$d příběhů denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro vytvoření nového příběhu, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Můžete vytvořit %1$d příběh denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro vytvoření nového příběhu a získání ještě více výhod.</item>
+        <item quantity="few">Můžete vytvořit %1$d příběhy denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro vytvoření nového příběhu a získání ještě více výhod.</item>
+        <item quantity="many">Můžete vytvořit %1$d příběhů denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro vytvoření nového příběhu a získání ještě více výhod.</item>
+        <item quantity="other">Můžete vytvořit %1$d příběhů denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro vytvoření nového příběhu a získání ještě více výhod.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Jejda, limit kontrol převyprávění překročen</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro zkontrolování převyprávění, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="few">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro zkontrolování převyprávění, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="many">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro zkontrolování převyprávění, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+        <item quantity="other">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, podívejte se na krátkou reklamu pro zkontrolování převyprávění, nebo vylepšete svůj plán pro získání ještě více výhod.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro zkontrolování převyprávění a získání ještě více výhod.</item>
+        <item quantity="few">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro zkontrolování převyprávění a získání ještě více výhod.</item>
+        <item quantity="many">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro zkontrolování převyprávění a získání ještě více výhod.</item>
+        <item quantity="other">Můžete zkontrolovat %1$d převyprávění denně s vaším plánem (%2$s).\nProsím, vylepšete svůj plán pro zkontrolování převyprávění a získání ještě více výhod.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Zhlédnout reklamu pro odemknutí</string>
+    <string name="title_monetization_upgrade_plan_btn">Vylepšit svůj plán</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Prosím čekejte...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Aktualizujeme limity vašeho plánu</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Jejda</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Něco se pokazilo. Zkuste to prosím znovu nebo vylepšete svůj plán.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Úspěch</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Aktualizovali jsme limity vašeho plánu 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Získejte Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Prosím chvilku počkejte</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Aktualizujeme vaše předplatné...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Prosím chvilku počkejte</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Aktualizujeme vaše předplatné...\nTrvá to déle, než se očekávalo, ale pracujeme na rychlém dokončení 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Jejda</string>
+    <string name="desc_paywall_result_dialog_fail">Něco se pokazilo. Zkuste to prosím znovu.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Úspěch!</string>
+    <string name="desc_paywall_result_dialog_success">Váš plán byl vylepšen — Užijte si učení!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Rozumím</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Angličtina</string>
+    <string name="title_language_name_spanish">Španělština</string>
+    <string name="title_language_name_german">Němčina</string>
+    <string name="title_language_name_french">Francouzština</string>
+    <string name="title_language_name_italian">Italština</string>
+    <string name="title_language_name_russian">Ruština</string>
+    <string name="title_language_name_ukrainian">Ukrajinština</string>
+    <string name="title_language_name_polish">Polština</string>
+    <string name="title_language_name_czech">Čeština</string>
+    <string name="title_language_name_serbian">Srbština</string>
+    <string name="title_language_name_portuguese">Portugalština</string>
+    <string name="title_language_name_finnish">Finština</string>
+    <string name="title_language_name_swedish">Švédština</string>
+    <string name="title_language_name_estonian">Estonština</string>
+    <string name="title_language_name_latvian">Lotyština</string>
+    <string name="title_language_name_lithuanian">Litevština</string>
+    <string name="title_language_name_luxembourgish">Lucemburština</string>
+
+</resources>
