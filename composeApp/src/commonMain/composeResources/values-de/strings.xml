@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Abonnements verwalten</string>
     <string name="title_profile_upgrade_subscription_btn">Abonnement upgraden ✨</string>
 
+    <string name="title_profile_contact_us">Kontaktiere uns</string>
+    <string name="desc_profile_contact_us">Hast du Fragen oder Vorschläge?\nBitte kontaktiere uns!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Hoppla, Story-Limit überschritten</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

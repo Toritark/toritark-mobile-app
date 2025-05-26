@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Hallinnoi tilauksia</string>
     <string name="title_profile_upgrade_subscription_btn">Päivitä tilauksesi ✨</string>
 
+    <string name="title_profile_contact_us">Ota yhteyttä</string>
+    <string name="desc_profile_contact_us">Onko sinulla kysyttävää tai ehdotuksia?\nOta meihin yhteyttä!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Hups, tarinaraja ylitetty</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

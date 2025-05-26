@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Halda tellimusi</string>
     <string name="title_profile_upgrade_subscription_btn">Uuenda oma tellimust ✨</string>
 
+    <string name="title_profile_contact_us">Võta meiega ühendust</string>
+    <string name="desc_profile_contact_us">Kas sul on küsimusi või ettepanekuid?\nVõta meiega ühendust!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Ops, lugude limiit ületatud</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

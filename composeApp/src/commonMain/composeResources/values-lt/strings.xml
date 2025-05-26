@@ -161,6 +161,9 @@
     <string name="title_profile_manage_subscriptions_btn">Tvarkyti prenumeratas</string>
     <string name="title_profile_upgrade_subscription_btn">Atnaujinti savo prenumeratą ✨</string>
 
+    <string name="title_profile_contact_us">Susisiekite su mumis</string>
+    <string name="desc_profile_contact_us">Turite klausimų ar pasiūlymų?\nPrašome susisiekti su mumis!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Oi, viršytas istorijų limitas</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

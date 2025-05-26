@@ -24,6 +24,7 @@ import com.toritark.app.presentation.core_ui.screen.BaseScreen
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
 import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.main.app.theme.LocalExtendedColors
+import com.toritark.app.presentation.profile.main.component.ContactUsSection
 import com.toritark.app.presentation.profile.main.component.ManageSubscriptionsSection
 import com.toritark.app.presentation.profile.main.component.ProfileHeaderSection
 import com.toritark.app.presentation.profile.main.component.ProfileSettingsSection
@@ -122,8 +123,14 @@ private fun ProfileScreenContent(
             onChooseNativeLanguageClick = onChooseNativeLanguageClick,
         )
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        ContactUsSection(
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         if (hasActiveSubscription) {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             ManageSubscriptionsSection(
                 modifier = Modifier

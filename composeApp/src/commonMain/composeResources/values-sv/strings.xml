@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Hantera prenumerationer</string>
     <string name="title_profile_upgrade_subscription_btn">Uppgradera din prenumeration ✨</string>
 
+    <string name="title_profile_contact_us">Kontakta oss</string>
+    <string name="desc_profile_contact_us">Har du några frågor eller förslag?\nVänligen kontakta oss!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Hoppsan, gränsen för berättelser överskriden</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

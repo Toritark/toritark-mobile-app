@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Pārvaldīt abonementus</string>
     <string name="title_profile_upgrade_subscription_btn">Jauniniet savu abonementu ✨</string>
 
+    <string name="title_profile_contact_us">Sazinieties ar mums</string>
+    <string name="desc_profile_contact_us">Vai jums ir kādi jautājumi vai ieteikumi?\nLūdzu, sazinieties ar mums!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Ups, stāstu limits pārsniegts</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

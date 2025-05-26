@@ -161,6 +161,9 @@
     <string name="title_profile_manage_subscriptions_btn">Управление подписками</string>
     <string name="title_profile_upgrade_subscription_btn">Обновить подписку ✨</string>
 
+    <string name="title_profile_contact_us">Написать нам</string>
+    <string name="desc_profile_contact_us">У вас есть вопросы или предложения?\nПожалуйста, напишите нам!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Ой, лимит историй превышен</string>
     <plurals name="desc_monetization_generation_quota_exceeded">

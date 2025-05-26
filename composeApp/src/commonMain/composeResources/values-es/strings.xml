@@ -151,6 +151,9 @@
     <string name="title_profile_manage_subscriptions_btn">Gestionar suscripciones</string>
     <string name="title_profile_upgrade_subscription_btn">Mejorar tu suscripción ✨</string>
 
+    <string name="title_profile_contact_us">Contáctanos</string>
+    <string name="desc_profile_contact_us">¿Tienes alguna pregunta o sugerencia?\n¡Por favor, contáctanos!</string>
+
     <!-- Monetization -->
     <string name="title_monetization_generation_quota_exceeded">Vaya, se ha superado el límite de historias</string>
     <plurals name="desc_monetization_generation_quota_exceeded">
