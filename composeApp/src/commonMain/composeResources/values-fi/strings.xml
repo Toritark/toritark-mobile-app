@@ -1,0 +1,225 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI voi tehdä virheitä. Tarkista tärkeät tiedot.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Hae kieliä</string>
+
+    <string name="title_choose_learning_language_screen">Valitse kieli, jota opiskelet</string>
+    <string name="title_choose_learning_language_next_btn">Seuraava</string>
+
+    <string name="title_choose_language_level_screen">Valitse nykyinen kielitaitosi taso</string>
+    <string name="title_choose_language_level_next_btn">Seuraava</string>
+
+    <string name="title_choose_native_language_screen">Valitse äidinkielesi</string>
+    <string name="title_choose_native_language_next_btn">Seuraava</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Olet vasta aloittamassa eikä sinulla ole aiempaa tietoa.</string>
+    <string name="desc_language_level_a1">Ymmärtää ja osaa käyttää tuttuja arkipäivän ilmauksia ja hyvin perustason fraaseja</string>
+    <string name="desc_language_level_a2">Ymmärtää lauseita ja usein käytettyjä ilmauksia</string>
+    <string name="desc_language_level_b1">Ymmärtää selkeän standarditekstin pääkohdat tutuista aiheista, joita säännöllisesti kohtaa työssä, koulussa, vapaa-ajalla</string>
+    <string name="desc_language_level_b2">Ymmärtää monimutkaisen tekstin pääideat sekä konkreettisista että abstrakteista aiheista, mukaan lukien tekniset keskustelut omalla erikoisalallaan</string>
+    <string name="desc_language_level_c1">Ymmärtää laajan valikoiman vaativia, pidempiä tekstejä ja tunnistaa implisiittisen merkityksen. Osaa ilmaista itseään sujuvasti ja spontaanisti ilman ilmeistä sanojen etsimistä</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Viimeinen vaihe: Kirjaudu sisään Toritarkiin ja aloita oppiminen 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Kirjaudu sisään Googlella</string>
+    <string name="title_auth_sign_in_apple_btn">Kirjaudu sisään Applella</string>
+    <string name="title_auth_sign_in_facebook_btn">Kirjaudu sisään Facebookilla</string>
+
+    <string name="title_auth_sign_in_failed">Kirjautuminen epäonnistui: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Päivitä ✨</string>
+
+    <string name="title_main_bottom_nav_story">Tarina</string>
+    <string name="title_main_bottom_nav_learning_words">Opi sanoja</string>
+    <string name="title_main_bottom_nav_profile">Profiili</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Mukauta tarinaa</string>
+    <string name="hint_story_customize_prompt">Kirjoita ohjeet tarinalle tähän...</string>
+
+    <string name="title_story_detail_empty_hint">Valitse aihe ja napauta tätä painiketta luodaksesi tarinasi 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Päivittäinen rutiini</string>
+    <string name="title_story_topic_store_dialog">Kauppakeskustelu</string>
+    <string name="title_story_topic_favorite_animal">Lemmikkieläin</string>
+    <string name="title_story_topic_walk">Kävely</string>
+    <string name="title_story_topic_meeting_new_friend">Uuden ystävän tapaaminen</string>
+    <string name="title_story_topic_special_day">Erityinen päivä</string>
+    <string name="title_story_topic_my_dream">Unelmani</string>
+    <string name="title_story_topic_room">Huone</string>
+    <string name="title_story_topic_family">Perhe</string>
+    <string name="title_story_topic_custom">Mukautettu</string>
+
+    <string name="title_story_generate_btn">Luo</string>
+
+    <string name="title_story_preview_read_your_story">Lue tarinasi</string>
+
+    <string name="title_story_quiz">Testaa itsesi</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Vastaa yhteen kysymykseen tästä tarinasta testataksesi itsesi!</item>
+        <item quantity="other">Vastaa %1$d kysymykseen tästä tarinasta testataksesi itsesi!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Ideaa keitellään…</string>
+    <string name="title_story_creation_progress_2">Ajatellaan syvemmin…</string>
+    <string name="title_story_creation_progress_3">Lisätään mielikuvitusta…</string>
+    <string name="title_story_creation_progress_4">Lisätään taikaa…</string>
+
+    <string name="title_story_text_screen">Oma tarinasi ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Paina ja pidä painettuna mitä tahansa tuntematonta sanaa lisätäksesi sen oppimislistalle</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Valittu %1$d sana opittavaksi. Lisää se oppimislistalle tai jatka muiden tuntemattomien sanojen lisäämistä painamalla &amp; pitämällä niitä.</item>
+        <item quantity="other">Valittu %1$d sanaa opittavaksi. Lisää ne oppimislistalle tai jatka muiden tuntemattomien sanojen lisäämistä painamalla &amp; pitämällä niitä.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Poista</string>
+    <string name="title_story_selected_words_add_to_learning">Lisää oppimislistalle</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Lisätty %1$d sana opittavaksi</item>
+        <item quantity="other">Lisätty %1$d sanaa opittavaksi</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Testaa itsesi ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Seuraava kysymys</string>
+    <string name="title_story_quiz_question_finish_btn">Valmis</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Kertaa tarina</string>
+    <string name="desc_story_retelling_card">Kertaa tarina, ja tekoälymme tarkistaa ja arvioi sen</string>
+    <string name="title_story_retelling_check_btn">Tarkista kertaus</string>
+
+    <string name="title_story_retelling_review_progress_1">Tarkistetaan täydellisyyttä…</string>
+    <string name="title_story_retelling_review_progress_2">Tarkistetaan kielioppia…</string>
+    <string name="title_story_retelling_review_progress_3">Tarkistetaan sanastoa…</string>
+    <string name="title_story_retelling_review_progress_4">Tarkistetaan välimerkkejä…</string>
+    <string name="title_story_retelling_review_progress_5">Tarkistetaan oikeinkirjoitusta…</string>
+    <string name="title_story_retelling_review_progress_6">Viimeistellään tarkistuksia…</string>
+
+    <string name="title_retelling_review_summary_header">Kertauksesi pistemäärä: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Katso yksityiskohtainen arvio</string>
+
+    <string name="title_retelling_review_score_completeness">Täydellisyys</string>
+    <string name="title_retelling_review_score_grammar">Kielioppi</string>
+    <string name="title_retelling_review_score_vocabulary">Sanasto</string>
+    <string name="title_retelling_review_score_spelling">Oikeinkirjoitus</string>
+    <string name="title_retelling_review_score_punctuation">Välimerkit</string>
+
+    <string name="title_retelling_review_detail_screen">Kertauksesi arvio ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Ei vielä sanoja opittavaksi.\nLuo tarina ja paina ja pidä painettuna mitä tahansa tuntematonta sanaa lisätäksesi sen oppimislistalle</string>
+    <string name="title_learning_words_no_words_create_btn">Luo tarina</string>
+
+    <string name="title_learning_words_next_sentence">Seuraava lause</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d sana opittu</item>
+        <item quantity="other">%1$d sanaa opittu</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d sana opittavaksi</item>
+        <item quantity="other">%1$d sanaa opittavaksi</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Merkitäänkö nämä sanat opituiksi?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Kyllä, olen oppinut ne</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Ei, näytä ne myöhemmin uudelleen</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Kieli, jota opiskelet</string>
+    <string name="title_profile_settings_learning_language_level">Nykyinen kielitaitosi taso</string>
+    <string name="title_profile_settings_native_language">Äidinkielesi</string>
+    <string name="title_profile_manage_subscriptions_btn">Hallinnoi tilauksia</string>
+    <string name="title_profile_upgrade_subscription_btn">Päivitä tilauksesi ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Hups, tarinaraja ylitetty</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Voit luoda %1$d tarinan päivässä suunnitelmallasi (%2$s).\nKatso lyhyt mainos luodaksesi uuden tarinan, tai päivitä suunnitelmasi saadaksesi vielä enemmän etuja.</item>
+        <item quantity="other">Voit luoda %1$d tarinaa päivässä suunnitelmallasi (%2$s).\nKatso lyhyt mainos luodaksesi uuden tarinan, tai päivitä suunnitelmasi saadaksesi vielä enemmän etuja.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Voit luoda %1$d tarinan päivässä suunnitelmallasi (%2$s).\nPäivitä suunnitelmasi luodaksesi uuden tarinan ja saadaksesi vielä enemmän etuja.</item>
+        <item quantity="other">Voit luoda %1$d tarinaa päivässä suunnitelmallasi (%2$s).\nPäivitä suunnitelmasi luodaksesi uuden tarinan ja saadaksesi vielä enemmän etuja.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Hups, kertauksen tarkistusraja ylitetty</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Voit tarkistaa %1$d kertauksen päivässä suunnitelmallasi (%2$s).\nKatso lyhyt mainos tarkistaaksesi kertauksen, tai päivitä suunnitelmasi saadaksesi vielä enemmän etuja.</item>
+        <item quantity="other">Voit tarkistaa %1$d kertausta päivässä suunnitelmallasi (%2$s).\nKatso lyhyt mainos tarkistaaksesi kertauksia, tai päivitä suunnitelmasi saadaksesi vielä enemmän etuja.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Voit tarkistaa %1$d kertauksen päivässä suunnitelmallasi (%2$s).\nPäivitä suunnitelmasi tarkistaaksesi kertauksen ja saadaksesi vielä enemmän etuja.</item>
+        <item quantity="other">Voit tarkistaa %1$d kertausta päivässä suunnitelmallasi (%2$s).\nPäivitä suunnitelmasi tarkistaaksesi kertauksia ja saadaksesi vielä enemmän etuja.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Katso mainos avataksesi</string>
+    <string name="title_monetization_upgrade_plan_btn">Päivitä suunnitelmasi</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Odota hetki...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Päivitämme suunnitelmasi rajoituksia</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Hups</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Jotain meni pieleen. Yritä uudelleen tai päivitä suunnitelmasi.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Onnistui!</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Olemme päivittäneet suunnitelmasi rajoituksia 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Hanki Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Odota hetki</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Päivitämme tilaustasi...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Odota hetki</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Päivitämme tilaustasi...\nSe kestää odotettua kauemmin, mutta pyrimme saamaan sen valmiiksi nopeasti 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Hups</string>
+    <string name="desc_paywall_result_dialog_fail">Jotain meni pieleen. Yritä uudelleen.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Onnistui!</string>
+    <string name="desc_paywall_result_dialog_success">Tilauksesi on päivitetty — Nauti oppimisesta!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Selvä</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Englanti</string>
+    <string name="title_language_name_spanish">Espanja</string>
+    <string name="title_language_name_german">Saksa</string>
+    <string name="title_language_name_french">Ranska</string>
+    <string name="title_language_name_italian">Italia</string>
+    <string name="title_language_name_russian">Venäjä</string>
+    <string name="title_language_name_ukrainian">Ukraina</string>
+    <string name="title_language_name_polish">Puola</string>
+    <string name="title_language_name_czech">Tšekki</string>
+    <string name="title_language_name_serbian">Serbia</string>
+    <string name="title_language_name_portuguese">Portugali</string>
+    <string name="title_language_name_finnish">Suomi</string>
+    <string name="title_language_name_swedish">Ruotsi</string>
+    <string name="title_language_name_estonian">Viro</string>
+    <string name="title_language_name_latvian">Latvia</string>
+    <string name="title_language_name_lithuanian">Liettua</string>
+    <string name="title_language_name_luxembourgish">Luxemburg</string>
+
+</resources>
