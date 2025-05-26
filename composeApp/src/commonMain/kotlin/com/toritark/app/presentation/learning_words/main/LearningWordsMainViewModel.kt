@@ -84,8 +84,6 @@ internal class LearningWordsMainViewModel(
         viewModelScope.launch {
             if (billingInteractor.shouldShowPaywall()) {
                 onNavigateTo(BillingNavDestination.Paywall(PaywallSource.LearningWordsOffering)) {}
-            } else {
-                onPopBackStack()
             }
         }
     }
