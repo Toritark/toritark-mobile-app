@@ -1,0 +1,225 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">AI võib teha vigu. Kontrolli olulist infot.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Otsi keeli</string>
+
+    <string name="title_choose_learning_language_screen">Vali keel, mida õpid</string>
+    <string name="title_choose_learning_language_next_btn">Edasi</string>
+
+    <string name="title_choose_language_level_screen">Vali oma praegune keele tase</string>
+    <string name="title_choose_language_level_next_btn">Edasi</string>
+
+    <string name="title_choose_native_language_screen">Vali oma emakeel</string>
+    <string name="title_choose_native_language_next_btn">Edasi</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Sa alles alustad ja sul pole eelnevaid teadmisi.</string>
+    <string name="desc_language_level_a1">Oskab mõista ja kasutada tuttavaid igapäevaseid väljendeid ja väga lihtsaid fraase</string>
+    <string name="desc_language_level_a2">Oskab mõista lauseid ja sageli kasutatavaid väljendeid</string>
+    <string name="desc_language_level_b1">Oskab mõista selge standardteksti põhipunkte tuttavatel teemadel, mida regulaarselt kohtab tööl, koolis, vabal ajal</string>
+    <string name="desc_language_level_b2">Oskab mõista keeruka teksti põhiideid nii konkreetsetel kui abstraktsetel teemadel, sealhulgas tehnilisi arutelusid oma erialal</string>
+    <string name="desc_language_level_c1">Oskab mõista laia valikut nõudlikke, pikemaid tekste ja ära tunda kaudset tähendust. Oskab end väljendada ladusalt ja spontaanselt ilma ilmse sõnade otsimiseta</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Viimane samm: Logi sisse Toritarki ja alusta õppimist 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Logi sisse Google\'iga</string>
+    <string name="title_auth_sign_in_apple_btn">Logi sisse Apple\'iga</string>
+    <string name="title_auth_sign_in_facebook_btn">Logi sisse Facebookiga</string>
+
+    <string name="title_auth_sign_in_failed">Sisselogimine ebaõnnestus: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Uuenda ✨</string>
+
+    <string name="title_main_bottom_nav_story">Lugu</string>
+    <string name="title_main_bottom_nav_learning_words">Õpi sõnu</string>
+    <string name="title_main_bottom_nav_profile">Profiil</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Kohanda lugu</string>
+    <string name="hint_story_customize_prompt">Sisesta siia oma juhised loo jaoks...</string>
+
+    <string name="title_story_detail_empty_hint">Vali teema ja puuduta seda nuppu, et luua oma lugu 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Päevakava</string>
+    <string name="title_story_topic_store_dialog">Poedialoog</string>
+    <string name="title_story_topic_favorite_animal">Lemmikloom</string>
+    <string name="title_story_topic_walk">Jalutuskäik</string>
+    <string name="title_story_topic_meeting_new_friend">Uue sõbra kohtamine</string>
+    <string name="title_story_topic_special_day">Eriline päev</string>
+    <string name="title_story_topic_my_dream">Minu unistus</string>
+    <string name="title_story_topic_room">Tuba</string>
+    <string name="title_story_topic_family">Perekond</string>
+    <string name="title_story_topic_custom">Kohandatud</string>
+
+    <string name="title_story_generate_btn">Loo</string>
+
+    <string name="title_story_preview_read_your_story">Loe oma lugu</string>
+
+    <string name="title_story_quiz">Testi ennast</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Vasta ühele küsimusele selle loo kohta, et ennast testida!</item>
+        <item quantity="other">Vasta %1$d küsimusele selle loo kohta, et ennast testida!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Ideed haudumas…</string>
+    <string name="title_story_creation_progress_2">Mõtlen sügavamalt…</string>
+    <string name="title_story_creation_progress_3">Lisan kujutlusvõimet…</string>
+    <string name="title_story_creation_progress_4">Lisan maagiat…</string>
+
+    <string name="title_story_text_screen">Sinu isiklik lugu ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Vajuta ja hoia all tundmatut sõna, et lisada see õppekomplekti</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">Valitud %1$d sõna õppimiseks. Lisa see õppekomplekti või jätka teiste tundmatute sõnade lisamist, vajutades &amp; hoides neid all.</item>
+        <item quantity="other">Valitud %1$d sõna õppimiseks. Lisa need õppekomplekti või jätka teiste tundmatute sõnade lisamist, vajutades &amp; hoides neid all.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Eemalda</string>
+    <string name="title_story_selected_words_add_to_learning">Lisa õppekomplekti</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">Lisatud %1$d sõna õppimiseks</item>
+        <item quantity="other">Lisatud %1$d sõna õppimiseks</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Testi ennast ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Järgmine küsimus</string>
+    <string name="title_story_quiz_question_finish_btn">Lõpeta</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Jutusta lugu ümber</string>
+    <string name="desc_story_retelling_card">Jutusta lugu ümber ja meie AI kontrollib ning hindab seda</string>
+    <string name="title_story_retelling_check_btn">Kontrolli ümberjutustust</string>
+
+    <string name="title_story_retelling_review_progress_1">Kontrollin täielikkust…</string>
+    <string name="title_story_retelling_review_progress_2">Kontrollin grammatikat…</string>
+    <string name="title_story_retelling_review_progress_3">Kontrollin sõnavara…</string>
+    <string name="title_story_retelling_review_progress_4">Kontrollin kirjavahemärke…</string>
+    <string name="title_story_retelling_review_progress_5">Kontrollin õigekirja…</string>
+    <string name="title_story_retelling_review_progress_6">Lõpetan kontrollimisi…</string>
+
+    <string name="title_retelling_review_summary_header">Sinu ümberjutustuse skoor: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Vaata detailset ülevaadet</string>
+
+    <string name="title_retelling_review_score_completeness">Täielikkus</string>
+    <string name="title_retelling_review_score_grammar">Grammatika</string>
+    <string name="title_retelling_review_score_vocabulary">Sõnavara</string>
+    <string name="title_retelling_review_score_spelling">Õigekiri</string>
+    <string name="title_retelling_review_score_punctuation">Kirjavahemärgid</string>
+
+    <string name="title_retelling_review_detail_screen">Sinu ümberjutustuse ülevaade ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Pole veel sõnu õppimiseks.\nLoo lugu ja vajuta ja hoia all tundmatut sõna, et lisada see õppekomplekti</string>
+    <string name="title_learning_words_no_words_create_btn">Loo lugu</string>
+
+    <string name="title_learning_words_next_sentence">Järgmine lause</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d sõna õpitud</item>
+        <item quantity="other">%1$d sõna õpitud</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d sõna õppimiseks</item>
+        <item quantity="other">%1$d sõna õppimiseks</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Märgi need sõnad õpituks?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Jah, olen need õppinud</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Ei, näita neid hiljem uuesti</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Keel, mida õpid</string>
+    <string name="title_profile_settings_learning_language_level">Sinu praegune keele tase</string>
+    <string name="title_profile_settings_native_language">Sinu emakeel</string>
+    <string name="title_profile_manage_subscriptions_btn">Halda tellimusi</string>
+    <string name="title_profile_upgrade_subscription_btn">Uuenda oma tellimust ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Ops, lugude limiit ületatud</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Saad luua %1$d loo päevas oma plaaniga (%2$s).\nPalun vaata lühikest reklaami, et luua uus lugu, või uuenda oma plaani, et saada veel rohkem eeliseid.</item>
+        <item quantity="other">Saad luua %1$d lugu päevas oma plaaniga (%2$s).\nPalun vaata lühikest reklaami, et luua uus lugu, või uuenda oma plaani, et saada veel rohkem eeliseid.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Saad luua %1$d loo päevas oma plaaniga (%2$s).\nPalun uuenda oma plaani, et luua uus lugu ja saada veel rohkem eeliseid.</item>
+        <item quantity="other">Saad luua %1$d lugu päevas oma plaaniga (%2$s).\nPalun uuenda oma plaani, et luua uus lugu ja saada veel rohkem eeliseid.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Ops, ümberjutustuste kontrolli limiit ületatud</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Saad kontrollida %1$d ümberjutustust päevas oma plaaniga (%2$s).\nPalun vaata lühikest reklaami, et kontrollida ümberjutustust, või uuenda oma plaani, et saada veel rohkem eeliseid.</item>
+        <item quantity="other">Saad kontrollida %1$d ümberjutustust päevas oma plaaniga (%2$s).\nPalun vaata lühikest reklaami, et kontrollida ümberjutustusi, või uuenda oma plaani, et saada veel rohkem eeliseid.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Saad kontrollida %1$d ümberjutustust päevas oma plaaniga (%2$s).\nPalun uuenda oma plaani, et kontrollida ümberjutustust ja saada veel rohkem eeliseid.</item>
+        <item quantity="other">Saad kontrollida %1$d ümberjutustust päevas oma plaaniga (%2$s).\nPalun uuenda oma plaani, et kontrollida ümberjutustusi ja saada veel rohkem eeliseid.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Vaata reklaami avamiseks</string>
+    <string name="title_monetization_upgrade_plan_btn">Uuenda oma plaani</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Palun oota...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Uuendame sinu plaani piiranguid</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Ops</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Midagi läks valesti. Palun proovi uuesti või uuenda oma plaani.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Edukas!</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Oleme sinu plaani piiranguid uuendanud 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Hangi Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Palun oota veidi</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Uuendame sinu tellimust...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Palun oota veidi</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Uuendame sinu tellimust...\nSee võtab oodatust kauem aega, kuid töötame selle kiireks lõpetamiseks 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Ops</string>
+    <string name="desc_paywall_result_dialog_fail">Midagi läks valesti. Palun proovi uuesti.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Edukas!</string>
+    <string name="desc_paywall_result_dialog_success">Sinu plaan on uuendatud — Naudi õppimist!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Sain aru</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Inglise</string>
+    <string name="title_language_name_spanish">Hispaania</string>
+    <string name="title_language_name_german">Saksa</string>
+    <string name="title_language_name_french">Prantsuse</string>
+    <string name="title_language_name_italian">Itaalia</string>
+    <string name="title_language_name_russian">Vene</string>
+    <string name="title_language_name_ukrainian">Ukraina</string>
+    <string name="title_language_name_polish">Poola</string>
+    <string name="title_language_name_czech">Tšehhi</string>
+    <string name="title_language_name_serbian">Serbia</string>
+    <string name="title_language_name_portuguese">Portugali</string>
+    <string name="title_language_name_finnish">Soome</string>
+    <string name="title_language_name_swedish">Rootsi</string>
+    <string name="title_language_name_estonian">Eesti</string>
+    <string name="title_language_name_latvian">Läti</string>
+    <string name="title_language_name_lithuanian">Leedu</string>
+    <string name="title_language_name_luxembourgish">Luksemburgi</string>
+
+</resources>
