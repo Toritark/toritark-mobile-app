@@ -1,0 +1,225 @@
+<resources>
+
+    <!-- Common -->
+    <string name="title_ai_disclaimer">KI kann Fehler machen. Überprüfe wichtige Informationen.</string>
+
+    <!-- Languages set up -->
+    <string name="title_search_languages_field">Sprachen suchen</string>
+
+    <string name="title_choose_learning_language_screen">Wähle die Sprache, die du lernst</string>
+    <string name="title_choose_learning_language_next_btn">Weiter</string>
+
+    <string name="title_choose_language_level_screen">Wähle dein aktuelles Sprachniveau</string>
+    <string name="title_choose_language_level_next_btn">Weiter</string>
+
+    <string name="title_choose_native_language_screen">Wähle deine Muttersprache</string>
+    <string name="title_choose_native_language_next_btn">Weiter</string>
+
+    <string name="title_language_level_none">--</string>
+    <string name="title_language_level_a1">A1</string>
+    <string name="title_language_level_a2">A2</string>
+    <string name="title_language_level_b1">B1</string>
+    <string name="title_language_level_b2">B2</string>
+    <string name="title_language_level_c1">C1</string>
+
+    <string name="desc_language_level_none">Du fängst gerade erst an und hast keine Vorkenntnisse.</string>
+    <string name="desc_language_level_a1">Kann vertraute alltägliche Ausdrücke und sehr einfache Sätze verstehen und verwenden</string>
+    <string name="desc_language_level_a2">Kann Sätze und häufig verwendete Ausdrücke verstehen</string>
+    <string name="desc_language_level_b1">Kann die Hauptpunkte klarer Standardsprache zu vertrauten Themen verstehen, die regelmäßig bei der Arbeit, in der Schule oder in der Freizeit vorkommen</string>
+    <string name="desc_language_level_b2">Kann die Hauptideen eines komplexen Textes zu konkreten und abstrakten Themen verstehen, einschließlich Fachdiskussionen in seinem Spezialgebiet</string>
+    <string name="desc_language_level_c1">Kann ein breites Spektrum anspruchsvoller, längerer Texte verstehen und implizite Bedeutungen erkennen. Kann sich fließend und spontan ohne offensichtliches Suchen nach Ausdrücken ausdrücken</string>
+
+    <!-- Auth -->
+    <string name="title_auth_sign_in_screen">Letzter Schritt: Melde dich bei Toritark an und beginne zu lernen 🚀</string>
+
+    <string name="title_auth_sign_in_google_btn">Mit Google anmelden</string>
+    <string name="title_auth_sign_in_apple_btn">Mit Apple anmelden</string>
+    <string name="title_auth_sign_in_facebook_btn">Mit Facebook anmelden</string>
+
+    <string name="title_auth_sign_in_failed">Anmeldung fehlgeschlagen: %1$s</string>
+
+    <!-- Main screen -->
+    <string name="title_main_screen_topbar">Toritark</string>
+    <string name="title_main_screen_topbar_upgrade">Upgrade ✨</string>
+
+    <string name="title_main_bottom_nav_story">Geschichte</string>
+    <string name="title_main_bottom_nav_learning_words">Wörter lernen</string>
+    <string name="title_main_bottom_nav_profile">Profil</string>
+
+    <!-- Story detail -->
+    <string name="title_story_customize_prompt_dropdown">Geschichte anpassen</string>
+    <string name="hint_story_customize_prompt">Gib hier deine Anweisungen für die Geschichte ein...</string>
+
+    <string name="title_story_detail_empty_hint">Wähle ein Thema und tippe auf diese Schaltfläche, um deine Geschichte zu erstellen 🚀</string>
+
+    <string name="title_story_topic_daily_routine">Tagesablauf</string>
+    <string name="title_story_topic_store_dialog">Dialog im Geschäft</string>
+    <string name="title_story_topic_favorite_animal">Lieblingstier</string>
+    <string name="title_story_topic_walk">Spaziergang</string>
+    <string name="title_story_topic_meeting_new_friend">Einen neuen Freund treffen</string>
+    <string name="title_story_topic_special_day">Besonderer Tag</string>
+    <string name="title_story_topic_my_dream">Mein Traum</string>
+    <string name="title_story_topic_room">Zimmer</string>
+    <string name="title_story_topic_family">Familie</string>
+    <string name="title_story_topic_custom">Benutzerdefiniert</string>
+
+    <string name="title_story_generate_btn">Erstellen</string>
+
+    <string name="title_story_preview_read_your_story">Lies deine Geschichte</string>
+
+    <string name="title_story_quiz">Teste dich selbst</string>
+    <plurals name="desc_story_quiz">
+        <item quantity="one">Beantworte eine Frage zu dieser Geschichte, um dich selbst zu testen!</item>
+        <item quantity="other">Beantworte %1$d Fragen zu dieser Geschichte, um dich selbst zu testen!</item>
+    </plurals>
+
+    <string name="title_story_creation_progress_1">Idee wird gebraut…</string>
+    <string name="title_story_creation_progress_2">Denke tiefer nach…</string>
+    <string name="title_story_creation_progress_3">Füge Fantasie hinzu…</string>
+    <string name="title_story_creation_progress_4">Füge Magie hinzu…</string>
+
+    <string name="title_story_text_screen">Deine persönliche Geschichte ✨</string>
+
+    <!-- Selected story words -->
+    <string name="title_story_selected_words_empty">Halte ein unbekanntes Wort gedrückt, um es zum Lernset hinzuzufügen</string>
+
+    <plurals name="title_story_selected_words">
+        <item quantity="one">%1$d Wort zum Lernen ausgewählt. Füge es zum Lernset hinzu oder wähle weitere unbekannte Wörter aus, indem du sie gedrückt hältst.</item>
+        <item quantity="other">%1$d Wörter zum Lernen ausgewählt. Füge sie zum Lernset hinzu oder wähle weitere unbekannte Wörter aus, indem du sie gedrückt hältst.</item>
+    </plurals>
+
+    <string name="title_story_selected_words_remove_all">Entfernen</string>
+    <string name="title_story_selected_words_add_to_learning">Zum Lernset hinzufügen</string>
+    <plurals name="message_added_selected_words_to_learning">
+        <item quantity="one">%1$d Wort zum Lernen hinzugefügt</item>
+        <item quantity="other">%1$d Wörter zum Lernen hinzugefügt</item>
+    </plurals>
+
+    <!-- Story quiz -->
+    <string name="title_story_quiz_screen">Teste dich selbst ✅</string>
+
+    <string name="title_story_quiz_question_next_btn">Nächste Frage</string>
+    <string name="title_story_quiz_question_finish_btn">Fertigstellen</string>
+
+    <!-- Story retelling -->
+    <string name="title_story_retelling_card">Erzähle die Geschichte nach</string>
+    <string name="desc_story_retelling_card">Erzähle die Geschichte nach, und unsere KI wird sie überprüfen und bewerten</string>
+    <string name="title_story_retelling_check_btn">Nacherzählung überprüfen</string>
+
+    <string name="title_story_retelling_review_progress_1">Überprüfe Vollständigkeit…</string>
+    <string name="title_story_retelling_review_progress_2">Überprüfe Grammatik…</string>
+    <string name="title_story_retelling_review_progress_3">Überprüfe Vokabular…</string>
+    <string name="title_story_retelling_review_progress_4">Überprüfe Zeichensetzung…</string>
+    <string name="title_story_retelling_review_progress_5">Überprüfe Rechtschreibung…</string>
+    <string name="title_story_retelling_review_progress_6">Schließe Überprüfungen ab…</string>
+
+    <string name="title_retelling_review_summary_header">Deine Bewertung der Nacherzählung: %1$d/100</string>
+    <string name="title_retelling_review_summary_more_details_btn">Detaillierte Bewertung anzeigen</string>
+
+    <string name="title_retelling_review_score_completeness">Vollständigkeit</string>
+    <string name="title_retelling_review_score_grammar">Grammatik</string>
+    <string name="title_retelling_review_score_vocabulary">Vokabular</string>
+    <string name="title_retelling_review_score_spelling">Rechtschreibung</string>
+    <string name="title_retelling_review_score_punctuation">Zeichensetzung</string>
+
+    <string name="title_retelling_review_detail_screen">Bewertung deiner Nacherzählung ✨</string>
+
+    <!-- Learning words -->
+    <string name="title_learning_words_no_words">Noch keine Wörter zum Lernen.\nErstelle eine Geschichte und halte unbekannte Wörter gedrückt, um sie zum Lernset hinzuzufügen</string>
+    <string name="title_learning_words_no_words_create_btn">Eine Geschichte erstellen</string>
+
+    <string name="title_learning_words_next_sentence">Nächster Satz</string>
+
+    <plurals name="title_learning_words_stats_learned">
+        <item quantity="one">%1$d Wort gelernt</item>
+        <item quantity="other">%1$d Wörter gelernt</item>
+    </plurals>
+
+    <plurals name="title_learning_words_stats_to_learn">
+        <item quantity="one">%1$d Wort zum Lernen</item>
+        <item quantity="other">%1$d Wörter zum Lernen</item>
+    </plurals>
+
+    <string name="title_learning_words_learned_dialog">Diese Wörter als gelernt markieren?</string>
+    <string name="title_learning_words_learned_dialog_learned_btn">Ja, ich habe sie gelernt</string>
+    <string name="title_learning_words_learned_dialog_not_learned_btn">Nein, später erneut anzeigen</string>
+
+    <!-- Profile -->
+    <string name="title_profile_settings_learning_language">Sprache, die du lernst</string>
+    <string name="title_profile_settings_learning_language_level">Dein aktuelles Sprachniveau</string>
+    <string name="title_profile_settings_native_language">Deine Muttersprache</string>
+    <string name="title_profile_manage_subscriptions_btn">Abonnements verwalten</string>
+    <string name="title_profile_upgrade_subscription_btn">Abonnement upgraden ✨</string>
+
+    <!-- Monetization -->
+    <string name="title_monetization_generation_quota_exceeded">Hoppla, Story-Limit überschritten</string>
+    <plurals name="desc_monetization_generation_quota_exceeded">
+        <item quantity="one">Du kannst %1$d Geschichte pro Tag mit deinem Plan (%2$s) erstellen.\nBitte sieh dir eine kurze Werbung an, um eine neue Geschichte zu erstellen, oder upgrade deinen Plan, um noch mehr Vorteile zu erhalten.</item>
+        <item quantity="other">Du kannst %1$d Geschichten pro Tag mit deinem Plan (%2$s) erstellen.\nBitte sieh dir eine kurze Werbung an, um eine neue Geschichte zu erstellen, oder upgrade deinen Plan, um noch mehr Vorteile zu erhalten.</item>
+    </plurals>
+    <plurals name="desc_monetization_generation_quota_exceeded_no_ads">
+        <item quantity="one">Du kannst %1$d Geschichte pro Tag mit deinem Plan (%2$s) erstellen.\nBitte upgrade deinen Plan, um eine neue Geschichte zu erstellen und noch mehr Vorteile zu erhalten.</item>
+        <item quantity="other">Du kannst %1$d Geschichten pro Tag mit deinem Plan (%2$s) erstellen.\nBitte upgrade deinen Plan, um eine neue Geschichte zu erstellen und noch mehr Vorteile zu erhalten.</item>
+    </plurals>
+
+    <string name="title_monetization_retelling_check_quota_exceeded">Hoppla, Limit für Nacherzählungsprüfungen überschritten</string>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded">
+        <item quantity="one">Du kannst %1$d Nacherzählung pro Tag mit deinem Plan (%2$s) überprüfen.\nBitte sieh dir eine kurze Werbung an, um eine Nacherzählung zu überprüfen, oder upgrade deinen Plan, um noch mehr Vorteile zu erhalten.</item>
+        <item quantity="other">Du kannst %1$d Nacherzählungen pro Tag mit deinem Plan (%2$s) überprüfen.\nBitte sieh dir eine kurze Werbung an, um Nacherzählungen zu überprüfen, oder upgrade deinen Plan, um noch mehr Vorteile zu erhalten.</item>
+    </plurals>
+    <plurals name="desc_monetization_retelling_check_quota_exceeded_no_ads">
+        <item quantity="one">Du kannst %1$d Nacherzählung pro Tag mit deinem Plan (%2$s) überprüfen.\nBitte upgrade deinen Plan, um eine Nacherzählung zu überprüfen und noch mehr Vorteile zu erhalten.</item>
+        <item quantity="other">Du kannst %1$d Nacherzählungen pro Tag mit deinem Plan (%2$s) überprüfen.\nBitte upgrade deinen Plan, um Nacherzählungen zu überprüfen und noch mehr Vorteile zu erhalten.</item>
+    </plurals>
+
+    <string name="title_monetization_watch_rewarded_ad_btn">Werbung ansehen zum Freischalten</string>
+    <string name="title_monetization_upgrade_plan_btn">Deinen Plan upgraden</string>
+
+    <string name="title_monetization_watch_rewarded_ad_waiting">🕜 Bitte warten...</string>
+    <string name="desc_monetization_watch_rewarded_ad_waiting">Wir aktualisieren die Limits deines Plans</string>
+
+    <string name="title_monetization_watch_rewarded_ad_fail">😞 Hoppla</string>
+    <string name="desc_monetization_watch_rewarded_ad_fail">Etwas ist schiefgelaufen. Bitte versuche es erneut oder upgrade deinen Plan.</string>
+
+    <string name="title_monetization_watch_rewarded_ad_success">✅ Erfolg</string>
+    <string name="desc_monetization_watch_rewarded_ad_success">Wir haben die Limits deines Plans aktualisiert 🎉</string>
+
+    <string name="title_monetization_watch_rewarded_ad_ok_btn">OK</string>
+
+    <!-- Paywall -->
+    <string name="title_paywall_screen">Hol dir Toritark Plus</string>
+
+    <string name="title_paywall_result_dialog_checking_normal">🕜 Bitte warte einen Moment</string>
+    <string name="desc_paywall_result_dialog_checking_normal">Wir aktualisieren dein Abonnement...</string>
+
+    <string name="title_paywall_result_dialog_checking_too_long">🕜 Bitte warte einen Moment</string>
+    <string name="desc_paywall_result_dialog_checking_too_long">Wir aktualisieren dein Abonnement...\nEs dauert länger als erwartet, aber wir arbeiten daran, es schnell abzuschließen 😰</string>
+
+    <string name="title_paywall_result_dialog_fail">😥 Hoppla</string>
+    <string name="desc_paywall_result_dialog_fail">Etwas ist schiefgelaufen. Bitte versuche es erneut.</string>
+
+    <string name="title_paywall_result_dialog_success">🎉 Erfolg!</string>
+    <string name="desc_paywall_result_dialog_success">Dein Plan wurde upgegradet — Viel Spaß beim Lernen!</string>
+
+    <string name="title_paywall_result_dialog_ok_btn">Verstanden</string>
+
+    <!-- Languages -->
+    <string name="title_language_name_english">Englisch</string>
+    <string name="title_language_name_spanish">Spanisch</string>
+    <string name="title_language_name_german">Deutsch</string>
+    <string name="title_language_name_french">Französisch</string>
+    <string name="title_language_name_italian">Italienisch</string>
+    <string name="title_language_name_russian">Russisch</string>
+    <string name="title_language_name_ukrainian">Ukrainisch</string>
+    <string name="title_language_name_polish">Polnisch</string>
+    <string name="title_language_name_czech">Tschechisch</string>
+    <string name="title_language_name_serbian">Serbisch</string>
+    <string name="title_language_name_portuguese">Portugiesisch</string>
+    <string name="title_language_name_finnish">Finnisch</string>
+    <string name="title_language_name_swedish">Schwedisch</string>
+    <string name="title_language_name_estonian">Estnisch</string>
+    <string name="title_language_name_latvian">Lettisch</string>
+    <string name="title_language_name_lithuanian">Litauisch</string>
+    <string name="title_language_name_luxembourgish">Luxemburgisch</string>
+
+</resources>
