@@ -7,6 +7,7 @@ import platform.AuthenticationServices.*
 import platform.Foundation.NSError
 import platform.UIKit.UIApplication
 import platform.darwin.NSObject
+import kotlin.coroutines.resumeWithException
 import platform.AuthenticationServices.ASAuthorizationControllerPresentationContextProvidingProtocol as PresentationContext
 
 private val UiContext: PresentationContext by lazy {
@@ -35,15 +36,21 @@ private suspend fun ASAuthorizationController.performSignIn(): ASAuthorizationAp
     return suspendCancellableCoroutine coroutine@{ continuation ->
 
         // we MUST store a strong reference to the object or is fill be cleared
-        val delegate = AuthorizationDelegate {
-            continuation.resume(it) { cause, _, _ ->
+        val delegate = AuthorizationDelegate(
+            onComplete = { 
+                continuation.resume(it) { cause, _, _ ->
+                }
+            },
+            onError = { error ->
+                continuation.resumeWithException(error)
             }
-        }
+        )
 
         continuation.invokeOnCancellation {
             // we MUST keep a strong reference until full completion because cinterop ASAuthorizationController.delegate
             // is a weak reference. If you remove this (redundant) call, it will stop working.
             delegate.onComplete = {}
+            delegate.onError = {}
             cancel()
         }
 
@@ -56,6 +63,7 @@ private suspend fun ASAuthorizationController.performSignIn(): ASAuthorizationAp
 
 private class AuthorizationDelegate(
     var onComplete: (result: ASAuthorizationAppleIDCredential) -> Unit,
+    var onError: (exception: SignInException) -> Unit,
 ) : NSObject(), ASAuthorizationControllerDelegateProtocol {
 
     override fun authorizationController(
@@ -64,7 +72,10 @@ private class AuthorizationDelegate(
     ) {
         val result = when (val credential = didCompleteWithAuthorization.credential) {
             is ASAuthorizationAppleIDCredential -> credential
-            else -> throw IllegalArgumentException("Unrecognized credential type: $credential")
+            else -> {
+                onError(SignInException("Unrecognized credential type: $credential"))
+                return
+            }
         }
         onComplete(result)
     }
@@ -78,6 +89,6 @@ private class AuthorizationDelegate(
             else -> SignInException("Failed to sign in: code=${didCompleteWithError.code}")
         }
 
-        throw exception
+        onError(exception)
     }
 }

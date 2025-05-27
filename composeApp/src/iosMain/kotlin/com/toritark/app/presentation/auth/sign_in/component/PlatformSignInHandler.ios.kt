@@ -10,18 +10,16 @@ import com.toritark.app.presentation.auth.sign_in.SignInViewModel
 import com.toritark.app.presentation.auth.sign_in.exception.FirebaseSignInException
 import com.toritark.app.presentation.auth.sign_in.exception.SignInException
 import com.toritark.app.presentation.auth.sign_in.exception.UnsupportedProviderException
-import io.ktor.utils.io.charsets.Charsets
-import io.ktor.utils.io.core.String
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okio.ByteString.Companion.toByteString
 import platform.AuthenticationServices.ASAuthorizationAppleIDCredential
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 private val logger = Logger.withTag("PlatformSignInHandler")
 
 @Composable
 internal actual fun PlatformSignInHandler(viewModel: SignInViewModel) {
-
     LaunchedEffect(viewModel) {
         viewModel.signInRequestEvents.collect { authProvider ->
             viewModel.setIsSigningIn(true)
@@ -67,7 +65,8 @@ private suspend fun getFirebaseIdToken(
     return suspendCancellableCoroutine coroutine@{ continuation ->
         val appleTokenBytes = credential.identityToken?.toByteString()?.toByteArray()
         if (appleTokenBytes == null) {
-            throw FirebaseSignInException("Apple token is null")
+            continuation.resumeWithException(FirebaseSignInException("Apple token is null"))
+            return@coroutine
         }
 
         val appleToken = appleTokenBytes.decodeToString()
@@ -82,16 +81,19 @@ private suspend fun getFirebaseIdToken(
             credential = firebaseCredential,
         ) { authResult, error ->
             if (error != null) {
-                throw FirebaseSignInException(error.localizedDescription)
+                continuation.resumeWithException(FirebaseSignInException(error.localizedDescription))
+                return@signInWithCredential
             }
 
             if (authResult == null) {
-                throw FirebaseSignInException("Failed to sign in")
+                continuation.resumeWithException(FirebaseSignInException("Failed to sign in"))
+                return@signInWithCredential
             }
 
             authResult.user().getIDTokenWithCompletion { firebaseToken, error ->
                 if (error != null || firebaseToken == null) {
-                    throw FirebaseSignInException("Failed to get Firebase token")
+                    continuation.resumeWithException(FirebaseSignInException("Failed to get Firebase token"))
+                    return@getIDTokenWithCompletion
                 }
 
                 continuation.resume(firebaseToken)
