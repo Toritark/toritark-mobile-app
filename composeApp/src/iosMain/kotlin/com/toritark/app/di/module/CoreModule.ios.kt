@@ -1,6 +1,12 @@
 package com.toritark.app.di.module
 
-import org.koin.core.module.Module
+import com.toritark.app.domain.core.language.GetDeviceLanguageCode
+import com.toritark.app.domain.core.language.GetDeviceLanguageCodeImpl
+import org.koin.dsl.module
 
-actual val platformCoreModule: Module
-    get() = TODO("Not yet implemented")
+actual val platformCoreModule = module {
+
+    single<GetDeviceLanguageCode> {
+        GetDeviceLanguageCodeImpl()
+    }
+}

@@ -1,6 +1,12 @@
 package com.toritark.app.di.module.analytics
 
-import org.koin.core.module.Module
+import com.toritark.app.domain.analytics.InitializeAnalytics
+import com.toritark.app.domain.analytics.InitializeAnalyticsImpl
+import org.koin.dsl.module
 
-actual val analyticsPlatformModule: Module
-    get() = TODO("Not yet implemented")
+actual val analyticsPlatformModule = module {
+
+    single<InitializeAnalytics> {
+        InitializeAnalyticsImpl()
+    }
+}

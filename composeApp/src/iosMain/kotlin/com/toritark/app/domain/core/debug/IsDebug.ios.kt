@@ -5,6 +5,6 @@ package com.toritark.app.domain.core.debug
 internal actual class IsDebugImpl : IsDebug {
 
     actual override fun invoke(): Boolean {
-        return true
+        return true // FIXME
     }
 }
