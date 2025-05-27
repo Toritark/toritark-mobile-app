@@ -66,6 +66,10 @@ kotlin {
 //    }
 
     sourceSets {
+        all {
+            languageSettings.enableLanguageFeature("ExpectActualClasses")
+        }
+
         named { it.lowercase().startsWith("ios") }.configureEach {
             languageSettings {
                 optIn("kotlinx.cinterop.ExperimentalForeignApi")
