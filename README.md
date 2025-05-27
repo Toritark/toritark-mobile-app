@@ -27,8 +27,8 @@ That's why:
 
 ## 📱 Platform Support
 
-- ✅ Android (current)
-- 🔜 iOS (planned, soon — right after Android)
+- ✅ Android (Done)
+- 🔜 iOS (In progress)
 - 🌐 Web (planned, much later)
 
 ## 📋 Features
