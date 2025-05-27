@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.gradle.versions) apply false
     alias(libs.plugins.build.konfig) apply false
+    alias(libs.plugins.kotlin.cocoapods) apply false
 }

@@ -19,3 +19,6 @@ captures
 google-services.json
 *.aab
 *.apk
+composeApp.podspec
+iosApp/Pods
+iosApp/Podfile.lock
