@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>292544897582-g5l2vj2luf3pg1jtf9gpdobdiq18sh0g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.292544897582-g5l2vj2luf3pg1jtf9gpdobdiq18sh0g</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>292544897582-3coj4h5t7vjlh7k3qc5igh2p165b6ork.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBsior2AdfwO1nYEEn4EDAMAwB-NO35bus</string>
+	<key>GCM_SENDER_ID</key>
+	<string>292544897582</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.toritark.stories.app</string>
+	<key>PROJECT_ID</key>
+	<string>toritark-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>toritark-app.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:292544897582:ios:2ebb87930fe20526a735bf</string>
+</dict>
+</plist>

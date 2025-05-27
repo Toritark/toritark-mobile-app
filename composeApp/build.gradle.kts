@@ -50,27 +50,63 @@ kotlin {
 
         summary = "Toritark app"
         homepage = "https://toritark.com"
-    }
 
-//    @OptIn(ExperimentalWasmDsl::class)
-//    wasmJs {
-//        moduleName = "composeApp"
-//        browser {
-//            val rootDirPath = project.rootDir.path
-//            val projectDirPath = project.projectDir.path
-//            commonWebpackConfig {
-//                outputFileName = "composeApp.js"
-//                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-//                    static = (static ?: mutableListOf()).apply {
-//                        // Serve sources to debug inside browser
-//                        add(rootDirPath)
-//                        add(projectDirPath)
-//                    }
-//                }
-//            }
-//        }
-//        binaries.executable()
-//    }
+        ios.deploymentTarget = libs.versions.ios.deployment.target.get()
+
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "composeApp"
+            isStatic = false
+
+            linkerOpts(
+                "-framework", "FirebaseCore",
+                "-framework", "FirebaseInstallations",
+                "-framework", "FirebaseAnalytics",
+                "-framework", "FirebaseAuth",
+                "-framework", "FirebaseCrashlytics",
+                "-framework", "FirebaseCrashlytics",
+                "-framework", "GoogleAppMeasurement",
+                "-framework", "GoogleUtilities",
+                "-framework", "nanopb"
+            )
+        }
+
+        pod("PurchasesHybridCommon") {
+            version = libs.versions.revenuecat.ios.get()
+            linkOnly = true
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("PurchasesHybridCommonUI") {
+            version = libs.versions.revenuecat.ios.get()
+            linkOnly = true
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+
+        pod("FirebaseCore") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseAnalytics") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseAuth") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseMessaging") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseCrashlytics") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseInstallations") {
+            version = libs.versions.firebase.ios.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+    }
 
     sourceSets {
         all {

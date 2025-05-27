@@ -3,14 +3,17 @@
 package com.toritark.app.domain.analytics
 
 import co.touchlab.kermit.Logger
+import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.system.AnalyticsSystem
 
-actual class InitializeAnalyticsImpl : InitializeAnalytics {
+actual class InitializeAnalyticsImpl(
+    private val analyticsSystems: List<AnalyticsSystem>,
+) : InitializeAnalytics {
 
     private val logger = Logger.withTag(LOG_TAG)
 
     actual override fun invoke() {
-        logger.e { "InitializeAnalyticImpl is not implemented" }
-        // TODO
+        Analytics.initialize(analyticsSystems)
     }
 
     private companion object {

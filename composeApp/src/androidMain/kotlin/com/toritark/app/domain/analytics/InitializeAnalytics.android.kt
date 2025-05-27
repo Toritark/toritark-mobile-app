@@ -9,8 +9,6 @@ actual class InitializeAnalyticsImpl(
     private val analyticsSystems: List<AnalyticsSystem>,
 ) : InitializeAnalytics {
 
-    actual constructor() : this(emptyList())
-
     actual override operator fun invoke() {
         Analytics.initialize(analyticsSystems)
     }

@@ -6,6 +6,6 @@ interface InitializeAnalytics {
     operator fun invoke()
 }
 
-expect class InitializeAnalyticsImpl() : InitializeAnalytics {
+expect class InitializeAnalyticsImpl : InitializeAnalytics {
     override operator fun invoke()
 }
