@@ -52,26 +52,6 @@ kotlin {
         homepage = "https://toritark.com"
     }
 
-//    @OptIn(ExperimentalWasmDsl::class)
-//    wasmJs {
-//        moduleName = "composeApp"
-//        browser {
-//            val rootDirPath = project.rootDir.path
-//            val projectDirPath = project.projectDir.path
-//            commonWebpackConfig {
-//                outputFileName = "composeApp.js"
-//                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-//                    static = (static ?: mutableListOf()).apply {
-//                        // Serve sources to debug inside browser
-//                        add(rootDirPath)
-//                        add(projectDirPath)
-//                    }
-//                }
-//            }
-//        }
-//        binaries.executable()
-//    }
-
     sourceSets {
         all {
             languageSettings.enableLanguageFeature("ExpectActualClasses")
@@ -226,9 +206,20 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = localProperties["signing.keyAlias"] as String
+            keyPassword = localProperties["signing.keyPassword"] as String
+            storeFile = file(localProperties["signing.storeFile"] as String)
+            storePassword = localProperties["signing.storePassword"] as String
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
 
             buildConfigField("boolean", "DEBUG", "false")
         }
