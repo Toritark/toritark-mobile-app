@@ -10,7 +10,7 @@ firebase-crashlytics = "3.0.3"
 app-version-year = "25"
 app-version-month = "05"
 app-version-date = "27"
-app-version-build = "1"
+app-version-build = "2"
 
 android-compileSdk = "35"
 android-minSdk = "24"
