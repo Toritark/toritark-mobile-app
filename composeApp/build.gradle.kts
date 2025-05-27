@@ -262,9 +262,20 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = localProperties["signing.keyAlias"] as String
+            keyPassword = localProperties["signing.keyPassword"] as String
+            storeFile = file(localProperties["signing.storeFile"] as String)
+            storePassword = localProperties["signing.storePassword"] as String
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
 
             buildConfigField("boolean", "DEBUG", "false")
         }
