@@ -8,7 +8,7 @@ internal actual class AuthProvidersRepositoryImpl : AuthProvidersRepository {
 
     actual override suspend fun getAuthProviders(): List<AuthProvider> {
         return listOf(
-            AuthProvider.GOOGLE,
+            AuthProvider.APPLE,
         )
     }
 }
