@@ -1,25 +1,12 @@
-# Toritark Stories
+# Toritark
 
 A language learning application that helps users learn languages through text stories.
 
+<img src="img/screenshots/1.png" width="16%" /> <img src="img/screenshots/2.png" width="16%" /> <img src="img/screenshots/3.png" width="16%" /> <img src="img/screenshots/4.png" width="16%" /> <img src="img/screenshots/5.png" width="16%" /> <img src="img/screenshots/6.png" width="16%" />
+
 ## 🌐 Supported languages
 
-- 🇬🇧 English
-- 🇪🇸 Spanish
-- 🇩🇪 German
-- 🇫🇷 French
-- 🇮🇹 Italian
-- 🇷🇺 Russian
-- 🇺🇦 Ukrainian
-- 🇵🇱 Polish
-- 🇨🇿 Czech
-- 🇷🇸 Serbian
-- 🇵🇹 Portuguese
-- 🇫🇮 Finnish
-- 🇸🇪 Swedish
-- 🇪🇪 Estonian
-- 🇱🇻 Latvian
-- 🇱🇹 Lithuanian
+🇬🇧 🇪🇸 🇩🇪 🇫🇷 🇮🇹 🇷🇺 🇺🇦 🇵🇱 🇨🇿 🇷🇸 🇵🇹 🇫🇮 🇸🇪 🇪🇪 🇱🇻 🇱🇹 🇱🇺
 
 ## 🚧 Work in Progress
 
@@ -30,7 +17,8 @@ That's why:
 - There are no Compose optimizations performed yet. Will be added after the basic implementation is complete.
 - Single module. However, it's being developed keeping in mind future multi-module support, so most of the code is
   ready to be split into modules by copy-paste.
-- No separation to Data/Domain level models. Will add later, for now using models from Data layer everywhere (and sometimes Presentation-level models).
+- No separation to Data/Domain level models. Will add later, for now using models from Data layer everywhere (and
+  sometimes Presentation-level models).
 - Commits are that huge.
 - No tests. The most important ATM part - backend - is fully covered by tests, but not the client. Will add tests later.
 
