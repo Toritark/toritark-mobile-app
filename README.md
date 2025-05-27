@@ -2,6 +2,9 @@
 
 A language learning application that helps users learn languages through text stories.
 
+<img src="img/badge/made-in-eu.jpg" height="100x" /> <img src="img/badge/made-in-estonia.jpg" height="100x" /> 
+
+
 <img src="img/screenshots/1.jpg" width="32%" /> <img src="img/screenshots/2.jpg" width="32%" /> <img src="img/screenshots/3.jpg" width="32%" /> <img src="img/screenshots/4.jpg" width="32%" /> <img src="img/screenshots/5.jpg" width="32%" /> <img src="img/screenshots/6.jpg" width="32%" />
 
 ## 🌐 Supported languages
