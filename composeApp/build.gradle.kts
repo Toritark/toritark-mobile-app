@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.build.konfig)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.kotlin.cocoapods)
 }
 
 val localProperties = Properties().apply {
@@ -43,6 +44,13 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+    }
+
+    cocoapods {
+        version = "1.0"
+
+        summary = "Toritark app"
+        homepage = "https://toritark.com"
     }
 
 //    @OptIn(ExperimentalWasmDsl::class)
