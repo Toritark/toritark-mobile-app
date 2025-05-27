@@ -1,6 +1,7 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.cocoapods.CocoapodsExtension
 import java.util.*
 
 plugins {
@@ -71,41 +72,14 @@ kotlin {
             )
         }
 
-        pod("PurchasesHybridCommon") {
-            version = libs.versions.revenuecat.ios.get()
-            linkOnly = true
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("PurchasesHybridCommonUI") {
-            version = libs.versions.revenuecat.ios.get()
-            linkOnly = true
-            extraOpts += listOf("-compiler-option", "-fmodules")
+        specRepos {
+            url("https://cdn.cocoapods.org")
+            url("https://github.com/bidon-io/CocoaPods_Specs.git")
+            url("https://github.com/appodeal/CocoaPods.git")
         }
 
-        pod("FirebaseCore") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("FirebaseAnalytics") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("FirebaseAuth") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("FirebaseMessaging") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("FirebaseCrashlytics") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
-        pod("FirebaseInstallations") {
-            version = libs.versions.firebase.ios.get()
-            extraOpts += listOf("-compiler-option", "-fmodules")
-        }
+        addFirebasePods()
+        addRevenueCatPods()
     }
 
     sourceSets {
@@ -516,4 +490,36 @@ fun getVersionName(): String {
         append(".")
         libs.versions.app.version.build.get().let(::append)
     }
+}
+
+/**
+ * Cocoapods
+ */
+fun CocoapodsExtension.pod(
+    name: String,
+    version: Provider<String>,
+    linkOnly: Boolean = false,
+    configure: CocoapodsExtension.CocoapodsDependency.() -> Unit = {},
+) {
+    pod(name) {
+        this.version = version.get()
+        extraOpts += listOf("-compiler-option", "-fmodules")
+        this.linkOnly = linkOnly;
+
+        configure()
+    }
+}
+
+fun CocoapodsExtension.addFirebasePods() {
+    pod(name = "FirebaseCore", version = libs.versions.firebase.ios)
+    pod(name = "FirebaseAnalytics", version = libs.versions.firebase.ios)
+    pod(name = "FirebaseAuth", version = libs.versions.firebase.ios)
+    pod(name = "FirebaseMessaging", version = libs.versions.firebase.ios)
+    pod(name = "FirebaseCrashlytics", version = libs.versions.firebase.ios)
+    pod(name = "FirebaseInstallations", version = libs.versions.firebase.ios)
+}
+
+fun CocoapodsExtension.addRevenueCatPods() {
+    pod(name="PurchasesHybridCommon", version =libs.versions.revenuecat.ios, linkOnly = true)
+    pod(name="PurchasesHybridCommonUI", version =libs.versions.revenuecat.ios, linkOnly = true)
 }
