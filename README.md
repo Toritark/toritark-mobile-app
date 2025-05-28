@@ -66,7 +66,7 @@ Tests will be added later as this is an MVP focused on rapid development.
 
 ## 🛠️ Development
 
-See [this document](DEVELOPMENT.md) to see the development instructions.
+You can find the development instructions in [this document](DEVELOPMENT.md).
 
 ## 📜 License
 
