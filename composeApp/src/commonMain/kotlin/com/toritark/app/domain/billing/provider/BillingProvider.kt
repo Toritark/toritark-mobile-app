@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import com.revenuecat.purchases.kmp.LogLevel
 import com.revenuecat.purchases.kmp.Purchases
 import com.revenuecat.purchases.kmp.configure
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.core.model.Environment
 import com.toritark.app.domain.core.debug.IsDebug
 import com.toritark.app.domain.core.env.GetEnvironment
@@ -28,7 +29,7 @@ internal class BillingProviderImpl(
 
         Purchases.logLevel = if (isDebug()) LogLevel.VERBOSE else LogLevel.WARN
         Purchases.configure(
-            apiKey = getRevenueCatApiKey(),
+            apiKey = BuildKonfig.REVENUE_CAT_API_KEY,
         ) {
             appUserId = prefixedUserId
         }
@@ -50,5 +51,3 @@ internal class BillingProviderImpl(
         private const val USER_ID_PREFIX_PRODUCTION = "production_"
     }
 }
-
-internal expect suspend fun getRevenueCatApiKey(): String

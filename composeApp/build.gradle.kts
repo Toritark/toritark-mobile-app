@@ -342,6 +342,20 @@ buildkonfig {
             project.findProperty("apiIsHttps") as String? ?: "false",
         )
 
+        // Appodeal
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "APPODEAL_KEY",
+            "",
+        )
+
+        // RevenueCat
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "REVENUE_CAT_API_KEY",
+            "",
+        )
+
         // Analytics
         buildConfigField(
             FieldSpec.Type.STRING,
@@ -409,6 +423,23 @@ buildkonfig {
 
     targetConfigs {
         create("android") {
+            // RevenueCat
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "REVENUE_CAT_API_KEY",
+                requireNotNull(localProperties.getProperty("revenuecat.android.key")) {
+                    "Set revenuecat.android.key in local.properties file"
+                },
+            )
+
+            // Appodeal
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "APPODEAL_KEY",
+                requireNotNull(localProperties.getProperty("appodeal.android.key")) {
+                    "Set appodeal.android.key in local.properties file"
+                },
+            )
             // Subscriptions management URL
             buildConfigField(
                 FieldSpec.Type.STRING,
@@ -418,6 +449,15 @@ buildkonfig {
         }
 
         create("ios") {
+            // RevenueCat
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "REVENUE_CAT_API_KEY",
+                requireNotNull(localProperties.getProperty("revenuecat.ios.key")) {
+                    "Set revenuecat.ios.key in local.properties file"
+                },
+            )
+
             // Appodeal
             buildConfigField(
                 FieldSpec.Type.STRING,
