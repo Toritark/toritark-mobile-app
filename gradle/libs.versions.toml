@@ -16,8 +16,6 @@ android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
 
-ios-deployment-target = "17.0"
-
 kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.8.1"
 kotlinx-io = "0.7.0"
@@ -45,11 +43,10 @@ compose-multiplatform = "1.8.0"
 compose-material-icons = "1.7.3"
 
 firebase-android-bom = "33.14.0"
-firebase-ios = "11.13.0"
 
-appodeal-sdk = "3.5.2.1"
+appodeal-sdk-android = "3.5.2.1"
+
 revenuecat = "1.8.0+13.32.0"
-revenuecat-ios = "13.32.0"
 
 amplitude-android = "1.21.0"
 mixpanel-android = "8.1.0"
@@ -128,7 +125,7 @@ google-identity-google-id = { module = "com.google.android.libraries.identity.go
 
 ksoup-html = { module = "com.mohamedrejeb.ksoup:ksoup-html", version.ref = "ksoup" }
 
-appodeal-sdk = { module = "com.appodeal.ads:sdk", version.ref = "appodeal-sdk" }
+appodeal-sdk-android = { module = "com.appodeal.ads:sdk", version.ref = "appodeal-sdk-android" }
 
 revenuecat-purchases-core = { module = "com.revenuecat.purchases:purchases-kmp-core", version.ref = "revenuecat" }
 revenuecat-purchases-ui = { module = "com.revenuecat.purchases:purchases-kmp-ui", version.ref = "revenuecat" }
@@ -183,4 +180,4 @@ kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidx-room = { id = "androidx.room", version.ref = "androidx-room" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
-firebase-crashlytics = {id = "com.google.firebase.crashlytics", version.ref="firebase-crashlytics"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }

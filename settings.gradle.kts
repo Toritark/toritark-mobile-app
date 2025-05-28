@@ -30,6 +30,12 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url = uri("https://artifactory.appodeal.com/appodeal") }
     }
+
+    versionCatalogs {
+        create("iosLibs") {
+            from(files("./gradle/iosLibs.versions.toml"))
+        }
+    }
 }
 
 include(":composeApp")

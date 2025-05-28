@@ -52,7 +52,7 @@ kotlin {
         summary = "Toritark app"
         homepage = "https://toritark.com"
 
-        ios.deploymentTarget = libs.versions.ios.deployment.target.get()
+        ios.deploymentTarget = iosLibs.versions.ios.deployment.target.get()
 
         podfile = project.file("../iosApp/Podfile")
         framework {
@@ -80,6 +80,7 @@ kotlin {
 
         addFirebasePods()
         addRevenueCatPods()
+        addAppodealPods()
     }
 
     sourceSets {
@@ -166,7 +167,7 @@ kotlin {
             implementation(libs.androidx.credentials.play.services.auth)
             implementation(libs.google.identity.google.id)
 
-            implementation(libs.appodeal.sdk)
+            implementation(libs.appodeal.sdk.android)
 
             implementation(libs.play.services.ads.id)
             implementation(libs.play.services.app.set)
@@ -417,6 +418,14 @@ buildkonfig {
         }
 
         create("ios") {
+            // Appodeal
+            buildConfigField(
+                FieldSpec.Type.STRING,
+                "APPODEAL_KEY",
+                requireNotNull(localProperties.getProperty("appodeal.ios.key")) {
+                    "Set appodeal.ios.key in local.properties file"
+                },
+            )
             // Subscriptions management URL
             buildConfigField(
                 FieldSpec.Type.STRING,
@@ -495,7 +504,7 @@ fun getVersionName(): String {
 /**
  * Cocoapods
  */
-fun CocoapodsExtension.pod(
+fun CocoapodsExtension.addPod(
     name: String,
     version: Provider<String>,
     linkOnly: Boolean = false,
@@ -511,15 +520,344 @@ fun CocoapodsExtension.pod(
 }
 
 fun CocoapodsExtension.addFirebasePods() {
-    pod(name = "FirebaseCore", version = libs.versions.firebase.ios)
-    pod(name = "FirebaseAnalytics", version = libs.versions.firebase.ios)
-    pod(name = "FirebaseAuth", version = libs.versions.firebase.ios)
-    pod(name = "FirebaseMessaging", version = libs.versions.firebase.ios)
-    pod(name = "FirebaseCrashlytics", version = libs.versions.firebase.ios)
-    pod(name = "FirebaseInstallations", version = libs.versions.firebase.ios)
+    addPod(name = "FirebaseCore", version = iosLibs.versions.firebase)
+    addPod(name = "FirebaseAnalytics", version = iosLibs.versions.firebase)
+    addPod(name = "FirebaseAuth", version = iosLibs.versions.firebase)
+    addPod(name = "FirebaseMessaging", version = iosLibs.versions.firebase)
+    addPod(name = "FirebaseCrashlytics", version = iosLibs.versions.firebase)
+    addPod(name = "FirebaseInstallations", version = iosLibs.versions.firebase)
 }
 
 fun CocoapodsExtension.addRevenueCatPods() {
-    pod(name="PurchasesHybridCommon", version =libs.versions.revenuecat.ios, linkOnly = true)
-    pod(name="PurchasesHybridCommonUI", version =libs.versions.revenuecat.ios, linkOnly = true)
+    addPod(name = "PurchasesHybridCommon", version = iosLibs.versions.revenuecat, linkOnly = true)
+    addPod(name = "PurchasesHybridCommonUI", version = iosLibs.versions.revenuecat, linkOnly = true)
+}
+
+fun CocoapodsExtension.addAppodealPods() {
+    addPod(name = "Appodeal", version = iosLibs.versions.appodeal.sdk)
+    addPod(name = "APDAmazonAdapter", version = iosLibs.versions.appodeal.amazon.adapter, linkOnly = true)
+    addPod(name = "APDAppLovinAdapter", version = iosLibs.versions.appodeal.applovin.adapter, linkOnly = true)
+    addPod(name = "APDAppLovinMAXAdapter", version = iosLibs.versions.appodeal.applovin.max.adapter, linkOnly = true)
+    addPod(name = "APDBidMachineAdapter", version = iosLibs.versions.appodeal.bid.machine.adapter, linkOnly = true)
+    addPod(name = "APDBidonAdapter", version = iosLibs.versions.appodeal.bidon.adapter.main, linkOnly = true)
+    addPod(name = "APDBigoAdsAdapter", version = iosLibs.versions.appodeal.bigo.ads.adapter, linkOnly = true)
+    addPod(name = "APDDTExchangeAdapter", version = iosLibs.versions.appodeal.dt.exchange.adapter, linkOnly = true)
+    addPod(name = "APDGoogleAdMobAdapter", version = iosLibs.versions.appodeal.admob.adapter, linkOnly = true)
+    addPod(name = "APDIABAdapter", version = iosLibs.versions.appodeal.iab.adapter, linkOnly = true)
+    addPod(name = "APDInMobiAdapter", version = iosLibs.versions.appodeal.inmobi.adapter, linkOnly = true)
+    addPod(name = "APDIronSourceAdapter", version = iosLibs.versions.appodeal.ironsource.adapter, linkOnly = true)
+    addPod(name = "APDLevelPlayAdapter", version = iosLibs.versions.appodeal.levelplay.adapter, linkOnly = true)
+    addPod(
+        name = "APDMetaAudienceNetworkAdapter",
+        version = iosLibs.versions.appodeal.meta.audience.network.adapter,
+        linkOnly = true,
+    )
+    addPod(name = "APDMintegralAdapter", version = iosLibs.versions.appodeal.mintegral.adapter, linkOnly = true)
+    addPod(name = "APDMyTargetAdapter", version = iosLibs.versions.appodeal.mytarget.adapter, linkOnly = true)
+    addPod(name = "APDPangleAdapter", version = iosLibs.versions.appodeal.pangle.adapter, linkOnly = true)
+    addPod(name = "APDSentryAdapter", version = iosLibs.versions.appodeal.sentry.adapter, linkOnly = true)
+    addPod(name = "APDSmaatoAdapter", version = iosLibs.versions.appodeal.smaato.adapter, linkOnly = true)
+    addPod(name = "APDUnityAdapter", version = iosLibs.versions.appodeal.unity.adapter, linkOnly = true)
+    addPod(name = "APDVungleAdapter", version = iosLibs.versions.appodeal.vungle.adapter, linkOnly = true)
+    addPod(name = "APDYandexAdapter", version = iosLibs.versions.appodeal.yandex.adapter, linkOnly = true)
+    addPod(
+        name = "AppLovinMediationAmazonAdMarketplaceAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.amazon.ad.marketplace.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationBidMachineAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.bid.machine.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationBigoAdsAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.bigo.ads.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationByteDanceAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.bytedance.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationChartboostAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.chartboost.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationFacebookAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.facebook.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationFyberAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.fyber.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationGoogleAdManagerAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.google.ad.manager.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationGoogleAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.google.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationInMobiAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.inmobi.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationIronSourceAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.ironsource.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationMintegralAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.mintegral.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationMobileFuseAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.mobile.fuse.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationMolocoAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.moloco.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationMyTargetAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.mytarget.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationOguryPresageAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.ogury.presage.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationSmaatoAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.smaato.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationUnityAdsAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.unity.ads.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationVerveAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.verve.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationVungleAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.vungle.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "AppLovinMediationYandexAdapter",
+        version = iosLibs.versions.appodeal.applovin.mediation.yandex.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachineAmazonAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.amazon.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachineMetaAudienceAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.meta.audience.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachineMintegralAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.mintegral.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachineMyTargetAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.mytarget.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachinePangleAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.pangle.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidMachineVungleAdapter",
+        version = iosLibs.versions.appodeal.bid.machine.vungle.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterAmazon",
+        version = iosLibs.versions.appodeal.bidon.adapter.amazon,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterAppLovin",
+        version = iosLibs.versions.appodeal.bidon.adapter.applovin,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterBidMachine",
+        version = iosLibs.versions.appodeal.bidon.adapter.bid.machine,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterBigoAds",
+        version = iosLibs.versions.appodeal.bidon.adapter.bigo.ads,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterChartboost",
+        version = iosLibs.versions.appodeal.bidon.adapter.chartboost,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterDTExchange",
+        version = iosLibs.versions.appodeal.bidon.adapter.dt.exchange,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterInMobi",
+        version = iosLibs.versions.appodeal.bidon.adapter.inmobi,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterIronSource",
+        version = iosLibs.versions.appodeal.bidon.adapter.ironsource,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterMetaAudienceNetwork",
+        version = iosLibs.versions.appodeal.bidon.adapter.meta.audience.network,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterMintegral",
+        version = iosLibs.versions.appodeal.bidon.adapter.mintegral,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterMobileFuse",
+        version = iosLibs.versions.appodeal.bidon.adapter.mobile.fuse,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterMyTarget",
+        version = iosLibs.versions.appodeal.bidon.adapter.ironsource,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterUnityAds",
+        version = iosLibs.versions.appodeal.bidon.adapter.unity.ads,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterVungle",
+        version = iosLibs.versions.appodeal.bidon.adapter.vungle,
+        linkOnly = true,
+    )
+    addPod(
+        name = "BidonAdapterYandex",
+        version = iosLibs.versions.appodeal.bidon.adapter.yandex,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceAPSAdapter",
+        version = iosLibs.versions.appodeal.ironsource.aps.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceAdMobAdapter",
+        version = iosLibs.versions.appodeal.ironsource.admob.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceAppLovinAdapter",
+        version = iosLibs.versions.appodeal.ironsource.applovin.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceBidMachineAdapter",
+        version = iosLibs.versions.appodeal.ironsource.bid.machine.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceBigoAdapter",
+        version = iosLibs.versions.appodeal.ironsource.bigo.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceFacebookAdapter",
+        version = iosLibs.versions.appodeal.ironsource.facebook.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceFyberAdapter",
+        version = iosLibs.versions.appodeal.ironsource.fyber.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceInMobiAdapter",
+        version = iosLibs.versions.appodeal.ironsource.inmobi.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceMintegralAdapter",
+        version = iosLibs.versions.appodeal.ironsource.mintegral.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceMobileFuseAdapter",
+        version = iosLibs.versions.appodeal.ironsource.mobile.fuse.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceMolocoAdapter",
+        version = iosLibs.versions.appodeal.ironsource.moloco.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceMyTargetAdapter",
+        version = iosLibs.versions.appodeal.ironsource.mytarget.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceOguryAdapter",
+        version = iosLibs.versions.appodeal.ironsource.ogury.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourcePangleAdapter",
+        version = iosLibs.versions.appodeal.ironsource.pangle.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceSmaatoAdapter",
+        version = iosLibs.versions.appodeal.ironsource.smaato.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceUnityAdsAdapter",
+        version = iosLibs.versions.appodeal.ironsource.unity.ads.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceVerveAdapter",
+        version = iosLibs.versions.appodeal.ironsource.verve.adapter,
+        linkOnly = true,
+    )
+    addPod(
+        name = "IronSourceVungleAdapter",
+        version = iosLibs.versions.appodeal.ironsource.vungle.adapter,
+        linkOnly = true,
+    )
 }
