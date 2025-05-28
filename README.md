@@ -33,10 +33,10 @@ That's why:
 
 ## 📋 Features
 
-- Language selection (native and learning)
 - Interactive stories for language learning
+- Quiz: Answer the story-related questions
+- Retelling: Retell the story and get instant feedback with detailed review
 - Word and sentence learning tools
-- Progress tracking
 
 ## 🔧 Technical Details
 
