@@ -64,6 +64,10 @@ This application requires a backend server to run, which is closed-source.
 
 Tests will be added later as this is an MVP focused on rapid development.
 
+## 🛠️ Development
+
+See [this document](DEVELOPMENT.md) to see the development instructions.
+
 ## 📜 License
 
 Attribution-NonCommercial-ShareAlike 4.0 International
