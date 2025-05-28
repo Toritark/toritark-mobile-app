@@ -48,4 +48,24 @@ object Analytics {
 
         analyticsSystems.forEach { analyticsSystem -> analyticsSystem.logScreenView(screenName) }
     }
+
+    fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        logger.d { "logAdRevenue: format=$format, source=$source, adUnitName=$adUnitName, amount=$amount, currency=$currency" }
+
+        analyticsSystems.forEach { analyticsSystem ->
+            analyticsSystem.logAdRevenue(
+                format = format,
+                source = source,
+                adUnitName = adUnitName,
+                amount = amount,
+                currency = currency,
+            )
+        }
+    }
 }

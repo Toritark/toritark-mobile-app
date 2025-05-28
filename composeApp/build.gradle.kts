@@ -56,7 +56,7 @@ kotlin {
 
         podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "composeApp"
+            baseName = "ComposeApp"
             isStatic = false
 
             linkerOpts(
@@ -68,7 +68,9 @@ kotlin {
                 "-framework", "FirebaseCrashlytics",
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
-                "-framework", "nanopb"
+                "-framework", "nanopb",
+                "-framework", "Appodeal",
+                "-framework", "StackModules",
             )
         }
 

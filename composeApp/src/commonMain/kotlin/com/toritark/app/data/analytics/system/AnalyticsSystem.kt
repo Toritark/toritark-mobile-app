@@ -90,4 +90,12 @@ abstract class AnalyticsSystem(
             )
         )
     }
+
+    abstract fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    )
 }

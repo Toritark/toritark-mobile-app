@@ -3,7 +3,11 @@
 package com.toritark.app.domain.ads.provider
 
 import co.touchlab.kermit.Logger
+import cocoapods.Appodeal.*
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
+import com.toritark.app.data.analytics.Analytics
+import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.domain.core.debug.IsDebug
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -12,6 +16,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import platform.Foundation.NSError
+import platform.darwin.NSObject
 
 internal actual class AdsProviderImpl(
     private val isDebug: IsDebug,
@@ -35,9 +42,34 @@ internal actual class AdsProviderImpl(
     private val coroutineScope by lazy { CoroutineScope(defaultDispatcher + SupervisorJob()) }
 
     actual override suspend fun initialize(userId: Long) {
+        logger.d { "initialize: userId=$userId" }
+
+        Appodeal.setTestingEnabled(isDebug())
+        Appodeal.setAutocache(
+            autocache = true,
+            types = AppodealAdTypeBanner or AppodealAdTypeInterstitial or AppodealAdTypeRewardedVideo,
+        )
+        Appodeal.setLogLevel(if (isDebug()) APDLogLevelDebug else APDLogLevelOff)
+
+        Appodeal.setInitializationDelegate(object : NSObject(), AppodealInitializationDelegateProtocol {
+            override fun appodealSDKDidInitialize() {
+                logger.d { "Appodeal initialized for user $userId" }
+            }
+        })
+
+        Appodeal.setBannerDelegate(bannerDelegate)
+        Appodeal.setInterstitialDelegate(interstitialDelegate)
+        Appodeal.setRewardedVideoDelegate(rewardedVideoDelegate)
+        Appodeal.setAdRevenueDelegate(adRevenueDelegate)
+
+        Appodeal.initializeWithApiKey(
+            apiKey = BuildKonfig.APPODEAL_KEY,
+            types = AppodealAdTypeBanner or AppodealAdTypeInterstitial or AppodealAdTypeRewardedVideo,
+        )
     }
 
     actual override suspend fun checkConsent() {
+        // Shown automatically
     }
 
     actual override suspend fun canShowBanner(placementName: String?): Boolean {
@@ -74,6 +106,188 @@ internal actual class AdsProviderImpl(
         logger.e { "hideBanner: not implemented" }
         return false
     }
+
+    /**
+     * Banner delegate
+     */
+    private val bannerDelegate: AppodealBannerDelegateProtocol = object : NSObject(), AppodealBannerDelegateProtocol {
+
+        override fun bannerDidClick() {
+            logger.d { "bannerDidClick" }
+
+            Analytics.logEvent(
+                AnalyticsEvent(
+                    name = "ad_banner_click",
+                )
+            )
+        }
+
+        override fun bannerDidExpired() {
+            logger.d { "bannerDidExpired" }
+        }
+
+        override fun bannerDidFailToLoadAd() {
+            logger.w { "bannerDidFailToLoadAd" }
+
+            _isBannerAvailable.value = false
+        }
+
+        override fun bannerDidFailToPresentWithError(error: NSError) {
+            logger.w { "bannerDidFailToLoadWithError: code=${error.code}, description=${error.description}" }
+        }
+
+        override fun bannerDidLoadAdIsPrecache(precache: Boolean) {
+            logger.d { "bannerDidLoadAdIsPrecache: precache=$precache" }
+
+            _isBannerAvailable.value = true
+        }
+
+        override fun bannerDidShow() {
+            logger.d { "bannerDidShow" }
+        }
+    }
+
+    /**
+     * Interstitial delegate
+     */
+    private val interstitialDelegate: AppodealInterstitialDelegateProtocol =
+        object : NSObject(), AppodealInterstitialDelegateProtocol {
+
+            override fun interstitialDidClick() {
+                logger.d { "interstitialDidClick" }
+
+                Analytics.logEvent(
+                    AnalyticsEvent(
+                        name = "ad_interstitial_click",
+                    )
+                )
+            }
+
+            override fun interstitialDidDismiss() {
+                logger.d { "interstitialDidDismiss" }
+            }
+
+            override fun interstitialDidExpired() {
+                logger.d { "interstitialDidExpired" }
+            }
+
+            override fun interstitialDidFailToLoadAd() {
+                logger.w { "interstitialDidFailToLoadAd" }
+
+                _isInterstitialAvailable.value = false
+            }
+
+            override fun interstitialDidFailToPresent() {
+                logger.w { "interstitialDidFailToPresent" }
+            }
+
+            override fun interstitialDidLoadAdIsPrecache(precache: Boolean) {
+                logger.d { "interstitialDidLoadAdIsPrecache: precache=$precache" }
+
+                _isInterstitialAvailable.value = true
+            }
+
+            override fun interstitialWillPresent() {
+                logger.d { "interstitialWillPresent" }
+            }
+        }
+
+    /**
+     * Rewarded video delegate
+     */
+    private val rewardedVideoDelegate: AppodealRewardedVideoDelegateProtocol =
+        object : NSObject(), AppodealRewardedVideoDelegateProtocol {
+
+            override fun rewardedVideoDidClick() {
+                logger.d { "rewardedVideoDidClick" }
+
+                Analytics.logEvent(
+                    AnalyticsEvent(
+                        name = "ad_rewarded_video_click",
+                    )
+                )
+            }
+
+            override fun rewardedVideoDidExpired() {
+                logger.d { "rewardedVideoDidExpired" }
+            }
+
+            override fun rewardedVideoDidFailToLoadAd() {
+                logger.w { "rewardedVideoDidFailToLoadAd" }
+
+                _isRewardedAvailable.value = true
+            }
+
+            override fun rewardedVideoDidFailToPresentWithError(error: NSError) {
+                logger.e { "rewardedVideoDidFailToPresentWithError: code=${error.code}, description=${error.description}" }
+            }
+
+            override fun rewardedVideoDidFinish(rewardAmount: Float, name: String?) {
+                logger.d { "rewardedVideoDidFinish: rewardAmount=$rewardAmount, name=$name" }
+
+                Analytics.logEvent(
+                    AnalyticsEvent(
+                        name = "ad_rewarded_video_finished",
+                        parameters = mapOf(
+                            "amount" to rewardAmount,
+                            "currency" to name,
+                        )
+                    )
+                )
+            }
+
+            override fun rewardedVideoDidLoadAdIsPrecache(precache: Boolean) {
+                logger.d { "rewardedVideoDidLoadAdIsPrecache: precache=$precache" }
+
+                _isRewardedAvailable.value = true
+            }
+
+            override fun rewardedVideoDidPresent() {
+                logger.d { "rewardedVideoDidPresent" }
+            }
+
+            override fun rewardedVideoWillDismissAndWasFullyWatched(wasFullyWatched: Boolean) {
+                logger.d { "rewardedVideoWillDismissAndWasFullyWatched: wasFullyWatched=$wasFullyWatched" }
+
+                coroutineScope.launch {
+                    val result = RewardedVideoResult(
+                        isFinished = wasFullyWatched,
+                    )
+                    _rewardedAdFinishedEvents.emit(result)
+                }
+
+                Analytics.logEvent(
+                    AnalyticsEvent(
+                        name = "ad_rewarded_video_close",
+                        parameters = mapOf(
+                            "is_finished" to wasFullyWatched,
+                        )
+                    )
+                )
+            }
+        }
+
+    /**
+     * Ad revenue delegate
+     */
+    private val adRevenueDelegate: AppodealAdRevenueDelegateProtocol =
+        object : NSObject(), AppodealAdRevenueDelegateProtocol {
+            override fun didReceiveRevenueForAd(ad: AppodealAdRevenueProtocol) {
+                logger.i {
+                    "didReceiveRevenueForAd: network=${ad.networkName}, unit=${ad.adUnitName}, placement=${ad.placement}, " +
+                            "precision=${ad.revenuePrecision}, demand=${ad.demandSource}, currency=${ad.currency}, " +
+                            "revenue=${ad.revenue}, ad_type=${ad.adTypeString}"
+                }
+
+                Analytics.logAdRevenue(
+                    format = ad.adTypeString,
+                    source = ad.networkName,
+                    adUnitName = ad.adUnitName,
+                    amount = ad.revenue,
+                    currency = ad.currency,
+                )
+            }
+        }
 
     private companion object {
         private const val LOG_TAG = "AdsProvider"

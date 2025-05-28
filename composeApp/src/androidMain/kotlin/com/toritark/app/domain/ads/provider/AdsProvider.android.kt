@@ -8,10 +8,12 @@ import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
 import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.RewardedVideoCallbacks
+import com.appodeal.ads.revenue.AdRevenueCallbacks
+import com.appodeal.ads.revenue.RevenueInfo
 import com.appodeal.ads.utils.Log
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentStatus
-import com.toritark.app.R
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent
@@ -68,12 +70,13 @@ internal actual class AdsProviderImpl(
         Appodeal.setRewardedVideoCallbacks(rewardedVideoCallbacks)
         Appodeal.setBannerCallbacks(bannerCallbacks)
         Appodeal.setInterstitialCallbacks(interstitialCallbacks)
+        Appodeal.setAdRevenueCallbacks(adRevenueCallbacks)
 
         Appodeal.setUserId(userId.toString())
 
         Appodeal.initialize(
             context = activity,
-            appKey = activity.getString(R.string.appodeal_app_key),
+            appKey = BuildKonfig.APPODEAL_KEY,
             adTypes = Appodeal.INTERSTITIAL or Appodeal.REWARDED_VIDEO or Appodeal.BANNER,
             callback = { errors ->
                 if (errors == null) {
@@ -353,6 +356,24 @@ internal actual class AdsProviderImpl(
         override fun onRewardedVideoExpired() {
             logger.d { "onRewardedVideoExpired" }
         }
+    }
+
+    /**
+     * Ad revenue callback
+     */
+    val adRevenueCallbacks = object : AdRevenueCallbacks {
+        override fun onAdRevenueReceive(revenueInfo: RevenueInfo) {
+            logger.d { "onAdRevenueReceived: revenueInfo=$revenueInfo" }
+
+            Analytics.logAdRevenue(
+                format = revenueInfo.adTypeString,
+                source = revenueInfo.networkName,
+                adUnitName = revenueInfo.currency,
+                amount = revenueInfo.revenue,
+                currency = revenueInfo.currency,
+            )
+        }
+
     }
 
     private companion object {
