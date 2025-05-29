@@ -31,7 +31,7 @@ ksoup = "0.5.0"
 androidx-activity-compose = "1.10.1"
 
 androidx-core-ktx = "1.16.0"
-androidx-lifecycle = "2.9.0"
+androidx-lifecycle = "2.8.4"
 androidx-lifecycle-jb = "2.8.4"
 androidx-room = "2.7.1"
 androidx-sqlite = "2.5.1"
@@ -39,18 +39,18 @@ androidx-credentials = "1.5.0"
 
 google-identity-google-id = "1.1.1"
 
-compose-multiplatform = "1.8.0"
+compose-multiplatform = "1.8.0" # 1.8.1+ requires newer koin, which requires migration of navType
 compose-material-icons = "1.7.3"
 
 firebase-android-bom = "33.14.0"
 
-appodeal-sdk-android = "3.5.2.1"
+appodeal-sdk-android = "3.6.0.0"
 
 revenuecat = "1.8.0+13.32.0"
 
-amplitude-android = "1.21.0"
+amplitude-android = "1.21.1"
 mixpanel-android = "8.1.0"
-facebook-sdk-android-core = "18.0.2"
+facebook-sdk-android-core = "18.0.3"
 facebook-sdk-android-marketing = "7.0.1"
 kochava-android = "5.6.0"
 
