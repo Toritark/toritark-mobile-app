@@ -40,21 +40,25 @@ That's why:
 
 ## 🔧 Technical Details
 
-- **Kotlin Multiplatform** - Cross-platform development
-- **Compose Multiplatform** - Cross-platform UI
-- **Material 3** - UI
-- **Koin** - DI
-- **Ktor** - HTTP client
-- **Room** - Cross-platform SQLite ORM
-- **Kotlinx Serialization** - JSON serialization/deserialization
-- **Kotlinx Coroutines** - Asynchronous programming
-- **Kotlinx DateTime** - Date and time handling
-- **Coil** - Image loading library
-- **Firebase Auth** - Authentication service (Google & Apple sign in)
-- **RevenueCat** - IAP
-- **Appodeal** - Ads
-- **KSoup** - HTML parsing (for text highlighting)
-- **Django** - Backend (closed-source)
+- **[Kotlin Multiplatform](https://www.jetbrains.com/kotlin-multiplatform/)** - Cross-platform development
+- **[Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/)** - Cross-platform UI
+- **[Material 3](https://m3.material.io/)** - UI
+- **[Koin](https://insert-koin.io/)** - DI
+- **[Ktor](https://ktor.io/)** - HTTP client
+- **[Room](https://developer.android.com/kotlin/multiplatform/room)** - Cross-platform SQLite ORM
+- **[Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)** - JSON serialization/deserialization
+- **[Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines)** - Asynchronous programming
+- **[Kotlinx DateTime](https://github.com/Kotlin/kotlinx-datetime)** - Date and time handling
+- **[Firebase Authentication](https://firebase.google.com/docs/auth)** - Authentication service (Google & Apple sign in)
+- **[RevenueCat](https://www.revenuecat.com/)** - IAP
+- **[Appodeal](https://appodeal.com/)** - Ads
+- **[KSoup](https://github.com/fleeksoft/ksoup)** - HTML parsing (for text highlighting)
+
+### Backend (closed-source)
+
+- **[Django](https://www.djangoproject.com/)**
+- **[Django REST framework](https://www.django-rest-framework.org/)**
+- **[Celery](https://github.com/celery/celery)**
 
 ## ⚠️ Requirements
 
