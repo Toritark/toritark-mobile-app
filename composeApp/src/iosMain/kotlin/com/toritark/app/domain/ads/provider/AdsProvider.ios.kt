@@ -72,11 +72,6 @@ internal actual class AdsProviderImpl(
         Appodeal.setRewardedVideoDelegate(rewardedVideoDelegate)
         Appodeal.setAdRevenueDelegate(adRevenueDelegate)
 
-        Appodeal.initializeWithApiKey(
-            "3bd8b3a757d8fb52be113ab228f056579fc5874d65458486",
-            AppodealAdTypeInterstitial
-        )
-
 //        Appodeal.initializeWithApiKey(
 //            apiKey = BuildKonfig.APPODEAL_KEY,
 //            types = AppodealAdTypeBanner// or AppodealAdTypeInterstitial or AppodealAdTypeRewardedVideo,

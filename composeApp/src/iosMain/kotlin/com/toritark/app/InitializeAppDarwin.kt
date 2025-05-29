@@ -9,6 +9,7 @@ import org.koin.core.context.startKoin
 
 private val logger = Logger.withTag("InitializeAppDarwin")
 
+@Suppress("unused")
 fun initializeApp() {
     startDi().apply {
         initializeAnalytics()
