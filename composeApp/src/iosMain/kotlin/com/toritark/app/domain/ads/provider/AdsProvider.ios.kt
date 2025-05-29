@@ -1,4 +1,5 @@
 @file:Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+@file:OptIn(ExperimentalNativeApi::class)
 
 package com.toritark.app.domain.ads.provider
 
@@ -18,12 +19,19 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import platform.Foundation.NSError
+import platform.UIKit.UIViewController
 import platform.darwin.NSObject
+import kotlin.experimental.ExperimentalNativeApi
+import kotlin.native.ref.WeakReference
+
+interface IOSAdsProvider {
+    fun setViewController(viewController: UIViewController?)
+}
 
 internal actual class AdsProviderImpl(
     private val isDebug: IsDebug,
     private val defaultDispatcher: CoroutineDispatcher,
-) : AdsProvider {
+) : AdsProvider, IOSAdsProvider {
 
     private val logger = Logger.withTag(LOG_TAG)
 
@@ -38,6 +46,8 @@ internal actual class AdsProviderImpl(
 
     private val _rewardedAdFinishedEvents = MutableSharedFlow<RewardedVideoResult>()
     actual override val rewardedAdFinishedEvents = _rewardedAdFinishedEvents.asSharedFlow()
+
+    private var viewController: WeakReference<UIViewController>? = null
 
     private val coroutineScope by lazy { CoroutineScope(defaultDispatcher + SupervisorJob()) }
 
@@ -63,9 +73,14 @@ internal actual class AdsProviderImpl(
         Appodeal.setAdRevenueDelegate(adRevenueDelegate)
 
         Appodeal.initializeWithApiKey(
-            apiKey = BuildKonfig.APPODEAL_KEY,
-            types = AppodealAdTypeBanner or AppodealAdTypeInterstitial or AppodealAdTypeRewardedVideo,
+            "3bd8b3a757d8fb52be113ab228f056579fc5874d65458486",
+            AppodealAdTypeInterstitial
         )
+
+//        Appodeal.initializeWithApiKey(
+//            apiKey = BuildKonfig.APPODEAL_KEY,
+//            types = AppodealAdTypeBanner// or AppodealAdTypeInterstitial or AppodealAdTypeRewardedVideo,
+//        )
     }
 
     actual override suspend fun checkConsent() {
@@ -73,38 +88,69 @@ internal actual class AdsProviderImpl(
     }
 
     actual override suspend fun canShowBanner(placementName: String?): Boolean {
-        logger.e { "canShowBanner: not implemented" }
-        return false
+        return Appodeal.canShow(
+            type = AppodealAdTypeBanner,
+            forPlacement = placementName.orEmpty(),
+        )
     }
 
     actual override suspend fun canShowInterstitial(placementName: String?): Boolean {
-        logger.e { "canShowInterstitial: not implemented" }
-        return false
+        return Appodeal.canShow(
+            type = AppodealAdTypeInterstitial,
+            forPlacement = placementName.orEmpty(),
+        )
     }
 
     actual override suspend fun canShowRewarded(placementName: String?): Boolean {
-        logger.e { "canShowRewarded: not implemented" }
-        return false
+        return Appodeal.canShow(
+            type = AppodealAdTypeRewardedVideo,
+            forPlacement = placementName.orEmpty(),
+        )
     }
 
     actual override suspend fun showBanner(placementName: String?): Boolean {
-        logger.e { "showBanner: not implemented" }
+        // Do not show banner for now
         return false
     }
 
     actual override suspend fun showInterstitial(placementName: String?): Boolean {
-        logger.e { "showInterstitial: not implemented" }
-        return false
+        logger.d { "showInterstitial: placementName=$placementName" }
+
+        return showAd(style = AppodealShowStyleInterstitial, placementName = placementName)
     }
 
     actual override suspend fun showRewarded(placementName: String?): Boolean {
-        logger.e { "showRewarded: not implemented" }
-        return false
+        logger.d { "showRewarded: placementName=$placementName" }
+
+        return showAd(style = AppodealShowStyleInterstitial, placementName = placementName)
     }
 
     actual override suspend fun hideBanner(): Boolean {
-        logger.e { "hideBanner: not implemented" }
+        // Not implemented for now
         return false
+    }
+
+    private fun showAd(style: AppodealShowStyle, placementName: String?): Boolean {
+        val viewController = viewController?.get() ?: run {
+            logger.w { "showAd: style=$style, placementName=$placementName: viewController == null" }
+            return false
+        }
+
+        return Appodeal.showAd(
+            style = style,
+            forPlacement = placementName.orEmpty(),
+            rootViewController = viewController,
+        )
+    }
+
+    override fun setViewController(viewController: UIViewController?) {
+        logger.i { "setViewController: viewController=$viewController" }
+
+        this.viewController = if (viewController != null) {
+            WeakReference(viewController)
+        } else {
+            null
+        }
     }
 
     /**

@@ -71,6 +71,7 @@ kotlin {
                 "-framework", "nanopb",
                 "-framework", "Appodeal",
                 "-framework", "StackModules",
+                "-framework", "StackConsentManager",
             )
         }
 

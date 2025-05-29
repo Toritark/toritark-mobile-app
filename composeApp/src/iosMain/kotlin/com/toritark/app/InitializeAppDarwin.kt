@@ -2,6 +2,7 @@ package com.toritark.app
 
 import co.touchlab.kermit.Logger
 import com.toritark.app.di.configureModules
+import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.analytics.InitializeAnalytics
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -9,8 +10,10 @@ import org.koin.core.context.startKoin
 private val logger = Logger.withTag("InitializeAppDarwin")
 
 fun initializeApp() {
-    val koinApplication = startDi()
-    koinApplication.initializeAnalytics()
+    startDi().apply {
+        initializeAnalytics()
+        initializeAds()
+    }
 }
 
 private fun startDi(): KoinApplication {
@@ -24,4 +27,11 @@ private fun KoinApplication.initializeAnalytics() {
 
     val initializeAnalytics: InitializeAnalytics = koin.get()
     initializeAnalytics()
+}
+
+private fun KoinApplication.initializeAds() {
+    logger.d { "initializeAds" }
+
+    val adsInteractor = koin.get<AdsInteractor>()
+    adsInteractor.initialize()
 }
