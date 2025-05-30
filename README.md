@@ -28,8 +28,8 @@ That's why:
 ## 📱 Platform Support
 
 - ✅ Android (Done)
-- 🔜 iOS (In progress)
-- 🌐 Web (planned, much later)
+- 🔜 iOS (In progress, broken)
+- 🌐 Web (In progress, broken)
 
 ## 📋 Features
 
