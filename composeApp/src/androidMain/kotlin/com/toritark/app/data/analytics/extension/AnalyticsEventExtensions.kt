@@ -1,6 +1,6 @@
 package com.toritark.app.data.analytics.extension
 
-import androidx.core.bundle.Bundle
+import android.os.Bundle
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 
 internal val AnalyticsEvent.bundleParameters: Bundle

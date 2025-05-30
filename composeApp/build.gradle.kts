@@ -3,7 +3,6 @@ import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.cocoapods.CocoapodsExtension
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.*
 
 plugins {
@@ -88,31 +87,6 @@ kotlin {
 //        addAppodealPods()
     }
 
-    @Suppress("OPT_IN_USAGE")
-    wasmJs {
-        outputModuleName = "composeApp"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        add(project.rootDir.path)
-                        add(project.projectDir.path)
-                    }
-                }
-            }
-        }
-
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                "-Xwasm-use-traps-instead-of-exceptions",
-                "-Xwasm-use-new-exception-proposal",
-            )
-        }
-
-        binaries.executable()
-    }
-
     sourceSets {
         all {
             languageSettings.enableLanguageFeature("ExpectActualClasses")
@@ -122,18 +96,6 @@ kotlin {
             languageSettings {
                 optIn("kotlinx.cinterop.ExperimentalForeignApi")
             }
-        }
-
-        val iosAndAndroidMain by creating {
-            dependsOn(commonMain.get())
-        }
-
-        androidMain {
-            dependsOn(iosAndAndroidMain)
-        }
-
-        iosMain {
-            dependsOn(iosAndAndroidMain)
         }
 
         commonMain.dependencies {
@@ -166,6 +128,10 @@ kotlin {
 
             implementation(libs.ksoup.html)
 
+            implementation(libs.revenuecat.purchases.core)
+            implementation(libs.revenuecat.purchases.ui)
+            implementation(libs.revenuecat.purchases.datetime)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -180,12 +146,6 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.navigation)
-        }
-
-        iosAndAndroidMain.dependencies {
-            implementation(libs.revenuecat.purchases.core)
-            implementation(libs.revenuecat.purchases.ui)
-            implementation(libs.revenuecat.purchases.datetime)
         }
 
         androidMain.dependencies {
@@ -224,11 +184,6 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-        }
-
-        wasmJsMain.dependencies {
-            implementation(libs.koin.core.wasm.js)
-            implementation(libs.ktor.client.js)
         }
 
         commonTest.dependencies {
