@@ -44,7 +44,7 @@ internal fun PurchaseResultDialog(
         tonalElevation = 1.dp,
         sheetState = sheetState,
         properties = ModalBottomSheetProperties(
-            shouldDismissOnBackPress = true,
+            shouldDismissOnBackPress = state !is PaywallScreenState.DialogState.Visible.Checking,
         ),
     ) {
         Column(

@@ -79,6 +79,12 @@ private fun PaywallScreenContent(
 
     val resultSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
+        confirmValueChange = { newState ->
+            when (screenState.dialogState) {
+                is PaywallScreenState.DialogState.Visible.Checking -> false
+                else -> true
+            }
+        }
     )
 
     Scaffold(
