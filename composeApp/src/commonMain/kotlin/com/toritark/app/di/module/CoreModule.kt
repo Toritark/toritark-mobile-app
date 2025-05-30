@@ -9,7 +9,6 @@ import com.toritark.app.domain.core.env.GetEnvironment
 import com.toritark.app.domain.core.env.GetEnvironmentImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
@@ -17,13 +16,12 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-expect val platformCoreModule: Module
+internal expect val platformCoreModule: Module
 
 val coreModule = module {
     includes(platformCoreModule)
     
     single(named(DispatchersNames.DEFAULT)) { Dispatchers.Default }
-    single(named(DispatchersNames.IO)) { Dispatchers.IO }
     single<CoroutineDispatcher>(named(DispatchersNames.MAIN)) { Dispatchers.Main }
 
     single { IsDebugImpl() } bind IsDebug::class

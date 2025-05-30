@@ -3,6 +3,7 @@ import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.cocoapods.CocoapodsExtension
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.*
 
 plugins {
@@ -85,6 +86,23 @@ kotlin {
         addAppodealPods()
     }
 
+    @Suppress("OPT_IN_USAGE")
+    wasmJs {
+        outputModuleName = "composeApp"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        add(project.rootDir.path)
+                        add(project.projectDir.path)
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
     sourceSets {
         all {
             languageSettings.enableLanguageFeature("ExpectActualClasses")
@@ -103,7 +121,6 @@ kotlin {
             implementation(libs.kermit)
 
             implementation(libs.koin.core)
-            implementation(libs.koin.core.coroutines)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
@@ -126,12 +143,6 @@ kotlin {
             implementation(libs.coil.network)
 
             implementation(libs.ksoup.html)
-
-            implementation(libs.revenuecat.purchases.core)
-            implementation(libs.revenuecat.purchases.ui)
-            implementation(libs.revenuecat.purchases.datetime)
-
-            implementation(libs.rebugger)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -173,6 +184,10 @@ kotlin {
             implementation(libs.play.services.app.set)
             implementation(libs.android.install.referrer)
 
+            implementation(libs.revenuecat.purchases.core)
+            implementation(libs.revenuecat.purchases.ui)
+            implementation(libs.revenuecat.purchases.datetime)
+
             implementation(libs.amplitude.android)
             implementation(libs.mixpanel.android)
             implementation(libs.facebook.sdk.android.core)
@@ -184,6 +199,15 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+
+            implementation(libs.revenuecat.purchases.core)
+            implementation(libs.revenuecat.purchases.ui)
+            implementation(libs.revenuecat.purchases.datetime)
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.koin.core.wasm.js)
+            implementation(libs.ktor.client.js)
         }
 
         commonTest.dependencies {
