@@ -1,7 +1,7 @@
 [versions]
 agp = "8.9.3"
-kotlin = "2.1.21"
-ksp = "2.1.21-2.0.1"
+kotlin = "2.2.0-RC" # Compose 1.8.1+ requires kotlin 2.2+ to build resources for iOS correctly
+ksp = "2.2.0-RC-2.0.1"
 gradle-versions = "0.52.0"
 build-konfig = "0.17.1"
 google-services = "4.4.2"
@@ -36,7 +36,7 @@ androidx-credentials = "1.5.0"
 
 google-identity-google-id = "1.1.1"
 
-compose-multiplatform = "1.8.1" # 1.8.1+ requires newer koin, which requires migration of navType
+compose-multiplatform = "1.8.1" # 1.8.1+ requires kotlin 2.2+ to build resources for iOS correctly
 compose-material-icons = "1.7.3"
 
 firebase-android-bom = "33.14.0"

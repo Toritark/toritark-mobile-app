@@ -1,6 +1,5 @@
 import SwiftUI
 import ComposeApp
-import Appodeal
 
 @main
 struct iOSApp: App {

@@ -68,7 +68,6 @@ kotlin {
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
                 "-framework", "nanopb",
-                "-framework", "Google-Mobile-Ads-SDK",
 //                "-framework", "Appodeal",
 //                "-framework", "StackModules",
 //                "-framework", "StackConsentManager",
