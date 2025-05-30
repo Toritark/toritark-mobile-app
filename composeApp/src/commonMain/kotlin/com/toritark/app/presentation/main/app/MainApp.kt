@@ -1,6 +1,7 @@
 package com.toritark.app.presentation.main.app
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import co.touchlab.kermit.Logger
 import com.toritark.app.presentation.main.app.theme.AppTheme
 import com.toritark.app.presentation.main.nav.AppNavigation
@@ -11,8 +12,12 @@ private val logger = Logger.withTag(LOG_TAG)
 
 @Composable
 @Preview
-fun MainApp() {
+fun MainApp(
+    onNavHostReady: suspend (NavController) -> Unit = {},
+) {
     AppTheme {
-        AppNavigation()
+        AppNavigation(
+            onNavHostReady = onNavHostReady,
+        )
     }
 }

@@ -4,7 +4,7 @@ package com.toritark.app.domain.core.debug
 
 import com.toritark.app.BuildConfig
 
-internal actual class IsDebugImpl : IsDebug {
+internal actual class IsDebugImpl actual constructor(): IsDebug {
     actual override fun invoke(): Boolean {
         return BuildConfig.DEBUG
     }

@@ -6,6 +6,6 @@ interface GetDeviceLanguageCode {
     suspend operator fun invoke(): String
 }
 
-internal expect class GetDeviceLanguageCodeImpl() : GetDeviceLanguageCode {
+internal expect class GetDeviceLanguageCodeImpl : GetDeviceLanguageCode {
     override suspend operator fun invoke(): String
 }

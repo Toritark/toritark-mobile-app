@@ -14,7 +14,7 @@ import com.revenuecat.purchases.kmp.ui.revenuecatui.PaywallListener
 import com.revenuecat.purchases.kmp.ui.revenuecatui.PaywallOptions
 
 @Composable
-fun PaywallComponent(
+internal fun PaywallComponent(
     modifier: Modifier = Modifier,
     onPurchaseStarted: (rcPackage: Package) -> Unit,
     onPurchaseCompleted: (customerInfo: CustomerInfo, storeTransaction: StoreTransaction) -> Unit,

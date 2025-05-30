@@ -13,18 +13,17 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal expect val platformCoreModule: Module
 
 val coreModule = module {
     includes(platformCoreModule)
-    
+
     single(named(DispatchersNames.DEFAULT)) { Dispatchers.Default }
     single<CoroutineDispatcher>(named(DispatchersNames.MAIN)) { Dispatchers.Main }
 
-    single { IsDebugImpl() } bind IsDebug::class
+    single<IsDebug> { IsDebugImpl() }
 
     single<GetEnvironment> {
         GetEnvironmentImpl()

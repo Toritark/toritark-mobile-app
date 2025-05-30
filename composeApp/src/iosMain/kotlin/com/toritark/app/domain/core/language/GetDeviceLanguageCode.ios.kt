@@ -6,7 +6,7 @@ import platform.Foundation.NSLocale
 import platform.Foundation.currentLocale
 import platform.Foundation.languageCode
 
-internal actual class GetDeviceLanguageCodeImpl actual constructor() : GetDeviceLanguageCode {
+internal actual class GetDeviceLanguageCodeImpl : GetDeviceLanguageCode {
 
     actual override suspend fun invoke(): String {
         return NSLocale.currentLocale().languageCode

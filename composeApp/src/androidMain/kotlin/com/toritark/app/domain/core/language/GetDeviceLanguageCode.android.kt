@@ -4,7 +4,7 @@ package com.toritark.app.domain.core.language
 
 import java.util.*
 
-internal actual class GetDeviceLanguageCodeImpl actual constructor() : GetDeviceLanguageCode {
+internal actual class GetDeviceLanguageCodeImpl : GetDeviceLanguageCode {
 
     actual override suspend operator fun invoke(): String {
         return Locale.getDefault().language

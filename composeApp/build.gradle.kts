@@ -100,6 +100,14 @@ kotlin {
                 }
             }
         }
+
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xwasm-use-traps-instead-of-exceptions",
+                "-Xwasm-use-new-exception-proposal",
+            )
+        }
+
         binaries.executable()
     }
 
@@ -112,6 +120,18 @@ kotlin {
             languageSettings {
                 optIn("kotlinx.cinterop.ExperimentalForeignApi")
             }
+        }
+
+        val iosAndAndroidMain by creating {
+            dependsOn(commonMain.get())
+        }
+
+        androidMain {
+            dependsOn(iosAndAndroidMain)
+        }
+
+        iosMain {
+            dependsOn(iosAndAndroidMain)
         }
 
         commonMain.dependencies {
@@ -157,6 +177,13 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.navigation)
+        }
+
+        iosAndAndroidMain.dependencies {
+            implementation(libs.revenuecat.purchases.core)
+            implementation(libs.revenuecat.purchases.ui)
+            implementation(libs.revenuecat.purchases.datetime)
         }
 
         androidMain.dependencies {
@@ -184,10 +211,6 @@ kotlin {
             implementation(libs.play.services.app.set)
             implementation(libs.android.install.referrer)
 
-            implementation(libs.revenuecat.purchases.core)
-            implementation(libs.revenuecat.purchases.ui)
-            implementation(libs.revenuecat.purchases.datetime)
-
             implementation(libs.amplitude.android)
             implementation(libs.mixpanel.android)
             implementation(libs.facebook.sdk.android.core)
@@ -199,10 +222,6 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-
-            implementation(libs.revenuecat.purchases.core)
-            implementation(libs.revenuecat.purchases.ui)
-            implementation(libs.revenuecat.purchases.datetime)
         }
 
         wasmJsMain.dependencies {

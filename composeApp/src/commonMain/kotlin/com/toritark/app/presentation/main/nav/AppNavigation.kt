@@ -1,6 +1,8 @@
 package com.toritark.app.presentation.main.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -20,7 +22,7 @@ private val logger = Logger.withTag(LOG_TAG)
 
 @Composable
 internal fun AppNavigation(
-
+    onNavHostReady: suspend (NavController) -> Unit,
 ) {
     val navController = rememberNavController()
 
@@ -43,5 +45,9 @@ internal fun AppNavigation(
         storiesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         billingScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
         mainScreen(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
+    }
+
+    LaunchedEffect(navController) {
+        onNavHostReady(navController)
     }
 }
