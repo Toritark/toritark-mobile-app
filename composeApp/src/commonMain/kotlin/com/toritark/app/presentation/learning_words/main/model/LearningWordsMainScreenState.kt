@@ -1,7 +1,7 @@
 package com.toritark.app.presentation.learning_words.main.model
 
 import androidx.compose.runtime.Immutable
-import com.toritark.app.data.learning_words.data.model.LearningStats
+import com.toritark.app.data.learning_words.api.model.LearningStatsApiModel
 import com.toritark.app.presentation.learning_words.main.model.sentence.SentenceWithParts
 
 @Immutable
@@ -17,7 +17,7 @@ internal data class LearningWordsMainScreenState(
 
         @Immutable
         data class Present(
-            val stats: LearningStats,
+            val stats: LearningStatsApiModel,
         ) : LearningStatsState
     }
 

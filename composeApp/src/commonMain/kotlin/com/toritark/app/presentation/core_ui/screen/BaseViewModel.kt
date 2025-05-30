@@ -80,6 +80,26 @@ abstract class BaseViewModel<C>(
         }
     }
 
+    protected fun <T> Flow<T>.onErrorShowMessageAnd(
+        getMessage: (throwable: Throwable) -> String = { throwable ->
+            throwable.message ?: throwable.toString()
+        },
+        block: () -> Unit,
+    ): Flow<T> {
+        return this.catch { throwable ->
+            val message = getMessage(throwable)
+
+            Logger.e(throwable = throwable) { message }
+
+            withContext(mainDispatcher) {
+                showErrorMessage(message = message)
+                setContentScreenState()
+            }
+
+            block()
+        }
+    }
+
     suspend fun showErrorMessage(message: String) {
         _errorMessage.emit(message)
     }

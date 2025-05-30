@@ -12,7 +12,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.androidx.room)
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.build.konfig)
     alias(libs.plugins.google.services)
@@ -121,8 +120,6 @@ kotlin {
             implementation(libs.settings)
             implementation(libs.settings.coroutines)
 
-            implementation(libs.androidx.sqlite.bundled)
-            implementation(libs.androidx.room.runtime)
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.coil)
@@ -281,15 +278,6 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-
-    // Room
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
 
 tasks.withType<Test> {

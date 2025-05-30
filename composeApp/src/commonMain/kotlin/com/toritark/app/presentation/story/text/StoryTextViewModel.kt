@@ -5,7 +5,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent
-import com.toritark.app.data.learning_words.data.model.SentenceToLearn
+import com.toritark.app.data.learning_words.model.SentenceToLearn
 import com.toritark.app.data.story.model.story.story.StoryApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.billing.interactor.BillingInteractor

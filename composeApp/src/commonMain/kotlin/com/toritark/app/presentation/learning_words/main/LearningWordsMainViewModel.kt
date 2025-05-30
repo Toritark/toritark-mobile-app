@@ -5,7 +5,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent
-import com.toritark.app.data.learning_words.db.model.SentenceToLearnWithWords
+import com.toritark.app.data.learning_words.api.model.SentenceToLearnApiModel
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.learning_words.interactor.LearningWordsInteractor
@@ -36,7 +36,7 @@ internal class LearningWordsMainViewModel(
 ) {
     override val logger = Logger.withTag(LOG_TAG)
 
-    private var currentSentenceDbModel: SentenceToLearnWithWords? = null
+    private var currentSentenceApiModel: SentenceToLearnApiModel? = null
 
     init {
         getNextSentence()
@@ -65,7 +65,7 @@ internal class LearningWordsMainViewModel(
             )
         }
 
-        this.currentSentenceDbModel = null
+        this.currentSentenceApiModel = null
 
         viewModelScope.launch {
             learningWordsInteractor
@@ -76,7 +76,7 @@ internal class LearningWordsMainViewModel(
                     updateLearningStats()
                 }
                 .collect { sentence ->
-                    showSentenceToLearn(sentenceDbModel = sentence)
+                    showSentenceToLearn(sentenceApiModel = sentence)
                     updateLearningStats()
                 }
         }
@@ -89,18 +89,18 @@ internal class LearningWordsMainViewModel(
     }
 
     private fun showEmptyState() {
-        this.currentSentenceDbModel = null
+        this.currentSentenceApiModel = null
 
         updateAndShowContent {
             copy(currentSentence = LearningWordsMainScreenState.CurrentSentence.Empty)
         }
     }
 
-    private fun showSentenceToLearn(sentenceDbModel: SentenceToLearnWithWords) {
-        logger.d { "showSentenceToLearn: sentenceDbModel=$sentenceDbModel" }
+    private fun showSentenceToLearn(sentenceApiModel: SentenceToLearnApiModel) {
+        logger.d { "showSentenceToLearn: sentenceApiModel=$sentenceApiModel" }
 
-        val sentenceWithWords = getSentenceWithWords(sentenceDbModel = sentenceDbModel)
-        this.currentSentenceDbModel = sentenceDbModel
+        val sentenceWithWords = getSentenceWithWords(sentenceApiModel = sentenceApiModel)
+        this.currentSentenceApiModel = sentenceApiModel
 
         updateAndShowContent {
             copy(currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(sentenceWithWords))
@@ -112,20 +112,21 @@ internal class LearningWordsMainViewModel(
             AnalyticsEvent(
                 name = "learning_words_show_sentence",
                 parameters = mapOf(
-                    "learning_language" to sentenceDbModel.sentence.languageCode,
-                    "correct_attempts" to sentenceDbModel.sentence.correctAttempts,
-                    "incorrect_attempts" to sentenceDbModel.sentence.incorrectAttempts,
-                    "total_attempts" to sentenceDbModel.sentence.correctAttempts + sentenceDbModel.sentence.incorrectAttempts,
-                    "total_words_count" to sentenceDbModel.words.size,
-                    "total_words_to_learn_count" to sentenceDbModel.words.count { !it.isLearned },
+                    "learning_language" to sentenceApiModel.learningLanguage.isoCode,
+                    "native_language" to sentenceApiModel.nativeLanguage.isoCode,
+                    "correct_attempts" to sentenceApiModel.correctAttemptsCount,
+                    "incorrect_attempts" to sentenceApiModel.incorrectAttemptsCount,
+                    "total_attempts" to sentenceApiModel.correctAttemptsCount + sentenceApiModel.incorrectAttemptsCount,
+                    "total_words_count" to sentenceApiModel.words.size,
+                    "total_words_to_learn_count" to sentenceApiModel.words.count { !it.isLearned },
                 )
             )
         )
     }
 
-    private fun getSentenceWithWords(sentenceDbModel: SentenceToLearnWithWords): SentenceWithParts {
-        val text = sentenceDbModel.sentence.learningLanguageText
-        val words = sentenceDbModel
+    private fun getSentenceWithWords(sentenceApiModel: SentenceToLearnApiModel): SentenceWithParts {
+        val text = sentenceApiModel.learningLanguageText
+        val words = sentenceApiModel
             .words
             .filterNot { it.isLearned }
             .map { word -> word.text }
@@ -135,9 +136,9 @@ internal class LearningWordsMainViewModel(
         if (words.isEmpty()) {
             logger.e { "getSentenceWithWords: words is empty" }
             return SentenceWithParts(
-                id = sentenceDbModel.sentence.id,
+                id = sentenceApiModel.id,
                 parts = listOf(SentencePart.Text(text)),
-                nativeLanguageText = sentenceDbModel.sentence.nativeLanguageText,
+                nativeLanguageText = sentenceApiModel.nativeLanguageText,
             )
         }
 
@@ -177,10 +178,12 @@ internal class LearningWordsMainViewModel(
         }
 
         return SentenceWithParts(
-            id = sentenceDbModel.sentence.id,
+            id = sentenceApiModel.id,
             parts = parts,
-            nativeLanguageText = sentenceDbModel.sentence.nativeLanguageText,
-        )
+            nativeLanguageText = sentenceApiModel.nativeLanguageText,
+        ).also {
+            logger.i { "getSentenceWithWords: $it" }
+        }
     }
 
     private fun tokenizeTextSegment(segment: String): List<SentencePart.Text> {
@@ -265,8 +268,8 @@ internal class LearningWordsMainViewModel(
     }
 
     fun logLearningWordsEvent(eventName: String, parameters: Map<String, Any> = emptyMap()) {
-        val correctAttempts = currentSentenceDbModel?.sentence?.correctAttempts
-        val incorrectAttempts = currentSentenceDbModel?.sentence?.incorrectAttempts
+        val correctAttempts = currentSentenceApiModel?.correctAttemptsCount
+        val incorrectAttempts = currentSentenceApiModel?.incorrectAttemptsCount
         val totalAttempts = if (correctAttempts != null && incorrectAttempts != null) {
             correctAttempts + incorrectAttempts
         } else {
@@ -277,12 +280,13 @@ internal class LearningWordsMainViewModel(
             AnalyticsEvent(
                 name = eventName,
                 parameters = mapOf(
-                    "learning_language" to currentSentenceDbModel?.sentence?.languageCode,
+                    "learning_language" to currentSentenceApiModel?.learningLanguage?.isoCode,
+                    "native_language" to currentSentenceApiModel?.nativeLanguage?.isoCode,
                     "correct_attempts" to correctAttempts,
                     "incorrect_attempts" to incorrectAttempts,
                     "total_attempts" to totalAttempts,
-                    "total_words_count" to currentSentenceDbModel?.words?.size,
-                    "total_words_to_learn_count" to currentSentenceDbModel?.words?.count { !it.isLearned },
+                    "total_words_count" to currentSentenceApiModel?.words?.size,
+                    "total_words_to_learn_count" to currentSentenceApiModel?.words?.count { !it.isLearned },
                 ) + parameters
             )
         )
@@ -299,8 +303,8 @@ internal class LearningWordsMainViewModel(
             return
         }
 
-        val currentSentenceDbModel = this.currentSentenceDbModel
-        if (currentSentenceDbModel == null) {
+        val currentSentenceApiModel = this.currentSentenceApiModel
+        if (currentSentenceApiModel == null) {
             logger.e { "onNextClick: Current sentence db model is null!" }
             return
         }
@@ -320,33 +324,48 @@ internal class LearningWordsMainViewModel(
 
             val correctWordsTexts = sentence
                 .inputParts
+                .asSequence()
                 .filter { it.state == SentencePart.Input.State.CORRECT }
                 .map { it.correctText.lowercase() }
                 .toSet()
 
             val incorrectWordsTexts = sentence
                 .inputParts
+                .asSequence()
                 .filter { it.state == SentencePart.Input.State.INCORRECT }
                 .map { it.correctText.lowercase() }
                 .toSet()
 
-            val correctWords = currentSentenceDbModel
+            val correctWords = currentSentenceApiModel
                 .words
+                .asSequence()
                 .filter { word -> correctWordsTexts.contains(word.text) }
+                .map { it.id }
                 .toSet()
 
-            val incorrectWords = currentSentenceDbModel
+            val incorrectWords = currentSentenceApiModel
                 .words
+                .asSequence()
                 .filter { word -> incorrectWordsTexts.contains(word.text) }
+                .map { it.id }
                 .toSet()
 
             learningWordsInteractor
                 .updateSentenceResults(
-                    sentence = currentSentenceDbModel,
-                    correctWords = correctWords,
-                    incorrectWords = incorrectWords,
+                    sentenceId = currentSentenceApiModel.id,
+                    correctWordsIds = correctWords,
+                    incorrectWordsIds = incorrectWords,
                 )
-                .onErrorShowMessage()
+                .onErrorShowMessageAnd {
+                    updateAndShowContent {
+                        copy(
+                            currentSentence = LearningWordsMainScreenState.CurrentSentence.Present.Todo(
+                                sentence = currentSentence.sentence,
+                                isComplete = currentSentence.sentence.areAllPartsComplete,
+                            )
+                        )
+                    }
+                }
                 .collect {
                     logger.d { "onNextClick: updated sentence results" }
 
@@ -370,8 +389,8 @@ internal class LearningWordsMainViewModel(
             copy(showLearnedDialog = false)
         }
 
-        val currentSentenceDbModel = this.currentSentenceDbModel
-        if (currentSentenceDbModel == null) {
+        val currentSentenceApiModel = this.currentSentenceApiModel
+        if (currentSentenceApiModel == null) {
             logger.e { "onLearnedClick: Current sentence db model is null!" }
             return
         }
@@ -380,7 +399,7 @@ internal class LearningWordsMainViewModel(
             logLearningWordsEvent(eventName = "learning_words_learned_click")
 
             learningWordsInteractor
-                .setSentenceLearned(sentence = currentSentenceDbModel)
+                .setSentenceLearned(sentenceId = currentSentenceApiModel.id)
                 .onErrorShowMessage()
                 .collect {
                     logger.d { "onLearnedClick: set sentence learned" }

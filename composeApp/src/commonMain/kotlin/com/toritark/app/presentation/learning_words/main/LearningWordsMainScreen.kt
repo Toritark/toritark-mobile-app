@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.toritark.app.data.learning_words.data.model.LearningStats
+import com.toritark.app.data.learning_words.api.model.LearningStatsApiModel
 import com.toritark.app.presentation.ads.banner.BannerContainer
 import com.toritark.app.presentation.core_ui.animation.FadeInAnimation
 import com.toritark.app.presentation.core_ui.component.FlatCard
@@ -314,8 +314,8 @@ private fun ScreenContentPresentPreview() {
                         ),
                     ),
                     learningStatsState = LearningWordsMainScreenState.LearningStatsState.Present(
-                        stats = LearningStats(
-                            words = LearningStats.Words(
+                        stats = LearningStatsApiModel(
+                            words = LearningStatsApiModel.Words(
                                 total = 110,
                                 learned = 50,
                                 toLearn = 60,

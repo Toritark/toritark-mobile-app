@@ -2,14 +2,10 @@ package com.toritark.app.data.language.repository
 
 import co.touchlab.kermit.Logger
 import com.russhwolf.settings.Settings
-import com.toritark.app.data.language.model.Language
-import com.toritark.app.data.language.model.LanguageLevel
-import com.toritark.app.data.language.model.allLanguages
-import com.toritark.app.data.language.model.learningLanguages
+import com.toritark.app.data.language.model.*
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
 interface LanguagesRepository {
@@ -19,8 +15,12 @@ interface LanguagesRepository {
     val nativeLanguage: StateFlow<Language?>
     val languageLevel: StateFlow<LanguageLevel?>
 
+    val languagesWithLevel: StateFlow<LanguagesWithLevel?>
+
     fun getAllLanguages(): List<Language>
     fun getLearningLanguages(): List<Language>
+
+    fun getLanguagesWithLevel(): Flow<LanguagesWithLevel>
 
     suspend fun setLearningLanguage(language: Language)
     suspend fun setNativeLanguage(language: Language)
@@ -29,10 +29,13 @@ interface LanguagesRepository {
 
 internal class LanguagesRepositoryImpl(
     private val settings: Settings,
+    private val defaultDispatcher: CoroutineDispatcher,
     private val ioDispatcher: CoroutineDispatcher,
 ) : LanguagesRepository {
 
     private val logger = Logger.withTag(LOG_TAG)
+
+    private val coroutineScope = CoroutineScope(defaultDispatcher)
 
     private val _areAllParametersSet = MutableStateFlow<Boolean?>(null)
     override val areAllParametersSet = _areAllParametersSet.asStateFlow()
@@ -45,6 +48,18 @@ internal class LanguagesRepositoryImpl(
 
     private val _languageLevel = MutableStateFlow<LanguageLevel?>(null)
     override val languageLevel = _languageLevel.asStateFlow()
+
+    override val languagesWithLevel = combine(
+        learningLanguage.filterNotNull(),
+        nativeLanguage.filterNotNull(),
+        languageLevel.filterNotNull(),
+    ) { learningLanguage, nativeLanguage, languageLevel ->
+        LanguagesWithLevel(
+            learningLanguage = learningLanguage,
+            nativeLanguage = nativeLanguage,
+            languageLevel = languageLevel,
+        )
+    }.stateIn(coroutineScope, SharingStarted.Lazily, null)
 
     init {
         initializeLanguages()
@@ -105,6 +120,13 @@ internal class LanguagesRepositoryImpl(
 
     override fun getLearningLanguages(): List<Language> {
         return learningLanguages
+    }
+
+    override fun getLanguagesWithLevel(): Flow<LanguagesWithLevel> {
+        return languagesWithLevel
+            .filterNotNull()
+            .take(1)
+            .flowOn(defaultDispatcher)
     }
 
     private companion object {

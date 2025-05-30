@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.toritark.app.data.learning_words.data.model.LearningStats
+import com.toritark.app.data.learning_words.api.model.LearningStatsApiModel
 import com.toritark.app.presentation.main.app.theme.AppTheme
 import org.jetbrains.compose.resources.PluralStringResource
 import org.jetbrains.compose.resources.pluralStringResource
@@ -25,7 +25,7 @@ import toritark.composeapp.generated.resources.title_learning_words_stats_to_lea
 @Composable
 internal fun LearningStatsBlock(
     modifier: Modifier,
-    learningStats: LearningStats,
+    learningStats: LearningStatsApiModel,
 ) {
 
     Column(
@@ -58,7 +58,7 @@ private fun LearningStatsItem(
     icon: ImageVector,
     iconTint: Color,
     textResource: PluralStringResource,
-    value: Long,
+    value: Int,
 ) {
     Row(
         modifier = modifier,
@@ -96,8 +96,8 @@ private fun LearningStatsBlock() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
-                learningStats = LearningStats(
-                    words = LearningStats.Words(
+                learningStats = LearningStatsApiModel(
+                    words = LearningStatsApiModel.Words(
                         total = 110,
                         learned = 50,
                         toLearn = 60,

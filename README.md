@@ -45,7 +45,6 @@ That's why:
 - **[Material 3](https://m3.material.io/)** - UI
 - **[Koin](https://insert-koin.io/)** - DI
 - **[Ktor](https://ktor.io/)** - HTTP client
-- **[Room](https://developer.android.com/kotlin/multiplatform/room)** - Cross-platform SQLite ORM
 - **[Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)** - JSON serialization/deserialization
 - **[Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines)** - Asynchronous programming
 - **[Kotlinx DateTime](https://github.com/Kotlin/kotlinx-datetime)** - Date and time handling
@@ -53,6 +52,7 @@ That's why:
 - **[RevenueCat](https://www.revenuecat.com/)** - IAP
 - **[Appodeal](https://appodeal.com/)** - Ads
 - **[KSoup](https://github.com/fleeksoft/ksoup)** - HTML parsing (for text highlighting)
+- ~~**[Room](https://developer.android.com/kotlin/multiplatform/room)** - Cross-platform SQLite ORM~~ - removed due to incompatibility with the WASM target
 
 ### Backend (closed-source)
 

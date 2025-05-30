@@ -23,6 +23,7 @@ val languageModule = module {
     single<LanguagesRepository> {
         LanguagesRepositoryImpl(
             settings = get(named(LanguageSettingsNames.LANGUAGE)),
+            defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
             ioDispatcher = get(named(DispatchersNames.IO)),
         )
     }
