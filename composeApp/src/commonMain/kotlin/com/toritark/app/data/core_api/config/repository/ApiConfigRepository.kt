@@ -5,12 +5,12 @@ import com.toritark.app.data.core_api.config.model.ApiConfig
 
 
 interface ApiConfigRepository {
-    suspend fun getApiConfig(): ApiConfig
+    fun getApiConfig(): ApiConfig
 }
 
 internal class ApiConfigRepositoryImpl : ApiConfigRepository {
 
-    override suspend fun getApiConfig(): ApiConfig {
+    override fun getApiConfig(): ApiConfig {
         return ApiConfig(
             host = requireNotNull(BuildKonfig.API_HOST.takeIf { it.isNotBlank() }) { "API Host is not set" },
             port = BuildKonfig.API_PORT,

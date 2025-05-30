@@ -21,7 +21,6 @@ import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.network.*
-import kotlinx.coroutines.runBlocking
 import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
@@ -89,7 +88,7 @@ internal val coreApiModule = module {
             }
 
             defaultRequest {
-                val apiConfig = runBlocking { apiConfigRepository.getApiConfig() }
+                val apiConfig = apiConfigRepository.getApiConfig()
 
                 host = apiConfig.host
                 port = apiConfig.port
@@ -200,7 +199,7 @@ internal val coreApiModule = module {
             }
 
             defaultRequest {
-                val apiConfig = runBlocking { apiConfigRepository.getApiConfig() }
+                val apiConfig = apiConfigRepository.getApiConfig()
 
                 host = apiConfig.host
                 port = apiConfig.port
