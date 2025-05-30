@@ -22,4 +22,14 @@ internal class FacebookAnalyticsSystem(
     override fun logScreenViewInternal(screenName: String) {
         logScreenViewAsEvent(screenName)
     }
+
+    override fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        // TODO
+    }
 }

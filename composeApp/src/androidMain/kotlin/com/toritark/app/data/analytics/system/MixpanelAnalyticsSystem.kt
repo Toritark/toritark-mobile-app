@@ -2,6 +2,7 @@ package com.toritark.app.data.analytics.system
 
 import android.content.Context
 import com.mixpanel.android.mpmetrics.MixpanelAPI
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 import org.json.JSONObject
@@ -40,5 +41,15 @@ internal class MixpanelAnalyticsSystem(
 
     override fun logScreenViewInternal(screenName: String) {
         logScreenViewAsEvent(screenName)
+    }
+
+    override fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        // TODO
     }
 }

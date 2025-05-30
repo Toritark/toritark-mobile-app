@@ -4,6 +4,7 @@ import android.content.Context
 import com.kochava.tracker.Tracker
 import com.kochava.tracker.TrackerApi
 import com.kochava.tracker.events.Event
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 
 internal class KochavaAnalyticsSystem(
@@ -39,5 +40,15 @@ internal class KochavaAnalyticsSystem(
 
     override fun logScreenViewInternal(screenName: String) {
         logScreenViewAsEvent(screenName)
+    }
+
+    override fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        // TODO
     }
 }

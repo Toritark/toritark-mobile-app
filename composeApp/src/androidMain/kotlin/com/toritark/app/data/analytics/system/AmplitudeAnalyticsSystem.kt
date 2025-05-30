@@ -6,6 +6,7 @@ import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
 import com.amplitude.common.Logger
 import com.amplitude.core.ServerZone
+import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 import com.toritark.app.domain.core.debug.IsDebug
@@ -60,5 +61,15 @@ internal class AmplitudeAnalyticsSystem(
 
     override fun logScreenViewInternal(screenName: String) {
         logScreenViewAsEvent(screenName)
+    }
+
+    override fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        // TODO
     }
 }

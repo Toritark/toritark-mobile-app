@@ -33,4 +33,14 @@ internal class FirebaseAnalyticsSystem : AnalyticsSystem(name = "Firebase") {
             putString(FirebaseAnalytics.Param.SCREEN_CLASS, screenName)
         })
     }
+
+    override fun logAdRevenue(
+        format: String,
+        source: String,
+        adUnitName: String,
+        amount: Double,
+        currency: String,
+    ) {
+        // TODO
+    }
 }

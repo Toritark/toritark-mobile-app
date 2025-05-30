@@ -16,6 +16,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingExcept
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.toritark.app.BuildKonfig
 import com.toritark.app.presentation.auth.sign_in.exception.FirebaseSignInException
 import com.toritark.app.presentation.auth.sign_in.exception.InvalidCredentialTypeException
 import com.toritark.app.presentation.auth.sign_in.exception.SignInException
