@@ -3,6 +3,7 @@
 ios-deployment-target = "17.0"
 
 firebase = "11.13.0"
+google-mobile-ads-ios = "12.5.0"
 
 appodeal-sdk = "3.5.2"
 appodeal-amazon-adapter = "3.5.2.0"

@@ -69,21 +69,23 @@ kotlin {
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
                 "-framework", "nanopb",
-                "-framework", "Appodeal",
-                "-framework", "StackModules",
-                "-framework", "StackConsentManager",
+                "-framework", "Google-Mobile-Ads-SDK",
+//                "-framework", "Appodeal",
+//                "-framework", "StackModules",
+//                "-framework", "StackConsentManager",
             )
         }
 
         specRepos {
             url("https://cdn.cocoapods.org")
-            url("https://github.com/bidon-io/CocoaPods_Specs.git")
-            url("https://github.com/appodeal/CocoaPods.git")
+//            url("https://github.com/bidon-io/CocoaPods_Specs.git")
+//            url("https://github.com/appodeal/CocoaPods.git")
         }
 
         addFirebasePods()
+        addGoogleAdsPods()
         addRevenueCatPods()
-        addAppodealPods()
+//        addAppodealPods()
     }
 
     @Suppress("OPT_IN_USAGE")
@@ -565,6 +567,10 @@ fun CocoapodsExtension.addFirebasePods() {
     addPod(name = "FirebaseMessaging", version = iosLibs.versions.firebase)
     addPod(name = "FirebaseCrashlytics", version = iosLibs.versions.firebase)
     addPod(name = "FirebaseInstallations", version = iosLibs.versions.firebase)
+}
+
+fun CocoapodsExtension.addGoogleAdsPods() {
+    addPod(name = "Google-Mobile-Ads-SDK", version = iosLibs.versions.google.mobile.ads.ios)
 }
 
 fun CocoapodsExtension.addRevenueCatPods() {

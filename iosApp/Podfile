@@ -22,12 +22,12 @@ post_install do |installer|
       end
     end
 
-    xcframework_path = "#{installer.sandbox.root}/smaato-ios-sdk/vendor"
-
-    Dir.glob("#{xcframework_path}/**/*.framework/OMSDK_Smaato").each do |binary|
-        if File.exist?(binary)
-          puts "Stripping bitcode from: #{binary}"
-          system("xcrun bitcode_strip #{binary} -r -o #{binary}")
-        end
-    end
+#     xcframework_path = "#{installer.sandbox.root}/smaato-ios-sdk/vendor"
+#
+#     Dir.glob("#{xcframework_path}/**/*.framework/OMSDK_Smaato").each do |binary|
+#         if File.exist?(binary)
+#           puts "Stripping bitcode from: #{binary}"
+#           system("xcrun bitcode_strip #{binary} -r -o #{binary}")
+#         end
+#     end
 end
