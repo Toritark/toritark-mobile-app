@@ -9,6 +9,7 @@ import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.auth.model.auth.AuthProvider
 import com.toritark.app.domain.auth.interactor.AuthInteractor
 import com.toritark.app.domain.profile.interactor.ProfileInteractor
+import com.toritark.app.presentation.auth.nav.AuthScreenDestination
 import com.toritark.app.presentation.auth.sign_in.exception.SignInException
 import com.toritark.app.presentation.auth.sign_in.exception.UserCancelledSignInException
 import com.toritark.app.presentation.auth.sign_in.model.SignInScreenState
@@ -207,7 +208,9 @@ internal class SignInViewModel(
     }
 
     private fun openNextScreen() {
-        onNavigateTo(MainScreenDestination.Story) {}
+        onNavigateTo(MainScreenDestination.Story) {
+            popUpTo(AuthScreenDestination.SignIn) { inclusive = true }
+        }
     }
 
     private companion object {
