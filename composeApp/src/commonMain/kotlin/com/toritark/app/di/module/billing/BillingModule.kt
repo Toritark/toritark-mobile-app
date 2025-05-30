@@ -10,15 +10,19 @@ import com.toritark.app.di.name.DispatchersNames
 import com.toritark.app.di.name.HttpClientNames
 import com.toritark.app.domain.billing.interactor.BillingInteractor
 import com.toritark.app.domain.billing.interactor.BillingInteractorImpl
-import org.koin.core.module.Module
+import com.toritark.app.domain.billing.provider.BillingProvider
+import com.toritark.app.domain.billing.provider.BillingProviderImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-internal expect val platformBillingModule: Module
-
 val billingModule = module {
 
-    includes(platformBillingModule)
+    single<BillingProvider> {
+        BillingProviderImpl(
+            isDebug = get(),
+            getEnvironment = get(),
+        )
+    }
 
     single<BillingApiRepository> {
         BillingApiRepositoryImpl(
