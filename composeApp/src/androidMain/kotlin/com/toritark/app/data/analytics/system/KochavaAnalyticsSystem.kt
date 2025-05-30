@@ -4,7 +4,6 @@ import android.content.Context
 import com.kochava.tracker.Tracker
 import com.kochava.tracker.TrackerApi
 import com.kochava.tracker.events.Event
-import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 
 internal class KochavaAnalyticsSystem(

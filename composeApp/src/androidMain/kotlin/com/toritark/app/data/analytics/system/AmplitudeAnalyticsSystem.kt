@@ -6,7 +6,6 @@ import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
 import com.amplitude.common.Logger
 import com.amplitude.core.ServerZone
-import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 import com.toritark.app.domain.core.debug.IsDebug

@@ -2,7 +2,6 @@ package com.toritark.app.data.analytics.system
 
 import android.content.Context
 import com.mixpanel.android.mpmetrics.MixpanelAPI
-import com.toritark.app.BuildKonfig
 import com.toritark.app.data.analytics.model.AnalyticsEvent
 import com.toritark.app.data.analytics.model.AnalyticsProperty
 import org.json.JSONObject

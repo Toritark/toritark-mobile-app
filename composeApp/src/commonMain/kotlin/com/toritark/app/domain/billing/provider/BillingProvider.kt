@@ -21,11 +21,11 @@ internal class BillingProviderImpl(
     private val logger = Logger.withTag(LOG_TAG)
 
     override suspend fun initialize(userId: Long) {
-        logger.d { "initialize: userId=$userId" }
+        logger.i { "initialize: userId=$userId" }
 
         val prefixedUserId = getPrefixedUserId(userId)
 
-        logger.d { "initialize: prefixedUserId=$prefixedUserId" }
+        logger.i { "initialize: prefixedUserId=$prefixedUserId" }
 
         Purchases.logLevel = if (isDebug()) LogLevel.VERBOSE else LogLevel.WARN
         Purchases.configure(

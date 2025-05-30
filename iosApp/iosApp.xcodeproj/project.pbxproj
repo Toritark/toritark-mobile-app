@@ -13,6 +13,7 @@
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		E2E941322DE6226200CC41F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2E941312DE6226200CC41F0 /* GoogleService-Info.plist */; };
 		E2E941352DE78BF800CC41F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E941342DE78BF800CC41F0 /* StoreKit.framework */; };
+		E2E941372DE80DE800CC41F0 /* Toritark.storekit in Resources */ = {isa = PBXBuildFile; fileRef = E2E941362DE80DE800CC41F0 /* Toritark.storekit */; };
 		EED062DA4BF4770A10B37030 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D263634D5355FD8E7F1FAE8D /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		E2E941312DE6226200CC41F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E2E941332DE64A9600CC41F0 /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
 		E2E941342DE78BF800CC41F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		E2E941362DE80DE800CC41F0 /* Toritark.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Toritark.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				E2E941362DE80DE800CC41F0 /* Toritark.storekit */,
 				AB1DB47929225F7C00F7AF9C /* Configuration */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
@@ -175,6 +178,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E941372DE80DE800CC41F0 /* Toritark.storekit in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 				E2E941322DE6226200CC41F0 /* GoogleService-Info.plist in Resources */,

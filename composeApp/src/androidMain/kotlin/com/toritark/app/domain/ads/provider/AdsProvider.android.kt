@@ -13,7 +13,6 @@ import com.appodeal.ads.revenue.RevenueInfo
 import com.appodeal.ads.utils.Log
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentStatus
-import com.toritark.app.BuildKonfig
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent

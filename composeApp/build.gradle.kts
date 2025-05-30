@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.gradle.TargetConfigDsl
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.cocoapods.CocoapodsExtension
@@ -64,7 +65,6 @@ kotlin {
                 "-framework", "FirebaseInstallations",
                 "-framework", "FirebaseAnalytics",
                 "-framework", "FirebaseAuth",
-                "-framework", "FirebaseCrashlytics",
                 "-framework", "FirebaseCrashlytics",
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
@@ -310,165 +310,130 @@ tasks.whenTaskAdded {
     }
 }
 
+fun TargetConfigDsl.emptyStringField(fieldName: String) {
+    buildConfigField(FieldSpec.Type.STRING, fieldName, "")
+}
+
+fun TargetConfigDsl.propertyField(
+    type: FieldSpec.Type,
+    fieldName: String,
+    propertyName: String,
+    defaultValue: String = "",
+) {
+    buildConfigField(
+        type,
+        fieldName,
+        project.findProperty(propertyName) as String? ?: defaultValue,
+    )
+}
+
+fun TargetConfigDsl.localPropertiesStringField(fieldName: String, propertyName: String) {
+    buildConfigField(
+        FieldSpec.Type.STRING,
+        fieldName,
+        requireNotNull(localProperties.getProperty(propertyName)) {
+            "Set $propertyName in local.properties file"
+        },
+    )
+}
+
 buildkonfig {
     packageName = "com.toritark.app"
 
     defaultConfigs {
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "ENVIRONMENT",
-            "",
-        )
-
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
-            "",
-        )
+        emptyStringField("ENVIRONMENT")
+        emptyStringField("GOOGLE_SIGN_IN_SERVER_CLIENT_ID")
 
         // API
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "API_HOST",
-            project.findProperty("apiHost") as String? ?: "192.168.1.3",
+        propertyField(
+            type = FieldSpec.Type.STRING,
+            fieldName = "API_HOST",
+            propertyName = "apiHost",
+            defaultValue = "192.168.1.3",
         )
 
-        buildConfigField(
-            FieldSpec.Type.INT,
-            "API_PORT",
-            project.findProperty("apiPort") as String? ?: "8000",
+        propertyField(
+            type = FieldSpec.Type.INT,
+            fieldName = "API_PORT",
+            propertyName = "apiPort",
+            defaultValue = "8000",
         )
 
-        buildConfigField(
-            FieldSpec.Type.BOOLEAN,
-            "API_IS_HTTPS",
-            project.findProperty("apiIsHttps") as String? ?: "false",
+        propertyField(
+            type = FieldSpec.Type.BOOLEAN,
+            fieldName = "API_IS_HTTPS",
+            propertyName = "apiIsHttps",
+            defaultValue = "false",
         )
 
         // Appodeal
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "APPODEAL_KEY",
-            "",
-        )
-
+        emptyStringField("APPODEAL_KEY")
         // RevenueCat
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "REVENUE_CAT_API_KEY",
-            "",
-        )
-
+        emptyStringField("REVENUE_CAT_API_KEY")
         // Analytics
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "AMPLITUDE_API_KEY",
-            requireNotNull(localProperties.getProperty("amplitude.apiKey")) {
-                "Set amplitude.apiKey in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "MIXPANEL_API_KEY",
-            requireNotNull(localProperties.getProperty("mixpanel.apiKey")) {
-                "Set mixpanel.apiKey in local.properties file"
-            },
-        )
-
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "KOCHAVA_APP_GUID",
-            requireNotNull(localProperties.getProperty("kochava.android.appGuid")) {
-                "Set kochava.android.appGuid in local.properties file"
-            },
-        )
+        localPropertiesStringField("AMPLITUDE_API_KEY", "amplitude.apiKey")
+        localPropertiesStringField("MIXPANEL_API_KEY", "mixpanel.apiKey")
+        localPropertiesStringField("KOCHAVA_APP_GUID", "mixpanel.apiKey")
+        emptyStringField("KOCHAVA_APP_GUID")
 
         // Subscriptions management URL
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "SUBSCRIPTIONS_MANAGEMENT_URL",
-            "",
-        )
+        emptyStringField("SUBSCRIPTIONS_MANAGEMENT_URL")
     }
 
     defaultConfigs("local") {
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "ENVIRONMENT",
-            "local",
-        )
-
-        buildConfigField(
-            FieldSpec.Type.STRING,
+        buildConfigField(FieldSpec.Type.STRING, "ENVIRONMENT", "local")
+        localPropertiesStringField(
             "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
-            requireNotNull(localProperties.getProperty("signIn.local.google.serverClientId")) {
-                "Set signIn.local.google.serverClientId in local.properties file"
-            },
+            "signIn.local.google.serverClientId",
         )
     }
 
     defaultConfigs("production") {
-        buildConfigField(
-            FieldSpec.Type.STRING,
-            "ENVIRONMENT",
-            "production",
-        )
-
-        buildConfigField(
-            FieldSpec.Type.STRING,
+        buildConfigField(FieldSpec.Type.STRING, "ENVIRONMENT", "production")
+        localPropertiesStringField(
             "GOOGLE_SIGN_IN_SERVER_CLIENT_ID",
-            requireNotNull(localProperties.getProperty("signIn.production.google.serverClientId")) {
-                "Set signIn.production.google.serverClientId in local.properties file"
-            },
+            "signIn.production.google.serverClientId",
         )
     }
 
     targetConfigs {
         create("android") {
             // RevenueCat
-            buildConfigField(
-                FieldSpec.Type.STRING,
-                "REVENUE_CAT_API_KEY",
-                requireNotNull(localProperties.getProperty("revenuecat.android.key")) {
-                    "Set revenuecat.android.key in local.properties file"
-                },
-            )
-
+            localPropertiesStringField("REVENUE_CAT_API_KEY", "revenuecat.android.key")
             // Appodeal
-            buildConfigField(
-                FieldSpec.Type.STRING,
-                "APPODEAL_KEY",
-                requireNotNull(localProperties.getProperty("appodeal.android.key")) {
-                    "Set appodeal.android.key in local.properties file"
-                },
-            )
+            localPropertiesStringField("APPODEAL_KEY", "appodeal.android.key")
+
             // Subscriptions management URL
             buildConfigField(
                 FieldSpec.Type.STRING,
                 "SUBSCRIPTIONS_MANAGEMENT_URL",
                 "https://play.google.com/store/account/subscriptions",
             )
+
+            // Analytics
+            localPropertiesStringField("KOCHAVA_APP_GUID", "kochava.android.appGuid")
         }
 
-        create("ios") {
+        create("iosSimulatorArm64") {
             // RevenueCat
-            buildConfigField(
-                FieldSpec.Type.STRING,
-                "REVENUE_CAT_API_KEY",
-                requireNotNull(localProperties.getProperty("revenuecat.ios.key")) {
-                    "Set revenuecat.ios.key in local.properties file"
-                },
-            )
-
+            localPropertiesStringField("REVENUE_CAT_API_KEY", "revenuecat.ios.key")
             // Appodeal
+            localPropertiesStringField("APPODEAL_KEY", "appodeal.ios.key")
+
+            // Subscriptions management URL
             buildConfigField(
                 FieldSpec.Type.STRING,
-                "APPODEAL_KEY",
-                requireNotNull(localProperties.getProperty("appodeal.ios.key")) {
-                    "Set appodeal.ios.key in local.properties file"
-                },
+                "SUBSCRIPTIONS_MANAGEMENT_URL",
+                "https://apps.apple.com/account/subscriptions",
             )
+        }
+
+        create("iosArm64") {
+            // RevenueCat
+            localPropertiesStringField("REVENUE_CAT_API_KEY", "revenuecat.ios.key")
+            // Appodeal
+            localPropertiesStringField("APPODEAL_KEY", "appodeal.ios.key")
+
             // Subscriptions management URL
             buildConfigField(
                 FieldSpec.Type.STRING,

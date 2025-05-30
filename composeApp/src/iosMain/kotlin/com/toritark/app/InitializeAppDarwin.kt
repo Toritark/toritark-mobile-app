@@ -4,6 +4,7 @@ import co.touchlab.kermit.Logger
 import com.toritark.app.di.configureModules
 import com.toritark.app.domain.ads.interactor.AdsInteractor
 import com.toritark.app.domain.analytics.InitializeAnalytics
+import com.toritark.app.domain.billing.interactor.BillingInteractor
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 
@@ -14,6 +15,7 @@ fun initializeApp() {
     startDi().apply {
         initializeAnalytics()
         initializeAds()
+        initializeBilling()
     }
 }
 
@@ -35,4 +37,11 @@ private fun KoinApplication.initializeAds() {
 
     val adsInteractor = koin.get<AdsInteractor>()
     adsInteractor.initialize()
+}
+
+private fun KoinApplication.initializeBilling() {
+    logger.d { "initializeBilling" }
+
+    val billingInteractor = koin.get<BillingInteractor>()
+    billingInteractor.initialize()
 }
