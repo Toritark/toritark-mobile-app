@@ -68,6 +68,8 @@ kotlin {
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
                 "-framework", "nanopb",
+//                "-framework", "GoogleMobileAds",
+//                "-L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator"
 //                "-framework", "Appodeal",
 //                "-framework", "StackModules",
 //                "-framework", "StackConsentManager",
@@ -81,7 +83,7 @@ kotlin {
         }
 
         addFirebasePods()
-        addGoogleAdsPods()
+//        addGoogleAdsPods()
         addRevenueCatPods()
 //        addAppodealPods()
     }
@@ -524,7 +526,9 @@ fun CocoapodsExtension.addFirebasePods() {
 }
 
 fun CocoapodsExtension.addGoogleAdsPods() {
-    addPod(name = "Google-Mobile-Ads-SDK", version = iosLibs.versions.google.mobile.ads.ios)
+    addPod(name = "Google-Mobile-Ads-SDK", version = iosLibs.versions.google.mobile.ads.ios) {
+        moduleName = "GoogleMobileAds"
+    }
 }
 
 fun CocoapodsExtension.addRevenueCatPods() {

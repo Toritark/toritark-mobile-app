@@ -46,6 +46,10 @@ internal actual class AdsProviderImpl(
 
     actual override suspend fun initialize(userId: Long) {
         logger.e { "initialize NOT IMPLEMENTED: userId=$userId" }
+
+//        GADMobileAds.sharedInstance().startWithCompletionHandler { status ->
+//            logger.i { "initialize: initialization done, status=$status" }
+//        }
     }
 
     actual override suspend fun checkConsent() {
