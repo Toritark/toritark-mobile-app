@@ -419,7 +419,7 @@ buildkonfig {
             buildConfigField(
                 FieldSpec.Type.STRING,
                 "SUBSCRIPTIONS_MANAGEMENT_URL",
-                "https://apps.apple.com/account/subscriptions",
+                "itms-apps://apps.apple.com/account/subscriptions",
             )
         }
 
