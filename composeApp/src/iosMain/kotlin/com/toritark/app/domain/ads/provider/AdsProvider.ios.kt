@@ -47,6 +47,7 @@ internal actual class AdsProviderImpl(
     private val _rewardedAdFinishedEvents = MutableSharedFlow<RewardedVideoResult>()
     actual override val rewardedAdFinishedEvents = _rewardedAdFinishedEvents.asSharedFlow()
 
+    private var userId: String? = null
     private var viewController: WeakReference<UIViewController>? = null
 
     private val rewardedAds = mutableMapOf<AdPlacement, GADRewardedAd>()
@@ -55,6 +56,8 @@ internal actual class AdsProviderImpl(
 
     actual override suspend fun initialize(userId: Long) {
         logger.e { "initialize NOT IMPLEMENTED: userId=$userId" }
+
+        this.userId = userId.toString()
 
         GADMobileAds.sharedInstance().startWithCompletionHandler { status ->
             logger.i { "initialize: initialization done" }
@@ -70,13 +73,7 @@ internal actual class AdsProviderImpl(
         )
 
         placements.forEach { placement ->
-            loadRewardedAd(placement = placement) { ad ->
-                if (ad != null) {
-                    rewardedAds[placement] = ad
-                } else {
-                    rewardedAds.remove(placement)
-                }
-            }
+            loadAndSaveRewardedAd(placement = placement)
         }
     }
 
@@ -122,13 +119,29 @@ internal actual class AdsProviderImpl(
                     return@loadWithAdUnitID
                 }
 
-                ad?.fullScreenContentDelegate = rewardedAdCallback
+                ad?.apply {
+                    fullScreenContentDelegate = rewardedAdCallback
+                    serverSideVerificationOptions = GADServerSideVerificationOptions().apply {
+                        logger.i { "Loaded rewarded ad, adding userId=$userId" }
+                        this.setUserIdentifier(userId)
+                    }
+                }
 
                 onCompletion(ad)
             }
         } catch (e: ForeignException) {
             logger.e(e) { "Failed to load rewarded ad for placement=$placement" }
             onCompletion(null)
+        }
+    }
+
+    private fun loadAndSaveRewardedAd(placement: AdPlacement) {
+        coroutineScope.launch {
+            withContext(defaultDispatcher) {
+                loadRewardedAd(placement = placement) { ad ->
+                    ad?.let { rewardedAds[placement] = it } ?: rewardedAds.remove(placement)
+                }
+            }
         }
     }
 
@@ -152,7 +165,7 @@ internal actual class AdsProviderImpl(
             return false
         }
 
-        var ad = rewardedAds[placement]
+        var ad = rewardedAds.remove(placement)
         if (ad == null) {
             ad = suspendCoroutine { continuation ->
                 loadRewardedAd(placement) { loadedAd ->
@@ -163,10 +176,13 @@ internal actual class AdsProviderImpl(
 
         if (ad == null) {
             logger.w { "Failed to load rewarded ad for placement=$placement" }
+            loadAndSaveRewardedAd(placement = placement)
             return false
         }
 
         return try {
+            loadAndSaveRewardedAd(placement = placement)
+
             withContext(mainDispatcher) {
                 ad.presentFromRootViewController(viewController) {
                     logger.i { "User got reward" }
@@ -238,9 +254,9 @@ internal actual class AdsProviderImpl(
     private fun getRewardedAdId(placement: AdPlacement): String? {
         logger.i { "getRewardedAdId: placement=$placement" }
 
-        if (isDebug()) {
-            return TEST_REWARDED_AD_ID
-        }
+//        if (isDebug()) {
+//            return TEST_REWARDED_AD_ID
+//        }
 
         return rewardedAdIds[placement]
     }
