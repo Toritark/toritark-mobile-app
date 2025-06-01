@@ -42,14 +42,14 @@ class SplashViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }
 
     private fun initialize() {
-        coroutineScope.launch {
-            authInteractor.authState.collect { state ->
+        coroutineScope.launch(defaultDispatcher) {
+            authInteractor.authState.filterNot { it is AuthState.Unknown }.collect { state ->
                 logger.d { "initialize: authState=$state" }
 
                 when (state) {
