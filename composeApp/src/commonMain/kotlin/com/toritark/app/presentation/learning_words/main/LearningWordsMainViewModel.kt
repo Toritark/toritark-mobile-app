@@ -44,7 +44,7 @@ internal class LearningWordsMainViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }
@@ -67,7 +67,7 @@ internal class LearningWordsMainViewModel(
 
         this.currentSentenceApiModel = null
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             learningWordsInteractor
                 .getNextSentenceToLearn()
                 .onErrorShowMessage()
@@ -81,7 +81,7 @@ internal class LearningWordsMainViewModel(
                 }
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
                 onNavigateTo(BillingNavDestination.Paywall(PaywallSource.LearningWordsOffering)) {}
             }
@@ -318,7 +318,7 @@ internal class LearningWordsMainViewModel(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val sentence = currentSentence.sentence
             val showLearnedDialog = sentence.incorrectPartsCount == 0
 
@@ -395,7 +395,7 @@ internal class LearningWordsMainViewModel(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             logLearningWordsEvent(eventName = "learning_words_learned_click")
 
             learningWordsInteractor
@@ -480,7 +480,7 @@ internal class LearningWordsMainViewModel(
     private fun updateLearningStats() {
         logger.d { "updateLearningStats" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             learningWordsInteractor
                 .getLearningStats()
                 .onErrorShowMessage()

@@ -39,7 +39,7 @@ internal class StoryQuizViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             Analytics.logEvent(
@@ -82,7 +82,7 @@ internal class StoryQuizViewModel(
             )
         )
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
                 onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
             } else {
@@ -161,7 +161,7 @@ internal class StoryQuizViewModel(
             showNextQuestion()
         } else {
             // TODO: Show results
-            viewModelScope.launch {
+            viewModelScope.launch(defaultDispatcher) {
                 if (billingInteractor.shouldShowPaywall()) {
                     onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
                 } else {

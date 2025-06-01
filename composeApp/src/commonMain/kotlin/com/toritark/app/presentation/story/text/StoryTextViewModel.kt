@@ -40,7 +40,7 @@ internal class StoryTextViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             Analytics.logEvent(
@@ -68,7 +68,7 @@ internal class StoryTextViewModel(
             )
         )
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
                 onNavigateTo(BillingNavDestination.Paywall(PaywallSource.StoryOffering)) {}
             } else {
@@ -82,7 +82,7 @@ internal class StoryTextViewModel(
 
         val story = contentValue.story ?: return
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val sentences = story.learningLanguageText.mapIndexed { index, learningLanguageText ->
                 SentenceToLearn(
                     learningLanguageText = learningLanguageText,

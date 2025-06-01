@@ -32,7 +32,7 @@ internal class OnboardingMainViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }
@@ -40,7 +40,7 @@ internal class OnboardingMainViewModel(
     fun update() {
         logger.d { "update" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             if (onboardingRepository.isOnboardingCompleted()) {
                 openNextScreen()
             } else {

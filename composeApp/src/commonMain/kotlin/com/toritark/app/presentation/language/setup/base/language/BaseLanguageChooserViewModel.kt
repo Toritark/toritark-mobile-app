@@ -25,7 +25,7 @@ internal abstract class BaseLanguageChooserViewModel(
     override fun initialize() {
         logger.d { "initialize" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val languages = getLanguages()
 
             updateAndShowContent {
@@ -55,7 +55,7 @@ internal abstract class BaseLanguageChooserViewModel(
 
         val selectedLanguage = selectedLanguage ?: return
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             saveLanguage(selectedLanguage.language)
 
             onPopBackStack()

@@ -40,7 +40,7 @@ internal class LanguageLevelChooserViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             val isInitialSetup = languagesRepository.languageLevel.value == null
@@ -83,7 +83,7 @@ internal class LanguageLevelChooserViewModel(
 
         setLoadingScreenState()
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             languagesRepository.setLanguageLevel(languageLevel)
 
             Analytics.logEvent(

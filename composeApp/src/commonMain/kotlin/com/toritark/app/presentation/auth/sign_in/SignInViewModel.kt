@@ -53,7 +53,7 @@ internal class SignInViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             Analytics.logEvent(
@@ -67,7 +67,7 @@ internal class SignInViewModel(
     fun onSignInClick(authProviderUiModel: AuthProviderUiModel) {
         logger.d { "onSignInClick: authProviderUiModel=$authProviderUiModel" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             _signInRequestEvents.emit(authProviderUiModel.provider)
 
             selectedAuthProvider = authProviderUiModel.provider
@@ -92,7 +92,7 @@ internal class SignInViewModel(
     private fun loadAuthProviders() {
         logger.d { "loadAuthProviders" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val authProviders = authInteractor
                 .getAuthProviders()
                 .map { authProvider -> authProvider.toUiModel() }
@@ -130,7 +130,7 @@ internal class SignInViewModel(
     fun handleSignInToken(token: String) {
         logger.d { "handleSignInToken: token=$token" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             authInteractor
                 .authenticateWithFirebase(token = token)
                 .catch { e ->
@@ -191,7 +191,7 @@ internal class SignInViewModel(
             return
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val errorMessage = getString(Res.string.title_auth_sign_in_failed, exception.message.orEmpty())
             showErrorMessage(errorMessage)
 

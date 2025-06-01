@@ -100,7 +100,7 @@ internal class StoryRetellingViewModel(
             copy(reviewResult = StoryRetellingScreenState.ReviewResult.InProgress)
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             storiesInteractor
                 .createStoryRetellingReview(storyRequestId, retelling)
                 .catch { t ->
@@ -197,7 +197,7 @@ internal class StoryRetellingViewModel(
 
         profileInteractor.updateProfileInBackground()
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val plan = profileInteractor
                 .profileState
                 .filterIsInstance<ProfileState.Present>()
@@ -263,7 +263,7 @@ internal class StoryRetellingViewModel(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logEvent(
                 AnalyticsEvent(
                     name = "retelling_review_watch_ad_click",

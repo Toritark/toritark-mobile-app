@@ -59,7 +59,7 @@ internal class StoryDetailViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }
@@ -149,7 +149,7 @@ internal class StoryDetailViewModel(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             storiesInteractor
                 .createStory(
                     topic = topic,
@@ -257,7 +257,7 @@ internal class StoryDetailViewModel(
 
         profileInteractor.updateProfileInBackground()
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val plan = profileInteractor
                 .profileState
                 .filterIsInstance<ProfileState.Present>()
@@ -327,7 +327,7 @@ internal class StoryDetailViewModel(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logEvent(
                 AnalyticsEvent(
                     name = "generate_story_watch_ad_click",

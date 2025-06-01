@@ -31,7 +31,7 @@ internal class LearningLanguageChooserViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             val isInitialSetup = languagesRepository.learningLanguage.value == null

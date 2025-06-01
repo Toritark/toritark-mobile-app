@@ -42,7 +42,7 @@ internal class PaywallViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             Analytics.logEvent(
@@ -58,7 +58,7 @@ internal class PaywallViewModel(
      * Getting the initial plan before the purchase, because it may update earlier that we'll get it later
      */
     private fun initializeInitialPlan() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             initialPlan = profileInteractor.getCurrentPlan()
         }
     }
@@ -196,7 +196,7 @@ internal class PaywallViewModel(
             )
         }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             billingInteractor
                 .waitForPlanToUpgrade(initialPlan = initialPlan)
                 .flowOn(defaultDispatcher)

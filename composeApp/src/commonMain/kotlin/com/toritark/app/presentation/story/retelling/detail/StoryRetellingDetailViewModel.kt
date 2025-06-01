@@ -27,7 +27,7 @@ internal class StoryRetellingDetailViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }

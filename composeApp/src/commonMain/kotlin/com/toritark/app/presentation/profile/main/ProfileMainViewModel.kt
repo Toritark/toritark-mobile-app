@@ -76,7 +76,7 @@ internal class ProfileMainViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
         }
     }
@@ -88,7 +88,7 @@ internal class ProfileMainViewModel(
     private fun listenToStates() {
         logger.d { "listenToStates" }
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             combine(
                 languageSettingsState,
                 profileState
@@ -134,7 +134,7 @@ internal class ProfileMainViewModel(
 
         Analytics.logEvent(AnalyticsEvent(name = "profile_image_triple_click"))
 
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             billingInteractor.triggerPlanCheck()
         }
     }

@@ -39,7 +39,7 @@ internal class NativeLanguageChooserViewModel(
     }
 
     private fun logScreenView() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             Analytics.logScreenView(SCREEN_NAME)
 
             val isInitialSetup = languagesRepository.nativeLanguage.value == null
@@ -54,7 +54,7 @@ internal class NativeLanguageChooserViewModel(
     }
 
     private fun initializeNativeLanguage() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             val deviceLanguageCode = getDeviceLanguageCode().takeIf { it.isNotBlank() } ?: return@launch
 
             val allLanguages = languagesRepository.getAllLanguages()
