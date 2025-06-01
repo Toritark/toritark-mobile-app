@@ -1,5 +1,8 @@
 package com.toritark.app.presentation.main.nav
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
@@ -37,6 +40,8 @@ internal fun AppNavigation(
     NavHost(
         navController = navController,
         startDestination = SplashScreenDestination,
+        enterTransition = { fadeIn(animationSpec = tween()) },
+        exitTransition = { fadeOut(animationSpec = tween()) },
     ) {
         splashScreen(onNavigateTo = defaultOnNavigateTo)
         languagesScreens(onNavigateTo = defaultOnNavigateTo, onPopBackStack = defaultOnPopBackStack)
