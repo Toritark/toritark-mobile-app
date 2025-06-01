@@ -91,3 +91,6 @@ appodeal-ironsource-verve-adapter = "4.3.4.0"
 appodeal-ironsource-vungle-adapter = "4.3.42.0"
 
 revenuecat = "13.32.0"
+
+mixpanel = "5.0.8"
+facebook = "18.0.0"

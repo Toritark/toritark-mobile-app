@@ -49,6 +49,25 @@
             <true />
         </dict>
 
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>fbAPP-ID</string>
+                </array>
+            </dict>
+        </array>
+        <key>FacebookAppID</key>
+        <string>fb4030567537220474</string>
+        <key>FacebookClientToken</key>
+        <string>294ebf1a69bb8acb84c64c052f9abc73</string>
+        <key>FacebookDisplayName</key>
+        <string>Toritark</string>
+
+        <key>GADApplicationIdentifier</key>
+        <string>ca-app-pub-4910514618209773~4456811218</string>
+
         <key>GADApplicationIdentifier</key>
         <string>ca-app-pub-4910514618209773~4456811218</string>
 

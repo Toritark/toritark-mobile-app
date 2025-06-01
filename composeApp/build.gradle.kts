@@ -75,6 +75,7 @@ kotlin {
                 "-framework", "nanopb",
                 "-framework", "GoogleMobileAds",
                 "-framework", "JavaScriptCore",
+                "-framework", "Mixpanel",
                 swiftLibPathArg,
 //                "-framework", "Appodeal",
 //                "-framework", "StackModules",
@@ -91,7 +92,7 @@ kotlin {
         addFirebasePods()
         addGoogleAdsPods()
         addRevenueCatPods()
-//        addAppodealPods()
+        addAnalyticsPods()
     }
 
     sourceSets {
@@ -368,7 +369,6 @@ buildkonfig {
         // Analytics
         localPropertiesStringField("AMPLITUDE_API_KEY", "amplitude.apiKey")
         localPropertiesStringField("MIXPANEL_API_KEY", "mixpanel.apiKey")
-        localPropertiesStringField("KOCHAVA_APP_GUID", "mixpanel.apiKey")
         emptyStringField("KOCHAVA_APP_GUID")
 
         // Subscriptions management URL
@@ -524,7 +524,6 @@ fun CocoapodsExtension.addPod(
 
 fun CocoapodsExtension.addFirebasePods() {
     addPod(name = "FirebaseCore", version = iosLibs.versions.firebase)
-    addPod(name = "FirebaseAnalytics", version = iosLibs.versions.firebase)
     addPod(name = "FirebaseAuth", version = iosLibs.versions.firebase)
     addPod(name = "FirebaseMessaging", version = iosLibs.versions.firebase)
     addPod(name = "FirebaseCrashlytics", version = iosLibs.versions.firebase)
@@ -541,6 +540,12 @@ fun CocoapodsExtension.addGoogleAdsPods() {
 fun CocoapodsExtension.addRevenueCatPods() {
     addPod(name = "PurchasesHybridCommon", version = iosLibs.versions.revenuecat, linkOnly = true)
     addPod(name = "PurchasesHybridCommonUI", version = iosLibs.versions.revenuecat, linkOnly = true)
+}
+
+fun CocoapodsExtension.addAnalyticsPods() {
+    addPod(name = "FirebaseAnalytics", version = iosLibs.versions.firebase)
+    addPod(name = "Mixpanel", version = iosLibs.versions.mixpanel)
+    addPod(name = "FBSDKCoreKit", version = iosLibs.versions.facebook)
 }
 
 fun CocoapodsExtension.addAppodealPods() {
