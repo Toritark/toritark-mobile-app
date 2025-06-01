@@ -100,7 +100,7 @@ class SplashViewModel(
 
             withContext(mainDispatcher) {
                 onNavigateTo(MainScreenDestination.Story) {
-                    popUpTo(AuthScreenDestination.SignIn) { inclusive = true }
+                    popUpTo(SplashScreenDestination) { inclusive = true }
                 }
             }
         } else {
