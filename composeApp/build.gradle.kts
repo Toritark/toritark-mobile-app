@@ -55,9 +55,14 @@ kotlin {
         ios.deploymentTarget = iosLibs.versions.ios.deployment.target.get()
 
         podfile = project.file("../iosApp/Podfile")
+
         framework {
             baseName = "ComposeApp"
             isStatic = false
+
+            val targetPlatform = project.findProperty("kotlin.native.cocoapods.platform")?.toString()
+            val swiftLibPathArg =
+                "-L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$targetPlatform"
 
             linkerOpts(
                 "-framework", "FirebaseCore",
@@ -68,8 +73,9 @@ kotlin {
                 "-framework", "GoogleAppMeasurement",
                 "-framework", "GoogleUtilities",
                 "-framework", "nanopb",
-//                "-framework", "GoogleMobileAds",
-//                "-L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator"
+                "-framework", "GoogleMobileAds",
+                "-framework", "JavaScriptCore",
+                swiftLibPathArg,
 //                "-framework", "Appodeal",
 //                "-framework", "StackModules",
 //                "-framework", "StackConsentManager",
@@ -83,7 +89,7 @@ kotlin {
         }
 
         addFirebasePods()
-//        addGoogleAdsPods()
+        addGoogleAdsPods()
         addRevenueCatPods()
 //        addAppodealPods()
     }
@@ -528,6 +534,7 @@ fun CocoapodsExtension.addFirebasePods() {
 fun CocoapodsExtension.addGoogleAdsPods() {
     addPod(name = "Google-Mobile-Ads-SDK", version = iosLibs.versions.google.mobile.ads.ios) {
         moduleName = "GoogleMobileAds"
+        extraOpts = listOf("-Xforeign-exception-mode", "objc-wrap")
     }
 }
 

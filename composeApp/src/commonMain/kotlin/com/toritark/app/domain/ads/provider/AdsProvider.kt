@@ -2,6 +2,7 @@
 
 package com.toritark.app.domain.ads.provider
 
+import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,13 +17,13 @@ interface AdsProvider {
     suspend fun initialize(userId: Long)
     suspend fun checkConsent()
 
-    suspend fun canShowBanner(placementName: String? = null): Boolean
-    suspend fun canShowInterstitial(placementName: String? = null): Boolean
-    suspend fun canShowRewarded(placementName: String? = null): Boolean
+    suspend fun canShowBanner(placement: AdPlacement): Boolean
+    suspend fun canShowInterstitial(placement: AdPlacement): Boolean
+    suspend fun canShowRewarded(placement: AdPlacement): Boolean
 
-    suspend fun showBanner(placementName: String? = null): Boolean
-    suspend fun showInterstitial(placementName: String? = null): Boolean
-    suspend fun showRewarded(placementName: String? = null): Boolean
+    suspend fun showBanner(placement: AdPlacement): Boolean
+    suspend fun showInterstitial(placement: AdPlacement): Boolean
+    suspend fun showRewarded(placement: AdPlacement): Boolean
 
     suspend fun hideBanner(): Boolean
 }
@@ -38,13 +39,13 @@ internal expect class AdsProviderImpl : AdsProvider {
 
     override suspend fun checkConsent()
 
-    override suspend fun canShowBanner(placementName: String?): Boolean
-    override suspend fun canShowInterstitial(placementName: String?): Boolean
-    override suspend fun canShowRewarded(placementName: String?): Boolean
+    override suspend fun canShowBanner(placement: AdPlacement): Boolean
+    override suspend fun canShowInterstitial(placement: AdPlacement): Boolean
+    override suspend fun canShowRewarded(placement: AdPlacement): Boolean
 
-    override suspend fun showBanner(placementName: String?): Boolean
-    override suspend fun showInterstitial(placementName: String?): Boolean
-    override suspend fun showRewarded(placementName: String?): Boolean
+    override suspend fun showBanner(placement: AdPlacement): Boolean
+    override suspend fun showInterstitial(placement: AdPlacement): Boolean
+    override suspend fun showRewarded(placement: AdPlacement): Boolean
 
     override suspend fun hideBanner(): Boolean
 }

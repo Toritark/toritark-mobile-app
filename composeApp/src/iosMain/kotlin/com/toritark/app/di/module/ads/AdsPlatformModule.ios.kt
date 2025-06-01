@@ -12,6 +12,7 @@ actual val adsPlatformModule = module {
         AdsProviderImpl(
             isDebug = get(),
             defaultDispatcher = get(named(DispatchersNames.DEFAULT)),
+            mainDispatcher = get(named(DispatchersNames.MAIN)),
         )
     }
 }
