@@ -15,7 +15,7 @@ internal class MixpanelAnalyticsSystem(
             apiToken = BuildKonfig.MIXPANEL_API_KEY,
             trackAutomaticEvents = true,
         ).apply {
-            enableLogging = isDebug()
+//            enableLogging = isDebug()
         }
     }
 

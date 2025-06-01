@@ -74,6 +74,7 @@ kotlin {
                 "-framework", "GoogleUtilities",
                 "-framework", "nanopb",
                 "-framework", "GoogleMobileAds",
+//                "-framework", "GoogleUserMessagingPlatformMain",
                 "-framework", "JavaScriptCore",
                 "-framework", "Mixpanel",
                 swiftLibPathArg,
@@ -534,6 +535,9 @@ fun CocoapodsExtension.addGoogleAdsPods() {
     addPod(name = "Google-Mobile-Ads-SDK", version = iosLibs.versions.google.mobile.ads.ios) {
         moduleName = "GoogleMobileAds"
         extraOpts = listOf("-Xforeign-exception-mode", "objc-wrap")
+    }
+    addPod(name = "GoogleUserMessagingPlatform", version = iosLibs.versions.google.user.messaging.platform) {
+        moduleName = "UserMessagingPlatform"
     }
 }
 
