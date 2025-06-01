@@ -289,16 +289,12 @@ tasks.withType<Test> {
     }
 }
 
-tasks.withType<Test> {
-    if (name == "copyRoomSchemasToAndroidTestAssetsDebugAndroidTest") {
-        enabled = false
-    }
+tasks.named("podImport") { // Example task for iOS device
+    dependsOn("bootstrapXcodeVersionConfig")
 }
 
-tasks.whenTaskAdded {
-    if (name.contains("copyRoomSchemasToAndroidTestAssetsDebugAndroidTest")) {
-        enabled = false
-    }
+tasks.named("iosSimulatorArm64Binaries") { // Example task for iOS device
+    dependsOn("bootstrapXcodeVersionConfig")
 }
 
 fun TargetConfigDsl.emptyStringField(fieldName: String) {
@@ -496,6 +492,22 @@ fun getVersionName(): String {
         libs.versions.app.version.date.get().let(::append)
         append(".")
         libs.versions.app.version.build.get().let(::append)
+    }
+}
+
+tasks.register("bootstrapXcodeVersionConfig") {
+    val configFile = file(project.rootDir.toString() + "/iosApp/Configuration/Versions.xcconfig")
+    outputs.file(configFile)
+    val content = """
+        BUNDLE_VERSION=${getVersionCode()}
+        BUNDLE_SHORT_VERSION_STRING=${getVersionName()}
+    """.trimIndent()
+
+    outputs.upToDateWhen {
+        configFile.takeIf { it.exists() }?.readText() == content
+    }
+    doLast {
+        configFile.writeText(content)
     }
 }
 
