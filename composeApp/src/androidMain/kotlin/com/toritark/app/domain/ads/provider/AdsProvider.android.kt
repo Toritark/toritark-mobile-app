@@ -14,6 +14,7 @@ import com.appodeal.ads.utils.Log
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentStatus
 import com.toritark.app.BuildKonfig
+import com.toritark.app.data.ads.model.placement.AdPlacement
 import com.toritark.app.data.ads.model.rewarded.RewardedVideoResult
 import com.toritark.app.data.analytics.Analytics
 import com.toritark.app.data.analytics.model.AnalyticsEvent
@@ -130,34 +131,37 @@ internal actual class AdsProviderImpl(
         )
     }
 
-    actual override suspend fun canShowBanner(placementName: String?): Boolean {
-        return placementName
+    actual override suspend fun canShowBanner(placement: AdPlacement): Boolean {
+        return placement
+            .placementName
             ?.let { Appodeal.canShow(Appodeal.BANNER_VIEW, it) }
             ?: Appodeal.canShow(Appodeal.BANNER_VIEW)
     }
 
-    actual override suspend fun canShowInterstitial(placementName: String?): Boolean {
-        return placementName
+    actual override suspend fun canShowInterstitial(placement: AdPlacement): Boolean {
+        return placement
+            .placementName
             ?.let { Appodeal.canShow(Appodeal.INTERSTITIAL, it) }
             ?: Appodeal.canShow(Appodeal.INTERSTITIAL)
     }
 
-    actual override suspend fun canShowRewarded(placementName: String?): Boolean {
-        return placementName
+    actual override suspend fun canShowRewarded(placement: AdPlacement): Boolean {
+        return placement
+            .placementName
             ?.let { Appodeal.canShow(Appodeal.REWARDED_VIDEO, it) }
             ?: Appodeal.canShow(Appodeal.REWARDED_VIDEO)
     }
 
-    actual override suspend fun showBanner(placementName: String?): Boolean {
-        return showAd(adType = Appodeal.BANNER_VIEW, placementName = placementName)
+    actual override suspend fun showBanner(placement: AdPlacement): Boolean {
+        return showAd(adType = Appodeal.BANNER_VIEW, placementName = placement.placementName)
     }
 
-    actual override suspend fun showInterstitial(placementName: String?): Boolean {
-        return showAd(adType = Appodeal.INTERSTITIAL, placementName = placementName)
+    actual override suspend fun showInterstitial(placement: AdPlacement): Boolean {
+        return showAd(adType = Appodeal.INTERSTITIAL, placementName = placement.placementName)
     }
 
-    actual override suspend fun showRewarded(placementName: String?): Boolean {
-        return showAd(adType = Appodeal.REWARDED_VIDEO, placementName = placementName)
+    actual override suspend fun showRewarded(placement: AdPlacement): Boolean {
+        return showAd(adType = Appodeal.REWARDED_VIDEO, placementName = placement.placementName)
     }
 
     private fun showAd(adType: Int, placementName: String?): Boolean {

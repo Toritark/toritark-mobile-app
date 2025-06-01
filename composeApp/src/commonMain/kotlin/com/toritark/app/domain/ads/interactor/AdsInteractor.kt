@@ -80,7 +80,7 @@ internal class AdsInteractorImpl(
 
     override suspend fun canShowRewardedAd(adPlacement: AdPlacement): Boolean {
         return adsProvider.isRewardedAvailable.value && adsProvider.canShowRewarded(
-            placementName = adPlacement.placementName,
+            placement = adPlacement,
         )
     }
 
@@ -98,7 +98,7 @@ internal class AdsInteractorImpl(
                 return@launch
             }
 
-            adsProvider.showBanner(adPlacement.placementName)
+            adsProvider.showBanner(adPlacement)
         }
     }
 
@@ -127,11 +127,11 @@ internal class AdsInteractorImpl(
                 RewardedVideoKind.RetellingCheck -> AdPlacement.Rewarded.RetellingCheck
             }
 
-            if (!adsProvider.canShowRewarded(adPlacement.placementName)) {
+            if (!adsProvider.canShowRewarded(adPlacement)) {
                 throw NoRewardedAdException()
             }
 
-            if (!adsProvider.showRewarded(adPlacement.placementName)) {
+            if (!adsProvider.showRewarded(adPlacement)) {
                 throw FailedToShowRewardedAdException()
             }
 
@@ -182,8 +182,8 @@ internal class AdsInteractorImpl(
                 return@launch
             }
 
-            if (adsProvider.canShowInterstitial(adPlacement.placementName)) {
-                adsProvider.showInterstitial(adPlacement.placementName)
+            if (adsProvider.canShowInterstitial(adPlacement)) {
+                adsProvider.showInterstitial(adPlacement)
             }
         }
     }
