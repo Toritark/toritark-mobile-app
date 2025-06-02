@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getString
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.title_auth_sign_in_failed
@@ -207,9 +208,11 @@ internal class SignInViewModel(
         }
     }
 
-    private fun openNextScreen() {
-        onNavigateTo(MainScreenDestination.Story) {
-            popUpTo(AuthScreenDestination.SignIn) { inclusive = true }
+    private suspend fun openNextScreen() {
+        withContext(mainDispatcher) {
+            onNavigateTo(MainScreenDestination.Story) {
+                popUpTo(AuthScreenDestination.SignIn) { inclusive = true }
+            }
         }
     }
 

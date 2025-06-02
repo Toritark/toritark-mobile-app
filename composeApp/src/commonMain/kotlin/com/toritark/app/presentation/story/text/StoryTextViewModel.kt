@@ -16,6 +16,7 @@ import com.toritark.app.presentation.core_ui.screen.BaseViewModel
 import com.toritark.app.presentation.story.text.model.StoryTextScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.getPluralString
 import toritark.composeapp.generated.resources.Res
 import toritark.composeapp.generated.resources.message_added_selected_words_to_learning
@@ -70,9 +71,13 @@ internal class StoryTextViewModel(
 
         viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
-                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.StoryOffering)) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(BillingNavDestination.Paywall(PaywallSource.StoryOffering)) {}
+                }
             } else {
-                onPopBackStack()
+                withContext(mainDispatcher) {
+                    onPopBackStack()
+                }
             }
         }
     }

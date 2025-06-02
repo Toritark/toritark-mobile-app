@@ -19,6 +19,7 @@ import com.toritark.app.presentation.main.nav.MainScreenDestination
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.min
 
 internal class LearningWordsMainViewModel(
@@ -83,7 +84,9 @@ internal class LearningWordsMainViewModel(
 
         viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
-                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.LearningWordsOffering)) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(BillingNavDestination.Paywall(PaywallSource.LearningWordsOffering)) {}
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ import com.toritark.app.presentation.language.setup.level.model.LanguageLevelCho
 import com.toritark.app.presentation.language.setup.level.model.LanguageLevelUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class LanguageLevelChooserViewModel(
     private val languagesRepository: LanguagesRepository,
@@ -95,7 +96,9 @@ internal class LanguageLevelChooserViewModel(
                 )
             )
 
-            onPopBackStack()
+            withContext(mainDispatcher) {
+                onPopBackStack()
+            }
         }
     }
 

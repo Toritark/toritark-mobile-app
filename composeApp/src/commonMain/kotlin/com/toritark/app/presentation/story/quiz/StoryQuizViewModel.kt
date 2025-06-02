@@ -19,6 +19,7 @@ import com.toritark.app.presentation.story.quiz.model.StoryQuizScreenState
 import com.toritark.app.util.core.extension.iterable.replaceItemAt
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class StoryQuizViewModel(
     private val adsInteractor: AdsInteractor,
@@ -84,9 +85,13 @@ internal class StoryQuizViewModel(
 
         viewModelScope.launch(defaultDispatcher) {
             if (billingInteractor.shouldShowPaywall()) {
-                onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+                }
             } else {
-                onPopBackStack()
+                withContext(mainDispatcher) {
+                    onPopBackStack()
+                }
             }
         }
     }
@@ -163,9 +168,13 @@ internal class StoryQuizViewModel(
             // TODO: Show results
             viewModelScope.launch(defaultDispatcher) {
                 if (billingInteractor.shouldShowPaywall()) {
-                    onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+                    withContext(mainDispatcher) {
+                        onNavigateTo(BillingNavDestination.Paywall(PaywallSource.QuizOffering)) {}
+                    }
                 } else {
-                    onPopBackStack()
+                    withContext(mainDispatcher) {
+                        onPopBackStack()
+                    }
                 }
             }
         }

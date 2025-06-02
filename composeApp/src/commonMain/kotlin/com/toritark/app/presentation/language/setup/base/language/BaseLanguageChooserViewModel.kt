@@ -8,6 +8,7 @@ import com.toritark.app.presentation.language.setup.base.BaseLanguageSetupViewMo
 import com.toritark.app.presentation.language.setup.base.language.model.LanguageChooserScreenState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal abstract class BaseLanguageChooserViewModel(
     protected val languagesRepository: LanguagesRepository,
@@ -58,7 +59,9 @@ internal abstract class BaseLanguageChooserViewModel(
         viewModelScope.launch(defaultDispatcher) {
             saveLanguage(selectedLanguage.language)
 
-            onPopBackStack()
+            withContext(mainDispatcher) {
+                onPopBackStack()
+            }
         }
     }
 

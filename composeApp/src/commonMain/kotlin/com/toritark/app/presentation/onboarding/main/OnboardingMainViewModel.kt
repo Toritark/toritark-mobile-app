@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class OnboardingMainViewModel(
     private val languagesRepository: LanguagesRepository,
@@ -61,32 +62,40 @@ internal class OnboardingMainViewModel(
             .first()
     }
 
-    private fun showLanguageSetupStep() {
+    private suspend fun showLanguageSetupStep() {
         when {
             languagesRepository.learningLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: learningLanguage is null" }
 
-                onNavigateTo(LanguageSetupScreenDestination.LearningLanguageChooser) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(LanguageSetupScreenDestination.LearningLanguageChooser) {}
+                }
             }
 
             languagesRepository.languageLevel.value == null -> {
                 logger.d { "showLanguageSetupStep: languageLevel is null" }
 
-                onNavigateTo(LanguageSetupScreenDestination.LanguageLevelChooser) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(LanguageSetupScreenDestination.LanguageLevelChooser) {}
+                }
             }
 
             languagesRepository.nativeLanguage.value == null -> {
                 logger.d { "showLanguageSetupStep: nativeLanguage is null" }
 
-                onNavigateTo(LanguageSetupScreenDestination.NativeLanguageChooser) {}
+                withContext(mainDispatcher) {
+                    onNavigateTo(LanguageSetupScreenDestination.NativeLanguageChooser) {}
+                }
             }
         }
     }
 
-    private fun openNextScreen() {
+    private suspend fun openNextScreen() {
         logger.d { "openNextScreen" }
 
-        onNavigateTo(AuthScreenDestination.SignIn) {}
+        withContext(mainDispatcher) {
+            onNavigateTo(AuthScreenDestination.SignIn) {}
+        }
     }
 
     private companion object {
