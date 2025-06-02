@@ -511,6 +511,9 @@ tasks.register("bootstrapXcodeVersionConfig") {
     }
 }
 
+tasks.matching { it.name == "syncPodComposeResourcesForIos" }
+    .configureEach { enabled = false }
+
 /**
  * Cocoapods
  */
