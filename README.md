@@ -4,7 +4,7 @@ A language learning application that helps users learn languages through text st
 
 ## This app is no longer maintained
 
-I've decided to implement a PWA instead of native app. Read the story [in our blog](https://toritark.com/en/blog/google-play-banned-us-before-launch-a-ghost-from-10-years-ago-pushed-me-to-pwa) or [in my LinkedIn](https://www.linkedin.com/posts/artem-smirnov-at-labster_pwa-composemultiplatform-androiddev-activity-7338756082753753088-EgSg).
+I've decided to implement a PWA instead of native app, thanks to Google. Read the story [in our blog](https://toritark.com/en/blog/google-play-banned-us-before-launch-a-ghost-from-10-years-ago-pushed-me-to-pwa) or [in my LinkedIn](https://www.linkedin.com/posts/artem-smirnov-at-labster_pwa-composemultiplatform-androiddev-activity-7338756082753753088-EgSg).
 
 Feel free to use a [new PWA](https://toritark.com). It's not open-source yet, unfortunately.
 
