@@ -8,6 +8,8 @@ I've decided to implement a PWA instead of native app, thanks to Google. Read th
 
 Feel free to use a [new PWA](https://toritark.com). It's not open-source yet, unfortunately.
 
+
+
 <img src="img/badge/made-in-eu.jpg" height="40x" /> <img src="img/badge/made-in-estonia.jpg" height="40x" /> 
 
 
