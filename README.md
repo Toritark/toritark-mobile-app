@@ -82,4 +82,6 @@ You can find the development instructions in [this document](DEVELOPMENT.md).
 
 ## 📜 License
 
-Attribution-NonCommercial-ShareAlike 4.0 International
+This project is licensed under the [Do What The Fuck You Want To Public License](LICENSE.txt).
+
+The license was changed from Attribution-NonCommercial-ShareAlike 4.0 International to WTFPL on June 1, 2026.
